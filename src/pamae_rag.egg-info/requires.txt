@@ -1,0 +1,9 @@
+numpy<3,>=1.26
+pandas<3,>=2.1
+PyYAML<7,>=6.0.1
+tqdm<5,>=4.66
+
+[dev]
+pytest<9,>=8.0
+ruff<1,>=0.5
+mypy<2,>=1.8
