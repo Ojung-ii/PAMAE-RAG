@@ -1,0 +1,28 @@
+experiment:
+  name: musique_pamae_rag_v1
+  seed: 42
+  limit_queries: null
+
+universe:
+  max_nodes: 900
+  min_relevance_mass: 0.985
+  anchor_node_types: [chunk, sentence]
+
+distance:
+  metric: angular
+
+pamae:
+  k: 4
+  k_max: 4
+  auto_k: false
+  num_samples: 5
+  sample_size_per_k: 12
+  sample_size_cap: 48
+  sample_uniform_mix: 0.15
+  require_exact_sample_search: true
+  max_exact_combinations: 1000000
+  refinement_iters: 1
+  token_weight: 0.03
+  anchor_penalty: 0.0
+  max_context_tokens: 1600
+  evidence_per_anchor: 2

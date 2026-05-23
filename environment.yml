@@ -1,0 +1,13 @@
+name: pamae-rag
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11
+  - numpy
+  - pandas
+  - pyyaml
+  - tqdm
+  - pytest
+  - pip
+  - pip:
+      - -e .

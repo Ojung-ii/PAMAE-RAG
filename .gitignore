@@ -1,0 +1,19 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.DS_Store
+
+# Keep local/large data out of git. Smoke data is tracked.
+data/raw/*
+!data/raw/.gitkeep
+data/processed/*
+!data/processed/.gitkeep
+data/indexes/*
+!data/indexes/.gitkeep
+data/graphs/*
+!data/graphs/.gitkeep
+data/runs/*
+!data/runs/.gitkeep

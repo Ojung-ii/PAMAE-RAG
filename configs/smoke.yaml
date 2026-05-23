@@ -1,0 +1,28 @@
+experiment:
+  name: smoke
+  seed: 7
+  limit_queries: null
+
+universe:
+  max_nodes: 200
+  min_relevance_mass: 0.995
+  anchor_node_types: [chunk, sentence]
+
+distance:
+  metric: angular
+
+pamae:
+  k: 2
+  k_max: 3
+  auto_k: false
+  num_samples: 5
+  sample_size_per_k: 6
+  sample_size_cap: 12
+  sample_uniform_mix: 0.15
+  require_exact_sample_search: true
+  max_exact_combinations: 100000
+  refinement_iters: 1
+  token_weight: 0.01
+  anchor_penalty: 0.0
+  max_context_tokens: 300
+  evidence_per_anchor: 2
