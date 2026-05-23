@@ -17,6 +17,7 @@ def main() -> None:
     parser.add_argument("--embedding-dim", type=int, default=128)
     parser.add_argument("--max-features", type=int, default=50000)
     parser.add_argument("--limit", type=int, default=None)
+    parser.add_argument("--debug-dir", default=None)
     args = parser.parse_args()
 
     summary = prepare_raw_qa_corpus_dataset(
@@ -28,6 +29,7 @@ def main() -> None:
         embedding_dim=args.embedding_dim,
         max_features=args.max_features,
         limit=args.limit,
+        debug_dir=args.debug_dir,
     )
     print(json.dumps(summary, ensure_ascii=False, indent=2))
 
