@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from dataclasses import dataclass
 from typing import Sequence
 
 import numpy as np
@@ -7,23 +8,48 @@ import numpy as np
 from pamae_rag.data.schema import EvidenceNode
 
 
-def _append_with_budget(
-    selected: list[int],
-    nodes: Sequence[EvidenceNode],
-    idx: int,
-    used_tokens: int,
-    max_context_tokens: int,
-    *,
-    force: bool = False,
-) -> int:
-    idx = int(idx)
-    if idx in selected:
-        return used_tokens
-    tok = max(1, int(nodes[idx].token_count))
-    if not force and selected and used_tokens + tok > max_context_tokens:
-        return used_tokens
-    selected.append(idx)
-    return used_tokens + tok
+@dataclass
+class _Budget:
+    nodes: Sequence[EvidenceNode]
+    max_context_tokens: int
+    max_context_nodes: int | None
+    selected: list[int]
+    used_tokens: int = 0
+
+    def add(self, idx: int, *, force: bool = False) -> None:
+        idx = int(idx)
+        if idx in self.selected:
+            return
+        tok = max(1, int(self.nodes[idx].token_count))
+        if not force:
+            if self.max_context_nodes and len(self.selected) >= self.max_context_nodes:
+                return
+            if self.used_tokens + tok > self.max_context_tokens:
+                return
+        self.selected.append(idx)
+        self.used_tokens += tok
+
+
+def _nearest_anchor_distances(anchors: Sequence[int], distance_matrix: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
+    anchor_arr = np.asarray(list(anchors), dtype=np.int64)
+    nearest_pos = np.argmin(distance_matrix[:, anchor_arr], axis=1)
+    nearest_dist = distance_matrix[np.arange(distance_matrix.shape[0]), anchor_arr[nearest_pos]]
+    return nearest_pos, nearest_dist
+
+
+def _score_fill_order(anchors: Sequence[int], distance_matrix: np.ndarray, rho: np.ndarray, gamma: float) -> list[int]:
+    if not anchors:
+        return []
+    _, nearest_dist = _nearest_anchor_distances(anchors, distance_matrix)
+    return sorted(
+        range(distance_matrix.shape[0]),
+        key=lambda i: (
+            -(float(rho[i]) - float(gamma) * float(nearest_dist[i])),
+            -float(rho[i]),
+            float(nearest_dist[i]),
+            int(i),
+        ),
+    )
 
 
 def _render_old(
@@ -32,34 +58,38 @@ def _render_old(
     distance_matrix: np.ndarray,
     rho: np.ndarray,
     max_context_tokens: int,
+    max_context_nodes: int | None,
     evidence_per_anchor: int,
+    gamma: float,
 ) -> list[int]:
-    selected: list[int] = []
-    used_tokens = 0
+    anchor_list = list(dict.fromkeys(int(a) for a in anchors))
+    budget = _Budget(nodes, max_context_tokens, max_context_nodes, [])
     for anchor in anchors:
-        used_tokens = _append_with_budget(
-            selected, nodes, int(anchor), used_tokens, max_context_tokens, force=True
-        )
+        budget.add(int(anchor), force=True)
+    for anchor in anchor_list:
         nearest = np.argsort(distance_matrix[:, int(anchor)])
         candidate_window = nearest[: max(evidence_per_anchor * 4, evidence_per_anchor + 1)]
-        ranked = sorted(candidate_window, key=lambda i: (distance_matrix[int(i), int(anchor)], -rho[int(i)]))
+        ranked = sorted(
+            candidate_window,
+            key=lambda i: (float(distance_matrix[int(i), int(anchor)]), -float(rho[int(i)]), int(i)),
+        )
         for idx in ranked[: evidence_per_anchor + 1]:
-            used_tokens = _append_with_budget(selected, nodes, int(idx), used_tokens, max_context_tokens)
-    return selected
+            budget.add(int(idx))
+    for idx in _score_fill_order(anchor_list, distance_matrix, rho, gamma):
+        budget.add(int(idx))
+    return budget.selected
 
 
 def _render_anchor_only(
     nodes: Sequence[EvidenceNode],
     anchors: Sequence[int],
     max_context_tokens: int,
+    max_context_nodes: int | None,
 ) -> list[int]:
-    selected: list[int] = []
-    used_tokens = 0
+    budget = _Budget(nodes, max_context_tokens, max_context_nodes, [])
     for anchor in anchors:
-        used_tokens = _append_with_budget(
-            selected, nodes, int(anchor), used_tokens, max_context_tokens, force=True
-        )
-    return selected
+        budget.add(int(anchor), force=True)
+    return budget.selected
 
 
 def _render_nearest(
@@ -67,28 +97,53 @@ def _render_nearest(
     anchors: Sequence[int],
     distance_matrix: np.ndarray,
     max_context_tokens: int,
+    max_context_nodes: int | None,
     evidence_per_anchor: int,
+    rho: np.ndarray,
+    gamma: float,
 ) -> list[int]:
-    selected = _render_anchor_only(nodes, anchors, max_context_tokens)
-    used_tokens = sum(max(1, int(nodes[i].token_count)) for i in selected)
-    for anchor in anchors:
-        nearest = np.argsort(distance_matrix[:, int(anchor)])
+    anchor_list = list(dict.fromkeys(int(a) for a in anchors))
+    selected = _render_anchor_only(nodes, anchor_list, max_context_tokens, max_context_nodes)
+    budget = _Budget(
+        nodes,
+        max_context_tokens,
+        max_context_nodes,
+        selected,
+        sum(max(1, int(nodes[i].token_count)) for i in selected),
+    )
+    for anchor in anchor_list:
+        nearest = sorted(
+            range(len(nodes)),
+            key=lambda i: (float(distance_matrix[int(i), int(anchor)]), -float(rho[int(i)]), int(i)),
+        )
         for idx in nearest[: evidence_per_anchor + 1]:
-            used_tokens = _append_with_budget(selected, nodes, int(idx), used_tokens, max_context_tokens)
-    return selected
+            budget.add(int(idx))
+    for idx in _score_fill_order(anchor_list, distance_matrix, rho, gamma):
+        budget.add(int(idx))
+    return budget.selected
 
 
 def _render_global_top_rho(
     nodes: Sequence[EvidenceNode],
     anchors: Sequence[int],
+    distance_matrix: np.ndarray,
     rho: np.ndarray,
     max_context_tokens: int,
+    max_context_nodes: int | None,
+    gamma: float,
 ) -> list[int]:
-    selected = _render_anchor_only(nodes, anchors, max_context_tokens)
-    used_tokens = sum(max(1, int(nodes[i].token_count)) for i in selected)
-    for idx in np.argsort(-rho):
-        used_tokens = _append_with_budget(selected, nodes, int(idx), used_tokens, max_context_tokens)
-    return selected
+    anchor_list = list(dict.fromkeys(int(a) for a in anchors))
+    selected = _render_anchor_only(nodes, anchor_list, max_context_tokens, max_context_nodes)
+    budget = _Budget(
+        nodes,
+        max_context_tokens,
+        max_context_nodes,
+        selected,
+        sum(max(1, int(nodes[i].token_count)) for i in selected),
+    )
+    for idx in _score_fill_order(anchor_list, distance_matrix, rho, gamma):
+        budget.add(int(idx))
+    return budget.selected
 
 
 def _render_cell_top_rho(
@@ -97,36 +152,36 @@ def _render_cell_top_rho(
     distance_matrix: np.ndarray,
     rho: np.ndarray,
     max_context_tokens: int,
+    max_context_nodes: int | None,
     gamma: float,
 ) -> list[int]:
     anchor_list = list(dict.fromkeys(int(a) for a in anchors))
     if not anchor_list:
         return []
-    selected = _render_anchor_only(nodes, anchor_list, max_context_tokens)
-    used_tokens = sum(max(1, int(nodes[i].token_count)) for i in selected)
+    selected = _render_anchor_only(nodes, anchor_list, max_context_tokens, max_context_nodes)
+    budget = _Budget(
+        nodes,
+        max_context_tokens,
+        max_context_nodes,
+        selected,
+        sum(max(1, int(nodes[i].token_count)) for i in selected),
+    )
 
-    anchor_arr = np.asarray(anchor_list, dtype=np.int64)
-    nearest_pos = np.argmin(distance_matrix[:, anchor_arr], axis=1)
-    nearest_dist = distance_matrix[np.arange(len(nodes)), anchor_arr[nearest_pos]]
+    nearest_pos, nearest_dist = _nearest_anchor_distances(anchor_list, distance_matrix)
 
     for pos in range(len(anchor_list)):
         rows = np.where(nearest_pos == pos)[0]
         if rows.size == 0:
             continue
-        best = max((int(i) for i in rows.tolist()), key=lambda i: (float(rho[i]), -float(nearest_dist[i])))
-        used_tokens = _append_with_budget(selected, nodes, best, used_tokens, max_context_tokens)
+        best = max(
+            (int(i) for i in rows.tolist()),
+            key=lambda i: (float(rho[i]), -float(nearest_dist[i]), -int(i)),
+        )
+        budget.add(best)
 
-    ranked = sorted(
-        range(len(nodes)),
-        key=lambda i: (
-            -(float(rho[i]) - float(gamma) * float(nearest_dist[i])),
-            -float(rho[i]),
-            float(nearest_dist[i]),
-        ),
-    )
-    for idx in ranked:
-        used_tokens = _append_with_budget(selected, nodes, idx, used_tokens, max_context_tokens)
-    return selected
+    for idx in _score_fill_order(anchor_list, distance_matrix, rho, gamma):
+        budget.add(int(idx))
+    return budget.selected
 
 
 def render_context_indices(
@@ -135,21 +190,56 @@ def render_context_indices(
     distance_matrix: np.ndarray,
     rho: np.ndarray,
     max_context_tokens: int,
+    max_context_nodes: int | None = None,
     evidence_per_anchor: int = 2,
     *,
     renderer: str = "old",
     gamma: float = 0.0,
 ) -> list[int]:
     if renderer == "old":
-        return _render_old(nodes, anchors, distance_matrix, rho, max_context_tokens, evidence_per_anchor)
+        return _render_old(
+            nodes,
+            anchors,
+            distance_matrix,
+            rho,
+            max_context_tokens,
+            max_context_nodes,
+            evidence_per_anchor,
+            gamma,
+        )
     if renderer == "anchor_only":
-        return _render_anchor_only(nodes, anchors, max_context_tokens)
+        return _render_anchor_only(nodes, anchors, max_context_tokens, max_context_nodes)
     if renderer == "nearest":
-        return _render_nearest(nodes, anchors, distance_matrix, max_context_tokens, evidence_per_anchor)
+        return _render_nearest(
+            nodes,
+            anchors,
+            distance_matrix,
+            max_context_tokens,
+            max_context_nodes,
+            evidence_per_anchor,
+            rho,
+            gamma,
+        )
     if renderer == "cell_top_rho":
-        return _render_cell_top_rho(nodes, anchors, distance_matrix, rho, max_context_tokens, gamma)
+        return _render_cell_top_rho(
+            nodes,
+            anchors,
+            distance_matrix,
+            rho,
+            max_context_tokens,
+            max_context_nodes,
+            gamma,
+        )
     if renderer == "global_top_rho":
-        return _render_global_top_rho(nodes, anchors, rho, max_context_tokens)
+        return _render_global_top_rho(
+            nodes,
+            anchors,
+            distance_matrix,
+            rho,
+            max_context_tokens,
+            max_context_nodes,
+            gamma,
+        )
     raise ValueError(f"Unknown renderer: {renderer}")
 
 

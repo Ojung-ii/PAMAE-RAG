@@ -36,6 +36,10 @@ def _node_ids(nodes, idxs: Iterable[int]) -> tuple[str, ...]:
     return tuple(nodes[int(i)].node_id for i in idxs)
 
 
+def _context_tokens(nodes, idxs: Iterable[int]) -> int:
+    return int(sum(max(1, int(nodes[int(i)].token_count)) for i in idxs))
+
+
 def _cluster_sizes(anchor_indices: Iterable[int], distance_matrix: np.ndarray) -> list[int]:
     anchors = list(anchor_indices)
     if not anchors:
@@ -223,6 +227,7 @@ def _run_for_k(example: QueryExample, cfg: AppConfig, k: int, seed: int) -> Retr
         distance_matrix=distance_matrix,
         rho=rho,
         max_context_tokens=cfg.pamae.max_context_tokens,
+        max_context_nodes=cfg.pamae.max_context_nodes,
         evidence_per_anchor=cfg.pamae.evidence_per_anchor,
         renderer=renderer,
         gamma=cfg.pamae.renderer_gamma,
@@ -230,8 +235,15 @@ def _run_for_k(example: QueryExample, cfg: AppConfig, k: int, seed: int) -> Retr
 
     anchor_ids = _node_ids(nodes, anchors)
     context_node_ids = _node_ids(nodes, context_indices)
+    final_context_tokens = _context_tokens(nodes, context_indices)
     support_recall = recall(context_node_ids, example.gold_node_ids)
     support_hit = hit(context_node_ids, example.gold_node_ids)
+    max_context_nodes = cfg.pamae.max_context_nodes
+    node_budget_active = max_context_nodes is not None and max_context_nodes > 0
+    unique_anchor_count = len(list(dict.fromkeys(int(a) for a in anchors)))
+    node_budget_exceeded_by_anchors = bool(node_budget_active and unique_anchor_count > max_context_nodes)
+    node_budget_satisfied = bool(not node_budget_active or len(context_indices) <= max_context_nodes)
+    token_budget_satisfied = bool(final_context_tokens <= cfg.pamae.max_context_tokens)
 
     diagnostics = {
         "retrieval_variant": retrieval_variant,
@@ -255,6 +267,15 @@ def _run_for_k(example: QueryExample, cfg: AppConfig, k: int, seed: int) -> Retr
         "refinement_history": refined.history,
         "cluster_sizes": refined.cluster_sizes,
         "fallback_used": not exact_phase1,
+        "max_context_nodes": max_context_nodes,
+        "max_context_tokens": cfg.pamae.max_context_tokens,
+        "final_context_nodes": len(context_indices),
+        "final_context_tokens": final_context_tokens,
+        "node_budget_satisfied": node_budget_satisfied,
+        "token_budget_satisfied": token_budget_satisfied,
+        "node_budget_exceeded_by_anchors": node_budget_exceeded_by_anchors,
+        "context_budget_policy": "anchors_then_cell_top_rho_then_score_fill",
+        "max_context_nodes_less_than_k": bool(node_budget_active and max_context_nodes < k),
     }
 
     return RetrievalResult(

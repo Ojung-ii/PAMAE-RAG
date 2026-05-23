@@ -3,6 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
+import warnings
 
 import yaml
 
@@ -46,6 +47,8 @@ class PamaeConfig:
     token_weight: float = 0.03
     anchor_penalty: float = 0.0
     max_context_tokens: int = 1200
+    max_context_nodes: int | None = None
+    strict_context_budget: bool = False
     evidence_per_anchor: int = 2
 
 
@@ -129,6 +132,15 @@ def validate_config(cfg: AppConfig) -> None:
         raise ValueError("renderer_gamma must be nonnegative")
     if cfg.pamae.token_weight < 0 or cfg.pamae.anchor_penalty < 0:
         raise ValueError("objective penalties must be nonnegative")
+    if cfg.pamae.max_context_tokens < 1:
+        raise ValueError("max_context_tokens must be positive")
+    if cfg.pamae.max_context_nodes is not None and cfg.pamae.max_context_nodes < 0:
+        raise ValueError("max_context_nodes must be nonnegative or null")
+    if cfg.pamae.max_context_nodes and cfg.pamae.max_context_nodes < cfg.pamae.k:
+        msg = "pamae.max_context_nodes is smaller than pamae.k; anchors may exceed the node budget"
+        if cfg.pamae.strict_context_budget:
+            raise ValueError(msg)
+        warnings.warn(msg, stacklevel=2)
     if cfg.universe.max_nodes < 1:
         raise ValueError("universe.max_nodes must be positive")
     if not 0 < cfg.universe.min_relevance_mass <= 1:

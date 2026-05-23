@@ -1,0 +1,18 @@
+experiment:
+  name: 2wikimultihopqa_component_top_rho_compact
+  seed: 42
+  limit_queries: 100
+
+pamae:
+  retrieval_variant: top_rho
+  renderer: global_top_rho
+  relevance_mode: title_aware
+  k: 3
+  k_max: 4
+  num_samples: 5
+  sample_size_per_k: 16
+  sample_size_cap: 64
+  max_context_tokens: 512
+  max_context_nodes: 8
+  evidence_per_anchor: 1
+

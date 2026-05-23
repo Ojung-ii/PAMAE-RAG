@@ -38,6 +38,8 @@ def _augment_metrics(metrics_path: Path, *, dataset: str, variant: str, config_p
             "retrieval_variant": cfg.pamae.retrieval_variant,
             "k": cfg.pamae.k,
             "k_max": cfg.pamae.k_max,
+            "max_context_nodes": cfg.pamae.max_context_nodes,
+            "max_context_tokens": cfg.pamae.max_context_tokens,
         }
     )
     metrics_path.write_text(json.dumps(metrics, ensure_ascii=False, indent=2), encoding="utf-8")

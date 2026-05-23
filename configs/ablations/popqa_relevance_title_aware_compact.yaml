@@ -1,0 +1,15 @@
+experiment:
+  name: popqa_relevance_title_aware_compact
+  seed: 42
+  limit_queries: 100
+
+pamae:
+  retrieval_variant: sample_full_validation_refine_cell_renderer
+  renderer: cell_top_rho
+  relevance_mode: title_aware
+  k: 2
+  k_max: 2
+  max_context_tokens: 512
+  max_context_nodes: 8
+  evidence_per_anchor: 1
+
