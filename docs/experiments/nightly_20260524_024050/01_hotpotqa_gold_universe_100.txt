@@ -1,0 +1,15 @@
+{
+  "num_queries": 100,
+  "gold_total": 200,
+  "gold_in_nodes": 196,
+  "gold_universe_recall": 0.98,
+  "all_gold_covered_ratio": 0.96,
+  "examples_with_no_gold": 0,
+  "examples_missing_some_gold": 4,
+  "sample_missing_query_ids": [
+    "5abe953b5542993f32c2a170",
+    "5a790d8f554299029c4b5eec",
+    "5ae163b3554299422ee99678",
+    "5ab3b42c5542992ade7c6e4f"
+  ]
+}
