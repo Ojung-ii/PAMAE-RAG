@@ -16,3 +16,10 @@ eval:
 
 lint:
 	ruff check src tests scripts
+
+prepare-popqa:
+	python scripts/prepare_dataset.py \
+	  --dataset popqa \
+	  --qa data/raw/popqa/popqa.json \
+	  --corpus data/raw/popqa/popqa_corpus.json \
+	  --output data/processed/popqa/examples.jsonl
