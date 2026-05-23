@@ -1,0 +1,10 @@
+experiment:
+  name: popqa_renderer_nearest
+  seed: 42
+  limit_queries: 20
+
+pamae:
+  renderer: nearest
+  relevance_mode: current
+  retrieval_variant: sample_full_validation_refine
+

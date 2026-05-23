@@ -28,9 +28,13 @@ class DistanceConfig:
 
 @dataclass(frozen=True)
 class PamaeConfig:
+    retrieval_variant: str = "sample_full_validation_refine"
+    renderer: str = "old"
+    relevance_mode: str = "current"
     k: int = 3
     k_max: int = 4
     auto_k: bool = False
+    lambda_k: float = 0.0
     num_samples: int = 5
     sample_size_per_k: int = 12
     sample_size_cap: int = 48
@@ -38,6 +42,7 @@ class PamaeConfig:
     require_exact_sample_search: bool = True
     max_exact_combinations: int = 1_000_000
     refinement_iters: int = 1
+    renderer_gamma: float = 0.0
     token_weight: float = 0.03
     anchor_penalty: float = 0.0
     max_context_tokens: int = 1200
@@ -92,8 +97,26 @@ def load_config(path: str | Path) -> AppConfig:
 
 
 def validate_config(cfg: AppConfig) -> None:
+    retrieval_variants = {
+        "top_rho",
+        "sample_only",
+        "sample_full_validation",
+        "sample_full_validation_refine",
+        "sample_full_validation_refine_cell_renderer",
+        "adaptive_k",
+    }
+    renderers = {"old", "anchor_only", "nearest", "cell_top_rho", "global_top_rho"}
+    relevance_modes = {"current", "title_aware", "diagnostic_subject_title"}
+    if cfg.pamae.retrieval_variant not in retrieval_variants:
+        raise ValueError(f"pamae.retrieval_variant must be one of {sorted(retrieval_variants)}")
+    if cfg.pamae.renderer not in renderers:
+        raise ValueError(f"pamae.renderer must be one of {sorted(renderers)}")
+    if cfg.pamae.relevance_mode not in relevance_modes:
+        raise ValueError(f"pamae.relevance_mode must be one of {sorted(relevance_modes)}")
     if cfg.pamae.k < 1 or cfg.pamae.k_max < 1:
         raise ValueError("k and k_max must be positive")
+    if cfg.pamae.lambda_k < 0:
+        raise ValueError("lambda_k must be nonnegative")
     if cfg.pamae.num_samples < 1:
         raise ValueError("num_samples must be positive")
     if cfg.pamae.sample_size_per_k < 1 or cfg.pamae.sample_size_cap < 1:
@@ -102,6 +125,8 @@ def validate_config(cfg: AppConfig) -> None:
         raise ValueError("sample_uniform_mix must be in [0, 1]")
     if cfg.pamae.max_exact_combinations < 1:
         raise ValueError("max_exact_combinations must be positive")
+    if cfg.pamae.renderer_gamma < 0:
+        raise ValueError("renderer_gamma must be nonnegative")
     if cfg.pamae.token_weight < 0 or cfg.pamae.anchor_penalty < 0:
         raise ValueError("objective penalties must be nonnegative")
     if cfg.universe.max_nodes < 1:

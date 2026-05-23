@@ -1,0 +1,10 @@
+experiment:
+  name: popqa_relevance_diagnostic_subject_title
+  seed: 42
+  limit_queries: 20
+
+pamae:
+  relevance_mode: diagnostic_subject_title
+  renderer: old
+  retrieval_variant: sample_full_validation_refine
+

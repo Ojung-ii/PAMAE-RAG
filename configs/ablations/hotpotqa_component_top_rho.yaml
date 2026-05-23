@@ -1,0 +1,9 @@
+experiment:
+  name: hotpotqa_component_top_rho
+  seed: 42
+
+pamae:
+  retrieval_variant: top_rho
+  renderer: global_top_rho
+  relevance_mode: current
+

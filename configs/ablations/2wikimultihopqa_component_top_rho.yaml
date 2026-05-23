@@ -1,0 +1,12 @@
+experiment:
+  name: 2wikimultihopqa_component_top_rho
+  seed: 42
+
+universe:
+  max_nodes: 800
+
+pamae:
+  retrieval_variant: top_rho
+  renderer: global_top_rho
+  relevance_mode: current
+

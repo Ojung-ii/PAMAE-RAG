@@ -31,6 +31,7 @@ class QueryExample:
 @dataclass(frozen=True)
 class RetrievalResult:
     query_id: str
+    anchor_node_ids: tuple[str, ...]
     anchor_ids: tuple[str, ...]
     context_node_ids: tuple[str, ...]
     objective_before_refinement: float
@@ -39,11 +40,17 @@ class RetrievalResult:
     support_hit: float | None
     exact_phase1: bool
     diagnostics: dict[str, Any] = field(default_factory=dict)
+    latency_ms: float | None = None
 
     def to_json(self) -> dict[str, Any]:
+        anchor_node_ids = list(self.anchor_node_ids)
+        anchor_ids = list(self.anchor_ids)
+        if anchor_node_ids != anchor_ids:
+            raise ValueError("anchor_node_ids and anchor_ids must match")
         return {
             "query_id": self.query_id,
-            "anchor_ids": list(self.anchor_ids),
+            "anchor_node_ids": anchor_node_ids,
+            "anchor_ids": anchor_ids,
             "context_node_ids": list(self.context_node_ids),
             "objective_before_refinement": self.objective_before_refinement,
             "objective_after_refinement": self.objective_after_refinement,
@@ -51,4 +58,5 @@ class RetrievalResult:
             "support_hit": self.support_hit,
             "exact_phase1": self.exact_phase1,
             "diagnostics": self.diagnostics,
+            "latency_ms": self.latency_ms,
         }

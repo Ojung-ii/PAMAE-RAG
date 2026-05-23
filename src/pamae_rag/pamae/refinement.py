@@ -65,14 +65,11 @@ def refine_medoids_monotone(anchors: Sequence[int], candidate_indices: Sequence[
                 deduped.append(u)
         proposal = deduped[: len(current)]
         proposed_obj = anchor_objective(proposal, distance_matrix, rho, token_costs, token_weight, anchor_penalty)
-        if proposed_obj.total <= best_obj.total + 1e-12:
-            improved = proposed_obj.total < best_obj.total - 1e-12
+        if proposed_obj.total < best_obj.total - 1e-12:
             current = proposal
             best_obj = proposed_obj
             history.append(best_obj.total)
-            accepted_any = accepted_any or improved
-            if len(history) >= 2 and abs(history[-2] - history[-1]) <= 1e-12:
-                break
+            accepted_any = True
         else:
             history.append(best_obj.total)
             break

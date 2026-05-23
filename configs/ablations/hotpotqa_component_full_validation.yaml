@@ -1,0 +1,9 @@
+experiment:
+  name: hotpotqa_component_full_validation
+  seed: 42
+
+pamae:
+  retrieval_variant: sample_full_validation
+  renderer: old
+  relevance_mode: current
+

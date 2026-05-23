@@ -1,0 +1,14 @@
+experiment:
+  name: musique_component_full_validation
+  seed: 42
+
+universe:
+  max_nodes: 900
+
+pamae:
+  retrieval_variant: sample_full_validation
+  renderer: old
+  relevance_mode: current
+  k: 4
+  k_max: 4
+

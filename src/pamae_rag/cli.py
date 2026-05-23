@@ -26,8 +26,13 @@ def run_retrieval(config_path: str | Path, input_path: str | Path, output_path: 
     write_jsonl(output_path, rows)
 
 
-def evaluate(input_path: str | Path, prediction_path: str | Path, output_path: str | Path) -> None:
-    examples = read_jsonl(input_path)
+def evaluate(
+    input_path: str | Path,
+    prediction_path: str | Path,
+    output_path: str | Path,
+    limit: int | None = None,
+) -> None:
+    examples = read_jsonl(input_path, limit=limit)
     predictions = {}
     with Path(prediction_path).open("r", encoding="utf-8") as f:
         for line in f:
@@ -65,6 +70,7 @@ def build_parser() -> argparse.ArgumentParser:
     ev.add_argument("--input", required=True)
     ev.add_argument("--predictions", required=True)
     ev.add_argument("--output", required=True)
+    ev.add_argument("--limit", type=int, default=None)
 
     vd = sub.add_parser("validate-data", help="Validate examples.jsonl schema")
     vd.add_argument("--input", required=True)
@@ -78,7 +84,7 @@ def main(argv: list[str] | None = None) -> None:
     if args.command == "run":
         run_retrieval(args.config, args.input, args.output, args.limit)
     elif args.command == "eval":
-        evaluate(args.input, args.predictions, args.output)
+        evaluate(args.input, args.predictions, args.output, args.limit)
     elif args.command == "validate-data":
         validate_data(args.input, args.limit)
     else:

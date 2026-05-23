@@ -1,0 +1,7 @@
+experiment:
+  name: sensitivity_sample_24
+  seed: 42
+
+pamae:
+  sample_size_per_k: 24
+

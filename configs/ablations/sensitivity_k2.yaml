@@ -1,0 +1,8 @@
+experiment:
+  name: sensitivity_k2
+  seed: 42
+
+pamae:
+  k: 2
+  k_max: 4
+

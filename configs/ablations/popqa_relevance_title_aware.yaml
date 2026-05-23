@@ -1,0 +1,10 @@
+experiment:
+  name: popqa_relevance_title_aware
+  seed: 42
+  limit_queries: 20
+
+pamae:
+  relevance_mode: title_aware
+  renderer: old
+  retrieval_variant: sample_full_validation_refine
+

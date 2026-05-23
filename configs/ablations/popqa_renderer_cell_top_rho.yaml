@@ -1,0 +1,10 @@
+experiment:
+  name: popqa_renderer_cell_top_rho
+  seed: 42
+  limit_queries: 20
+
+pamae:
+  renderer: cell_top_rho
+  relevance_mode: current
+  retrieval_variant: sample_full_validation_refine_cell_renderer
+

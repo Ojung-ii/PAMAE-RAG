@@ -1,0 +1,7 @@
+experiment:
+  name: sensitivity_m3
+  seed: 42
+
+pamae:
+  num_samples: 3
+

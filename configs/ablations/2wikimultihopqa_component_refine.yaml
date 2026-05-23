@@ -1,0 +1,12 @@
+experiment:
+  name: 2wikimultihopqa_component_refine
+  seed: 42
+
+universe:
+  max_nodes: 800
+
+pamae:
+  retrieval_variant: sample_full_validation_refine
+  renderer: old
+  relevance_mode: current
+

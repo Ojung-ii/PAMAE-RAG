@@ -1,0 +1,14 @@
+experiment:
+  name: musique_component_top_rho
+  seed: 42
+
+universe:
+  max_nodes: 900
+
+pamae:
+  retrieval_variant: top_rho
+  renderer: global_top_rho
+  relevance_mode: current
+  k: 4
+  k_max: 4
+
