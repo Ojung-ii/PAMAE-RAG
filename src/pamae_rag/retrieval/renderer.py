@@ -21,11 +21,10 @@ class _Budget:
         if idx in self.selected:
             return
         tok = max(1, int(self.nodes[idx].token_count))
-        if not force:
-            if self.max_context_nodes and len(self.selected) >= self.max_context_nodes:
-                return
-            if self.used_tokens + tok > self.max_context_tokens:
-                return
+        if self.used_tokens + tok > self.max_context_tokens:
+            return
+        if not force and self.max_context_nodes and len(self.selected) >= self.max_context_nodes:
+            return
         self.selected.append(idx)
         self.used_tokens += tok
 
