@@ -9,6 +9,7 @@ from pamae_rag.config import AppConfig
 from pamae_rag.data.schema import QueryExample, RetrievalResult
 from pamae_rag.eval.support_recall import hit, recall
 from pamae_rag.graph.distances import build_distance_matrix, validate_square_distance_matrix
+from pamae_rag.graph.graph_distance import build_graph_aware_distance_matrix
 from pamae_rag.graph.universe import select_universe_by_mass
 from pamae_rag.objective.anchor_objective import ObjectiveBreakdown, anchor_objective, assign_to_anchors
 from pamae_rag.objective.relevance_mass import relevance_diagnostics, relevance_mass
@@ -111,7 +112,19 @@ def _run_for_k(example: QueryExample, cfg: AppConfig, k: int, seed: int) -> Retr
         raise ValueError(f"Example {example.query_id!r} has empty universe")
 
     embeddings = np.vstack([node.embedding for node in nodes])
-    distance_matrix = build_distance_matrix(embeddings, metric=cfg.distance.metric)
+    semantic_distance_matrix = build_distance_matrix(embeddings, metric=cfg.distance.metric)
+    graph_result = build_graph_aware_distance_matrix(
+        nodes,
+        example.query,
+        semantic_distance_matrix,
+        distance_mode=cfg.pamae.distance_mode,
+        distance_weights={
+            "semantic": cfg.pamae.distance_weights.semantic,
+            "graph": cfg.pamae.distance_weights.graph,
+        },
+        graph_config=cfg.pamae.graph,
+    )
+    distance_matrix = graph_result.distance_matrix
     validate_square_distance_matrix(distance_matrix)
 
     rho = relevance_mass(
@@ -258,6 +271,7 @@ def _run_for_k(example: QueryExample, cfg: AppConfig, k: int, seed: int) -> Retr
         "renderer": renderer,
         "relevance_mode": cfg.pamae.relevance_mode,
         "relevance_weights": dict(cfg.pamae.relevance_weights),
+        **graph_result.diagnostics,
         "semantic_component_available": rho_diagnostics["semantic_component_available"],
         "query_title_spans": rho_diagnostics["query_title_spans"],
         "top_relevance_node_ids": rho_diagnostics["top_relevance_node_ids"],

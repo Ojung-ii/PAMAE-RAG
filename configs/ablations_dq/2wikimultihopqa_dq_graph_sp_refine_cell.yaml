@@ -1,0 +1,29 @@
+experiment:
+  name: 2wikimultihopqa_dq_graph_sp_refine_cell
+  seed: 42
+  limit_queries: 100
+
+pamae:
+  retrieval_variant: sample_full_validation_refine_cell_renderer
+  renderer: cell_top_rho
+  relevance_mode: title_aware
+  distance_mode: graph_sp
+  distance_weights:
+    semantic: 0.0
+    graph: 1.0
+  graph:
+    enabled: true
+    disconnected_distance: 2.0
+    max_edges_per_node: 32
+    edge_lengths:
+      same_canonical_title: 0.25
+      title_mention: 0.50
+      shared_query_span: 0.75
+  k: 3
+  k_max: 4
+  num_samples: 5
+  sample_size_per_k: 16
+  sample_size_cap: 64
+  max_context_tokens: 512
+  max_context_nodes: 8
+  evidence_per_anchor: 1
