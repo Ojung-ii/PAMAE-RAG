@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import json
 import math
+import re
+import unicodedata
 from collections import defaultdict
 from pathlib import Path
 from typing import Any
@@ -28,6 +30,12 @@ def _safe_text(value: Any) -> str:
     if value is None:
         return ""
     return str(value)
+
+
+def normalize_title(title: Any) -> str:
+    text = unicodedata.normalize("NFKD", _safe_text(title)).encode("ascii", "ignore").decode("ascii")
+    text = re.sub(r"[^a-z0-9]+", " ", text.lower())
+    return " ".join(text.split())
 
 
 def _token_count(text: str) -> int:
@@ -75,25 +83,142 @@ def _possible_answers_from_example(example: dict[str, Any]) -> list[str]:
     return deduped
 
 
-def _support_paragraphs(example: dict[str, Any]) -> list[dict[str, str]]:
-    """Extract supporting paragraphs from common QA formats.
+def _context_paragraphs(example: dict[str, Any]) -> dict[str, dict[str, Any]]:
+    out: dict[str, dict[str, Any]] = {}
+    context = example.get("context") or []
+    if isinstance(context, list):
+        for item in context:
+            title = ""
+            sentences: list[str] = []
+            if isinstance(item, (list, tuple)) and len(item) >= 2:
+                title = _safe_text(item[0])
+                raw_sentences = item[1]
+                if isinstance(raw_sentences, list):
+                    sentences = [_safe_text(x) for x in raw_sentences]
+                else:
+                    sentences = [_safe_text(raw_sentences)]
+            elif isinstance(item, dict):
+                title = _safe_text(item.get("title"))
+                raw_sentences = item.get("sentences", item.get("text", item.get("content", "")))
+                if isinstance(raw_sentences, list):
+                    sentences = [_safe_text(x) for x in raw_sentences]
+                else:
+                    sentences = [_safe_text(raw_sentences)]
+            if title:
+                out[normalize_title(title)] = {
+                    "title": title,
+                    "text": " ".join(s for s in sentences if s).strip(),
+                    "sentences": sentences,
+                }
+    return out
 
-    Supported directly:
-    - PopQA-style: example["paragraphs"] = [{title,text,is_supporting}, ...]
-    - Hotpot-style local contexts can be pre-normalized into the same form.
 
-    If no explicit support flag exists, this function returns an empty list. The
-    converter still works but retrieval recall cannot be computed reliably.
-    """
-    supports: list[dict[str, str]] = []
+def _support_titles_and_sentences(example: dict[str, Any]) -> list[dict[str, Any]]:
+    supports: list[dict[str, Any]] = []
+    for key in ("supporting_facts", "support_facts"):
+        raw = example.get(key)
+        if isinstance(raw, list):
+            for item in raw:
+                if isinstance(item, (list, tuple)) and item:
+                    supports.append(
+                        {
+                            "title": _safe_text(item[0]),
+                            "sentence_id": item[1] if len(item) > 1 else None,
+                            "source": key,
+                        }
+                    )
+                elif isinstance(item, dict):
+                    title = item.get("title", item.get("wiki_title", item.get("page")))
+                    if title is not None:
+                        supports.append(
+                            {
+                                "title": _safe_text(title),
+                                "sentence_id": item.get("sent_id", item.get("sentence_id")),
+                                "source": key,
+                            }
+                        )
+    raw_titles = example.get("supporting_facts_titles")
+    if isinstance(raw_titles, list):
+        for title in raw_titles:
+            supports.append({"title": _safe_text(title), "sentence_id": None, "source": "supporting_facts_titles"})
+    return [s for s in supports if s["title"]]
+
+
+def _paragraph_supports(example: dict[str, Any]) -> list[dict[str, Any]]:
+    supports: list[dict[str, Any]] = []
     paragraphs = example.get("paragraphs") or []
     if isinstance(paragraphs, list):
         for p in paragraphs:
             if not isinstance(p, dict):
                 continue
             if bool(p.get("is_supporting", False)):
-                supports.append({"title": _safe_text(p.get("title")), "text": _safe_text(p.get("text"))})
-    return supports
+                supports.append(
+                    {
+                        "title": _safe_text(p.get("title")),
+                        "text": _safe_text(p.get("text")),
+                        "sentence_id": p.get("sent_id", p.get("sentence_id")),
+                        "source": "paragraphs",
+                    }
+                )
+    return [s for s in supports if s["title"] or s.get("text")]
+
+
+def _support_paragraphs(example: dict[str, Any]) -> list[dict[str, Any]]:
+    """Extract supporting paragraphs from common QA formats.
+
+    Supported directly:
+    - PopQA-style: example["paragraphs"] = [{title,text,is_supporting}, ...]
+    - Hotpot/2Wiki-style: supporting_facts = [[title, sent_id], ...]
+      with context = [[title, [sentences...]], ...]
+
+    If no explicit support flag exists, this function returns an empty list. The
+    converter still works but retrieval recall cannot be computed reliably.
+    """
+    supports = _paragraph_supports(example)
+    context_by_title = _context_paragraphs(example)
+    for item in _support_titles_and_sentences(example):
+        norm = normalize_title(item["title"])
+        ctx = context_by_title.get(norm, {})
+        supports.append(
+            {
+                "title": item["title"],
+                "text": _safe_text(ctx.get("text")),
+                "sentence_id": item.get("sentence_id"),
+                "source": item.get("source"),
+            }
+        )
+    deduped: list[dict[str, Any]] = []
+    seen: set[tuple[str, str, str]] = set()
+    for item in supports:
+        key = (normalize_title(item.get("title")), _safe_text(item.get("text")), _safe_text(item.get("sentence_id")))
+        if key not in seen:
+            seen.add(key)
+            deduped.append(item)
+    return deduped
+
+
+def _support_like_snippets(example: dict[str, Any]) -> dict[str, str]:
+    out = {}
+    for key, value in example.items():
+        low = key.lower()
+        if any(token in low for token in ("support", "evidence", "context", "paragraph")):
+            out[key] = repr(value)[:1200]
+    return out
+
+
+def _write_schema_debug(dataset_name: str, qa: list[Any], debug_dir: str | Path | None) -> None:
+    if debug_dir is None:
+        return
+    path = Path(debug_dir) / f"debug_schema_{dataset_name}.txt"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    lines = [f"dataset={dataset_name}", "No support-like fields were extracted from the first processed examples."]
+    for i, ex in enumerate(qa[:2]):
+        if not isinstance(ex, dict):
+            lines.append(f"example {i}: non-object {type(ex).__name__}")
+            continue
+        lines.append(f"example {i} keys: {sorted(ex.keys())}")
+        lines.append(f"example {i} support-like snippets: {_support_like_snippets(ex)}")
+    path.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
 def _qid(example: dict[str, Any], index: int) -> str:
@@ -147,6 +272,7 @@ def prepare_raw_qa_corpus_dataset(
     embedding_dim: int = 128,
     max_features: int = 50000,
     limit: int | None = None,
+    debug_dir: str | Path | None = None,
 ) -> dict[str, Any]:
     """Convert raw QA+corpus JSON files into PAMAE-RAG examples.jsonl.
 
@@ -185,7 +311,7 @@ def prepare_raw_qa_corpus_dataset(
     title_index: dict[str, list[int]] = defaultdict(list)
     for i, (title, text) in enumerate(zip(corpus_titles, corpus_texts, strict=True)):
         exact_index.setdefault((title, text), i)
-        title_index[title].append(i)
+        title_index[normalize_title(title)].append(i)
 
     output_path = Path(output_path)
     output_path.parent.mkdir(parents=True, exist_ok=True)
@@ -210,23 +336,29 @@ def prepare_raw_qa_corpus_dataset(
                 candidate_idxs = candidate_idxs[np.argsort(-sims[candidate_idxs])]
 
             gold_idxs: list[int] = []
+            support_metadata: list[dict[str, Any]] = []
             for p in _support_paragraphs(example):
                 total_gold += 1
-                key = (p["title"], p["text"])
+                title = _safe_text(p.get("title"))
+                text = _safe_text(p.get("text"))
+                sentence_id = p.get("sentence_id")
+                support_metadata.append(
+                    {
+                        "title": title,
+                        "sentence_id": sentence_id,
+                        "source": p.get("source"),
+                    }
+                )
+                key = (title, text)
+                norm_title = normalize_title(title)
                 if key in exact_index:
                     gold_idxs.append(exact_index[key])
-                elif p["title"] in title_index:
-                    gold_idxs.append(title_index[p["title"]][0])
+                elif norm_title in title_index:
+                    gold_idxs.append(title_index[norm_title][0])
                 else:
                     missing_gold += 1
 
-            merged = list(dict.fromkeys([int(x) for x in candidate_idxs] + gold_idxs))
-            # Keep max_nodes_per_query soft: gold nodes are never dropped.
-            if len(merged) > max_nodes_per_query:
-                gold_set = set(gold_idxs)
-                gold_first = [i for i in merged if i in gold_set]
-                nongold = [i for i in merged if i not in gold_set]
-                merged = gold_first + nongold[: max(0, max_nodes_per_query - len(gold_first))]
+            merged = list(dict.fromkeys(int(x) for x in candidate_idxs))
 
             nodes = []
             for ci in merged:
@@ -259,10 +391,14 @@ def prepare_raw_qa_corpus_dataset(
                     "possible_answers": _possible_answers_from_example(example),
                     "raw_id": qid,
                     "num_gold_nodes": len(gold_node_ids),
+                    "support_facts": support_metadata,
                 },
             }
             f.write(json.dumps(row, ensure_ascii=False) + "\n")
             written += 1
+
+    if total_gold == 0:
+        _write_schema_debug(dataset_name, qa, debug_dir)
 
     return {
         "dataset": dataset_name,

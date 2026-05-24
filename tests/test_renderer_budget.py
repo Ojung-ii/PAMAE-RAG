@@ -64,3 +64,31 @@ def test_renderer_respects_max_context_tokens():
     assert selected == [0, 1]
     assert sum(nodes[i].token_count for i in selected) <= 2
 
+
+def test_renderer_does_not_force_anchors_over_token_budget():
+    nodes = (
+        _node("a0", tokens=2),
+        _node("a1", tokens=2),
+        _node("cheap", tokens=1),
+    )
+    distance_matrix = np.array(
+        [
+            [0.0, 1.0, 0.2],
+            [1.0, 0.0, 0.1],
+            [0.2, 0.1, 0.0],
+        ]
+    )
+    rho = np.array([0.5, 0.4, 0.9])
+
+    selected = render_context_indices(
+        nodes,
+        anchors=[0, 1],
+        distance_matrix=distance_matrix,
+        rho=rho,
+        max_context_tokens=2,
+        max_context_nodes=1,
+        renderer="anchor_only",
+    )
+
+    assert selected == [0]
+    assert sum(nodes[i].token_count for i in selected) <= 2

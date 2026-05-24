@@ -1,0 +1,21 @@
+{
+  "num_queries": 100,
+  "gold_total": 246,
+  "gold_in_nodes": 215,
+  "gold_universe_recall": 0.8739837398373984,
+  "all_gold_covered_ratio": 0.71,
+  "examples_with_no_gold": 0,
+  "examples_missing_some_gold": 29,
+  "sample_missing_query_ids": [
+    "a1cdb240085811ebbd5bac1f6bf848b6",
+    "6718770a087311ebbd66ac1f6bf848b6",
+    "33f51d7e0bde11eba7f7acde48001122",
+    "f5e3b9ca0bdb11eba7f7acde48001122",
+    "bab3b6d00bda11eba7f7acde48001122",
+    "7cb81afc0bd911eba7f7acde48001122",
+    "f34d188608cb11ebbd93ac1f6bf848b6",
+    "0dfe41f60bdc11eba7f7acde48001122",
+    "3ce92df80bde11eba7f7acde48001122",
+    "02b62fce087211ebbd64ac1f6bf848b6"
+  ]
+}

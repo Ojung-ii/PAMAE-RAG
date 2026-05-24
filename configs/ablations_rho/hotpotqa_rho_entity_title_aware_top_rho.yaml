@@ -1,0 +1,22 @@
+experiment:
+  name: hotpotqa_rho_entity_title_aware_top_rho
+  seed: 42
+  limit_queries: 100
+
+pamae:
+  retrieval_variant: top_rho
+  renderer: global_top_rho
+  relevance_mode: entity_title_aware
+  relevance_weights:
+    lexical: 0.35
+    title: 0.25
+    entity_title: 0.40
+    semantic: 0.0
+  k: 3
+  k_max: 4
+  num_samples: 5
+  sample_size_per_k: 16
+  sample_size_cap: 64
+  max_context_tokens: 512
+  max_context_nodes: 8
+  evidence_per_anchor: 1

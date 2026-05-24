@@ -28,10 +28,35 @@ class DistanceConfig:
 
 
 @dataclass(frozen=True)
+class DistanceWeightsConfig:
+    semantic: float = 0.7
+    graph: float = 0.3
+
+
+@dataclass(frozen=True)
+class GraphEdgeLengthsConfig:
+    same_canonical_title: float = 0.25
+    title_mention: float = 0.50
+    shared_query_span: float = 0.75
+
+
+@dataclass(frozen=True)
+class GraphConfig:
+    enabled: bool = False
+    disconnected_distance: float = 2.0
+    max_edges_per_node: int = 32
+    edge_lengths: GraphEdgeLengthsConfig = field(default_factory=GraphEdgeLengthsConfig)
+
+
+@dataclass(frozen=True)
 class PamaeConfig:
     retrieval_variant: str = "sample_full_validation_refine"
     renderer: str = "old"
     relevance_mode: str = "current"
+    relevance_weights: dict[str, float] = field(default_factory=dict)
+    distance_mode: str = "semantic"
+    distance_weights: DistanceWeightsConfig = field(default_factory=DistanceWeightsConfig)
+    graph: GraphConfig = field(default_factory=GraphConfig)
     k: int = 3
     k_max: int = 4
     auto_k: bool = False
@@ -81,6 +106,15 @@ def _make(cls, values: dict[str, Any]):
     if cls is UniverseConfig and "anchor_node_types" in values:
         values = dict(values)
         values["anchor_node_types"] = tuple(values["anchor_node_types"])
+    if cls is PamaeConfig:
+        values = dict(values)
+        if "distance_weights" in values and isinstance(values["distance_weights"], dict):
+            values["distance_weights"] = _make(DistanceWeightsConfig, values["distance_weights"])
+        if "graph" in values and isinstance(values["graph"], dict):
+            graph_values = dict(values["graph"])
+            if "edge_lengths" in graph_values and isinstance(graph_values["edge_lengths"], dict):
+                graph_values["edge_lengths"] = _make(GraphEdgeLengthsConfig, graph_values["edge_lengths"])
+            values["graph"] = _make(GraphConfig, graph_values)
     return cls(**values)
 
 
@@ -109,13 +143,38 @@ def validate_config(cfg: AppConfig) -> None:
         "adaptive_k",
     }
     renderers = {"old", "anchor_only", "nearest", "cell_top_rho", "global_top_rho"}
-    relevance_modes = {"current", "title_aware", "diagnostic_subject_title"}
+    relevance_modes = {
+        "current",
+        "title_aware",
+        "entity_title_aware",
+        "hybrid_title_semantic",
+        "diagnostic_subject_title",
+    }
     if cfg.pamae.retrieval_variant not in retrieval_variants:
         raise ValueError(f"pamae.retrieval_variant must be one of {sorted(retrieval_variants)}")
     if cfg.pamae.renderer not in renderers:
         raise ValueError(f"pamae.renderer must be one of {sorted(renderers)}")
     if cfg.pamae.relevance_mode not in relevance_modes:
         raise ValueError(f"pamae.relevance_mode must be one of {sorted(relevance_modes)}")
+    distance_modes = {"semantic", "graph_sp", "hybrid_sem_graph"}
+    if cfg.pamae.distance_mode not in distance_modes:
+        raise ValueError(f"pamae.distance_mode must be one of {sorted(distance_modes)}")
+    if cfg.pamae.distance_weights.semantic < 0 or cfg.pamae.distance_weights.graph < 0:
+        raise ValueError("pamae.distance_weights values must be nonnegative")
+    if cfg.pamae.graph.disconnected_distance < 0:
+        raise ValueError("pamae.graph.disconnected_distance must be nonnegative")
+    if cfg.pamae.graph.max_edges_per_node < 0:
+        raise ValueError("pamae.graph.max_edges_per_node must be nonnegative")
+    for key, value in cfg.pamae.graph.edge_lengths.__dict__.items():
+        if float(value) < 0:
+            raise ValueError(f"pamae.graph.edge_lengths.{key} must be nonnegative")
+    allowed_relevance_weights = {"lexical", "title", "entity_title", "semantic"}
+    unknown_weights = sorted(set(cfg.pamae.relevance_weights) - allowed_relevance_weights)
+    if unknown_weights:
+        raise ValueError(f"pamae.relevance_weights has unknown keys: {unknown_weights}")
+    for key, value in cfg.pamae.relevance_weights.items():
+        if float(value) < 0:
+            raise ValueError(f"pamae.relevance_weights.{key} must be nonnegative")
     if cfg.pamae.k < 1 or cfg.pamae.k_max < 1:
         raise ValueError("k and k_max must be positive")
     if cfg.pamae.lambda_k < 0:
