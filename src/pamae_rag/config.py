@@ -32,6 +32,7 @@ class PamaeConfig:
     retrieval_variant: str = "sample_full_validation_refine"
     renderer: str = "old"
     relevance_mode: str = "current"
+    relevance_weights: dict[str, float] = field(default_factory=dict)
     k: int = 3
     k_max: int = 4
     auto_k: bool = False
@@ -109,13 +110,26 @@ def validate_config(cfg: AppConfig) -> None:
         "adaptive_k",
     }
     renderers = {"old", "anchor_only", "nearest", "cell_top_rho", "global_top_rho"}
-    relevance_modes = {"current", "title_aware", "diagnostic_subject_title"}
+    relevance_modes = {
+        "current",
+        "title_aware",
+        "entity_title_aware",
+        "hybrid_title_semantic",
+        "diagnostic_subject_title",
+    }
     if cfg.pamae.retrieval_variant not in retrieval_variants:
         raise ValueError(f"pamae.retrieval_variant must be one of {sorted(retrieval_variants)}")
     if cfg.pamae.renderer not in renderers:
         raise ValueError(f"pamae.renderer must be one of {sorted(renderers)}")
     if cfg.pamae.relevance_mode not in relevance_modes:
         raise ValueError(f"pamae.relevance_mode must be one of {sorted(relevance_modes)}")
+    allowed_relevance_weights = {"lexical", "title", "entity_title", "semantic"}
+    unknown_weights = sorted(set(cfg.pamae.relevance_weights) - allowed_relevance_weights)
+    if unknown_weights:
+        raise ValueError(f"pamae.relevance_weights has unknown keys: {unknown_weights}")
+    for key, value in cfg.pamae.relevance_weights.items():
+        if float(value) < 0:
+            raise ValueError(f"pamae.relevance_weights.{key} must be nonnegative")
     if cfg.pamae.k < 1 or cfg.pamae.k_max < 1:
         raise ValueError("k and k_max must be positive")
     if cfg.pamae.lambda_k < 0:
