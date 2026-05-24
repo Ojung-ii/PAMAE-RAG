@@ -1,0 +1,31 @@
+{
+  "diagnostics": {},
+  "examples_with_gold_outside_top50": 32,
+  "examples_with_no_gold": 0,
+  "gold_rank_mean": 27.494897959183675,
+  "gold_rank_median": 2.0,
+  "gold_top10_rate": 0.66,
+  "gold_top1_rate": 0.365,
+  "gold_top20_rate": 0.71,
+  "gold_top3_rate": 0.53,
+  "gold_top50_rate": 0.83,
+  "gold_top5_rate": 0.59,
+  "gold_total": 200,
+  "mean_gold_relevance": 0.43161160678674915,
+  "mean_non_gold_relevance": 0.12073532453234523,
+  "num_queries": 100,
+  "relevance_label_auc": 0.9365708593650826,
+  "relevance_label_spearman": 0.08631450684732535,
+  "sample_gold_outside_top50_query_ids": [
+    "5abe953b5542993f32c2a170",
+    "5ab69f9a554299710c8d1ef8",
+    "5abc030e554299642a094bdc",
+    "5ab57fc4554299488d4d99c0",
+    "5ade9c9c5542997c77adee8c",
+    "5a7a3a945542996a35c17147",
+    "5a8f5b6f554299458435d5e7",
+    "5ae40d405542996836b02c28",
+    "5ab8829d55429934fafe6e08",
+    "5adecc7755429975fa854f9d"
+  ]
+}

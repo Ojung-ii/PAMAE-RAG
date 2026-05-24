@@ -1,0 +1,35 @@
+# Relevance Alignment Diagnostic
+
+| metric | value |
+| --- | ---: |
+| input | data/processed/2wikimultihopqa/examples_100.jsonl |
+| relevance_mode | hybrid_title_semantic |
+| num_queries | 100 |
+| gold_total | 246 |
+| gold_rank_mean | 67.22325581395349 |
+| gold_rank_median | 2 |
+| gold_top1_rate | 0.3861788617886179 |
+| gold_top3_rate | 0.6260162601626016 |
+| gold_top5_rate | 0.6382113821138211 |
+| gold_top10_rate | 0.6382113821138211 |
+| gold_top20_rate | 0.6544715447154471 |
+| gold_top50_rate | 0.6747967479674797 |
+| examples_with_no_gold | 0 |
+| examples_with_gold_outside_top50 | 61 |
+| mean_gold_relevance | 0.40532714365158207 |
+| mean_non_gold_relevance | 0.1374921019864969 |
+| relevance_label_auc | 0.8910399474084462 |
+| relevance_label_spearman | 0.08097436560918517 |
+
+## Sample Queries Outside Top 50
+
+- `83bf3b5a0bd911eba7f7acde48001122`
+- `2dc690ba0bdc11eba7f7acde48001122`
+- `a1cdb240085811ebbd5bac1f6bf848b6`
+- `6718770a087311ebbd66ac1f6bf848b6`
+- `551e024408a611ebbd7fac1f6bf848b6`
+- `33f51d7e0bde11eba7f7acde48001122`
+- `914b452c0bdc11eba7f7acde48001122`
+- `006d81bc0bde11eba7f7acde48001122`
+- `f5e3b9ca0bdb11eba7f7acde48001122`
+- `bab3b6d00bda11eba7f7acde48001122`
