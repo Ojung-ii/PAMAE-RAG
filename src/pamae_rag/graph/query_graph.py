@@ -3,7 +3,9 @@ from __future__ import annotations
 from collections import Counter, defaultdict
 from dataclasses import dataclass
 import re
-from typing import Iterable
+from typing import Any, Iterable
+
+import numpy as np
 
 from pamae_rag.data.schema import EvidenceNode
 
@@ -55,6 +57,7 @@ class QueryGraph:
     num_nodes: int
     edges: tuple[QueryGraphEdge, ...]
     edge_counts_by_type: dict[str, int]
+    backbone_missing_embedding_count: int = 0
 
     @property
     def num_edges(self) -> int:
@@ -162,6 +165,86 @@ def _candidate_edges(
     return sorted(edges.values(), key=lambda e: (e.source, e.target, e.length, e.edge_type))
 
 
+def _as_plain_dict(value: Any) -> dict[str, Any]:
+    if value is None:
+        return {}
+    if isinstance(value, dict):
+        return dict(value)
+    if hasattr(value, "__dict__"):
+        return dict(value.__dict__)
+    raise TypeError(f"Expected mapping-like config, got {type(value).__name__}")
+
+
+def _valid_embedding(node: EvidenceNode) -> bool:
+    try:
+        embedding = np.asarray(node.embedding, dtype=np.float64)
+    except (TypeError, ValueError):
+        return False
+    return embedding.ndim == 1 and embedding.size > 0 and bool(np.all(np.isfinite(embedding)))
+
+
+def _knn_sets(semantic_distance_matrix: np.ndarray, valid: list[int], k: int) -> dict[int, set[int]]:
+    valid_set = set(valid)
+    out: dict[int, set[int]] = {}
+    for idx in valid:
+        row = np.asarray(semantic_distance_matrix[idx], dtype=np.float64)
+        candidates = [
+            (float(row[j]), int(j))
+            for j in valid
+            if j != idx and j in valid_set and np.isfinite(row[j]) and float(row[j]) >= 0
+        ]
+        candidates.sort(key=lambda item: (item[0], item[1]))
+        out[idx] = {j for _, j in candidates[:k]}
+    return out
+
+
+def _backbone_edges(
+    nodes: tuple[EvidenceNode, ...] | list[EvidenceNode],
+    semantic_distance_matrix: np.ndarray | None,
+    backbone_config: Any | None,
+) -> tuple[list[QueryGraphEdge], int]:
+    cfg = _as_plain_dict(backbone_config)
+    enabled = bool(cfg.get("enabled", False))
+    mode = str(cfg.get("mode", "none"))
+    if not enabled or mode == "none":
+        return [], 0
+    if mode not in {"knn", "mutual_knn"}:
+        raise ValueError(f"Unsupported graph backbone mode: {mode}")
+    if str(cfg.get("length_mode", "semantic_distance")) != "semantic_distance":
+        raise ValueError("Only semantic_distance graph backbone length_mode is supported")
+    if semantic_distance_matrix is None:
+        return [], len(nodes)
+
+    matrix = np.asarray(semantic_distance_matrix, dtype=np.float64)
+    if matrix.shape != (len(nodes), len(nodes)):
+        raise ValueError("semantic_distance_matrix must match graph node count")
+    valid = [idx for idx, node in enumerate(nodes) if _valid_embedding(node)]
+    missing = len(nodes) - len(valid)
+    if len(valid) < 2:
+        return [], missing
+
+    k = max(1, int(cfg.get("k", 4)))
+    edge_type = "semantic_knn" if mode == "knn" else "mutual_semantic_knn"
+    knn = _knn_sets(matrix, valid, k)
+    edges: dict[tuple[int, int], QueryGraphEdge] = {}
+    for i in sorted(knn):
+        for j in sorted(knn[i]):
+            if mode == "mutual_knn" and i not in knn.get(j, set()):
+                continue
+            a, b = sorted((i, j))
+            if a == b:
+                continue
+            length = max(0.0, float(matrix[a, b]))
+            key = (a, b)
+            prev = edges.get(key)
+            if prev is None or length < prev.length:
+                edges[key] = QueryGraphEdge(a, b, length, edge_type)
+
+    cap = int(cfg.get("max_edges_per_node", 32))
+    capped = _cap_edges(edges.values(), cap)
+    return list(capped), missing
+
+
 def _cap_edges(edges: Iterable[QueryGraphEdge], max_edges_per_node: int) -> tuple[QueryGraphEdge, ...]:
     if max_edges_per_node <= 0:
         return tuple()
@@ -183,18 +266,31 @@ def build_minimal_query_graph(
     *,
     edge_lengths: dict[str, float],
     max_edges_per_node: int,
+    semantic_distance_matrix: np.ndarray | None = None,
+    backbone_config: Any | None = None,
 ) -> QueryGraph:
-    required = {"same_canonical_title", "title_mention", "shared_query_span"}
+    symbolic_types = {"same_canonical_title", "title_mention", "shared_query_span"}
+    backbone_types = {"semantic_knn", "mutual_semantic_knn"}
+    required = symbolic_types
     missing = required - set(edge_lengths)
     if missing:
         raise ValueError(f"Missing graph edge lengths: {sorted(missing)}")
     for key in required:
         if float(edge_lengths[key]) < 0:
             raise ValueError(f"Graph edge length must be nonnegative: {key}")
-    edges = _cap_edges(_candidate_edges(nodes, query, edge_lengths), max_edges_per_node)
+    symbolic_edges = _candidate_edges(nodes, query, edge_lengths)
+    backbone_edges, missing_embeddings = _backbone_edges(nodes, semantic_distance_matrix, backbone_config)
+    by_pair: dict[tuple[int, int], QueryGraphEdge] = {}
+    for edge in [*symbolic_edges, *backbone_edges]:
+        key = (edge.source, edge.target)
+        prev = by_pair.get(key)
+        if prev is None or (edge.length, edge.edge_type) < (prev.length, prev.edge_type):
+            by_pair[key] = edge
+    edges = _cap_edges(by_pair.values(), max_edges_per_node)
     counts = Counter(edge.edge_type for edge in edges)
     return QueryGraph(
         num_nodes=len(nodes),
         edges=edges,
-        edge_counts_by_type={key: int(counts.get(key, 0)) for key in sorted(required)},
+        edge_counts_by_type={key: int(counts.get(key, 0)) for key in sorted(symbolic_types | backbone_types)},
+        backbone_missing_embedding_count=missing_embeddings,
     )

@@ -6,6 +6,8 @@ import heapq
 from typing import Any
 
 import numpy as np
+from scipy.sparse import csr_matrix
+from scipy.sparse.csgraph import shortest_path
 
 from pamae_rag.data.schema import EvidenceNode
 from pamae_rag.graph.query_graph import QueryGraph, build_minimal_query_graph
@@ -60,6 +62,24 @@ def graph_shortest_path_distance(graph: QueryGraph, disconnected_distance: float
     if disconnected_distance < 0:
         raise ValueError("disconnected_distance must be nonnegative")
     n = graph.num_nodes
+    if n == 0:
+        return np.zeros((0, 0), dtype=np.float64)
+    if graph.edges:
+        rows: list[int] = []
+        cols: list[int] = []
+        data: list[float] = []
+        for edge in graph.edges:
+            rows.extend([edge.source, edge.target])
+            cols.extend([edge.target, edge.source])
+            data.extend([float(edge.length), float(edge.length)])
+        matrix = csr_matrix((data, (rows, cols)), shape=(n, n), dtype=np.float64)
+        out = shortest_path(matrix, directed=False, unweighted=False)
+        out = np.asarray(out, dtype=np.float64)
+        out[~np.isfinite(out)] = float(disconnected_distance)
+        out = np.minimum(out, float(disconnected_distance))
+        out = np.minimum(out, out.T)
+        np.fill_diagonal(out, 0.0)
+        return out
     adj = _adjacency(graph)
     out = np.full((n, n), float(disconnected_distance), dtype=np.float64)
     np.fill_diagonal(out, 0.0)
@@ -92,13 +112,21 @@ def graph_diagnostics(graph: QueryGraph, distance_matrix: np.ndarray, disconnect
     disconnected = 0
     if offdiag:
         disconnected = int(np.sum((distance_matrix >= disconnected_distance - 1e-12) & ~np.eye(graph.num_nodes, dtype=bool)))
+    degrees = [0 for _ in range(graph.num_nodes)]
+    for edge in graph.edges:
+        degrees[edge.source] += 1
+        degrees[edge.target] += 1
     return {
         "num_edges": graph.num_edges,
         "edge_counts_by_type": dict(graph.edge_counts_by_type),
+        "avg_degree": float(np.mean(degrees)) if degrees else 0.0,
+        "max_degree": int(max(degrees, default=0)),
         "num_connected_components": len(components),
         "largest_component_ratio": largest / n,
+        "connected_pair_rate": 1.0 - (disconnected / max(offdiag, 1)),
         "disconnected_pair_rate": disconnected / max(offdiag, 1),
         "graph_disconnected_distance": float(disconnected_distance),
+        "backbone_missing_embedding_count": int(graph.backbone_missing_embedding_count),
     }
 
 
@@ -133,6 +161,8 @@ def build_graph_aware_distance_matrix(
         query,
         edge_lengths=_as_plain_dict(graph_config.edge_lengths),
         max_edges_per_node=int(graph_config.max_edges_per_node),
+        semantic_distance_matrix=semantic,
+        backbone_config=getattr(graph_config, "backbone", None),
     )
     graph_sp = graph_shortest_path_distance(graph, float(graph_config.disconnected_distance))
     diag = graph_diagnostics(graph, graph_sp, float(graph_config.disconnected_distance))
@@ -171,3 +201,15 @@ def average_edge_counts(values: list[dict[str, int]]) -> dict[str, float]:
             totals[key] += float(count)
     denom = max(len(values), 1)
     return {key: totals[key] / denom for key in sorted(keys)}
+
+
+def average_edge_lengths(values: list[dict[str, float]]) -> dict[str, float]:
+    totals: dict[str, float] = defaultdict(float)
+    counts: dict[str, int] = defaultdict(int)
+    keys: set[str] = set()
+    for value in values:
+        keys |= set(value)
+        for key, length in value.items():
+            totals[key] += float(length)
+            counts[key] += 1
+    return {key: totals[key] / max(counts[key], 1) for key in sorted(keys)}

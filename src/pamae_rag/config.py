@@ -41,11 +41,21 @@ class GraphEdgeLengthsConfig:
 
 
 @dataclass(frozen=True)
+class GraphBackboneConfig:
+    enabled: bool = False
+    mode: str = "none"
+    k: int = 4
+    length_mode: str = "semantic_distance"
+    max_edges_per_node: int = 32
+
+
+@dataclass(frozen=True)
 class GraphConfig:
     enabled: bool = False
     disconnected_distance: float = 2.0
     max_edges_per_node: int = 32
     edge_lengths: GraphEdgeLengthsConfig = field(default_factory=GraphEdgeLengthsConfig)
+    backbone: GraphBackboneConfig = field(default_factory=GraphBackboneConfig)
 
 
 @dataclass(frozen=True)
@@ -114,6 +124,8 @@ def _make(cls, values: dict[str, Any]):
             graph_values = dict(values["graph"])
             if "edge_lengths" in graph_values and isinstance(graph_values["edge_lengths"], dict):
                 graph_values["edge_lengths"] = _make(GraphEdgeLengthsConfig, graph_values["edge_lengths"])
+            if "backbone" in graph_values and isinstance(graph_values["backbone"], dict):
+                graph_values["backbone"] = _make(GraphBackboneConfig, graph_values["backbone"])
             values["graph"] = _make(GraphConfig, graph_values)
     return cls(**values)
 
@@ -168,6 +180,14 @@ def validate_config(cfg: AppConfig) -> None:
     for key, value in cfg.pamae.graph.edge_lengths.__dict__.items():
         if float(value) < 0:
             raise ValueError(f"pamae.graph.edge_lengths.{key} must be nonnegative")
+    if cfg.pamae.graph.backbone.mode not in {"none", "knn", "mutual_knn"}:
+        raise ValueError("pamae.graph.backbone.mode must be one of ['knn', 'mutual_knn', 'none']")
+    if cfg.pamae.graph.backbone.k < 1:
+        raise ValueError("pamae.graph.backbone.k must be positive")
+    if cfg.pamae.graph.backbone.max_edges_per_node < 0:
+        raise ValueError("pamae.graph.backbone.max_edges_per_node must be nonnegative")
+    if cfg.pamae.graph.backbone.length_mode != "semantic_distance":
+        raise ValueError("pamae.graph.backbone.length_mode must be 'semantic_distance'")
     allowed_relevance_weights = {"lexical", "title", "entity_title", "semantic"}
     unknown_weights = sorted(set(cfg.pamae.relevance_weights) - allowed_relevance_weights)
     if unknown_weights:

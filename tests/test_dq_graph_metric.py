@@ -1,7 +1,8 @@
 import numpy as np
 
-from pamae_rag.config import AppConfig, GraphConfig, PamaeConfig
+from pamae_rag.config import AppConfig, GraphConfig, PamaeConfig, load_config
 from pamae_rag.data.schema import EvidenceNode, QueryExample
+from pamae_rag.graph.distances import build_distance_matrix
 from pamae_rag.graph.graph_distance import build_graph_aware_distance_matrix
 from pamae_rag.graph.query_graph import (
     build_minimal_query_graph,
@@ -69,6 +70,86 @@ def test_query_graph_edges_nonnegative():
     )
     assert graph.num_edges > 0
     assert all(edge.length >= 0 for edge in graph.edges)
+
+
+def test_semantic_knn_backbone_edges_nonnegative():
+    nodes = (
+        _node("a", "Alpha", "Alpha text.", [1.0, 0.0]),
+        _node("b", "Beta", "Beta text.", [0.9, 0.1]),
+        _node("c", "Gamma", "Gamma text.", [0.0, 1.0]),
+    )
+    semantic = build_distance_matrix(np.vstack([node.embedding for node in nodes]))
+    graph = build_minimal_query_graph(
+        nodes,
+        "Alpha Beta",
+        edge_lengths={"same_canonical_title": 0.25, "title_mention": 0.5, "shared_query_span": 0.75},
+        max_edges_per_node=4,
+        semantic_distance_matrix=semantic,
+        backbone_config={
+            "enabled": True,
+            "mode": "knn",
+            "k": 1,
+            "length_mode": "semantic_distance",
+            "max_edges_per_node": 4,
+        },
+    )
+    assert graph.edge_counts_by_type["semantic_knn"] > 0
+    assert all(edge.length >= 0 for edge in graph.edges)
+
+
+def test_mutual_knn_is_symmetric():
+    nodes = (
+        _node("a", "Alpha", "Alpha text.", [1.0, 0.0]),
+        _node("b", "Beta", "Beta text.", [0.99, 0.01]),
+        _node("c", "Gamma", "Gamma text.", [0.0, 1.0]),
+    )
+    semantic = build_distance_matrix(np.vstack([node.embedding for node in nodes]))
+    graph = build_minimal_query_graph(
+        nodes,
+        "Alpha Beta",
+        edge_lengths={"same_canonical_title": 0.25, "title_mention": 0.5, "shared_query_span": 0.75},
+        max_edges_per_node=4,
+        semantic_distance_matrix=semantic,
+        backbone_config={
+            "enabled": True,
+            "mode": "mutual_knn",
+            "k": 1,
+            "length_mode": "semantic_distance",
+            "max_edges_per_node": 4,
+        },
+    )
+    pairs = {(edge.source, edge.target) for edge in graph.edges if edge.edge_type == "mutual_semantic_knn"}
+    assert pairs == {(0, 1)}
+
+
+def test_backbone_does_not_use_gold_fields():
+    nodes = (
+        _node("a", "Alpha", "Alpha text.", [1.0, 0.0]),
+        _node("b", "Beta", "Beta text.", [0.9, 0.1]),
+    )
+    semantic = build_distance_matrix(np.vstack([node.embedding for node in nodes]))
+    graph = build_minimal_query_graph(
+        nodes,
+        "Alpha Beta",
+        edge_lengths={"same_canonical_title": 0.25, "title_mention": 0.5, "shared_query_span": 0.75},
+        max_edges_per_node=4,
+        semantic_distance_matrix=semantic,
+        backbone_config={
+            "enabled": True,
+            "mode": "knn",
+            "k": 1,
+            "length_mode": "semantic_distance",
+            "max_edges_per_node": 4,
+        },
+    )
+    assert graph.num_edges > 0
+
+
+def test_query_graph_backbone_config_loads():
+    cfg = load_config("configs/ablations_dq_connectivity/hotpotqa_graph_mutual_knn4.yaml")
+    assert cfg.pamae.graph.backbone.enabled is True
+    assert cfg.pamae.graph.backbone.mode == "mutual_knn"
+    assert cfg.pamae.graph.backbone.k == 4
 
 
 def test_graph_distance_symmetric_zero_diag():

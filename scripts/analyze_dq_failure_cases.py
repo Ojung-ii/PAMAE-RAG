@@ -11,8 +11,9 @@ import numpy as np
 
 from pamae_rag.config import load_config
 from pamae_rag.data.io import read_jsonl
+from pamae_rag.graph.distances import build_distance_matrix
 from pamae_rag.graph.graph_distance import graph_diagnostics, graph_shortest_path_distance
-from pamae_rag.graph.query_graph import build_minimal_query_graph, extract_query_spans, normalize_text
+from pamae_rag.graph.query_graph import build_minimal_query_graph, extract_query_spans
 from pamae_rag.graph.universe import select_universe_by_mass
 
 
@@ -35,11 +36,14 @@ def _overlap(a: list[str], b: list[str]) -> int:
 
 
 def _gold_graph_stats(example, nodes, cfg) -> dict[str, Any]:
+    semantic = build_distance_matrix(np.vstack([node.embedding for node in nodes]), metric=cfg.distance.metric)
     graph = build_minimal_query_graph(
         nodes,
         example.query,
         edge_lengths=dict(cfg.pamae.graph.edge_lengths.__dict__),
         max_edges_per_node=cfg.pamae.graph.max_edges_per_node,
+        semantic_distance_matrix=semantic,
+        backbone_config=cfg.pamae.graph.backbone,
     )
     sp = graph_shortest_path_distance(graph, cfg.pamae.graph.disconnected_distance)
     diag = graph_diagnostics(graph, sp, cfg.pamae.graph.disconnected_distance)
