@@ -109,10 +109,11 @@ def _node_surface(node: EvidenceNode) -> str:
     return normalize_text(f"{_node_title(node)} {node.text}")
 
 
-def _contains_phrase(surface: str, phrase: str) -> bool:
-    if not surface or not phrase:
-        return False
-    return f" {phrase} " in f" {surface} "
+def _phrase_hits(padded_surfaces: list[str], phrase: str) -> list[int]:
+    if not phrase:
+        return []
+    padded_phrase = f" {phrase} "
+    return [idx for idx, surface in enumerate(padded_surfaces) if padded_phrase in surface]
 
 
 def _candidate_edges(
@@ -122,6 +123,7 @@ def _candidate_edges(
 ) -> list[QueryGraphEdge]:
     titles = [canonical_title(_node_title(node)) for node in nodes]
     surfaces = [_node_surface(node) for node in nodes]
+    padded_surfaces = [f" {surface} " for surface in surfaces]
     edges: dict[tuple[int, int], QueryGraphEdge] = {}
 
     def add(i: int, j: int, edge_type: str) -> None:
@@ -145,19 +147,15 @@ def _candidate_edges(
             for j in group[pos + 1 :]:
                 add(i, j, "same_canonical_title")
 
-    for i, title_i in enumerate(titles):
-        if not title_i:
-            continue
-        for j, title_j in enumerate(titles):
-            if i >= j:
+    for title, owners in by_title.items():
+        for hit in _phrase_hits(padded_surfaces, title):
+            if titles[hit] == title:
                 continue
-            if title_i == title_j:
-                continue
-            if _contains_phrase(surfaces[j], title_i) or _contains_phrase(surfaces[i], title_j):
-                add(i, j, "title_mention")
+            for owner in owners:
+                add(owner, hit, "title_mention")
 
     for span in extract_query_spans(query):
-        hits = [idx for idx, surface in enumerate(surfaces) if _contains_phrase(surface, span)]
+        hits = _phrase_hits(padded_surfaces, span)
         for pos, i in enumerate(hits):
             for j in hits[pos + 1 :]:
                 add(i, j, "shared_query_span")

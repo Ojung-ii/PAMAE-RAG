@@ -73,6 +73,27 @@ def test_query_graph_edges_nonnegative():
     assert all(edge.length >= 0 for edge in graph.edges)
 
 
+def test_title_mention_edges_are_bidirectional_equivalent():
+    nodes = (
+        _node("a", "Alpha", "Alpha text."),
+        _node("b", "Beta", "Beta text mentions Alpha."),
+        _node("c", "Gamma", "Gamma text mentions Beta."),
+    )
+    graph = build_minimal_query_graph(
+        nodes,
+        "Unrelated query",
+        edge_lengths={"same_canonical_title": 0.25, "title_mention": 0.5, "shared_query_span": 0.75},
+        max_edges_per_node=4,
+    )
+    title_mentions = {
+        (edge.source, edge.target)
+        for edge in graph.edges
+        if edge.edge_type == "title_mention"
+    }
+    assert (0, 1) in title_mentions
+    assert (1, 2) in title_mentions
+
+
 def test_semantic_knn_backbone_edges_nonnegative():
     nodes = (
         _node("a", "Alpha", "Alpha text.", [1.0, 0.0]),
