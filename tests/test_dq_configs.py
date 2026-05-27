@@ -47,3 +47,14 @@ def test_dq_connectivity_retrieval_config_loads():
         assert cfg.pamae.max_context_nodes == 8
     assert modes == {"graph_sp", "hybrid_sem_graph", "semantic"}
     assert retrieval_variants == {"sample_full_validation_refine_cell_renderer", "top_rho"}
+
+
+def test_content_graph_configs_load():
+    paths = sorted(Path("configs/content_graph").glob("*.yaml"))
+    assert len(paths) == 2
+    for path in paths:
+        cfg = load_config(path)
+        assert cfg.pamae.graph.source == "content"
+        assert cfg.pamae.relevance_mode == "current"
+        assert cfg.pamae.max_context_tokens == 512
+        assert cfg.pamae.max_context_nodes == 8

@@ -7,6 +7,7 @@ import re
 from typing import Any, Iterable
 
 from pamae_rag.data.schema import EvidenceNode
+from pamae_rag.graph.query_graph import QueryGraph, QueryGraphEdge
 
 
 _TOKEN_RE = re.compile(r"[a-z0-9]+")
@@ -251,3 +252,79 @@ def build_content_graph_index(nodes: tuple[EvidenceNode, ...] | list[EvidenceNod
         edges=edge_tuple,
         diagnostics=diagnostics,
     )
+
+
+def _cap_query_edges(edges: Iterable[QueryGraphEdge], max_edges_per_node: int) -> tuple[QueryGraphEdge, ...]:
+    if max_edges_per_node <= 0:
+        return tuple()
+    degree: Counter[int] = Counter()
+    selected: list[QueryGraphEdge] = []
+    ordered = sorted(edges, key=lambda edge: (edge.length, edge.edge_type, edge.source, edge.target))
+    for edge in ordered:
+        if degree[edge.source] >= max_edges_per_node or degree[edge.target] >= max_edges_per_node:
+            continue
+        selected.append(edge)
+        degree[edge.source] += 1
+        degree[edge.target] += 1
+    return tuple(sorted(selected, key=lambda edge: (edge.source, edge.target, edge.length, edge.edge_type)))
+
+
+def project_content_graph_to_query_graph(
+    nodes: tuple[EvidenceNode, ...] | list[EvidenceNode],
+    *,
+    edge_lengths: dict[str, float],
+    max_edges_per_node: int,
+) -> tuple[QueryGraph, ContentGraphIndex, tuple[int, ...]]:
+    required = {"shared_entity", "entity_fact_bridge"}
+    missing = required - set(edge_lengths)
+    if missing:
+        raise ValueError(f"Missing content graph edge lengths: {sorted(missing)}")
+    for key in required:
+        if float(edge_lengths[key]) < 0:
+            raise ValueError(f"Content graph edge length must be nonnegative: {key}")
+
+    index = build_content_graph_index(nodes)
+    node_position = {node.node_id: pos for pos, node in enumerate(nodes)}
+    entity_to_chunks: dict[str, set[int]] = {}
+    for mention in index.mentions:
+        pos = node_position.get(mention.node_id)
+        if pos is None:
+            continue
+        entity_to_chunks.setdefault(mention.entity_id, set()).add(pos)
+
+    edges: dict[tuple[int, int], QueryGraphEdge] = {}
+
+    def add(i: int, j: int, edge_type: str) -> None:
+        if i == j:
+            return
+        a, b = sorted((int(i), int(j)))
+        key = (a, b)
+        length = float(edge_lengths[edge_type])
+        prev = edges.get(key)
+        if prev is None or length < prev.length:
+            edges[key] = QueryGraphEdge(a, b, length, edge_type)
+
+    for chunks in entity_to_chunks.values():
+        ordered = sorted(chunks)
+        for pos, left in enumerate(ordered):
+            for right in ordered[pos + 1 :]:
+                add(left, right, "shared_entity")
+
+    for triple in index.triples:
+        subject_chunks = sorted(entity_to_chunks.get(triple.subject_entity_id, set()))
+        object_chunks = sorted(entity_to_chunks.get(triple.object_entity_id, set()))
+        for left in subject_chunks:
+            for right in object_chunks:
+                add(left, right, "entity_fact_bridge")
+
+    capped_edges = _cap_query_edges(edges.values(), max_edges_per_node)
+    counts = Counter(edge.edge_type for edge in capped_edges)
+    projected_node_indices = tuple(
+        sorted({edge.source for edge in capped_edges} | {edge.target for edge in capped_edges})
+    )
+    graph = QueryGraph(
+        num_nodes=len(nodes),
+        edges=capped_edges,
+        edge_counts_by_type={key: int(counts.get(key, 0)) for key in sorted(required)},
+    )
+    return graph, index, projected_node_indices

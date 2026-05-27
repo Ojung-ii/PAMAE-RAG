@@ -3,6 +3,7 @@ from __future__ import annotations
 from collections import defaultdict, deque
 from dataclasses import dataclass
 import heapq
+import time
 from typing import Any
 
 import numpy as np
@@ -10,6 +11,7 @@ from scipy.sparse import csr_matrix
 from scipy.sparse.csgraph import shortest_path
 
 from pamae_rag.data.schema import EvidenceNode
+from pamae_rag.graph.content_graph import project_content_graph_to_query_graph
 from pamae_rag.graph.query_graph import QueryGraph, build_minimal_query_graph
 
 
@@ -145,6 +147,7 @@ def build_graph_aware_distance_matrix(
             semantic,
             {
                 "distance_mode": "semantic",
+                "graph_source": "none",
                 "lambda_s": 1.0,
                 "lambda_g": 0.0,
                 "num_edges": 0,
@@ -156,16 +159,31 @@ def build_graph_aware_distance_matrix(
             },
         )
 
-    graph = build_minimal_query_graph(
-        nodes,
-        query,
-        edge_lengths=_as_plain_dict(graph_config.edge_lengths),
-        max_edges_per_node=int(graph_config.max_edges_per_node),
-        semantic_distance_matrix=semantic,
-        backbone_config=getattr(graph_config, "backbone", None),
-    )
+    graph_source = str(getattr(graph_config, "source", "legacy_query"))
+    projected_node_ids: list[str] = []
+    graph_start = time.perf_counter()
+    if graph_source == "content":
+        graph, content_index, projected_node_indices = project_content_graph_to_query_graph(
+            nodes,
+            edge_lengths=_as_plain_dict(graph_config.edge_lengths),
+            max_edges_per_node=int(graph_config.max_edges_per_node),
+        )
+        content_diagnostics = dict(content_index.diagnostics)
+        projected_node_ids = [nodes[int(idx)].node_id for idx in projected_node_indices]
+    else:
+        graph = build_minimal_query_graph(
+            nodes,
+            query,
+            edge_lengths=_as_plain_dict(graph_config.edge_lengths),
+            max_edges_per_node=int(graph_config.max_edges_per_node),
+            semantic_distance_matrix=semantic,
+            backbone_config=getattr(graph_config, "backbone", None),
+        )
+        content_diagnostics = {}
+    graph_build_latency_ms = (time.perf_counter() - graph_start) * 1000.0
     graph_sp = graph_shortest_path_distance(graph, float(graph_config.disconnected_distance))
     diag = graph_diagnostics(graph, graph_sp, float(graph_config.disconnected_distance))
+    diag.update(content_diagnostics)
 
     if distance_mode == "graph_sp":
         matrix = graph_sp
@@ -185,8 +203,11 @@ def build_graph_aware_distance_matrix(
     diag.update(
         {
             "distance_mode": distance_mode,
+            "graph_source": graph_source,
             "lambda_s": lambda_s,
             "lambda_g": lambda_g,
+            "graph_build_latency_ms": graph_build_latency_ms,
+            "projected_node_ids": projected_node_ids,
         }
     )
     return GraphDistanceResult(matrix, diag)

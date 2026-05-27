@@ -17,8 +17,9 @@ Title metadata is not used as an entity source or primary backbone. The index re
 Current status:
 
 - implemented as `pamae_rag.graph.content_graph`
-- not connected to retrieval or scoring yet
+- connected as an optional `pamae.graph.source: content` graph source
+- legacy graph construction remains the default `pamae.graph.source: legacy_query`
 - no gold labels, possible answers, oracle evidence, dataset-specific rules, or query-pattern branches
 - no imported runtime dependency on any external reference implementation
 
-Projection into a chunk-distance graph and stage-wise survival diagnostics are intentionally deferred to later commits so the indexing redesign can be reviewed independently from performance changes.
+Projection into a chunk-distance graph uses text-derived shared-entity and entity-fact bridge links. Edge lengths are neutral defaults unless explicitly configured; no dataset-specific or answer-aware weights are introduced.

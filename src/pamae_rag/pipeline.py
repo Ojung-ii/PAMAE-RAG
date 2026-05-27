@@ -136,6 +136,8 @@ def _run_for_k(example: QueryExample, cfg: AppConfig, k: int, seed: int) -> Retr
         },
         graph_config=cfg.pamae.graph,
     )
+    graph_diagnostics = dict(graph_result.diagnostics)
+    projected_node_ids = tuple(str(x) for x in graph_diagnostics.pop("projected_node_ids", []))
     distance_matrix = graph_result.distance_matrix
     validate_square_distance_matrix(distance_matrix)
 
@@ -336,13 +338,20 @@ def _run_for_k(example: QueryExample, cfg: AppConfig, k: int, seed: int) -> Retr
             },
         ),
     )
+    content_projection_enabled = graph_diagnostics.get("graph_source") == "content"
     stage_diagnostics["content_graph_projection"] = make_stage_metrics(
         stage="content_graph_projection",
-        selected_node_ids=_all_node_ids(nodes),
+        selected_node_ids=projected_node_ids if content_projection_enabled else _all_node_ids(nodes),
         gold_node_ids=example.gold_node_ids,
         token_count=universe_token_count,
-        latency_ms=0.0,
-        status="not_configured",
+        latency_ms=graph_diagnostics.get("graph_build_latency_ms", 0.0)
+        if content_projection_enabled
+        else 0.0,
+        status="ok" if content_projection_enabled else "not_configured",
+        extra={
+            "graph_source": graph_diagnostics.get("graph_source"),
+            "projected_node_count": len(projected_node_ids) if content_projection_enabled else None,
+        },
     )
     stage_diagnostics["reranking_scoring"] = make_stage_metrics(
         stage="reranking_scoring",
@@ -386,7 +395,7 @@ def _run_for_k(example: QueryExample, cfg: AppConfig, k: int, seed: int) -> Retr
         "renderer": renderer,
         "relevance_mode": cfg.pamae.relevance_mode,
         "relevance_weights": dict(cfg.pamae.relevance_weights),
-        **graph_result.diagnostics,
+        **graph_diagnostics,
         "semantic_component_available": rho_diagnostics["semantic_component_available"],
         "query_title_spans": rho_diagnostics["query_title_spans"],
         "top_relevance_node_ids": rho_diagnostics["top_relevance_node_ids"],

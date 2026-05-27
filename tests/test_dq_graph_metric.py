@@ -269,3 +269,22 @@ def test_pipeline_uses_distance_mode():
     result = run_query_pamae(example, cfg)
     assert result.diagnostics["distance_mode"] == "graph_sp"
     assert result.diagnostics["num_edges"] > 0
+
+
+def test_graph_distance_can_use_content_graph_source():
+    nodes = (
+        _node("a", "Wrong Title", "Ada Lovelace worked with Charles Babbage.", [1.0, 0.0]),
+        _node("b", "Another Trap", "Charles Babbage built engines.", [0.9, 0.1]),
+    )
+    semantic = np.array([[0.0, 0.3], [0.3, 0.0]])
+    result = build_graph_aware_distance_matrix(
+        nodes,
+        "Unrelated query",
+        semantic,
+        distance_mode="graph_sp",
+        distance_weights={"semantic": 0.0, "graph": 1.0},
+        graph_config=GraphConfig(enabled=True, source="content"),
+    )
+    assert result.diagnostics["graph_source"] == "content"
+    assert result.diagnostics["content_graph_title_metadata_used"] is False
+    assert result.diagnostics["edge_counts_by_type"]["shared_entity"] > 0

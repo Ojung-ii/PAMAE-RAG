@@ -38,6 +38,8 @@ class GraphEdgeLengthsConfig:
     same_canonical_title: float = 0.25
     title_mention: float = 0.50
     shared_query_span: float = 0.75
+    shared_entity: float = 1.0
+    entity_fact_bridge: float = 1.0
 
 
 @dataclass(frozen=True)
@@ -52,6 +54,7 @@ class GraphBackboneConfig:
 @dataclass(frozen=True)
 class GraphConfig:
     enabled: bool = False
+    source: str = "legacy_query"
     disconnected_distance: float = 2.0
     max_edges_per_node: int = 32
     edge_lengths: GraphEdgeLengthsConfig = field(default_factory=GraphEdgeLengthsConfig)
@@ -175,6 +178,8 @@ def validate_config(cfg: AppConfig) -> None:
         raise ValueError("pamae.distance_weights values must be nonnegative")
     if cfg.pamae.graph.disconnected_distance < 0:
         raise ValueError("pamae.graph.disconnected_distance must be nonnegative")
+    if cfg.pamae.graph.source not in {"legacy_query", "content"}:
+        raise ValueError("pamae.graph.source must be one of ['content', 'legacy_query']")
     if cfg.pamae.graph.max_edges_per_node < 0:
         raise ValueError("pamae.graph.max_edges_per_node must be nonnegative")
     for key, value in cfg.pamae.graph.edge_lengths.__dict__.items():
