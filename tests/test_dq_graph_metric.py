@@ -5,6 +5,7 @@ from pamae_rag.data.schema import EvidenceNode, QueryExample
 from pamae_rag.graph.distances import build_distance_matrix
 from pamae_rag.graph.graph_distance import build_graph_aware_distance_matrix
 from pamae_rag.graph.query_graph import (
+    _knn_sets,
     build_minimal_query_graph,
     canonical_title,
     extract_query_spans,
@@ -120,6 +121,20 @@ def test_mutual_knn_is_symmetric():
     )
     pairs = {(edge.source, edge.target) for edge in graph.edges if edge.edge_type == "mutual_semantic_knn"}
     assert pairs == {(0, 1)}
+
+
+def test_knn_sets_use_distance_then_index_tie_break():
+    matrix = np.array(
+        [
+            [0.0, 0.2, 0.2, 0.1],
+            [0.2, 0.0, 0.3, 0.4],
+            [0.2, 0.3, 0.0, np.inf],
+            [0.1, 0.4, np.inf, 0.0],
+        ]
+    )
+    knn = _knn_sets(matrix, [0, 1, 2, 3], k=2)
+    assert knn[0] == {1, 3}
+    assert knn[2] == {0, 1}
 
 
 def test_backbone_does_not_use_gold_fields():

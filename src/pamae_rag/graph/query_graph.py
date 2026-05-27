@@ -184,17 +184,17 @@ def _valid_embedding(node: EvidenceNode) -> bool:
 
 
 def _knn_sets(semantic_distance_matrix: np.ndarray, valid: list[int], k: int) -> dict[int, set[int]]:
-    valid_set = set(valid)
+    valid_arr = np.asarray(valid, dtype=np.int64)
+    valid_distances = np.asarray(semantic_distance_matrix[np.ix_(valid_arr, valid_arr)], dtype=np.float64)
     out: dict[int, set[int]] = {}
-    for idx in valid:
-        row = np.asarray(semantic_distance_matrix[idx], dtype=np.float64)
-        candidates = [
-            (float(row[j]), int(j))
-            for j in valid
-            if j != idx and j in valid_set and np.isfinite(row[j]) and float(row[j]) >= 0
-        ]
-        candidates.sort(key=lambda item: (item[0], item[1]))
-        out[idx] = {j for _, j in candidates[:k]}
+    for local_idx, idx in enumerate(valid_arr):
+        distances = valid_distances[local_idx]
+        eligible = np.isfinite(distances) & (distances >= 0.0)
+        eligible[local_idx] = False
+        candidate_ids = valid_arr[eligible]
+        candidate_distances = distances[eligible]
+        order = np.lexsort((candidate_ids, candidate_distances))
+        out[int(idx)] = {int(j) for j in candidate_ids[order[:k]]}
     return out
 
 
