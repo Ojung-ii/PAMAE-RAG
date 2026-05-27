@@ -51,3 +51,9 @@ The fixed offline extractive generator gives content graph F1 above oracle F1. T
 HotpotQA risk check:
 
 The content graph improves refinement survival (`0.3750` vs `0.1500`) but reduces rendered recall (`0.6750` vs `0.7250`) and QA F1 (`0.0624` vs `0.0672`). This prevents adoption as a performance improvement under the QA-gated criterion.
+
+Automated comparison guard:
+
+- 2Wiki20: [compare_2wiki20.md](compare_2wiki20.md) reports `oracle_dominance_valid=false` because `content_graph_2wiki20` exceeds oracle F1 under the offline deterministic generator. This blocks oracle-gap claims on 2Wiki.
+- Hotpot20: [compare_hotpot20.md](compare_hotpot20.md) reports `oracle_dominance_valid=true`, but content graph F1 is lower than baseline F1. This blocks content graph adoption as a performance improvement.
+- The guard command supports `--require-valid-oracle`; with that flag, the 2Wiki comparison exits nonzero and the Hotpot comparison passes.
