@@ -17,5 +17,15 @@ Current 2Wiki20 QA measurements:
 
 | run | graph_mode | oracle | candidate_recall | projected_recall | post_refine_recall | rendered_recall | context_f1 | avg_context_tokens | retrieval_ms | generation_ms | EM | F1 | oracle_gap | risk_decision |
 | --- | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| baseline_2wiki20 | legacy_hybrid_sem_graph | false | n/a | n/a | n/a | 0.5000 | 0.2347 | 497.1 | 322.6 | 0.4 | 0.0000 | 0.0355 | 0.0140 | measurement_only |
+| baseline_2wiki20 | legacy_hybrid_sem_graph | false | 0.8625 | n/a | 0.0250 | 0.5000 | 0.2347 | 497.1 | 314.3 | 0.4 | 0.0000 | 0.0355 | 0.0140 | measurement_only |
 | oracle_2wiki20 | direct_gold_context | true | n/a | n/a | n/a | 1.0000 | 1.0000 | 279.7 | 0.0 | 0.2 | 0.0000 | 0.0495 | 0.0000 | measurement_only |
+
+Current stage-wise bottleneck read:
+
+- query/anchor construction survival: `0.8625`
+- candidate generation recall: `0.8625`
+- content graph projection: `not_configured`
+- local refinement survival: `0.0250`
+- reranking/scoring survival: `0.0250`
+- context rendering recall: `0.5000`
+- final QA F1: `0.0355`

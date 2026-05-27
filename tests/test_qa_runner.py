@@ -67,9 +67,11 @@ def test_run_qa_scores_retrieved_context(tmp_path: Path):
     assert metrics.oracle is False
     assert metrics.mean_f1 > 0.0
     assert metrics.mean_context_recall == 1.0
+    assert "final_qa" in metrics.stage_diagnostics
     row = json.loads(output_path.read_text(encoding="utf-8").splitlines()[0])
     assert row["prediction"] == "Ada was born in London."
     assert row["generation_ms"] >= 0.0
+    assert "final_qa" in row["stage_diagnostics"]
 
 
 def test_run_qa_oracle_context_uses_gold_support(tmp_path: Path):

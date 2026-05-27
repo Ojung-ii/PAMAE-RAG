@@ -11,6 +11,7 @@ import numpy as np
 
 from pamae_rag.data.io import read_jsonl
 from pamae_rag.data.schema import EvidenceNode, QueryExample
+from pamae_rag.eval.stage_diagnostics import aggregate_stage_diagnostics, make_stage_metrics
 from pamae_rag.eval.support_recall import f1_score, precision, recall
 from pamae_rag.qa.generator import DeterministicExtractiveSentenceGenerator, PROMPT_TEXT
 from pamae_rag.qa.metrics import METRIC_ID, gold_answers, score_json, score_prediction
@@ -35,6 +36,7 @@ class QAMetrics:
     avg_generation_ms: float
     missing_prediction_count: int
     missing_answer_count: int
+    stage_diagnostics: dict[str, Any]
 
     def to_json(self) -> dict[str, Any]:
         return asdict(self)
@@ -163,6 +165,7 @@ def run_qa(
     corpus = _read_corpus(corpus_path)
     generator = DeterministicExtractiveSentenceGenerator()
     rows: list[dict[str, Any]] = []
+    stage_rows: list[dict[str, dict[str, Any]]] = []
     exact_matches: list[float] = []
     f1s: list[float] = []
     context_recalls: list[float] = []
@@ -213,6 +216,29 @@ def run_qa(
         if retrieval_ms is not None:
             retrieval_latencies.append(retrieval_ms)
         generation_latencies.append(generation_ms)
+        prediction_diagnostics = prediction.get("diagnostics") if isinstance(prediction, dict) else {}
+        stage_diagnostics = {}
+        if isinstance(prediction_diagnostics, dict) and isinstance(
+            prediction_diagnostics.get("stage_diagnostics"),
+            dict,
+        ):
+            stage_diagnostics.update(prediction_diagnostics["stage_diagnostics"])
+        final_extra = {
+            "qa_exact_match": score_payload["exact_match"],
+            "qa_f1": score_payload["f1"],
+            "context_source": "gold_support" if oracle_context else "retrieval_prediction",
+        }
+        stage_diagnostics["final_qa"] = make_stage_metrics(
+            stage="final_qa",
+            selected_node_ids=context_ids,
+            gold_node_ids=example.gold_node_ids,
+            context_node_ids=context_ids,
+            rendered_node_ids=context_ids,
+            token_count=token_count,
+            latency_ms=generation_ms,
+            extra=final_extra,
+        )
+        stage_rows.append(stage_diagnostics)
         rows.append(
             {
                 "query_id": example.query_id,
@@ -227,6 +253,7 @@ def run_qa(
                 "context_tokens": token_count,
                 "retrieval_ms": retrieval_ms,
                 "generation_ms": generation_ms,
+                "stage_diagnostics": stage_diagnostics,
                 "diagnostics": {
                     "generator_id": generated.generator_id,
                     "prompt_id": generated.prompt_id,
@@ -257,6 +284,7 @@ def run_qa(
         avg_generation_ms=_mean(generation_latencies),
         missing_prediction_count=missing_prediction_count,
         missing_answer_count=missing_answer_count,
+        stage_diagnostics=aggregate_stage_diagnostics(stage_rows),
     )
 
     output = Path(output_path)

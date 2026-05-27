@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import asdict
+import time
 from typing import Iterable
 
 import numpy as np
@@ -8,6 +9,7 @@ import numpy as np
 from pamae_rag.config import AppConfig
 from pamae_rag.data.schema import QueryExample, RetrievalResult
 from pamae_rag.eval.support_recall import hit, recall
+from pamae_rag.eval.stage_diagnostics import make_stage_metrics
 from pamae_rag.graph.distances import build_distance_matrix, validate_square_distance_matrix
 from pamae_rag.graph.graph_distance import build_graph_aware_distance_matrix
 from pamae_rag.graph.universe import select_universe_by_mass
@@ -43,6 +45,10 @@ def _node_ids(nodes, idxs: Iterable[int]) -> tuple[str, ...]:
 
 def _context_tokens(nodes, idxs: Iterable[int]) -> int:
     return int(sum(max(1, int(nodes[int(i)].token_count)) for i in idxs))
+
+
+def _all_node_ids(nodes) -> tuple[str, ...]:
+    return tuple(node.node_id for node in nodes)
 
 
 def _cluster_sizes(anchor_indices: Iterable[int], distance_matrix: np.ndarray) -> list[int]:
@@ -107,6 +113,8 @@ def _actual_renderer(cfg: AppConfig) -> str:
 
 
 def _run_for_k(example: QueryExample, cfg: AppConfig, k: int, seed: int) -> RetrievalResult:
+    stage_diagnostics: dict[str, dict] = {}
+    stage_start = time.perf_counter()
     nodes = select_universe_by_mass(
         example.nodes,
         max_nodes=cfg.universe.max_nodes,
@@ -149,6 +157,19 @@ def _run_for_k(example: QueryExample, cfg: AppConfig, k: int, seed: int) -> Retr
     )
     token_costs = np.asarray([max(1, node.token_count) / 1000.0 for node in nodes], dtype=np.float64)
     candidates = candidate_indices(nodes, cfg.universe.anchor_node_types)
+    universe_token_count = _context_tokens(nodes, range(len(nodes)))
+    stage_diagnostics["query_anchor_construction"] = make_stage_metrics(
+        stage="query_anchor_construction",
+        selected_node_ids=_all_node_ids(nodes),
+        gold_node_ids=example.gold_node_ids,
+        candidate_node_ids=_node_ids(nodes, candidates),
+        token_count=universe_token_count,
+        latency_ms=(time.perf_counter() - stage_start) * 1000.0,
+        extra={
+            "num_universe_nodes": len(nodes),
+            "num_anchor_candidates": len(candidates),
+        },
+    )
     if len(candidates) < k:
         k = len(candidates)
     if k < 1:
@@ -163,6 +184,7 @@ def _run_for_k(example: QueryExample, cfg: AppConfig, k: int, seed: int) -> Retr
     full_validation_objective: ObjectiveBreakdown | None = None
 
     if retrieval_variant == "top_rho":
+        stage_start = time.perf_counter()
         anchors = _top_rho_candidates(candidates, rho, k)
         full_validation_objective = anchor_objective(
             anchors,
@@ -174,7 +196,17 @@ def _run_for_k(example: QueryExample, cfg: AppConfig, k: int, seed: int) -> Retr
         )
         refined = _identity_refinement(anchors, full_validation_objective, distance_matrix)
         exact_phase1 = True
+        stage_diagnostics["candidate_generation"] = make_stage_metrics(
+            stage="candidate_generation",
+            selected_node_ids=_node_ids(nodes, anchors),
+            gold_node_ids=example.gold_node_ids,
+            candidate_node_ids=_node_ids(nodes, candidates),
+            token_count=_context_tokens(nodes, anchors),
+            latency_ms=(time.perf_counter() - stage_start) * 1000.0,
+            extra={"candidate_strategy": "top_rho"},
+        )
     else:
+        stage_start = time.perf_counter()
         samples = make_weighted_samples(
             candidates,
             rho,
@@ -202,6 +234,20 @@ def _run_for_k(example: QueryExample, cfg: AppConfig, k: int, seed: int) -> Retr
             )
             for sample in samples
         ]
+        sampled_ids = sorted({int(idx) for sample in samples for idx in sample})
+        stage_diagnostics["candidate_generation"] = make_stage_metrics(
+            stage="candidate_generation",
+            selected_node_ids=_node_ids(nodes, sampled_ids),
+            gold_node_ids=example.gold_node_ids,
+            candidate_node_ids=_node_ids(nodes, candidates),
+            token_count=_context_tokens(nodes, sampled_ids),
+            latency_ms=(time.perf_counter() - stage_start) * 1000.0,
+            extra={
+                "candidate_strategy": "weighted_samples",
+                "num_samples": len(samples),
+                "sampled_candidate_count": len(sampled_ids),
+            },
+        )
 
         if retrieval_variant == "sample_only":
             anchors, sample_objective, full_validation_objective, selected_sample_index = (
@@ -233,6 +279,7 @@ def _run_for_k(example: QueryExample, cfg: AppConfig, k: int, seed: int) -> Retr
             "sample_full_validation_refine_cell_renderer",
             "adaptive_k",
         }:
+            stage_start = time.perf_counter()
             refined = refine_medoids_monotone(
                 anchors,
                 candidate_indices=candidates,
@@ -243,11 +290,72 @@ def _run_for_k(example: QueryExample, cfg: AppConfig, k: int, seed: int) -> Retr
                 anchor_penalty=cfg.pamae.anchor_penalty,
                 max_iters=cfg.pamae.refinement_iters,
             )
+            stage_diagnostics["local_refinement"] = make_stage_metrics(
+                stage="local_refinement",
+                selected_node_ids=_node_ids(nodes, refined.anchors),
+                gold_node_ids=example.gold_node_ids,
+                token_count=_context_tokens(nodes, refined.anchors),
+                latency_ms=(time.perf_counter() - stage_start) * 1000.0,
+                extra={
+                    "refinement_accepted": refined.accepted,
+                    "objective_before": refined.before.total,
+                    "objective_after": refined.after.total,
+                },
+            )
         else:
             refined = _identity_refinement(anchors, full_validation_objective, distance_matrix)
+            stage_diagnostics["local_refinement"] = make_stage_metrics(
+                stage="local_refinement",
+                selected_node_ids=_node_ids(nodes, refined.anchors),
+                gold_node_ids=example.gold_node_ids,
+                token_count=_context_tokens(nodes, refined.anchors),
+                latency_ms=0.0,
+                status="identity",
+                extra={
+                    "refinement_accepted": refined.accepted,
+                    "objective_before": refined.before.total,
+                    "objective_after": refined.after.total,
+                },
+            )
         exact_phase1 = all(result.exact for result in phase1_results)
 
     anchors = refined.anchors
+    stage_diagnostics.setdefault(
+        "local_refinement",
+        make_stage_metrics(
+            stage="local_refinement",
+            selected_node_ids=_node_ids(nodes, refined.anchors),
+            gold_node_ids=example.gold_node_ids,
+            token_count=_context_tokens(nodes, refined.anchors),
+            latency_ms=0.0,
+            status="identity",
+            extra={
+                "refinement_accepted": refined.accepted,
+                "objective_before": refined.before.total,
+                "objective_after": refined.after.total,
+            },
+        ),
+    )
+    stage_diagnostics["content_graph_projection"] = make_stage_metrics(
+        stage="content_graph_projection",
+        selected_node_ids=_all_node_ids(nodes),
+        gold_node_ids=example.gold_node_ids,
+        token_count=universe_token_count,
+        latency_ms=0.0,
+        status="not_configured",
+    )
+    stage_diagnostics["reranking_scoring"] = make_stage_metrics(
+        stage="reranking_scoring",
+        selected_node_ids=_node_ids(nodes, anchors),
+        gold_node_ids=example.gold_node_ids,
+        token_count=_context_tokens(nodes, anchors),
+        latency_ms=0.0,
+        extra={
+            "objective_after_refinement": refined.after.total,
+            "anchor_count": len(anchors),
+        },
+    )
+    stage_start = time.perf_counter()
     context_indices = render_context_indices(
         nodes,
         anchors,
@@ -263,6 +371,7 @@ def _run_for_k(example: QueryExample, cfg: AppConfig, k: int, seed: int) -> Retr
     anchor_ids = _node_ids(nodes, anchors)
     context_node_ids = _node_ids(nodes, context_indices)
     final_context_tokens = _context_tokens(nodes, context_indices)
+    render_latency_ms = (time.perf_counter() - stage_start) * 1000.0
     support_recall = recall(context_node_ids, example.gold_node_ids)
     support_hit = hit(context_node_ids, example.gold_node_ids)
     max_context_nodes = cfg.pamae.max_context_nodes
@@ -308,6 +417,18 @@ def _run_for_k(example: QueryExample, cfg: AppConfig, k: int, seed: int) -> Retr
         "node_budget_exceeded_by_anchors": node_budget_exceeded_by_anchors,
         "context_budget_policy": "anchors_then_cell_top_rho_then_score_fill",
         "max_context_nodes_less_than_k": bool(node_budget_active and max_context_nodes < k),
+        "stage_diagnostics": {
+            **stage_diagnostics,
+            "context_rendering": make_stage_metrics(
+                stage="context_rendering",
+                selected_node_ids=context_node_ids,
+                gold_node_ids=example.gold_node_ids,
+                context_node_ids=context_node_ids,
+                rendered_node_ids=context_node_ids,
+                token_count=final_context_tokens,
+                latency_ms=render_latency_ms,
+            ),
+        },
     }
 
     return RetrievalResult(
