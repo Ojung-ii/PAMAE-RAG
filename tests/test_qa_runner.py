@@ -70,3 +70,99 @@ def test_run_qa_scores_retrieved_context(tmp_path: Path):
     row = json.loads(output_path.read_text(encoding="utf-8").splitlines()[0])
     assert row["prediction"] == "Ada was born in London."
     assert row["generation_ms"] >= 0.0
+
+
+def test_run_qa_oracle_context_uses_gold_support(tmp_path: Path):
+    input_path = tmp_path / "examples.jsonl"
+    output_path = tmp_path / "oracle_qa.jsonl"
+    metrics_path = tmp_path / "oracle_metrics.json"
+    _write_jsonl(
+        input_path,
+        [
+            {
+                "query_id": "q1",
+                "query": "Where was Ada born?",
+                "answer": "London",
+                "gold_node_ids": ["n1"],
+                "nodes": [
+                    {
+                        "node_id": "n1",
+                        "text": "Ada was born in London.",
+                        "embedding": [1.0, 0.0],
+                        "token_count": 5,
+                    },
+                    {
+                        "node_id": "n2",
+                        "text": "Grace studied mathematics.",
+                        "embedding": [0.0, 1.0],
+                        "token_count": 3,
+                    },
+                ],
+            }
+        ],
+    )
+
+    metrics = run_qa(
+        input_path,
+        prediction_path=None,
+        output_path=output_path,
+        metrics_output_path=metrics_path,
+        oracle_context=True,
+    )
+
+    assert metrics.oracle is True
+    assert metrics.mean_context_recall == 1.0
+    row = json.loads(output_path.read_text(encoding="utf-8").splitlines()[0])
+    assert row["oracle"] is True
+    assert row["context_node_ids"] == ["n1"]
+    assert row["diagnostics"]["context_source"] == "gold_support"
+
+
+def test_run_qa_oracle_context_can_read_gold_from_corpus(tmp_path: Path):
+    input_path = tmp_path / "examples.jsonl"
+    corpus_path = tmp_path / "corpus.json"
+    output_path = tmp_path / "oracle_qa.jsonl"
+    metrics_path = tmp_path / "oracle_metrics.json"
+    _write_jsonl(
+        input_path,
+        [
+            {
+                "query_id": "q1",
+                "query": "Where was Ada born?",
+                "answer": "London",
+                "gold_node_ids": ["toy:doc:1"],
+                "nodes": [
+                    {
+                        "node_id": "toy:doc:0",
+                        "text": "Grace studied mathematics.",
+                        "embedding": [0.0, 1.0],
+                        "token_count": 3,
+                    },
+                ],
+            }
+        ],
+    )
+    corpus_path.write_text(
+        json.dumps(
+            [
+                {"title": "Grace", "text": "Grace studied mathematics."},
+                {"title": "Ada", "text": "Ada was born in London."},
+            ]
+        ),
+        encoding="utf-8",
+    )
+
+    metrics = run_qa(
+        input_path,
+        prediction_path=None,
+        output_path=output_path,
+        metrics_output_path=metrics_path,
+        oracle_context=True,
+        corpus_path=corpus_path,
+    )
+
+    assert metrics.mean_context_recall == 1.0
+    row = json.loads(output_path.read_text(encoding="utf-8").splitlines()[0])
+    assert row["context_node_ids"] == ["toy:doc:1"]
+    assert row["diagnostics"]["corpus_context_node_count"] == 1
+    assert row["diagnostics"]["missing_context_node_ids"] == []

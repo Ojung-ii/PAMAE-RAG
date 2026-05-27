@@ -1,16 +1,21 @@
 from __future__ import annotations
 
 import json
+import re
 import time
 from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import Any
+
+import numpy as np
 
 from pamae_rag.data.io import read_jsonl
 from pamae_rag.data.schema import EvidenceNode, QueryExample
 from pamae_rag.eval.support_recall import f1_score, precision, recall
 from pamae_rag.qa.generator import DeterministicExtractiveSentenceGenerator, PROMPT_TEXT
 from pamae_rag.qa.metrics import METRIC_ID, gold_answers, score_json, score_prediction
+
+_CORPUS_NODE_RE = re.compile(r"^(?P<dataset>.+):doc:(?P<index>[0-9]+)$")
 
 
 @dataclass(frozen=True)
@@ -35,7 +40,9 @@ class QAMetrics:
         return asdict(self)
 
 
-def _read_predictions(path: str | Path) -> dict[str, dict[str, Any]]:
+def _read_predictions(path: str | Path | None) -> dict[str, dict[str, Any]]:
+    if path is None:
+        return {}
     predictions: dict[str, dict[str, Any]] = {}
     with Path(path).open("r", encoding="utf-8") as f:
         for line in f:
@@ -46,13 +53,60 @@ def _read_predictions(path: str | Path) -> dict[str, dict[str, Any]]:
     return predictions
 
 
+def _read_corpus(path: str | Path | None) -> list[dict[str, Any]]:
+    if path is None:
+        return []
+    raw = json.loads(Path(path).read_text(encoding="utf-8"))
+    if not isinstance(raw, list):
+        raise ValueError(f"Corpus must be a JSON list: {path}")
+    return [dict(item) for item in raw if isinstance(item, dict)]
+
+
 def _mean(values: list[float]) -> float:
     return float(sum(values) / len(values)) if values else 0.0
 
 
-def _node_order(nodes: tuple[EvidenceNode, ...], node_ids: list[str]) -> list[EvidenceNode]:
+def _corpus_index(node_id: str) -> int | None:
+    match = _CORPUS_NODE_RE.match(node_id)
+    return int(match.group("index")) if match else None
+
+
+def _node_from_corpus(node_id: str, corpus: list[dict[str, Any]]) -> EvidenceNode | None:
+    index = _corpus_index(node_id)
+    if index is None or index < 0 or index >= len(corpus):
+        return None
+    item = corpus[index]
+    text = str(item.get("text") or "")
+    title = str(item.get("title") or "")
+    return EvidenceNode(
+        node_id=node_id,
+        text=text,
+        embedding=np.zeros(1, dtype=np.float64),
+        token_count=max(1, len(text.split())),
+        metadata={"title": title, "corpus_index": index},
+    )
+
+
+def _node_order(
+    nodes: tuple[EvidenceNode, ...],
+    node_ids: list[str],
+    corpus: list[dict[str, Any]] | None = None,
+) -> tuple[list[EvidenceNode], list[str], int]:
     by_id = {node.node_id: node for node in nodes}
-    return [by_id[node_id] for node_id in node_ids if node_id in by_id]
+    ordered: list[EvidenceNode] = []
+    missing: list[str] = []
+    corpus_count = 0
+    for node_id in node_ids:
+        if node_id in by_id:
+            ordered.append(by_id[node_id])
+            continue
+        corpus_node = _node_from_corpus(node_id, corpus or [])
+        if corpus_node is None:
+            missing.append(node_id)
+            continue
+        ordered.append(corpus_node)
+        corpus_count += 1
+    return ordered, missing, corpus_count
 
 
 def _context_text(nodes: list[EvidenceNode]) -> str:
@@ -78,6 +132,13 @@ def _prediction_context_ids(example: QueryExample, prediction: dict[str, Any]) -
     return out
 
 
+def _gold_context_ids(example: QueryExample) -> list[str]:
+    gold = set(example.gold_node_ids)
+    present = [node.node_id for node in example.nodes if node.node_id in gold]
+    remaining = sorted(gold - set(present), key=lambda node_id: (_corpus_index(node_id) is None, _corpus_index(node_id) or 0, node_id))
+    return [*present, *remaining]
+
+
 def _float_value(value: Any) -> float | None:
     if value is None:
         return None
@@ -89,14 +150,17 @@ def _float_value(value: Any) -> float | None:
 
 def run_qa(
     input_path: str | Path,
-    prediction_path: str | Path,
+    prediction_path: str | Path | None,
     output_path: str | Path,
     metrics_output_path: str | Path,
     *,
     limit: int | None = None,
+    oracle_context: bool = False,
+    corpus_path: str | Path | None = None,
 ) -> QAMetrics:
     examples = read_jsonl(input_path, limit=limit)
     predictions = _read_predictions(prediction_path)
+    corpus = _read_corpus(corpus_path)
     generator = DeterministicExtractiveSentenceGenerator()
     rows: list[dict[str, Any]] = []
     exact_matches: list[float] = []
@@ -113,10 +177,15 @@ def run_qa(
     for example in examples:
         prediction = predictions.get(example.query_id)
         if prediction is None:
-            missing_prediction_count += 1
+            if not oracle_context:
+                missing_prediction_count += 1
             prediction = {"query_id": example.query_id, "context_node_ids": []}
-        context_ids = _prediction_context_ids(example, prediction)
-        context_nodes = _node_order(example.nodes, context_ids)
+        context_ids = _gold_context_ids(example) if oracle_context else _prediction_context_ids(example, prediction)
+        context_nodes, missing_context_ids, corpus_context_count = _node_order(
+            example.nodes,
+            context_ids,
+            corpus,
+        )
         context = _context_text(context_nodes)
         start = time.perf_counter()
         generated = generator.generate(example.query, context)
@@ -140,14 +209,14 @@ def run_qa(
             context_f1s.append(c_f1)
         token_count = float(_context_tokens(context_nodes))
         context_tokens.append(token_count)
-        retrieval_ms = _float_value(prediction.get("latency_ms"))
+        retrieval_ms = None if oracle_context else _float_value(prediction.get("latency_ms"))
         if retrieval_ms is not None:
             retrieval_latencies.append(retrieval_ms)
         generation_latencies.append(generation_ms)
         rows.append(
             {
                 "query_id": example.query_id,
-                "oracle": False,
+                "oracle": bool(oracle_context),
                 "prediction": generated.answer,
                 "gold_answers": list(answers),
                 **score_payload,
@@ -164,6 +233,9 @@ def run_qa(
                     "prompt_text": PROMPT_TEXT,
                     "metric_id": METRIC_ID,
                     "selected_sentence_index": generated.selected_sentence_index,
+                    "context_source": "gold_support" if oracle_context else "retrieval_prediction",
+                    "missing_context_node_ids": missing_context_ids,
+                    "corpus_context_node_count": corpus_context_count,
                     "source_prediction_query_id": prediction.get("query_id"),
                 },
             }
@@ -171,7 +243,7 @@ def run_qa(
 
     metrics = QAMetrics(
         num_queries=len(examples),
-        oracle=False,
+        oracle=bool(oracle_context),
         generator_id=generator.generator_id,
         prompt_id=generator.prompt_id,
         metric_id=METRIC_ID,
