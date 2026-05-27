@@ -20,6 +20,9 @@ Current 2Wiki20 QA measurements:
 | baseline_2wiki20 | legacy_hybrid_sem_graph | false | 0.8625 | n/a | 0.0250 | 0.5000 | 0.2347 | 497.1 | 311.8 | 0.4 | 0.0000 | 0.0355 | 0.0140 | measurement_only |
 | oracle_2wiki20 | direct_gold_context | true | n/a | n/a | n/a | 1.0000 | 1.0000 | 279.7 | 0.0 | 0.2 | 0.0000 | 0.0495 | 0.0000 | measurement_only |
 | content_graph_2wiki20 | content_hybrid_sem_graph | false | 0.8625 | 0.8000 | 0.3500 | 0.6000 | 0.2843 | 350.1 | 1260.7 | 0.3 | 0.0000 | 0.0580 | -0.0085 | measurement_limited |
+| baseline_hotpot20 | legacy_hybrid_sem_graph | false | 0.9750 | n/a | 0.1500 | 0.7250 | 0.3327 | 504.4 | 318.3 | 0.4 | 0.0000 | 0.0672 | 0.0040 | measurement_only |
+| oracle_hotpot20 | direct_gold_context | true | n/a | n/a | n/a | 1.0000 | 1.0000 | 153.0 | 0.0 | 0.1 | 0.0000 | 0.0711 | 0.0000 | measurement_only |
+| content_graph_hotpot20 | content_hybrid_sem_graph | false | 0.9750 | 0.9250 | 0.3750 | 0.6750 | 0.2871 | 478.8 | 823.8 | 0.4 | 0.0000 | 0.0624 | 0.0087 | no_adoption |
 
 Current stage-wise bottleneck read:
 
@@ -44,3 +47,7 @@ Content graph run:
 Measurement caution:
 
 The fixed offline extractive generator gives content graph F1 above oracle F1. That means the current oracle is not a strict upper bound for this generator. Do not claim successful oracle-gap reduction until the generator/oracle measurement is strengthened or replaced by a real fixed QA generator.
+
+HotpotQA risk check:
+
+The content graph improves refinement survival (`0.3750` vs `0.1500`) but reduces rendered recall (`0.6750` vs `0.7250`) and QA F1 (`0.0624` vs `0.0672`). This prevents adoption as a performance improvement under the QA-gated criterion.
