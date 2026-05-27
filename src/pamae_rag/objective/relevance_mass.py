@@ -219,6 +219,14 @@ def relevance_scores(
     raise ValueError(f"Unknown relevance mode: {mode}")
 
 
+def normalize_relevance_scores(scores: np.ndarray, smoothing: float = 1e-8) -> np.ndarray:
+    scores = np.maximum(np.asarray(scores, dtype=np.float64), 0.0) + smoothing
+    total = float(scores.sum())
+    if total <= 0:
+        return np.full(scores.shape[0], 1.0 / scores.shape[0], dtype=np.float64)
+    return scores / total
+
+
 def relevance_mass(
     nodes: tuple[EvidenceNode, ...] | list[EvidenceNode],
     smoothing: float = 1e-8,
@@ -229,11 +237,7 @@ def relevance_mass(
     weights: dict[str, float] | None = None,
 ) -> np.ndarray:
     scores = relevance_scores(nodes, mode=mode, query=query, query_metadata=query_metadata, weights=weights)
-    scores = np.maximum(scores, 0.0) + smoothing
-    total = float(scores.sum())
-    if total <= 0:
-        return np.full(len(nodes), 1.0 / len(nodes), dtype=np.float64)
-    return scores / total
+    return normalize_relevance_scores(scores, smoothing=smoothing)
 
 
 def relevance_diagnostics(
@@ -244,8 +248,14 @@ def relevance_diagnostics(
     query_metadata: dict[str, Any] | None = None,
     weights: dict[str, float] | None = None,
     top_k: int = 5,
+    scores: np.ndarray | None = None,
 ) -> dict[str, Any]:
-    scores = relevance_scores(nodes, mode=mode, query=query, query_metadata=query_metadata, weights=weights)
+    if scores is None:
+        scores = relevance_scores(nodes, mode=mode, query=query, query_metadata=query_metadata, weights=weights)
+    else:
+        scores = np.asarray(scores, dtype=np.float64)
+        if scores.shape != (len(nodes),):
+            raise ValueError("precomputed relevance scores must match node count")
     semantic_available = bool(_semantic_scores(nodes, query_metadata)[1]) if mode == "hybrid_title_semantic" else False
     ranked = sorted(range(len(nodes)), key=lambda i: (-float(scores[int(i)]), int(i)))[:top_k]
     return {

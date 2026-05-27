@@ -2,7 +2,12 @@ import numpy as np
 
 from pamae_rag.config import load_config
 from pamae_rag.data.schema import EvidenceNode
-from pamae_rag.objective.relevance_mass import relevance_diagnostics, relevance_mass
+from pamae_rag.objective.relevance_mass import (
+    normalize_relevance_scores,
+    relevance_diagnostics,
+    relevance_mass,
+    relevance_scores,
+)
 
 
 class TrapDict(dict):
@@ -97,6 +102,25 @@ def test_hybrid_title_semantic_fallback():
     assert np.allclose(hybrid, title_aware)
     assert diagnostics["semantic_component_available"] is False
     assert "George Rankin" in diagnostics["query_title_spans"]
+
+
+def test_precomputed_relevance_scores_match_mass_and_diagnostics():
+    nodes = (
+        _node("subject", "George Rankin", "George Rankin was a representative.", 0.01),
+        _node("surname", "Rankin", "A list of people named Rankin.", 0.99),
+    )
+    query = "Who was George Rankin?"
+    scores = relevance_scores(nodes, mode="title_aware", query=query)
+
+    assert np.allclose(
+        normalize_relevance_scores(scores),
+        relevance_mass(nodes, mode="title_aware", query=query),
+    )
+    assert relevance_diagnostics(nodes, mode="title_aware", query=query, scores=scores) == relevance_diagnostics(
+        nodes,
+        mode="title_aware",
+        query=query,
+    )
 
 
 def test_diagnostic_subject_title_raises_subject_node_above_current_without_gold_leakage():

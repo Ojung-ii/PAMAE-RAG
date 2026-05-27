@@ -12,7 +12,11 @@ from pamae_rag.graph.distances import build_distance_matrix, validate_square_dis
 from pamae_rag.graph.graph_distance import build_graph_aware_distance_matrix
 from pamae_rag.graph.universe import select_universe_by_mass
 from pamae_rag.objective.anchor_objective import ObjectiveBreakdown, anchor_objective, assign_to_anchors
-from pamae_rag.objective.relevance_mass import relevance_diagnostics, relevance_mass
+from pamae_rag.objective.relevance_mass import (
+    normalize_relevance_scores,
+    relevance_diagnostics,
+    relevance_scores,
+)
 from pamae_rag.pamae.global_search import SearchResult
 from pamae_rag.pamae.global_search import exact_k_medoids_on_sample
 from pamae_rag.pamae.refinement import RefinementResult, refine_medoids_monotone
@@ -127,19 +131,21 @@ def _run_for_k(example: QueryExample, cfg: AppConfig, k: int, seed: int) -> Retr
     distance_matrix = graph_result.distance_matrix
     validate_square_distance_matrix(distance_matrix)
 
-    rho = relevance_mass(
+    rho_scores = relevance_scores(
         nodes,
         mode=cfg.pamae.relevance_mode,
         query=example.query,
         query_metadata=example.metadata,
         weights=cfg.pamae.relevance_weights,
     )
+    rho = normalize_relevance_scores(rho_scores)
     rho_diagnostics = relevance_diagnostics(
         nodes,
         mode=cfg.pamae.relevance_mode,
         query=example.query,
         query_metadata=example.metadata,
         weights=cfg.pamae.relevance_weights,
+        scores=rho_scores,
     )
     token_costs = np.asarray([max(1, node.token_count) / 1000.0 for node in nodes], dtype=np.float64)
     candidates = candidate_indices(nodes, cfg.universe.anchor_node_types)
