@@ -1,0 +1,17 @@
+{
+  "num_queries": 20,
+  "oracle": false,
+  "generator_id": "deterministic_extractive_sentence_v1",
+  "prompt_id": "closed_book_free_context_qa_v1",
+  "metric_id": "squad_normalized_em_f1_v1",
+  "mean_exact_match": 0.0,
+  "mean_f1": 0.03547759103641457,
+  "mean_context_recall": 0.5,
+  "mean_context_precision": 0.15803571428571428,
+  "mean_context_f1": 0.23472222222222222,
+  "avg_context_tokens": 497.1,
+  "avg_retrieval_ms": 322.6049000000001,
+  "avg_generation_ms": 0.39590000000000003,
+  "missing_prediction_count": 0,
+  "missing_answer_count": 0
+}
