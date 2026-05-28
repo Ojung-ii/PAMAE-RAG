@@ -30,7 +30,7 @@ from pamae_rag.qa.metrics import gold_answers, normalize_answer
 from pamae_rag.rendering.basin_aware_renderer import render_basin_path_closure_indices
 from pamae_rag.rendering.gold_path_oracle_renderer import render_gold_path_oracle_indices
 from pamae_rag.rendering.path_neighborhood_renderer import render_path_neighborhood_indices
-from pamae_rag.retrieval.renderer import render_context_indices
+from pamae_rag.retrieval.renderer import render_context_indices, render_context_order_indices
 from pamae_rag.selection.basin_preserving import (
     BasinPreservingSelectionResult,
     assign_query_basins,
@@ -539,6 +539,7 @@ def _run_for_k(example: QueryExample, cfg: AppConfig, k: int, seed: int) -> Retr
             covered_basin_masses=basin_masses,
         )
         context_indices = basin_render.indices
+        renderer_order_indices = list(context_indices)
         basin_render_diagnostics = dict(basin_render.diagnostics)
     elif renderer == "gold_path_oracle":
         gold_path_render = render_gold_path_oracle_indices(
@@ -553,6 +554,7 @@ def _run_for_k(example: QueryExample, cfg: AppConfig, k: int, seed: int) -> Retr
             disconnected_distance=disconnected_distance,
         )
         context_indices = gold_path_render.indices
+        renderer_order_indices = list(context_indices)
         basin_render_diagnostics = dict(gold_path_render.diagnostics)
     elif renderer == "path_neighborhood":
         path_neighborhood = render_path_neighborhood_indices(
@@ -568,6 +570,7 @@ def _run_for_k(example: QueryExample, cfg: AppConfig, k: int, seed: int) -> Retr
             example=example,
         )
         context_indices = path_neighborhood.indices
+        renderer_order_indices = list(context_indices)
         basin_render_diagnostics = dict(path_neighborhood.diagnostics)
     else:
         context_indices = render_context_indices(
@@ -581,9 +584,32 @@ def _run_for_k(example: QueryExample, cfg: AppConfig, k: int, seed: int) -> Retr
             renderer=renderer,
             gamma=cfg.pamae.renderer_gamma,
         )
+        renderer_order_indices = render_context_order_indices(
+            nodes,
+            anchors,
+            distance_matrix=distance_matrix,
+            rho=rho,
+            evidence_per_anchor=cfg.pamae.evidence_per_anchor,
+            renderer=renderer,
+            gamma=cfg.pamae.renderer_gamma,
+        )
 
     anchor_ids = _node_ids(nodes, anchors)
     context_node_ids = _node_ids(nodes, context_indices)
+    renderer_order_node_ids = _node_ids(nodes, renderer_order_indices)
+    selected_basin_ids = {
+        int(diagnostic_node_to_basin[int(anchor)])
+        for anchor in anchors
+        if int(anchor) in diagnostic_node_to_basin
+    }
+    selected_basin_node_ids = _node_ids(
+        nodes,
+        sorted(
+            int(idx)
+            for idx, basin_id in diagnostic_node_to_basin.items()
+            if int(basin_id) in selected_basin_ids
+        ),
+    )
     final_context_tokens = _context_tokens(nodes, context_indices)
     render_latency_ms = (time.perf_counter() - stage_start) * 1000.0
     support_recall = recall(context_node_ids, example.gold_node_ids)
@@ -639,6 +665,13 @@ def _run_for_k(example: QueryExample, cfg: AppConfig, k: int, seed: int) -> Retr
         "num_samples": len(samples),
         "sample_sizes": [len(s) for s in samples],
         "selected_sample_index": selected_sample_index,
+        "active_universe_node_ids": list(_all_node_ids(nodes)),
+        "candidate_node_ids": list(_node_ids(nodes, candidates)),
+        "projected_node_ids": list(projection_node_ids),
+        "pre_refinement_anchor_ids": list(pre_refine_anchor_ids),
+        "diagnostic_query_anchor_node_ids": list(_node_ids(nodes, diagnostic_query_anchors)),
+        "diagnostic_selected_basin_node_ids": list(selected_basin_node_ids),
+        "renderer_budget_order_node_ids": list(renderer_order_node_ids),
         "phase1_exact": exact_phase1,
         "phase1_num_combinations": [r.num_combinations for r in phase1_results],
         "sample_objective": _objective_json(sample_objective),

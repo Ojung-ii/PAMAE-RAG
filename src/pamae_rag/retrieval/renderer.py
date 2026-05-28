@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Sequence
+from typing import Iterable, Sequence
 
 import numpy as np
 
@@ -49,6 +49,76 @@ def _score_fill_order(anchors: Sequence[int], distance_matrix: np.ndarray, rho: 
             int(i),
         ),
     )
+
+
+def _dedupe(indices: Iterable[int]) -> list[int]:
+    return list(dict.fromkeys(int(idx) for idx in indices))
+
+
+def _render_old_order(
+    nodes: Sequence[EvidenceNode],
+    anchors: Sequence[int],
+    distance_matrix: np.ndarray,
+    rho: np.ndarray,
+    evidence_per_anchor: int,
+    gamma: float,
+) -> list[int]:
+    anchor_list = _dedupe(anchors)
+    order: list[int] = [*anchor_list]
+    for anchor in anchor_list:
+        nearest = np.argsort(distance_matrix[:, int(anchor)])
+        candidate_window = nearest[: max(evidence_per_anchor * 4, evidence_per_anchor + 1)]
+        ranked = sorted(
+            candidate_window,
+            key=lambda i: (float(distance_matrix[int(i), int(anchor)]), -float(rho[int(i)]), int(i)),
+        )
+        order.extend(int(idx) for idx in ranked[: evidence_per_anchor + 1])
+    order.extend(_score_fill_order(anchor_list, distance_matrix, rho, gamma))
+    return _dedupe(order)
+
+
+def _render_nearest_order(
+    nodes: Sequence[EvidenceNode],
+    anchors: Sequence[int],
+    distance_matrix: np.ndarray,
+    rho: np.ndarray,
+    evidence_per_anchor: int,
+    gamma: float,
+) -> list[int]:
+    anchor_list = _dedupe(anchors)
+    order: list[int] = [*anchor_list]
+    for anchor in anchor_list:
+        nearest = sorted(
+            range(len(nodes)),
+            key=lambda i: (float(distance_matrix[int(i), int(anchor)]), -float(rho[int(i)]), int(i)),
+        )
+        order.extend(int(idx) for idx in nearest[: evidence_per_anchor + 1])
+    order.extend(_score_fill_order(anchor_list, distance_matrix, rho, gamma))
+    return _dedupe(order)
+
+
+def _render_cell_top_rho_order(
+    anchors: Sequence[int],
+    distance_matrix: np.ndarray,
+    rho: np.ndarray,
+    gamma: float,
+) -> list[int]:
+    anchor_list = _dedupe(anchors)
+    if not anchor_list:
+        return []
+    order: list[int] = [*anchor_list]
+    nearest_pos, nearest_dist = _nearest_anchor_distances(anchor_list, distance_matrix)
+    for pos in range(len(anchor_list)):
+        rows = np.where(nearest_pos == pos)[0]
+        if rows.size == 0:
+            continue
+        best = max(
+            (int(i) for i in rows.tolist()),
+            key=lambda i: (float(rho[i]), -float(nearest_dist[i]), -int(i)),
+        )
+        order.append(best)
+    order.extend(_score_fill_order(anchor_list, distance_matrix, rho, gamma))
+    return _dedupe(order)
 
 
 def _render_old(
@@ -239,6 +309,29 @@ def render_context_indices(
             max_context_nodes,
             gamma,
         )
+    raise ValueError(f"Unknown renderer: {renderer}")
+
+
+def render_context_order_indices(
+    nodes: Sequence[EvidenceNode],
+    anchors: Sequence[int],
+    distance_matrix: np.ndarray,
+    rho: np.ndarray,
+    evidence_per_anchor: int = 2,
+    *,
+    renderer: str = "old",
+    gamma: float = 0.0,
+) -> list[int]:
+    if renderer == "old":
+        return _render_old_order(nodes, anchors, distance_matrix, rho, evidence_per_anchor, gamma)
+    if renderer == "anchor_only":
+        return _dedupe(anchors)
+    if renderer == "nearest":
+        return _render_nearest_order(nodes, anchors, distance_matrix, rho, evidence_per_anchor, gamma)
+    if renderer == "cell_top_rho":
+        return _render_cell_top_rho_order(anchors, distance_matrix, rho, gamma)
+    if renderer == "global_top_rho":
+        return _dedupe([*anchors, *_score_fill_order(anchors, distance_matrix, rho, gamma)])
     raise ValueError(f"Unknown renderer: {renderer}")
 
 
