@@ -60,15 +60,15 @@ Automated comparison guard:
 - Hotpot20: [compare_hotpot20.md](compare_hotpot20.md) reports `oracle_dominance_valid=true`, but content graph F1 is lower than baseline F1. This blocks content graph adoption as a performance improvement.
 - The guard command supports `--require-valid-oracle`; with that flag, the 2Wiki comparison exits nonzero and the Hotpot comparison passes.
 
-Answer coverage diagnostic:
+Answer selection diagnostic:
 
-| run | answer_coverage |
-| --- | ---: |
-| baseline_2wiki20 | 0.3000 |
-| oracle_2wiki20 | 0.8000 |
-| content_graph_2wiki20 | 0.3000 |
-| baseline_hotpot20 | 0.5000 |
-| oracle_hotpot20 | 0.9000 |
-| content_graph_hotpot20 | 0.5500 |
+| run | answer_coverage | selected_answer_coverage |
+| --- | ---: | ---: |
+| baseline_2wiki20 | 0.3000 | 0.0500 |
+| oracle_2wiki20 | 0.8000 | 0.0500 |
+| content_graph_2wiki20 | 0.3000 | 0.0500 |
+| baseline_hotpot20 | 0.5000 | 0.2500 |
+| oracle_hotpot20 | 0.9000 | 0.3000 |
+| content_graph_hotpot20 | 0.5500 | 0.2000 |
 
-The oracle contexts contain answer strings far more often than retrieved contexts, but the fixed extractive sentence generator still produces low oracle QA F1. This confirms a final-QA generator bottleneck in addition to retrieval/context losses, and keeps performance changes gated on end-to-end QA rather than retrieval-only gains.
+The oracle contexts contain answer strings far more often than retrieved contexts, but the fixed extractive sentence generator often selects a non-answer sentence even when the answer appears in the context. This confirms a final-QA selection bottleneck in addition to retrieval/context losses, and keeps performance changes gated on end-to-end QA rather than retrieval-only gains.

@@ -10,9 +10,10 @@
   "mean_context_precision": 0.21702380952380956,
   "mean_context_f1": 0.3327380952380953,
   "mean_answer_coverage": 0.5,
+  "mean_selected_answer_coverage": 0.25,
   "avg_context_tokens": 504.35,
   "avg_retrieval_ms": 318.30685,
-  "avg_generation_ms": 0.39575,
+  "avg_generation_ms": 0.40595,
   "missing_prediction_count": 0,
   "missing_answer_count": 0,
   "stage_diagnostics": {
@@ -82,12 +83,13 @@
         "gold_support_count": 2.0,
         "gold_support_surviving_count": 1.45,
         "gold_supporting_evidence_survival": 0.725,
-        "latency_ms": 0.39575,
+        "latency_ms": 0.40595,
         "qa_exact_match": 0.0,
         "qa_f1": 0.06717360701706053,
         "rendered_f1": 0.3327380952380953,
         "rendered_precision": 0.21702380952380956,
         "rendered_recall": 0.725,
+        "selected_answer_coverage": 0.25,
         "survivor_count": 6.65,
         "token_count": 504.35
       }

@@ -32,6 +32,7 @@ class QAMetrics:
     mean_context_precision: float
     mean_context_f1: float
     mean_answer_coverage: float
+    mean_selected_answer_coverage: float
     avg_context_tokens: float
     avg_retrieval_ms: float
     avg_generation_ms: float
@@ -190,6 +191,7 @@ def run_qa(
     retrieval_latencies: list[float] = []
     generation_latencies: list[float] = []
     answer_coverages: list[float] = []
+    selected_answer_coverages: list[float] = []
     missing_prediction_count = 0
     missing_answer_count = 0
 
@@ -217,6 +219,9 @@ def run_qa(
         answer_coverage = _answer_coverage(context, answers)
         if answer_coverage is not None:
             answer_coverages.append(answer_coverage)
+        selected_answer_coverage = _answer_coverage(generated.answer, answers)
+        if selected_answer_coverage is not None:
+            selected_answer_coverages.append(selected_answer_coverage)
         if answer_score is not None:
             exact_matches.append(answer_score.exact_match)
             f1s.append(answer_score.f1)
@@ -246,6 +251,7 @@ def run_qa(
             "qa_exact_match": score_payload["exact_match"],
             "qa_f1": score_payload["f1"],
             "answer_coverage": answer_coverage,
+            "selected_answer_coverage": selected_answer_coverage,
             "context_source": "gold_support" if oracle_context else "retrieval_prediction",
         }
         stage_diagnostics["final_qa"] = make_stage_metrics(
@@ -272,6 +278,7 @@ def run_qa(
                 "context_f1": c_f1,
                 "context_tokens": token_count,
                 "answer_coverage": answer_coverage,
+                "selected_answer_coverage": selected_answer_coverage,
                 "retrieval_ms": retrieval_ms,
                 "generation_ms": generation_ms,
                 "stage_diagnostics": stage_diagnostics,
@@ -301,6 +308,7 @@ def run_qa(
         mean_context_precision=_mean(context_precisions),
         mean_context_f1=_mean(context_f1s),
         mean_answer_coverage=_mean(answer_coverages),
+        mean_selected_answer_coverage=_mean(selected_answer_coverages),
         avg_context_tokens=_mean(context_tokens),
         avg_retrieval_ms=_mean(retrieval_latencies),
         avg_generation_ms=_mean(generation_latencies),
