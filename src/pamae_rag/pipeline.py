@@ -25,6 +25,8 @@ from pamae_rag.pamae.global_search import exact_k_medoids_on_sample
 from pamae_rag.pamae.refinement import RefinementResult, refine_medoids_monotone
 from pamae_rag.pamae.sampling import make_weighted_samples
 from pamae_rag.pamae.selection import select_by_full_objective
+from pamae_rag.qa.metrics import gold_answers, normalize_answer
+from pamae_rag.rendering.basin_aware_renderer import render_basin_path_closure_indices
 from pamae_rag.retrieval.renderer import render_context_indices
 from pamae_rag.selection.basin_preserving import (
     BasinPreservingSelectionResult,
@@ -132,6 +134,22 @@ def _support_fact_extra(
 
 def _prefix_metrics(prefix: str, values: dict) -> dict:
     return {f"{prefix}{key}": value for key, value in values.items()}
+
+
+def _answer_in_context(example: QueryExample, nodes, idxs: Iterable[int]) -> bool | None:
+    answers = gold_answers(example)
+    if not answers:
+        return None
+    context = " ".join(str(nodes[int(idx)].text) for idx in idxs)
+    context_norm = normalize_answer(context)
+    if not context_norm:
+        return False
+    padded = f" {context_norm} "
+    for answer in answers:
+        answer_norm = normalize_answer(answer)
+        if answer_norm and f" {answer_norm} " in padded:
+            return True
+    return False
 
 
 def _run_for_k(example: QueryExample, cfg: AppConfig, k: int, seed: int) -> RetrievalResult:
@@ -472,17 +490,38 @@ def _run_for_k(example: QueryExample, cfg: AppConfig, k: int, seed: int) -> Retr
         },
     )
     stage_start = time.perf_counter()
-    context_indices = render_context_indices(
-        nodes,
-        anchors,
-        distance_matrix=distance_matrix,
-        rho=rho,
-        max_context_tokens=cfg.pamae.max_context_tokens,
-        max_context_nodes=cfg.pamae.max_context_nodes,
-        evidence_per_anchor=cfg.pamae.evidence_per_anchor,
-        renderer=renderer,
-        gamma=cfg.pamae.renderer_gamma,
-    )
+    basin_render_diagnostics: dict = {}
+    if renderer == "basin_path_closure":
+        if basin_selection is None:
+            raise ValueError("basin_path_closure renderer requires basin_preserving_medoids selection")
+        basin_masses = {
+            int(key): float(value)
+            for key, value in basin_selection.diagnostics.get("basin_masses", {}).items()
+        }
+        basin_render = render_basin_path_closure_indices(
+            nodes,
+            anchors,
+            distance_matrix=distance_matrix,
+            rho=rho,
+            max_context_tokens=cfg.pamae.max_context_tokens,
+            max_context_nodes=cfg.pamae.max_context_nodes,
+            node_to_basin=basin_selection.node_to_basin,
+            covered_basin_masses=basin_masses,
+        )
+        context_indices = basin_render.indices
+        basin_render_diagnostics = dict(basin_render.diagnostics)
+    else:
+        context_indices = render_context_indices(
+            nodes,
+            anchors,
+            distance_matrix=distance_matrix,
+            rho=rho,
+            max_context_tokens=cfg.pamae.max_context_tokens,
+            max_context_nodes=cfg.pamae.max_context_nodes,
+            evidence_per_anchor=cfg.pamae.evidence_per_anchor,
+            renderer=renderer,
+            gamma=cfg.pamae.renderer_gamma,
+        )
 
     anchor_ids = _node_ids(nodes, anchors)
     context_node_ids = _node_ids(nodes, context_indices)
@@ -532,7 +571,12 @@ def _run_for_k(example: QueryExample, cfg: AppConfig, k: int, seed: int) -> Retr
         "node_budget_satisfied": node_budget_satisfied,
         "token_budget_satisfied": token_budget_satisfied,
         "node_budget_exceeded_by_anchors": node_budget_exceeded_by_anchors,
-        "context_budget_policy": "anchors_then_cell_top_rho_then_score_fill",
+        "context_budget_policy": (
+            "basin_path_closure"
+            if renderer == "basin_path_closure"
+            else "anchors_then_cell_top_rho_then_score_fill"
+        ),
+        **basin_render_diagnostics,
         "max_context_nodes_less_than_k": bool(node_budget_active and max_context_nodes < k),
         "stage_diagnostics": {
             **stage_diagnostics,
@@ -544,7 +588,11 @@ def _run_for_k(example: QueryExample, cfg: AppConfig, k: int, seed: int) -> Retr
                 rendered_node_ids=context_node_ids,
                 token_count=final_context_tokens,
                 latency_ms=render_latency_ms,
-                extra=_support_fact_extra(example, nodes, context_node_ids),
+                extra={
+                    **basin_render_diagnostics,
+                    "answer_in_context": _answer_in_context(example, nodes, context_indices),
+                    **_support_fact_extra(example, nodes, context_node_ids),
+                },
             ),
         },
     }

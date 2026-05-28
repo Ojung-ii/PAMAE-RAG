@@ -159,7 +159,7 @@ def validate_config(cfg: AppConfig) -> None:
         "basin_preserving_medoids",
         "adaptive_k",
     }
-    renderers = {"old", "anchor_only", "nearest", "cell_top_rho", "global_top_rho"}
+    renderers = {"old", "anchor_only", "nearest", "cell_top_rho", "global_top_rho", "basin_path_closure"}
     relevance_modes = {
         "current",
         "title_aware",

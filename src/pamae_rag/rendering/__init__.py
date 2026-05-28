@@ -1,0 +1,2 @@
+"""Diagnostic rendering variants."""
+
