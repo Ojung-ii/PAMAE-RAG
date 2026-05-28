@@ -1,0 +1,32 @@
+{
+  "metric_id": "squad_normalized_em_f1_v1",
+  "method_f1": 0.08371125681899677,
+  "gold_support_f1": 0.09763315329764564,
+  "answer_containing_f1": 0.2650674156652641,
+  "answer_copy_f1": 0.6374761904761903,
+  "oracle_dominance_valid": true,
+  "diagnosis": "oracle_context_construction_weaker_than_answer_copy",
+  "oracle_modes": {
+    "gold_support": {
+      "oracle_mode": "gold_support",
+      "mean_f1": 0.09763315329764564,
+      "mean_exact_match": 0.01,
+      "context_found_rate": 1.0,
+      "num_queries": 100
+    },
+    "answer_containing": {
+      "oracle_mode": "answer_containing",
+      "mean_f1": 0.2650674156652641,
+      "mean_exact_match": 0.01,
+      "context_found_rate": 0.92,
+      "num_queries": 100
+    },
+    "answer_copy": {
+      "oracle_mode": "answer_copy",
+      "mean_f1": 0.6374761904761903,
+      "mean_exact_match": 0.0,
+      "context_found_rate": 1.0,
+      "num_queries": 100
+    }
+  }
+}

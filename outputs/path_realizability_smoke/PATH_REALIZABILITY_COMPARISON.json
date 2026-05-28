@@ -1,0 +1,773 @@
+{
+  "hotpotqa": {
+    "rows": [
+      {
+        "run": "current_content_current_renderer",
+        "F1": 0.07313792909791965,
+        "EM": 0.0,
+        "oracle_gap": 0.019567957498674945,
+        "rendered_recall": 0.67,
+        "context_f1": 0.288333333333333,
+        "answer_in_context": 0.65,
+        "avg_context_tokens": 480.93,
+        "retrieval_ms": 860.10281,
+        "generation_ms": 0.2889799999999999,
+        "A": 0,
+        "B": 2,
+        "C": 4,
+        "D": 5,
+        "E": 2,
+        "F": 56,
+        "G": 31,
+        "mean_d_medoid_gold": 0.88,
+        "mean_gold_distance_percentile_within_basin": 0.3529994599366705,
+        "gold_on_support_tree_rate": 0.82,
+        "gold_path_exists_but_not_rendered_rate": 0.33,
+        "answer_chunk_projected_but_not_rendered_rate": 0.29,
+        "oracle": {
+          "metric_id": "squad_normalized_em_f1_v1",
+          "method_f1": 0.07313792909791965,
+          "gold_support_f1": 0.0927058865965946,
+          "answer_containing_f1": 0.3104004841215606,
+          "answer_copy_f1": 0.6534761904761902,
+          "oracle_dominance_valid": true,
+          "diagnosis": "oracle_context_construction_weaker_than_answer_copy",
+          "oracle_modes": {
+            "gold_support": {
+              "oracle_mode": "gold_support",
+              "mean_f1": 0.0927058865965946,
+              "mean_exact_match": 0.0,
+              "context_found_rate": 1.0,
+              "num_queries": 100
+            },
+            "answer_containing": {
+              "oracle_mode": "answer_containing",
+              "mean_f1": 0.3104004841215606,
+              "mean_exact_match": 0.02,
+              "context_found_rate": 1.0,
+              "num_queries": 100
+            },
+            "answer_copy": {
+              "oracle_mode": "answer_copy",
+              "mean_f1": 0.6534761904761902,
+              "mean_exact_match": 0.0,
+              "context_found_rate": 1.0,
+              "num_queries": 100
+            }
+          }
+        }
+      },
+      {
+        "run": "current_content_gold_path_oracle_renderer",
+        "F1": 0.07157392777556168,
+        "EM": 0.0,
+        "oracle_gap": 0.021131958821032915,
+        "rendered_recall": 0.715,
+        "context_f1": 0.4258015873015873,
+        "answer_in_context": 0.72,
+        "avg_context_tokens": 322.58,
+        "retrieval_ms": 843.13288,
+        "generation_ms": 0.19699000000000005,
+        "A": 0,
+        "B": 2,
+        "C": 4,
+        "D": 1,
+        "E": 0,
+        "F": 59,
+        "G": 34,
+        "mean_d_medoid_gold": 0.88,
+        "mean_gold_distance_percentile_within_basin": 0.3529994599366705,
+        "gold_on_support_tree_rate": 0.82,
+        "gold_path_exists_but_not_rendered_rate": 0.13,
+        "answer_chunk_projected_but_not_rendered_rate": 0.22,
+        "oracle": {
+          "metric_id": "squad_normalized_em_f1_v1",
+          "method_f1": 0.07157392777556168,
+          "gold_support_f1": 0.0927058865965946,
+          "answer_containing_f1": 0.3104004841215606,
+          "answer_copy_f1": 0.6534761904761902,
+          "oracle_dominance_valid": true,
+          "diagnosis": "oracle_context_construction_weaker_than_answer_copy",
+          "oracle_modes": {
+            "gold_support": {
+              "oracle_mode": "gold_support",
+              "mean_f1": 0.0927058865965946,
+              "mean_exact_match": 0.0,
+              "context_found_rate": 1.0,
+              "num_queries": 100
+            },
+            "answer_containing": {
+              "oracle_mode": "answer_containing",
+              "mean_f1": 0.3104004841215606,
+              "mean_exact_match": 0.02,
+              "context_found_rate": 1.0,
+              "num_queries": 100
+            },
+            "answer_copy": {
+              "oracle_mode": "answer_copy",
+              "mean_f1": 0.6534761904761902,
+              "mean_exact_match": 0.0,
+              "context_found_rate": 1.0,
+              "num_queries": 100
+            }
+          }
+        }
+      },
+      {
+        "run": "current_content_path_neighborhood_renderer",
+        "F1": 0.0750440137540043,
+        "EM": 0.0,
+        "oracle_gap": 0.017661872842590298,
+        "rendered_recall": 0.655,
+        "context_f1": 0.2834126984126981,
+        "answer_in_context": 0.63,
+        "avg_context_tokens": 480.67,
+        "retrieval_ms": 805.5300499999997,
+        "generation_ms": 0.2870800000000001,
+        "A": 0,
+        "B": 2,
+        "C": 4,
+        "D": 6,
+        "E": 0,
+        "F": 56,
+        "G": 32,
+        "mean_d_medoid_gold": 0.88,
+        "mean_gold_distance_percentile_within_basin": 0.3529994599366705,
+        "gold_on_support_tree_rate": 0.82,
+        "gold_path_exists_but_not_rendered_rate": 0.3,
+        "answer_chunk_projected_but_not_rendered_rate": 0.31,
+        "oracle": {
+          "metric_id": "squad_normalized_em_f1_v1",
+          "method_f1": 0.0750440137540043,
+          "gold_support_f1": 0.0927058865965946,
+          "answer_containing_f1": 0.3104004841215606,
+          "answer_copy_f1": 0.6534761904761902,
+          "oracle_dominance_valid": true,
+          "diagnosis": "oracle_context_construction_weaker_than_answer_copy",
+          "oracle_modes": {
+            "gold_support": {
+              "oracle_mode": "gold_support",
+              "mean_f1": 0.0927058865965946,
+              "mean_exact_match": 0.0,
+              "context_found_rate": 1.0,
+              "num_queries": 100
+            },
+            "answer_containing": {
+              "oracle_mode": "answer_containing",
+              "mean_f1": 0.3104004841215606,
+              "mean_exact_match": 0.02,
+              "context_found_rate": 1.0,
+              "num_queries": 100
+            },
+            "answer_copy": {
+              "oracle_mode": "answer_copy",
+              "mean_f1": 0.6534761904761902,
+              "mean_exact_match": 0.0,
+              "context_found_rate": 1.0,
+              "num_queries": 100
+            }
+          }
+        }
+      },
+      {
+        "run": "basin_preserving_selection_current_renderer",
+        "F1": 0.07078685533508118,
+        "EM": 0.0,
+        "oracle_gap": 0.021919031261513414,
+        "rendered_recall": 0.66,
+        "context_f1": 0.28514285714285686,
+        "answer_in_context": 0.64,
+        "avg_context_tokens": 484.59,
+        "retrieval_ms": 888.9296899999998,
+        "generation_ms": 0.39276000000000005,
+        "A": 0,
+        "B": 0,
+        "C": 5,
+        "D": 7,
+        "E": 0,
+        "F": 56,
+        "G": 32,
+        "mean_d_medoid_gold": 0.99,
+        "mean_gold_distance_percentile_within_basin": 0.3623599688773255,
+        "gold_on_support_tree_rate": 0.79,
+        "gold_path_exists_but_not_rendered_rate": 0.25,
+        "answer_chunk_projected_but_not_rendered_rate": 0.3,
+        "oracle": {
+          "metric_id": "squad_normalized_em_f1_v1",
+          "method_f1": 0.07078685533508118,
+          "gold_support_f1": 0.0927058865965946,
+          "answer_containing_f1": 0.3104004841215606,
+          "answer_copy_f1": 0.6534761904761902,
+          "oracle_dominance_valid": true,
+          "diagnosis": "oracle_context_construction_weaker_than_answer_copy",
+          "oracle_modes": {
+            "gold_support": {
+              "oracle_mode": "gold_support",
+              "mean_f1": 0.0927058865965946,
+              "mean_exact_match": 0.0,
+              "context_found_rate": 1.0,
+              "num_queries": 100
+            },
+            "answer_containing": {
+              "oracle_mode": "answer_containing",
+              "mean_f1": 0.3104004841215606,
+              "mean_exact_match": 0.02,
+              "context_found_rate": 1.0,
+              "num_queries": 100
+            },
+            "answer_copy": {
+              "oracle_mode": "answer_copy",
+              "mean_f1": 0.6534761904761902,
+              "mean_exact_match": 0.0,
+              "context_found_rate": 1.0,
+              "num_queries": 100
+            }
+          }
+        }
+      },
+      {
+        "run": "basin_preserving_selection_gold_path_oracle_renderer",
+        "F1": 0.06509775068421181,
+        "EM": 0.0,
+        "oracle_gap": 0.027608135912382786,
+        "rendered_recall": 0.69,
+        "context_f1": 0.41965873015873023,
+        "answer_in_context": 0.68,
+        "avg_context_tokens": 323.37,
+        "retrieval_ms": 801.1255100000005,
+        "generation_ms": 0.18724999999999992,
+        "A": 0,
+        "B": 0,
+        "C": 5,
+        "D": 2,
+        "E": 0,
+        "F": 62,
+        "G": 31,
+        "mean_d_medoid_gold": 0.99,
+        "mean_gold_distance_percentile_within_basin": 0.3623599688773255,
+        "gold_on_support_tree_rate": 0.79,
+        "gold_path_exists_but_not_rendered_rate": 0.07,
+        "answer_chunk_projected_but_not_rendered_rate": 0.26,
+        "oracle": {
+          "metric_id": "squad_normalized_em_f1_v1",
+          "method_f1": 0.06509775068421181,
+          "gold_support_f1": 0.0927058865965946,
+          "answer_containing_f1": 0.3104004841215606,
+          "answer_copy_f1": 0.6534761904761902,
+          "oracle_dominance_valid": true,
+          "diagnosis": "oracle_context_construction_weaker_than_answer_copy",
+          "oracle_modes": {
+            "gold_support": {
+              "oracle_mode": "gold_support",
+              "mean_f1": 0.0927058865965946,
+              "mean_exact_match": 0.0,
+              "context_found_rate": 1.0,
+              "num_queries": 100
+            },
+            "answer_containing": {
+              "oracle_mode": "answer_containing",
+              "mean_f1": 0.3104004841215606,
+              "mean_exact_match": 0.02,
+              "context_found_rate": 1.0,
+              "num_queries": 100
+            },
+            "answer_copy": {
+              "oracle_mode": "answer_copy",
+              "mean_f1": 0.6534761904761902,
+              "mean_exact_match": 0.0,
+              "context_found_rate": 1.0,
+              "num_queries": 100
+            }
+          }
+        }
+      },
+      {
+        "run": "basin_preserving_selection_path_neighborhood_renderer",
+        "F1": 0.06892128009597653,
+        "EM": 0.0,
+        "oracle_gap": 0.02378460650061806,
+        "rendered_recall": 0.63,
+        "context_f1": 0.27357142857142824,
+        "answer_in_context": 0.61,
+        "avg_context_tokens": 481.99,
+        "retrieval_ms": 836.2045399999998,
+        "generation_ms": 0.2533100000000001,
+        "A": 0,
+        "B": 0,
+        "C": 5,
+        "D": 8,
+        "E": 1,
+        "F": 57,
+        "G": 29,
+        "mean_d_medoid_gold": 0.99,
+        "mean_gold_distance_percentile_within_basin": 0.3623599688773255,
+        "gold_on_support_tree_rate": 0.79,
+        "gold_path_exists_but_not_rendered_rate": 0.22,
+        "answer_chunk_projected_but_not_rendered_rate": 0.33,
+        "oracle": {
+          "metric_id": "squad_normalized_em_f1_v1",
+          "method_f1": 0.06892128009597653,
+          "gold_support_f1": 0.0927058865965946,
+          "answer_containing_f1": 0.3104004841215606,
+          "answer_copy_f1": 0.6534761904761902,
+          "oracle_dominance_valid": true,
+          "diagnosis": "oracle_context_construction_weaker_than_answer_copy",
+          "oracle_modes": {
+            "gold_support": {
+              "oracle_mode": "gold_support",
+              "mean_f1": 0.0927058865965946,
+              "mean_exact_match": 0.0,
+              "context_found_rate": 1.0,
+              "num_queries": 100
+            },
+            "answer_containing": {
+              "oracle_mode": "answer_containing",
+              "mean_f1": 0.3104004841215606,
+              "mean_exact_match": 0.02,
+              "context_found_rate": 1.0,
+              "num_queries": 100
+            },
+            "answer_copy": {
+              "oracle_mode": "answer_copy",
+              "mean_f1": 0.6534761904761902,
+              "mean_exact_match": 0.0,
+              "context_found_rate": 1.0,
+              "num_queries": 100
+            }
+          }
+        }
+      }
+    ],
+    "risk_gates": [
+      {
+        "run": "current_content_current_renderer",
+        "decision": "REFERENCE",
+        "blockers": []
+      },
+      {
+        "run": "current_content_gold_path_oracle_renderer",
+        "decision": "DIAGNOSTIC_ONLY",
+        "blockers": []
+      },
+      {
+        "run": "current_content_path_neighborhood_renderer",
+        "decision": "STOP",
+        "blockers": [
+          "rendered_recall_regression",
+          "answer_in_context_regression",
+          "context_f1_regression",
+          "renderer_sparsity_not_reduced"
+        ]
+      },
+      {
+        "run": "basin_preserving_selection_current_renderer",
+        "decision": "DIAGNOSTIC_ONLY",
+        "blockers": []
+      },
+      {
+        "run": "basin_preserving_selection_gold_path_oracle_renderer",
+        "decision": "DIAGNOSTIC_ONLY",
+        "blockers": []
+      },
+      {
+        "run": "basin_preserving_selection_path_neighborhood_renderer",
+        "decision": "STOP",
+        "blockers": [
+          "f1_regression",
+          "oracle_gap_regression",
+          "rendered_recall_regression",
+          "answer_in_context_regression",
+          "context_f1_regression",
+          "representative_mismatch_increase",
+          "renderer_sparsity_not_reduced"
+        ]
+      }
+    ]
+  },
+  "2wikimultihopqa": {
+    "rows": [
+      {
+        "run": "current_content_current_renderer",
+        "F1": 0.08142302152487911,
+        "EM": 0.01,
+        "oracle_gap": 0.016210131772766534,
+        "rendered_recall": 0.575,
+        "context_f1": 0.26461183261183224,
+        "answer_in_context": 0.43,
+        "avg_context_tokens": 333.39,
+        "retrieval_ms": 915.9622700000003,
+        "generation_ms": 0.27782999999999997,
+        "A": 1,
+        "B": 3,
+        "C": 7,
+        "D": 3,
+        "E": 2,
+        "F": 66,
+        "G": 18,
+        "mean_d_medoid_gold": 0.8924999999999998,
+        "mean_gold_distance_percentile_within_basin": 0.36596324879785747,
+        "gold_on_support_tree_rate": 0.88,
+        "gold_path_exists_but_not_rendered_rate": 0.22,
+        "answer_chunk_projected_but_not_rendered_rate": 0.33,
+        "oracle": {
+          "metric_id": "squad_normalized_em_f1_v1",
+          "method_f1": 0.08142302152487911,
+          "gold_support_f1": 0.09763315329764564,
+          "answer_containing_f1": 0.2650674156652641,
+          "answer_copy_f1": 0.6374761904761903,
+          "oracle_dominance_valid": true,
+          "diagnosis": "oracle_context_construction_weaker_than_answer_copy",
+          "oracle_modes": {
+            "gold_support": {
+              "oracle_mode": "gold_support",
+              "mean_f1": 0.09763315329764564,
+              "mean_exact_match": 0.01,
+              "context_found_rate": 1.0,
+              "num_queries": 100
+            },
+            "answer_containing": {
+              "oracle_mode": "answer_containing",
+              "mean_f1": 0.2650674156652641,
+              "mean_exact_match": 0.01,
+              "context_found_rate": 0.92,
+              "num_queries": 100
+            },
+            "answer_copy": {
+              "oracle_mode": "answer_copy",
+              "mean_f1": 0.6374761904761903,
+              "mean_exact_match": 0.0,
+              "context_found_rate": 1.0,
+              "num_queries": 100
+            }
+          }
+        }
+      },
+      {
+        "run": "current_content_gold_path_oracle_renderer",
+        "F1": 0.07900537446605557,
+        "EM": 0.01,
+        "oracle_gap": 0.018627778831590072,
+        "rendered_recall": 0.61,
+        "context_f1": 0.40886724386724366,
+        "answer_in_context": 0.47,
+        "avg_context_tokens": 222.33,
+        "retrieval_ms": 918.0456699999999,
+        "generation_ms": 0.18858,
+        "A": 1,
+        "B": 3,
+        "C": 7,
+        "D": 2,
+        "E": 0,
+        "F": 68,
+        "G": 19,
+        "mean_d_medoid_gold": 0.8924999999999998,
+        "mean_gold_distance_percentile_within_basin": 0.36596324879785747,
+        "gold_on_support_tree_rate": 0.88,
+        "gold_path_exists_but_not_rendered_rate": 0.07,
+        "answer_chunk_projected_but_not_rendered_rate": 0.29,
+        "oracle": {
+          "metric_id": "squad_normalized_em_f1_v1",
+          "method_f1": 0.07900537446605557,
+          "gold_support_f1": 0.09763315329764564,
+          "answer_containing_f1": 0.2650674156652641,
+          "answer_copy_f1": 0.6374761904761903,
+          "oracle_dominance_valid": true,
+          "diagnosis": "oracle_context_construction_weaker_than_answer_copy",
+          "oracle_modes": {
+            "gold_support": {
+              "oracle_mode": "gold_support",
+              "mean_f1": 0.09763315329764564,
+              "mean_exact_match": 0.01,
+              "context_found_rate": 1.0,
+              "num_queries": 100
+            },
+            "answer_containing": {
+              "oracle_mode": "answer_containing",
+              "mean_f1": 0.2650674156652641,
+              "mean_exact_match": 0.01,
+              "context_found_rate": 0.92,
+              "num_queries": 100
+            },
+            "answer_copy": {
+              "oracle_mode": "answer_copy",
+              "mean_f1": 0.6374761904761903,
+              "mean_exact_match": 0.0,
+              "context_found_rate": 1.0,
+              "num_queries": 100
+            }
+          }
+        }
+      },
+      {
+        "run": "current_content_path_neighborhood_renderer",
+        "F1": 0.0729759627013497,
+        "EM": 0.01,
+        "oracle_gap": 0.02465719059629594,
+        "rendered_recall": 0.5625,
+        "context_f1": 0.2585714285714283,
+        "answer_in_context": 0.41,
+        "avg_context_tokens": 350.19,
+        "retrieval_ms": 977.3356200000002,
+        "generation_ms": 0.21715000000000007,
+        "A": 1,
+        "B": 3,
+        "C": 7,
+        "D": 3,
+        "E": 1,
+        "F": 70,
+        "G": 15,
+        "mean_d_medoid_gold": 0.8924999999999998,
+        "mean_gold_distance_percentile_within_basin": 0.36596324879785747,
+        "gold_on_support_tree_rate": 0.88,
+        "gold_path_exists_but_not_rendered_rate": 0.19,
+        "answer_chunk_projected_but_not_rendered_rate": 0.35,
+        "oracle": {
+          "metric_id": "squad_normalized_em_f1_v1",
+          "method_f1": 0.0729759627013497,
+          "gold_support_f1": 0.09763315329764564,
+          "answer_containing_f1": 0.2650674156652641,
+          "answer_copy_f1": 0.6374761904761903,
+          "oracle_dominance_valid": true,
+          "diagnosis": "oracle_context_construction_weaker_than_answer_copy",
+          "oracle_modes": {
+            "gold_support": {
+              "oracle_mode": "gold_support",
+              "mean_f1": 0.09763315329764564,
+              "mean_exact_match": 0.01,
+              "context_found_rate": 1.0,
+              "num_queries": 100
+            },
+            "answer_containing": {
+              "oracle_mode": "answer_containing",
+              "mean_f1": 0.2650674156652641,
+              "mean_exact_match": 0.01,
+              "context_found_rate": 0.92,
+              "num_queries": 100
+            },
+            "answer_copy": {
+              "oracle_mode": "answer_copy",
+              "mean_f1": 0.6374761904761903,
+              "mean_exact_match": 0.0,
+              "context_found_rate": 1.0,
+              "num_queries": 100
+            }
+          }
+        }
+      },
+      {
+        "run": "basin_preserving_selection_current_renderer",
+        "F1": 0.08213730723916485,
+        "EM": 0.01,
+        "oracle_gap": 0.015495846058480797,
+        "rendered_recall": 0.5775,
+        "context_f1": 0.26792857142857107,
+        "answer_in_context": 0.44,
+        "avg_context_tokens": 350.5,
+        "retrieval_ms": 992.0562899999999,
+        "generation_ms": 0.28454,
+        "A": 1,
+        "B": 0,
+        "C": 6,
+        "D": 5,
+        "E": 1,
+        "F": 68,
+        "G": 19,
+        "mean_d_medoid_gold": 0.9516666666666664,
+        "mean_gold_distance_percentile_within_basin": 0.3814709887978095,
+        "gold_on_support_tree_rate": 0.88,
+        "gold_path_exists_but_not_rendered_rate": 0.19,
+        "answer_chunk_projected_but_not_rendered_rate": 0.32,
+        "oracle": {
+          "metric_id": "squad_normalized_em_f1_v1",
+          "method_f1": 0.08213730723916485,
+          "gold_support_f1": 0.09763315329764564,
+          "answer_containing_f1": 0.2650674156652641,
+          "answer_copy_f1": 0.6374761904761903,
+          "oracle_dominance_valid": true,
+          "diagnosis": "oracle_context_construction_weaker_than_answer_copy",
+          "oracle_modes": {
+            "gold_support": {
+              "oracle_mode": "gold_support",
+              "mean_f1": 0.09763315329764564,
+              "mean_exact_match": 0.01,
+              "context_found_rate": 1.0,
+              "num_queries": 100
+            },
+            "answer_containing": {
+              "oracle_mode": "answer_containing",
+              "mean_f1": 0.2650674156652641,
+              "mean_exact_match": 0.01,
+              "context_found_rate": 0.92,
+              "num_queries": 100
+            },
+            "answer_copy": {
+              "oracle_mode": "answer_copy",
+              "mean_f1": 0.6374761904761903,
+              "mean_exact_match": 0.0,
+              "context_found_rate": 1.0,
+              "num_queries": 100
+            }
+          }
+        }
+      },
+      {
+        "run": "basin_preserving_selection_gold_path_oracle_renderer",
+        "F1": 0.08371125681899677,
+        "EM": 0.01,
+        "oracle_gap": 0.013921896478648874,
+        "rendered_recall": 0.575,
+        "context_f1": 0.4031760461760461,
+        "answer_in_context": 0.43,
+        "avg_context_tokens": 241.02,
+        "retrieval_ms": 1019.9420000000001,
+        "generation_ms": 0.19907999999999998,
+        "A": 1,
+        "B": 0,
+        "C": 6,
+        "D": 5,
+        "E": 0,
+        "F": 68,
+        "G": 20,
+        "mean_d_medoid_gold": 0.9516666666666664,
+        "mean_gold_distance_percentile_within_basin": 0.3814709887978095,
+        "gold_on_support_tree_rate": 0.88,
+        "gold_path_exists_but_not_rendered_rate": 0.1,
+        "answer_chunk_projected_but_not_rendered_rate": 0.33,
+        "oracle": {
+          "metric_id": "squad_normalized_em_f1_v1",
+          "method_f1": 0.08371125681899677,
+          "gold_support_f1": 0.09763315329764564,
+          "answer_containing_f1": 0.2650674156652641,
+          "answer_copy_f1": 0.6374761904761903,
+          "oracle_dominance_valid": true,
+          "diagnosis": "oracle_context_construction_weaker_than_answer_copy",
+          "oracle_modes": {
+            "gold_support": {
+              "oracle_mode": "gold_support",
+              "mean_f1": 0.09763315329764564,
+              "mean_exact_match": 0.01,
+              "context_found_rate": 1.0,
+              "num_queries": 100
+            },
+            "answer_containing": {
+              "oracle_mode": "answer_containing",
+              "mean_f1": 0.2650674156652641,
+              "mean_exact_match": 0.01,
+              "context_found_rate": 0.92,
+              "num_queries": 100
+            },
+            "answer_copy": {
+              "oracle_mode": "answer_copy",
+              "mean_f1": 0.6374761904761903,
+              "mean_exact_match": 0.0,
+              "context_found_rate": 1.0,
+              "num_queries": 100
+            }
+          }
+        }
+      },
+      {
+        "run": "basin_preserving_selection_path_neighborhood_renderer",
+        "F1": 0.07768184505429088,
+        "EM": 0.01,
+        "oracle_gap": 0.019951308243354768,
+        "rendered_recall": 0.565,
+        "context_f1": 0.2627063492063489,
+        "answer_in_context": 0.42,
+        "avg_context_tokens": 364.01,
+        "retrieval_ms": 1025.7304599999995,
+        "generation_ms": 0.29688000000000003,
+        "A": 1,
+        "B": 0,
+        "C": 6,
+        "D": 6,
+        "E": 1,
+        "F": 69,
+        "G": 17,
+        "mean_d_medoid_gold": 0.9516666666666664,
+        "mean_gold_distance_percentile_within_basin": 0.3814709887978095,
+        "gold_on_support_tree_rate": 0.88,
+        "gold_path_exists_but_not_rendered_rate": 0.19,
+        "answer_chunk_projected_but_not_rendered_rate": 0.34,
+        "oracle": {
+          "metric_id": "squad_normalized_em_f1_v1",
+          "method_f1": 0.07768184505429088,
+          "gold_support_f1": 0.09763315329764564,
+          "answer_containing_f1": 0.2650674156652641,
+          "answer_copy_f1": 0.6374761904761903,
+          "oracle_dominance_valid": true,
+          "diagnosis": "oracle_context_construction_weaker_than_answer_copy",
+          "oracle_modes": {
+            "gold_support": {
+              "oracle_mode": "gold_support",
+              "mean_f1": 0.09763315329764564,
+              "mean_exact_match": 0.01,
+              "context_found_rate": 1.0,
+              "num_queries": 100
+            },
+            "answer_containing": {
+              "oracle_mode": "answer_containing",
+              "mean_f1": 0.2650674156652641,
+              "mean_exact_match": 0.01,
+              "context_found_rate": 0.92,
+              "num_queries": 100
+            },
+            "answer_copy": {
+              "oracle_mode": "answer_copy",
+              "mean_f1": 0.6374761904761903,
+              "mean_exact_match": 0.0,
+              "context_found_rate": 1.0,
+              "num_queries": 100
+            }
+          }
+        }
+      }
+    ],
+    "risk_gates": [
+      {
+        "run": "current_content_current_renderer",
+        "decision": "REFERENCE",
+        "blockers": []
+      },
+      {
+        "run": "current_content_gold_path_oracle_renderer",
+        "decision": "DIAGNOSTIC_ONLY",
+        "blockers": []
+      },
+      {
+        "run": "current_content_path_neighborhood_renderer",
+        "decision": "STOP",
+        "blockers": [
+          "f1_regression",
+          "oracle_gap_regression",
+          "rendered_recall_regression",
+          "answer_in_context_regression",
+          "context_f1_regression",
+          "renderer_sparsity_not_reduced"
+        ]
+      },
+      {
+        "run": "basin_preserving_selection_current_renderer",
+        "decision": "DIAGNOSTIC_ONLY",
+        "blockers": []
+      },
+      {
+        "run": "basin_preserving_selection_gold_path_oracle_renderer",
+        "decision": "DIAGNOSTIC_ONLY",
+        "blockers": []
+      },
+      {
+        "run": "basin_preserving_selection_path_neighborhood_renderer",
+        "decision": "STOP",
+        "blockers": [
+          "f1_regression",
+          "oracle_gap_regression",
+          "rendered_recall_regression",
+          "answer_in_context_regression",
+          "context_f1_regression",
+          "renderer_sparsity_not_reduced"
+        ]
+      }
+    ]
+  }
+}
