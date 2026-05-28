@@ -16,11 +16,15 @@ def _row(
     answer_coverage: float = 1.0,
     selected_answer_coverage: float = 1.0,
     projection: float | None = 1.0,
+    pre_local: float | None = 1.0,
     local: float | None = 1.0,
     rendered: float | None = 1.0,
 ) -> dict:
     stages = {
-        "local_refinement": {"gold_supporting_evidence_survival": local},
+        "local_refinement": {
+            "pre_refinement_gold_supporting_evidence_survival": pre_local,
+            "gold_supporting_evidence_survival": local,
+        },
         "context_rendering": {"rendered_recall": rendered},
     }
     if projection is not None:
@@ -47,14 +51,30 @@ def test_analyze_qa_stage_bottlenecks_buckets_content_rows(tmp_path: Path):
             _row("q1", f1=0.1),
             _row("q2", f1=0.0),
             _row("q3", f1=0.3),
+            _row("q4", f1=0.2),
         ],
     )
     _write_jsonl(
         content_path,
         [
-            _row("q1", f1=0.0, local=0.0, answer_coverage=1.0, selected_answer_coverage=0.0),
+            _row(
+                "q1",
+                f1=0.0,
+                pre_local=0.0,
+                local=0.0,
+                answer_coverage=1.0,
+                selected_answer_coverage=0.0,
+            ),
             _row("q2", f1=0.0, answer_coverage=1.0, selected_answer_coverage=0.0),
             _row("q3", f1=0.4, answer_coverage=1.0, selected_answer_coverage=1.0),
+            _row(
+                "q4",
+                f1=0.0,
+                pre_local=0.5,
+                local=0.0,
+                answer_coverage=1.0,
+                selected_answer_coverage=0.0,
+            ),
         ],
     )
     _write_jsonl(
@@ -63,15 +83,17 @@ def test_analyze_qa_stage_bottlenecks_buckets_content_rows(tmp_path: Path):
             _row("q1", f1=0.5),
             _row("q2", f1=0.5),
             _row("q3", f1=0.5),
+            _row("q4", f1=0.5),
         ],
     )
 
     result = analyze(baseline_path, content_path, oracle_path)
 
     summary = result["content_bucket_summary"]
-    assert summary["local_refinement_loss"]["count"] == 1
+    assert summary["pre_refinement_anchor_loss"]["count"] == 1
+    assert summary["refinement_update_loss"]["count"] == 1
     assert summary["answer_present_not_selected"]["count"] == 1
     assert summary["qa_partial_or_success"]["count"] == 1
     assert summary["answer_present_not_selected"]["mean_answer_coverage"] == 1.0
     assert summary["answer_present_not_selected"]["mean_selected_answer_coverage"] == 0.0
-    assert result["transition_counts"]["qa_partial_or_success->local_refinement_loss"] == 1
+    assert result["transition_counts"]["qa_partial_or_success->pre_refinement_anchor_loss"] == 1

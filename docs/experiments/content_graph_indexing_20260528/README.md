@@ -100,8 +100,8 @@ The oracle contexts contain answer strings far more often than retrieved context
 
 Per-query bottleneck reports:
 
-- Hotpot20: [qa_bottlenecks_hotpot20.md](qa_bottlenecks_hotpot20.md) partitions content graph queries into `local_refinement_loss` (8), `answer_absent_from_context` (5), `answer_present_not_selected` (4), and `qa_partial_or_success` (3).
-- 2Wiki20: [qa_bottlenecks_2wiki20.md](qa_bottlenecks_2wiki20.md) partitions content graph queries into `answer_absent_from_context` (9), `local_refinement_loss` (6), `answer_present_not_selected` (3), `projection_loss` (1), and `qa_partial_or_success` (1).
+- Hotpot20: [qa_bottlenecks_hotpot20.md](qa_bottlenecks_hotpot20.md) partitions content graph queries into `pre_refinement_anchor_loss` (8), `answer_absent_from_context` (5), `answer_present_not_selected` (4), and `qa_partial_or_success` (3).
+- 2Wiki20: [qa_bottlenecks_2wiki20.md](qa_bottlenecks_2wiki20.md) partitions content graph queries into `answer_absent_from_context` (9), `pre_refinement_anchor_loss` (6), `answer_present_not_selected` (3), `projection_loss` (1), and `qa_partial_or_success` (1).
 - These reports are diagnostic only; they do not use gold labels for retrieval, scoring, rendering, or answer generation.
 
 Risk-gated ideas stopped:

@@ -27,6 +27,11 @@ def _stage_value(row: dict[str, Any], stage: str, key: str) -> float | None:
 
 def _bucket(row: dict[str, Any]) -> str:
     projection = _stage_value(row, "content_graph_projection", "gold_supporting_evidence_survival")
+    pre_local = _stage_value(
+        row,
+        "local_refinement",
+        "pre_refinement_gold_supporting_evidence_survival",
+    )
     local = _stage_value(row, "local_refinement", "gold_supporting_evidence_survival")
     rendered = _stage_value(row, "context_rendering", "rendered_recall")
     answer_coverage = row.get("answer_coverage")
@@ -34,6 +39,10 @@ def _bucket(row: dict[str, Any]) -> str:
     f1 = float(row.get("f1") or 0.0)
     if projection is not None and projection <= 0.0:
         return "projection_loss"
+    if pre_local is not None and pre_local <= 0.0:
+        return "pre_refinement_anchor_loss"
+    if pre_local is not None and local is not None and pre_local > 0.0 and local <= 0.0:
+        return "refinement_update_loss"
     if local is not None and local <= 0.0:
         return "local_refinement_loss"
     if rendered is not None and rendered <= 0.0:
@@ -109,6 +118,16 @@ def analyze(
             "content_answer_coverage": _float(content_row, "answer_coverage"),
             "baseline_selected_answer_coverage": _float(baseline_row, "selected_answer_coverage"),
             "content_selected_answer_coverage": _float(content_row, "selected_answer_coverage"),
+            "content_pre_refinement_survival": _stage_value(
+                content_row,
+                "local_refinement",
+                "pre_refinement_gold_supporting_evidence_survival",
+            ),
+            "content_post_refinement_survival": _stage_value(
+                content_row,
+                "local_refinement",
+                "gold_supporting_evidence_survival",
+            ),
         }
         rows.append(row)
         groups[content_bucket].append(row)
