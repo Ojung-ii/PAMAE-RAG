@@ -10,12 +10,14 @@ PROJECTED_ANSWER_CHUNK_ORACLE = "projected_answer_chunk_oracle"
 SELECTED_BASIN_ANSWER_CHUNK_ORACLE = "selected_basin_answer_chunk_oracle"
 CURRENT_ANSWER_ROLE_ORACLE = "current_answer_role_oracle"
 GOLD_CHUNK_ROLE_ORACLE = "gold_chunk_role_oracle"
+SUPPORT_TREE_ANSWER_ORACLE = "support_tree_answer_oracle"
 
 ANSWER_CARRIER_ORACLE_RENDERERS = {
     PROJECTED_ANSWER_CHUNK_ORACLE,
     SELECTED_BASIN_ANSWER_CHUNK_ORACLE,
     CURRENT_ANSWER_ROLE_ORACLE,
     GOLD_CHUNK_ROLE_ORACLE,
+    SUPPORT_TREE_ANSWER_ORACLE,
 }
 
 
@@ -101,6 +103,7 @@ def render_answer_carrier_oracle(
     if not projected_ids:
         projected_ids = {str(node.node_id) for node in example.nodes}
     selected_basin_ids = set(_ids(diagnostics.get("diagnostic_selected_basin_node_ids", [])))
+    refined_support_tree_ids = set(_ids(diagnostics.get("refined_support_tree_node_ids", [])))
     current_order = _ids(retrieval_row.get("context_node_ids", []))
 
     uses_answer = True
@@ -111,10 +114,12 @@ def render_answer_carrier_oracle(
         selected = _ordered_subset(example.nodes, answer_ids & selected_basin_ids)
     elif renderer_mode == CURRENT_ANSWER_ROLE_ORACLE:
         selected = [node_id for node_id in current_order if node_id in answer_ids]
-    else:
+    elif renderer_mode == GOLD_CHUNK_ROLE_ORACLE:
         selected = [node_id for node_id in current_order if node_id in gold_ids]
         uses_answer = False
         uses_gold = True
+    else:
+        selected = _ordered_subset(example.nodes, answer_ids & refined_support_tree_ids)
 
     context_ids, tokens = _materialize(example.nodes, selected, max_context_tokens=max_context_tokens)
     return AnswerCarrierOracleRenderResult(
@@ -137,6 +142,7 @@ __all__ = [
     "GOLD_CHUNK_ROLE_ORACLE",
     "PROJECTED_ANSWER_CHUNK_ORACLE",
     "SELECTED_BASIN_ANSWER_CHUNK_ORACLE",
+    "SUPPORT_TREE_ANSWER_ORACLE",
     "AnswerCarrierOracleRenderResult",
     "render_answer_carrier_oracle",
 ]
