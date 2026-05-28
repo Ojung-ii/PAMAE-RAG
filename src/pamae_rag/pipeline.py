@@ -29,6 +29,7 @@ from pamae_rag.pamae.selection import select_by_full_objective
 from pamae_rag.qa.metrics import gold_answers, normalize_answer
 from pamae_rag.rendering.basin_aware_renderer import render_basin_path_closure_indices
 from pamae_rag.rendering.gold_path_oracle_renderer import render_gold_path_oracle_indices
+from pamae_rag.rendering.path_neighborhood_renderer import render_path_neighborhood_indices
 from pamae_rag.retrieval.renderer import render_context_indices
 from pamae_rag.selection.basin_preserving import (
     BasinPreservingSelectionResult,
@@ -553,6 +554,21 @@ def _run_for_k(example: QueryExample, cfg: AppConfig, k: int, seed: int) -> Retr
         )
         context_indices = gold_path_render.indices
         basin_render_diagnostics = dict(gold_path_render.diagnostics)
+    elif renderer == "path_neighborhood":
+        path_neighborhood = render_path_neighborhood_indices(
+            nodes=nodes,
+            selected_medoids=anchors,
+            query_anchors=diagnostic_query_anchors,
+            distance_matrix=graph_distance_matrix,
+            rho=rho,
+            max_context_tokens=cfg.pamae.max_context_tokens,
+            max_context_nodes=cfg.pamae.max_context_nodes,
+            active_indices=candidates,
+            disconnected_distance=disconnected_distance,
+            example=example,
+        )
+        context_indices = path_neighborhood.indices
+        basin_render_diagnostics = dict(path_neighborhood.diagnostics)
     else:
         context_indices = render_context_indices(
             nodes,
@@ -646,6 +662,8 @@ def _run_for_k(example: QueryExample, cfg: AppConfig, k: int, seed: int) -> Retr
             if renderer == "basin_path_closure"
             else "gold_path_oracle"
             if renderer == "gold_path_oracle"
+            else "path_neighborhood"
+            if renderer == "path_neighborhood"
             else "anchors_then_cell_top_rho_then_score_fill"
         ),
         "path_realizability": path_realizability.to_json(),

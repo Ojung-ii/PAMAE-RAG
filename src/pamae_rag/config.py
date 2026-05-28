@@ -167,6 +167,7 @@ def validate_config(cfg: AppConfig) -> None:
         "global_top_rho",
         "basin_path_closure",
         "gold_path_oracle",
+        "path_neighborhood",
     }
     relevance_modes = {
         "current",
