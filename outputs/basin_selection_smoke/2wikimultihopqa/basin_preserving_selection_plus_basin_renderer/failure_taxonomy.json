@@ -1,0 +1,2472 @@
+{
+  "failure_type_counts": {
+    "projection_miss": 2,
+    "selection_miss": 0,
+    "rendering_miss": 13,
+    "qa_fail": 84,
+    "success": 1
+  },
+  "rows": [
+    {
+      "query_id": "83bf3b5a0bd911eba7f7acde48001122",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": false,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:4",
+        "2wikimultihopqa:doc:5"
+      ],
+      "projected_gold_chunk_ids": [
+        "2wikimultihopqa:doc:4",
+        "2wikimultihopqa:doc:5"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:4",
+        "2wikimultihopqa:doc:5"
+      ],
+      "rendered_gold_chunk_ids": [
+        "2wikimultihopqa:doc:4"
+      ]
+    },
+    {
+      "query_id": "a80d84e7096d11ebbdb0ac1f6bf848b6",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": false,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:17",
+        "2wikimultihopqa:doc:19"
+      ],
+      "projected_gold_chunk_ids": [
+        "2wikimultihopqa:doc:17",
+        "2wikimultihopqa:doc:19"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:17",
+        "2wikimultihopqa:doc:19"
+      ],
+      "rendered_gold_chunk_ids": [
+        "2wikimultihopqa:doc:17"
+      ]
+    },
+    {
+      "query_id": "2dc690ba0bdc11eba7f7acde48001122",
+      "failure_type": "rendering_miss",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": false,
+      "answer_in_context": false,
+      "qa_f1": 0.09090909090909091,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:22",
+        "2wikimultihopqa:doc:24"
+      ],
+      "projected_gold_chunk_ids": [
+        "2wikimultihopqa:doc:22"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:22"
+      ],
+      "rendered_gold_chunk_ids": []
+    },
+    {
+      "query_id": "462bb642099211ebbdb0ac1f6bf848b6",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": false,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:31",
+        "2wikimultihopqa:doc:39"
+      ],
+      "projected_gold_chunk_ids": [
+        "2wikimultihopqa:doc:31"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:31",
+        "2wikimultihopqa:doc:39"
+      ],
+      "rendered_gold_chunk_ids": [
+        "2wikimultihopqa:doc:39"
+      ]
+    },
+    {
+      "query_id": "a1cdb240085811ebbd5bac1f6bf848b6",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.08000000000000002,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:41",
+        "2wikimultihopqa:doc:44",
+        "2wikimultihopqa:doc:46",
+        "2wikimultihopqa:doc:47"
+      ],
+      "projected_gold_chunk_ids": [
+        "2wikimultihopqa:doc:41",
+        "2wikimultihopqa:doc:44",
+        "2wikimultihopqa:doc:46"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:41",
+        "2wikimultihopqa:doc:44",
+        "2wikimultihopqa:doc:46"
+      ],
+      "rendered_gold_chunk_ids": [
+        "2wikimultihopqa:doc:41",
+        "2wikimultihopqa:doc:46"
+      ]
+    },
+    {
+      "query_id": "6718770a087311ebbd66ac1f6bf848b6",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:50",
+        "2wikimultihopqa:doc:51",
+        "2wikimultihopqa:doc:53",
+        "2wikimultihopqa:doc:54"
+      ],
+      "projected_gold_chunk_ids": [
+        "2wikimultihopqa:doc:51"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:50",
+        "2wikimultihopqa:doc:51"
+      ],
+      "rendered_gold_chunk_ids": [
+        "2wikimultihopqa:doc:50",
+        "2wikimultihopqa:doc:51"
+      ]
+    },
+    {
+      "query_id": "7f7046d308f711ebbdaaac1f6bf848b6",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:60",
+        "2wikimultihopqa:doc:65"
+      ],
+      "projected_gold_chunk_ids": [
+        "2wikimultihopqa:doc:60",
+        "2wikimultihopqa:doc:65"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:60",
+        "2wikimultihopqa:doc:65"
+      ],
+      "rendered_gold_chunk_ids": [
+        "2wikimultihopqa:doc:60",
+        "2wikimultihopqa:doc:65"
+      ]
+    },
+    {
+      "query_id": "9fe6a6760baf11ebab90acde48001122",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.19354838709677416,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:73",
+        "2wikimultihopqa:doc:75"
+      ],
+      "projected_gold_chunk_ids": [
+        "2wikimultihopqa:doc:73",
+        "2wikimultihopqa:doc:75"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:73",
+        "2wikimultihopqa:doc:75"
+      ],
+      "rendered_gold_chunk_ids": [
+        "2wikimultihopqa:doc:73"
+      ]
+    },
+    {
+      "query_id": "551e024408a611ebbd7fac1f6bf848b6",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": false,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:76",
+        "2wikimultihopqa:doc:81",
+        "2wikimultihopqa:doc:84",
+        "2wikimultihopqa:doc:85"
+      ],
+      "projected_gold_chunk_ids": [
+        "2wikimultihopqa:doc:76",
+        "2wikimultihopqa:doc:81",
+        "2wikimultihopqa:doc:84",
+        "2wikimultihopqa:doc:85"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:76",
+        "2wikimultihopqa:doc:81",
+        "2wikimultihopqa:doc:84",
+        "2wikimultihopqa:doc:85"
+      ],
+      "rendered_gold_chunk_ids": [
+        "2wikimultihopqa:doc:81",
+        "2wikimultihopqa:doc:85"
+      ]
+    },
+    {
+      "query_id": "33f51d7e0bde11eba7f7acde48001122",
+      "failure_type": "projection_miss",
+      "projected_hit": false,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": false,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:87",
+        "2wikimultihopqa:doc:92"
+      ],
+      "projected_gold_chunk_ids": [],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:87"
+      ],
+      "rendered_gold_chunk_ids": [
+        "2wikimultihopqa:doc:87"
+      ]
+    },
+    {
+      "query_id": "914b452c0bdc11eba7f7acde48001122",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": false,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:102",
+        "2wikimultihopqa:doc:103"
+      ],
+      "projected_gold_chunk_ids": [
+        "2wikimultihopqa:doc:102",
+        "2wikimultihopqa:doc:103"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:102",
+        "2wikimultihopqa:doc:103"
+      ],
+      "rendered_gold_chunk_ids": [
+        "2wikimultihopqa:doc:102"
+      ]
+    },
+    {
+      "query_id": "d6898f78089511ebbd75ac1f6bf848b6",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": false,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:106",
+        "2wikimultihopqa:doc:107"
+      ],
+      "projected_gold_chunk_ids": [
+        "2wikimultihopqa:doc:106",
+        "2wikimultihopqa:doc:107"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:106",
+        "2wikimultihopqa:doc:107"
+      ],
+      "rendered_gold_chunk_ids": [
+        "2wikimultihopqa:doc:106",
+        "2wikimultihopqa:doc:107"
+      ]
+    },
+    {
+      "query_id": "006d81bc0bde11eba7f7acde48001122",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": false,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:116",
+        "2wikimultihopqa:doc:118"
+      ],
+      "projected_gold_chunk_ids": [
+        "2wikimultihopqa:doc:116",
+        "2wikimultihopqa:doc:118"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:116",
+        "2wikimultihopqa:doc:118"
+      ],
+      "rendered_gold_chunk_ids": [
+        "2wikimultihopqa:doc:116"
+      ]
+    },
+    {
+      "query_id": "f5e3b9ca0bdb11eba7f7acde48001122",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": false,
+      "qa_f1": 0.08333333333333334,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:119",
+        "2wikimultihopqa:doc:122"
+      ],
+      "projected_gold_chunk_ids": [
+        "2wikimultihopqa:doc:119"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:119"
+      ],
+      "rendered_gold_chunk_ids": [
+        "2wikimultihopqa:doc:119"
+      ]
+    },
+    {
+      "query_id": "265daf200bdc11eba7f7acde48001122",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": false,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:131",
+        "2wikimultihopqa:doc:133"
+      ],
+      "projected_gold_chunk_ids": [
+        "2wikimultihopqa:doc:131",
+        "2wikimultihopqa:doc:133"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:131",
+        "2wikimultihopqa:doc:133"
+      ],
+      "rendered_gold_chunk_ids": [
+        "2wikimultihopqa:doc:133"
+      ]
+    },
+    {
+      "query_id": "1c0dd3b00bdc11eba7f7acde48001122",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": false,
+      "qa_f1": 0.2,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:138",
+        "2wikimultihopqa:doc:140"
+      ],
+      "projected_gold_chunk_ids": [
+        "2wikimultihopqa:doc:138",
+        "2wikimultihopqa:doc:140"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:138",
+        "2wikimultihopqa:doc:140"
+      ],
+      "rendered_gold_chunk_ids": [
+        "2wikimultihopqa:doc:138"
+      ]
+    },
+    {
+      "query_id": "bab3b6d00bda11eba7f7acde48001122",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": false,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:147",
+        "2wikimultihopqa:doc:148"
+      ],
+      "projected_gold_chunk_ids": [
+        "2wikimultihopqa:doc:148"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:148"
+      ],
+      "rendered_gold_chunk_ids": [
+        "2wikimultihopqa:doc:148"
+      ]
+    },
+    {
+      "query_id": "84b691d8086a11ebbd5fac1f6bf848b6",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": false,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:150",
+        "2wikimultihopqa:doc:151",
+        "2wikimultihopqa:doc:153",
+        "2wikimultihopqa:doc:157"
+      ],
+      "projected_gold_chunk_ids": [
+        "2wikimultihopqa:doc:150",
+        "2wikimultihopqa:doc:151",
+        "2wikimultihopqa:doc:153",
+        "2wikimultihopqa:doc:157"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:150",
+        "2wikimultihopqa:doc:151",
+        "2wikimultihopqa:doc:153",
+        "2wikimultihopqa:doc:157"
+      ],
+      "rendered_gold_chunk_ids": [
+        "2wikimultihopqa:doc:150"
+      ]
+    },
+    {
+      "query_id": "dcbee4b608b011ebbd85ac1f6bf848b6",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.42857142857142855,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:160",
+        "2wikimultihopqa:doc:162",
+        "2wikimultihopqa:doc:165",
+        "2wikimultihopqa:doc:166"
+      ],
+      "projected_gold_chunk_ids": [
+        "2wikimultihopqa:doc:160",
+        "2wikimultihopqa:doc:162",
+        "2wikimultihopqa:doc:165",
+        "2wikimultihopqa:doc:166"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:160",
+        "2wikimultihopqa:doc:162",
+        "2wikimultihopqa:doc:165",
+        "2wikimultihopqa:doc:166"
+      ],
+      "rendered_gold_chunk_ids": [
+        "2wikimultihopqa:doc:162",
+        "2wikimultihopqa:doc:166"
+      ]
+    },
+    {
+      "query_id": "2d8f3ebe0bda11eba7f7acde48001122",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.11764705882352941,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:169",
+        "2wikimultihopqa:doc:174"
+      ],
+      "projected_gold_chunk_ids": [
+        "2wikimultihopqa:doc:169",
+        "2wikimultihopqa:doc:174"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:169",
+        "2wikimultihopqa:doc:174"
+      ],
+      "rendered_gold_chunk_ids": [
+        "2wikimultihopqa:doc:169",
+        "2wikimultihopqa:doc:174"
+      ]
+    },
+    {
+      "query_id": "e6e38bc40bdd11eba7f7acde48001122",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:183",
+        "2wikimultihopqa:doc:188"
+      ],
+      "projected_gold_chunk_ids": [
+        "2wikimultihopqa:doc:183",
+        "2wikimultihopqa:doc:188"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:183",
+        "2wikimultihopqa:doc:188"
+      ],
+      "rendered_gold_chunk_ids": [
+        "2wikimultihopqa:doc:183",
+        "2wikimultihopqa:doc:188"
+      ]
+    },
+    {
+      "query_id": "0bedb7e80bdc11eba7f7acde48001122",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": false,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:192",
+        "2wikimultihopqa:doc:198"
+      ],
+      "projected_gold_chunk_ids": [
+        "2wikimultihopqa:doc:192",
+        "2wikimultihopqa:doc:198"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:192",
+        "2wikimultihopqa:doc:198"
+      ],
+      "rendered_gold_chunk_ids": [
+        "2wikimultihopqa:doc:198"
+      ]
+    },
+    {
+      "query_id": "86508dc60bdc11eba7f7acde48001122",
+      "failure_type": "rendering_miss",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": false,
+      "answer_in_context": false,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:202",
+        "2wikimultihopqa:doc:203"
+      ],
+      "projected_gold_chunk_ids": [
+        "2wikimultihopqa:doc:202",
+        "2wikimultihopqa:doc:203"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:202",
+        "2wikimultihopqa:doc:203"
+      ],
+      "rendered_gold_chunk_ids": []
+    },
+    {
+      "query_id": "e311a3ba0bdc11eba7f7acde48001122",
+      "failure_type": "rendering_miss",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": false,
+      "answer_in_context": false,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:211",
+        "2wikimultihopqa:doc:213"
+      ],
+      "projected_gold_chunk_ids": [
+        "2wikimultihopqa:doc:211",
+        "2wikimultihopqa:doc:213"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:211",
+        "2wikimultihopqa:doc:213"
+      ],
+      "rendered_gold_chunk_ids": []
+    },
+    {
+      "query_id": "bdd526c4091811ebbdaeac1f6bf848b6",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.18181818181818182,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:219",
+        "2wikimultihopqa:doc:227"
+      ],
+      "projected_gold_chunk_ids": [
+        "2wikimultihopqa:doc:219",
+        "2wikimultihopqa:doc:227"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:219",
+        "2wikimultihopqa:doc:227"
+      ],
+      "rendered_gold_chunk_ids": [
+        "2wikimultihopqa:doc:219"
+      ]
+    },
+    {
+      "query_id": "435f65fa0baf11ebab90acde48001122",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": false,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:234",
+        "2wikimultihopqa:doc:236"
+      ],
+      "projected_gold_chunk_ids": [
+        "2wikimultihopqa:doc:234",
+        "2wikimultihopqa:doc:236"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:234",
+        "2wikimultihopqa:doc:236"
+      ],
+      "rendered_gold_chunk_ids": [
+        "2wikimultihopqa:doc:234"
+      ]
+    },
+    {
+      "query_id": "5cc01ab60bb011ebab90acde48001122",
+      "failure_type": "rendering_miss",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": false,
+      "answer_in_context": false,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:245",
+        "2wikimultihopqa:doc:247"
+      ],
+      "projected_gold_chunk_ids": [
+        "2wikimultihopqa:doc:245",
+        "2wikimultihopqa:doc:247"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:245",
+        "2wikimultihopqa:doc:247"
+      ],
+      "rendered_gold_chunk_ids": []
+    },
+    {
+      "query_id": "2084260e0bde11eba7f7acde48001122",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": false,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:250",
+        "2wikimultihopqa:doc:251"
+      ],
+      "projected_gold_chunk_ids": [
+        "2wikimultihopqa:doc:250",
+        "2wikimultihopqa:doc:251"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:250",
+        "2wikimultihopqa:doc:251"
+      ],
+      "rendered_gold_chunk_ids": [
+        "2wikimultihopqa:doc:250"
+      ]
+    },
+    {
+      "query_id": "7cb81afc0bd911eba7f7acde48001122",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": false,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:252",
+        "2wikimultihopqa:doc:253"
+      ],
+      "projected_gold_chunk_ids": [
+        "2wikimultihopqa:doc:252"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:252"
+      ],
+      "rendered_gold_chunk_ids": [
+        "2wikimultihopqa:doc:252"
+      ]
+    },
+    {
+      "query_id": "a1d9a65c0bd911eba7f7acde48001122",
+      "failure_type": "rendering_miss",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": false,
+      "answer_in_context": false,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:261",
+        "2wikimultihopqa:doc:263"
+      ],
+      "projected_gold_chunk_ids": [
+        "2wikimultihopqa:doc:261",
+        "2wikimultihopqa:doc:263"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:261",
+        "2wikimultihopqa:doc:263"
+      ],
+      "rendered_gold_chunk_ids": []
+    },
+    {
+      "query_id": "f34d188608cb11ebbd93ac1f6bf848b6",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.3846153846153846,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:265",
+        "2wikimultihopqa:doc:270",
+        "2wikimultihopqa:doc:271",
+        "2wikimultihopqa:doc:272"
+      ],
+      "projected_gold_chunk_ids": [
+        "2wikimultihopqa:doc:265",
+        "2wikimultihopqa:doc:270",
+        "2wikimultihopqa:doc:272"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:265",
+        "2wikimultihopqa:doc:270",
+        "2wikimultihopqa:doc:272"
+      ],
+      "rendered_gold_chunk_ids": [
+        "2wikimultihopqa:doc:265",
+        "2wikimultihopqa:doc:270"
+      ]
+    },
+    {
+      "query_id": "3a3c2efe0bdc11eba7f7acde48001122",
+      "failure_type": "rendering_miss",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": false,
+      "answer_in_context": false,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:278",
+        "2wikimultihopqa:doc:283"
+      ],
+      "projected_gold_chunk_ids": [
+        "2wikimultihopqa:doc:278",
+        "2wikimultihopqa:doc:283"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:278",
+        "2wikimultihopqa:doc:283"
+      ],
+      "rendered_gold_chunk_ids": []
+    },
+    {
+      "query_id": "9aa8008408de11ebbd9eac1f6bf848b6",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:286",
+        "2wikimultihopqa:doc:287",
+        "2wikimultihopqa:doc:289",
+        "2wikimultihopqa:doc:290"
+      ],
+      "projected_gold_chunk_ids": [
+        "2wikimultihopqa:doc:286",
+        "2wikimultihopqa:doc:287",
+        "2wikimultihopqa:doc:289"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:286",
+        "2wikimultihopqa:doc:287",
+        "2wikimultihopqa:doc:289"
+      ],
+      "rendered_gold_chunk_ids": [
+        "2wikimultihopqa:doc:287",
+        "2wikimultihopqa:doc:289"
+      ]
+    },
+    {
+      "query_id": "0dfe41f60bdc11eba7f7acde48001122",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": false,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:296",
+        "2wikimultihopqa:doc:297"
+      ],
+      "projected_gold_chunk_ids": [
+        "2wikimultihopqa:doc:296"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:296"
+      ],
+      "rendered_gold_chunk_ids": [
+        "2wikimultihopqa:doc:296"
+      ]
+    },
+    {
+      "query_id": "3ce92df80bde11eba7f7acde48001122",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": false,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:304",
+        "2wikimultihopqa:doc:306"
+      ],
+      "projected_gold_chunk_ids": [
+        "2wikimultihopqa:doc:306"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:306"
+      ],
+      "rendered_gold_chunk_ids": [
+        "2wikimultihopqa:doc:306"
+      ]
+    },
+    {
+      "query_id": "3e3cd62a086211ebbd5dac1f6bf848b6",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.3636363636363636,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:310",
+        "2wikimultihopqa:doc:312"
+      ],
+      "projected_gold_chunk_ids": [
+        "2wikimultihopqa:doc:310",
+        "2wikimultihopqa:doc:312"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:310",
+        "2wikimultihopqa:doc:312"
+      ],
+      "rendered_gold_chunk_ids": [
+        "2wikimultihopqa:doc:310"
+      ]
+    },
+    {
+      "query_id": "b672c1ee0bdd11eba7f7acde48001122",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": false,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:316",
+        "2wikimultihopqa:doc:317"
+      ],
+      "projected_gold_chunk_ids": [
+        "2wikimultihopqa:doc:316",
+        "2wikimultihopqa:doc:317"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:316",
+        "2wikimultihopqa:doc:317"
+      ],
+      "rendered_gold_chunk_ids": [
+        "2wikimultihopqa:doc:317"
+      ]
+    },
+    {
+      "query_id": "01309e5008bd11ebbd89ac1f6bf848b6",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.07407407407407407,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:325",
+        "2wikimultihopqa:doc:328",
+        "2wikimultihopqa:doc:330",
+        "2wikimultihopqa:doc:333"
+      ],
+      "projected_gold_chunk_ids": [
+        "2wikimultihopqa:doc:325",
+        "2wikimultihopqa:doc:328",
+        "2wikimultihopqa:doc:330",
+        "2wikimultihopqa:doc:333"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:325",
+        "2wikimultihopqa:doc:328",
+        "2wikimultihopqa:doc:330",
+        "2wikimultihopqa:doc:333"
+      ],
+      "rendered_gold_chunk_ids": [
+        "2wikimultihopqa:doc:330",
+        "2wikimultihopqa:doc:333"
+      ]
+    },
+    {
+      "query_id": "c5a00e860bda11eba7f7acde48001122",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": false,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:334",
+        "2wikimultihopqa:doc:338"
+      ],
+      "projected_gold_chunk_ids": [
+        "2wikimultihopqa:doc:334"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:334"
+      ],
+      "rendered_gold_chunk_ids": [
+        "2wikimultihopqa:doc:334"
+      ]
+    },
+    {
+      "query_id": "434dea7708d211ebbd95ac1f6bf848b6",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.2666666666666667,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:349",
+        "2wikimultihopqa:doc:350"
+      ],
+      "projected_gold_chunk_ids": [
+        "2wikimultihopqa:doc:349",
+        "2wikimultihopqa:doc:350"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:349",
+        "2wikimultihopqa:doc:350"
+      ],
+      "rendered_gold_chunk_ids": [
+        "2wikimultihopqa:doc:349"
+      ]
+    },
+    {
+      "query_id": "02b62fce087211ebbd64ac1f6bf848b6",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:354",
+        "2wikimultihopqa:doc:355",
+        "2wikimultihopqa:doc:356",
+        "2wikimultihopqa:doc:357"
+      ],
+      "projected_gold_chunk_ids": [
+        "2wikimultihopqa:doc:354",
+        "2wikimultihopqa:doc:355",
+        "2wikimultihopqa:doc:356"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:354",
+        "2wikimultihopqa:doc:355",
+        "2wikimultihopqa:doc:356"
+      ],
+      "rendered_gold_chunk_ids": [
+        "2wikimultihopqa:doc:355",
+        "2wikimultihopqa:doc:356"
+      ]
+    },
+    {
+      "query_id": "b0ac0fc8087b11ebbd68ac1f6bf848b6",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.5945945945945945,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:358",
+        "2wikimultihopqa:doc:360",
+        "2wikimultihopqa:doc:363",
+        "2wikimultihopqa:doc:365"
+      ],
+      "projected_gold_chunk_ids": [
+        "2wikimultihopqa:doc:360",
+        "2wikimultihopqa:doc:363",
+        "2wikimultihopqa:doc:365"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:360",
+        "2wikimultihopqa:doc:363",
+        "2wikimultihopqa:doc:365"
+      ],
+      "rendered_gold_chunk_ids": [
+        "2wikimultihopqa:doc:363",
+        "2wikimultihopqa:doc:365"
+      ]
+    },
+    {
+      "query_id": "c9a769c608be11ebbd8aac1f6bf848b6",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:368",
+        "2wikimultihopqa:doc:369"
+      ],
+      "projected_gold_chunk_ids": [
+        "2wikimultihopqa:doc:368",
+        "2wikimultihopqa:doc:369"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:368",
+        "2wikimultihopqa:doc:369"
+      ],
+      "rendered_gold_chunk_ids": [
+        "2wikimultihopqa:doc:368",
+        "2wikimultihopqa:doc:369"
+      ]
+    },
+    {
+      "query_id": "3f04140e08c311ebbd8dac1f6bf848b6",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:371",
+        "2wikimultihopqa:doc:372",
+        "2wikimultihopqa:doc:373",
+        "2wikimultihopqa:doc:374"
+      ],
+      "projected_gold_chunk_ids": [
+        "2wikimultihopqa:doc:371",
+        "2wikimultihopqa:doc:373",
+        "2wikimultihopqa:doc:374"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:371",
+        "2wikimultihopqa:doc:373",
+        "2wikimultihopqa:doc:374"
+      ],
+      "rendered_gold_chunk_ids": [
+        "2wikimultihopqa:doc:371",
+        "2wikimultihopqa:doc:373"
+      ]
+    },
+    {
+      "query_id": "50e4a65c0bde11eba7f7acde48001122",
+      "failure_type": "rendering_miss",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": false,
+      "answer_in_context": false,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:375",
+        "2wikimultihopqa:doc:377"
+      ],
+      "projected_gold_chunk_ids": [
+        "2wikimultihopqa:doc:377"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:377"
+      ],
+      "rendered_gold_chunk_ids": []
+    },
+    {
+      "query_id": "b64f541e088d11ebbd70ac1f6bf848b6",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.47058823529411764,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:379",
+        "2wikimultihopqa:doc:381",
+        "2wikimultihopqa:doc:383",
+        "2wikimultihopqa:doc:384"
+      ],
+      "projected_gold_chunk_ids": [
+        "2wikimultihopqa:doc:379",
+        "2wikimultihopqa:doc:381",
+        "2wikimultihopqa:doc:384"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:379",
+        "2wikimultihopqa:doc:381",
+        "2wikimultihopqa:doc:383",
+        "2wikimultihopqa:doc:384"
+      ],
+      "rendered_gold_chunk_ids": [
+        "2wikimultihopqa:doc:381",
+        "2wikimultihopqa:doc:383"
+      ]
+    },
+    {
+      "query_id": "f998c58c091b11ebbdaeac1f6bf848b6",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": false,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:390",
+        "2wikimultihopqa:doc:391"
+      ],
+      "projected_gold_chunk_ids": [
+        "2wikimultihopqa:doc:390",
+        "2wikimultihopqa:doc:391"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:390",
+        "2wikimultihopqa:doc:391"
+      ],
+      "rendered_gold_chunk_ids": [
+        "2wikimultihopqa:doc:391"
+      ]
+    },
+    {
+      "query_id": "38da155f087511ebbd67ac1f6bf848b6",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:402",
+        "2wikimultihopqa:doc:403"
+      ],
+      "projected_gold_chunk_ids": [
+        "2wikimultihopqa:doc:402",
+        "2wikimultihopqa:doc:403"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:402",
+        "2wikimultihopqa:doc:403"
+      ],
+      "rendered_gold_chunk_ids": [
+        "2wikimultihopqa:doc:402",
+        "2wikimultihopqa:doc:403"
+      ]
+    },
+    {
+      "query_id": "49b22d0a0bde11eba7f7acde48001122",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": false,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:405",
+        "2wikimultihopqa:doc:407"
+      ],
+      "projected_gold_chunk_ids": [
+        "2wikimultihopqa:doc:405",
+        "2wikimultihopqa:doc:407"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:405",
+        "2wikimultihopqa:doc:407"
+      ],
+      "rendered_gold_chunk_ids": [
+        "2wikimultihopqa:doc:405"
+      ]
+    },
+    {
+      "query_id": "78b10fb00bdc11eba7f7acde48001122",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": false,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:408",
+        "2wikimultihopqa:doc:409"
+      ],
+      "projected_gold_chunk_ids": [
+        "2wikimultihopqa:doc:408"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:408"
+      ],
+      "rendered_gold_chunk_ids": [
+        "2wikimultihopqa:doc:408"
+      ]
+    },
+    {
+      "query_id": "879d21e208fc11ebbdadac1f6bf848b6",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": false,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:419",
+        "2wikimultihopqa:doc:420"
+      ],
+      "projected_gold_chunk_ids": [
+        "2wikimultihopqa:doc:419",
+        "2wikimultihopqa:doc:420"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:419",
+        "2wikimultihopqa:doc:420"
+      ],
+      "rendered_gold_chunk_ids": [
+        "2wikimultihopqa:doc:419",
+        "2wikimultihopqa:doc:420"
+      ]
+    },
+    {
+      "query_id": "62a9cd640bb011ebab90acde48001122",
+      "failure_type": "rendering_miss",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": false,
+      "answer_in_context": false,
+      "qa_f1": 0.11764705882352941,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:425",
+        "2wikimultihopqa:doc:426"
+      ],
+      "projected_gold_chunk_ids": [
+        "2wikimultihopqa:doc:425",
+        "2wikimultihopqa:doc:426"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:425",
+        "2wikimultihopqa:doc:426"
+      ],
+      "rendered_gold_chunk_ids": []
+    },
+    {
+      "query_id": "cda459160bda11eba7f7acde48001122",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": false,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:432",
+        "2wikimultihopqa:doc:439"
+      ],
+      "projected_gold_chunk_ids": [
+        "2wikimultihopqa:doc:439"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:439"
+      ],
+      "rendered_gold_chunk_ids": [
+        "2wikimultihopqa:doc:439"
+      ]
+    },
+    {
+      "query_id": "1dfaa6200bdd11eba7f7acde48001122",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": false,
+      "qa_f1": 0.1111111111111111,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:442",
+        "2wikimultihopqa:doc:444"
+      ],
+      "projected_gold_chunk_ids": [
+        "2wikimultihopqa:doc:442",
+        "2wikimultihopqa:doc:444"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:442",
+        "2wikimultihopqa:doc:444"
+      ],
+      "rendered_gold_chunk_ids": [
+        "2wikimultihopqa:doc:442"
+      ]
+    },
+    {
+      "query_id": "ea151f3908e011ebbda2ac1f6bf848b6",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:447",
+        "2wikimultihopqa:doc:452"
+      ],
+      "projected_gold_chunk_ids": [
+        "2wikimultihopqa:doc:447",
+        "2wikimultihopqa:doc:452"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:447",
+        "2wikimultihopqa:doc:452"
+      ],
+      "rendered_gold_chunk_ids": [
+        "2wikimultihopqa:doc:447",
+        "2wikimultihopqa:doc:452"
+      ]
+    },
+    {
+      "query_id": "8e07f1f00bda11eba7f7acde48001122",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": false,
+      "qa_f1": 0.09999999999999999,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:458",
+        "2wikimultihopqa:doc:461"
+      ],
+      "projected_gold_chunk_ids": [
+        "2wikimultihopqa:doc:458"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:458"
+      ],
+      "rendered_gold_chunk_ids": [
+        "2wikimultihopqa:doc:458"
+      ]
+    },
+    {
+      "query_id": "b7f5f7200bdd11eba7f7acde48001122",
+      "failure_type": "rendering_miss",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": false,
+      "answer_in_context": false,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:467",
+        "2wikimultihopqa:doc:469"
+      ],
+      "projected_gold_chunk_ids": [
+        "2wikimultihopqa:doc:467",
+        "2wikimultihopqa:doc:469"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:467",
+        "2wikimultihopqa:doc:469"
+      ],
+      "rendered_gold_chunk_ids": []
+    },
+    {
+      "query_id": "0dc9691b087911ebbd67ac1f6bf848b6",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.4,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:470",
+        "2wikimultihopqa:doc:471",
+        "2wikimultihopqa:doc:473",
+        "2wikimultihopqa:doc:477"
+      ],
+      "projected_gold_chunk_ids": [
+        "2wikimultihopqa:doc:470",
+        "2wikimultihopqa:doc:471",
+        "2wikimultihopqa:doc:473"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:470",
+        "2wikimultihopqa:doc:471",
+        "2wikimultihopqa:doc:473"
+      ],
+      "rendered_gold_chunk_ids": [
+        "2wikimultihopqa:doc:473"
+      ]
+    },
+    {
+      "query_id": "ec70a8a208a311ebbd7cac1f6bf848b6",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.25,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:484",
+        "2wikimultihopqa:doc:486"
+      ],
+      "projected_gold_chunk_ids": [
+        "2wikimultihopqa:doc:484",
+        "2wikimultihopqa:doc:486"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:484",
+        "2wikimultihopqa:doc:486"
+      ],
+      "rendered_gold_chunk_ids": [
+        "2wikimultihopqa:doc:484",
+        "2wikimultihopqa:doc:486"
+      ]
+    },
+    {
+      "query_id": "0083038e0bde11eba7f7acde48001122",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.05555555555555556,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:488",
+        "2wikimultihopqa:doc:497"
+      ],
+      "projected_gold_chunk_ids": [
+        "2wikimultihopqa:doc:488",
+        "2wikimultihopqa:doc:497"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:488",
+        "2wikimultihopqa:doc:497"
+      ],
+      "rendered_gold_chunk_ids": [
+        "2wikimultihopqa:doc:497"
+      ]
+    },
+    {
+      "query_id": "6b8402c40bdd11eba7f7acde48001122",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": false,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:500",
+        "2wikimultihopqa:doc:501"
+      ],
+      "projected_gold_chunk_ids": [
+        "2wikimultihopqa:doc:500",
+        "2wikimultihopqa:doc:501"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:500",
+        "2wikimultihopqa:doc:501"
+      ],
+      "rendered_gold_chunk_ids": [
+        "2wikimultihopqa:doc:500"
+      ]
+    },
+    {
+      "query_id": "d9c894ec0bd911eba7f7acde48001122",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": false,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:503",
+        "2wikimultihopqa:doc:504"
+      ],
+      "projected_gold_chunk_ids": [
+        "2wikimultihopqa:doc:503",
+        "2wikimultihopqa:doc:504"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:503",
+        "2wikimultihopqa:doc:504"
+      ],
+      "rendered_gold_chunk_ids": [
+        "2wikimultihopqa:doc:504"
+      ]
+    },
+    {
+      "query_id": "4d3ab509099c11ebbdb0ac1f6bf848b6",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": false,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:507",
+        "2wikimultihopqa:doc:514"
+      ],
+      "projected_gold_chunk_ids": [
+        "2wikimultihopqa:doc:507",
+        "2wikimultihopqa:doc:514"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:507",
+        "2wikimultihopqa:doc:514"
+      ],
+      "rendered_gold_chunk_ids": [
+        "2wikimultihopqa:doc:507",
+        "2wikimultihopqa:doc:514"
+      ]
+    },
+    {
+      "query_id": "a9e322b20bdc11eba7f7acde48001122",
+      "failure_type": "rendering_miss",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": false,
+      "answer_in_context": false,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:516",
+        "2wikimultihopqa:doc:518"
+      ],
+      "projected_gold_chunk_ids": [
+        "2wikimultihopqa:doc:518"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:518"
+      ],
+      "rendered_gold_chunk_ids": []
+    },
+    {
+      "query_id": "8f783c7a0bda11eba7f7acde48001122",
+      "failure_type": "rendering_miss",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": false,
+      "answer_in_context": false,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:519",
+        "2wikimultihopqa:doc:528"
+      ],
+      "projected_gold_chunk_ids": [
+        "2wikimultihopqa:doc:519"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:519"
+      ],
+      "rendered_gold_chunk_ids": []
+    },
+    {
+      "query_id": "b642318c0bdd11eba7f7acde48001122",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": false,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:529",
+        "2wikimultihopqa:doc:531"
+      ],
+      "projected_gold_chunk_ids": [
+        "2wikimultihopqa:doc:529",
+        "2wikimultihopqa:doc:531"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:529",
+        "2wikimultihopqa:doc:531"
+      ],
+      "rendered_gold_chunk_ids": [
+        "2wikimultihopqa:doc:531"
+      ]
+    },
+    {
+      "query_id": "a52e9e1908b711ebbd88ac1f6bf848b6",
+      "failure_type": "success",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 1.0,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:539",
+        "2wikimultihopqa:doc:542",
+        "2wikimultihopqa:doc:546",
+        "2wikimultihopqa:doc:547"
+      ],
+      "projected_gold_chunk_ids": [
+        "2wikimultihopqa:doc:546",
+        "2wikimultihopqa:doc:547"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:546",
+        "2wikimultihopqa:doc:547"
+      ],
+      "rendered_gold_chunk_ids": [
+        "2wikimultihopqa:doc:547"
+      ]
+    },
+    {
+      "query_id": "fcdafe320bdb11eba7f7acde48001122",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": false,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:550",
+        "2wikimultihopqa:doc:551"
+      ],
+      "projected_gold_chunk_ids": [
+        "2wikimultihopqa:doc:550"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:550"
+      ],
+      "rendered_gold_chunk_ids": [
+        "2wikimultihopqa:doc:550"
+      ]
+    },
+    {
+      "query_id": "7d87730c087211ebbd66ac1f6bf848b6",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": false,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:553",
+        "2wikimultihopqa:doc:556"
+      ],
+      "projected_gold_chunk_ids": [
+        "2wikimultihopqa:doc:553",
+        "2wikimultihopqa:doc:556"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:553",
+        "2wikimultihopqa:doc:556"
+      ],
+      "rendered_gold_chunk_ids": [
+        "2wikimultihopqa:doc:556"
+      ]
+    },
+    {
+      "query_id": "ee5cf4a008a711ebbd7fac1f6bf848b6",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.19607843137254902,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:557",
+        "2wikimultihopqa:doc:561"
+      ],
+      "projected_gold_chunk_ids": [
+        "2wikimultihopqa:doc:557",
+        "2wikimultihopqa:doc:561"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:557",
+        "2wikimultihopqa:doc:561"
+      ],
+      "rendered_gold_chunk_ids": [
+        "2wikimultihopqa:doc:557"
+      ]
+    },
+    {
+      "query_id": "037da85d08c611ebbd90ac1f6bf848b6",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": false,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:568",
+        "2wikimultihopqa:doc:570"
+      ],
+      "projected_gold_chunk_ids": [
+        "2wikimultihopqa:doc:568",
+        "2wikimultihopqa:doc:570"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:568",
+        "2wikimultihopqa:doc:570"
+      ],
+      "rendered_gold_chunk_ids": [
+        "2wikimultihopqa:doc:570"
+      ]
+    },
+    {
+      "query_id": "e15d99380bdd11eba7f7acde48001122",
+      "failure_type": "rendering_miss",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": false,
+      "answer_in_context": false,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:577",
+        "2wikimultihopqa:doc:578"
+      ],
+      "projected_gold_chunk_ids": [
+        "2wikimultihopqa:doc:577",
+        "2wikimultihopqa:doc:578"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:577",
+        "2wikimultihopqa:doc:578"
+      ],
+      "rendered_gold_chunk_ids": []
+    },
+    {
+      "query_id": "f05423560bda11eba7f7acde48001122",
+      "failure_type": "projection_miss",
+      "projected_hit": false,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": false,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:582",
+        "2wikimultihopqa:doc:583"
+      ],
+      "projected_gold_chunk_ids": [],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:583"
+      ],
+      "rendered_gold_chunk_ids": [
+        "2wikimultihopqa:doc:583"
+      ]
+    },
+    {
+      "query_id": "0ce9a92008ed11ebbda7ac1f6bf848b6",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": false,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:589",
+        "2wikimultihopqa:doc:592"
+      ],
+      "projected_gold_chunk_ids": [
+        "2wikimultihopqa:doc:589",
+        "2wikimultihopqa:doc:592"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:589",
+        "2wikimultihopqa:doc:592"
+      ],
+      "rendered_gold_chunk_ids": [
+        "2wikimultihopqa:doc:592"
+      ]
+    },
+    {
+      "query_id": "7d7237ac08a011ebbd78ac1f6bf848b6",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.23529411764705882,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:596",
+        "2wikimultihopqa:doc:597",
+        "2wikimultihopqa:doc:599",
+        "2wikimultihopqa:doc:602"
+      ],
+      "projected_gold_chunk_ids": [
+        "2wikimultihopqa:doc:596",
+        "2wikimultihopqa:doc:599",
+        "2wikimultihopqa:doc:602"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:596",
+        "2wikimultihopqa:doc:599",
+        "2wikimultihopqa:doc:602"
+      ],
+      "rendered_gold_chunk_ids": [
+        "2wikimultihopqa:doc:599",
+        "2wikimultihopqa:doc:602"
+      ]
+    },
+    {
+      "query_id": "90c8793c087411ebbd67ac1f6bf848b6",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.5263157894736842,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:603",
+        "2wikimultihopqa:doc:604",
+        "2wikimultihopqa:doc:606",
+        "2wikimultihopqa:doc:607"
+      ],
+      "projected_gold_chunk_ids": [
+        "2wikimultihopqa:doc:603",
+        "2wikimultihopqa:doc:604",
+        "2wikimultihopqa:doc:606",
+        "2wikimultihopqa:doc:607"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:603",
+        "2wikimultihopqa:doc:604",
+        "2wikimultihopqa:doc:606",
+        "2wikimultihopqa:doc:607"
+      ],
+      "rendered_gold_chunk_ids": [
+        "2wikimultihopqa:doc:603"
+      ]
+    },
+    {
+      "query_id": "63c16246095211ebbdaeac1f6bf848b6",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.15384615384615383,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:613",
+        "2wikimultihopqa:doc:614"
+      ],
+      "projected_gold_chunk_ids": [
+        "2wikimultihopqa:doc:613",
+        "2wikimultihopqa:doc:614"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:613",
+        "2wikimultihopqa:doc:614"
+      ],
+      "rendered_gold_chunk_ids": [
+        "2wikimultihopqa:doc:613",
+        "2wikimultihopqa:doc:614"
+      ]
+    },
+    {
+      "query_id": "48e6d06e086f11ebbd62ac1f6bf848b6",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.4444444444444445,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:617",
+        "2wikimultihopqa:doc:621",
+        "2wikimultihopqa:doc:622",
+        "2wikimultihopqa:doc:624"
+      ],
+      "projected_gold_chunk_ids": [
+        "2wikimultihopqa:doc:617",
+        "2wikimultihopqa:doc:621",
+        "2wikimultihopqa:doc:622",
+        "2wikimultihopqa:doc:624"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:617",
+        "2wikimultihopqa:doc:621",
+        "2wikimultihopqa:doc:622",
+        "2wikimultihopqa:doc:624"
+      ],
+      "rendered_gold_chunk_ids": [
+        "2wikimultihopqa:doc:617"
+      ]
+    },
+    {
+      "query_id": "d18fc6640bda11eba7f7acde48001122",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:627",
+        "2wikimultihopqa:doc:628"
+      ],
+      "projected_gold_chunk_ids": [
+        "2wikimultihopqa:doc:627",
+        "2wikimultihopqa:doc:628"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:627",
+        "2wikimultihopqa:doc:628"
+      ],
+      "rendered_gold_chunk_ids": [
+        "2wikimultihopqa:doc:627",
+        "2wikimultihopqa:doc:628"
+      ]
+    },
+    {
+      "query_id": "4a11106f08ea11ebbda7ac1f6bf848b6",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:631",
+        "2wikimultihopqa:doc:637"
+      ],
+      "projected_gold_chunk_ids": [
+        "2wikimultihopqa:doc:631",
+        "2wikimultihopqa:doc:637"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:631",
+        "2wikimultihopqa:doc:637"
+      ],
+      "rendered_gold_chunk_ids": [
+        "2wikimultihopqa:doc:631",
+        "2wikimultihopqa:doc:637"
+      ]
+    },
+    {
+      "query_id": "a457e11c0bdb11eba7f7acde48001122",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:638",
+        "2wikimultihopqa:doc:639"
+      ],
+      "projected_gold_chunk_ids": [
+        "2wikimultihopqa:doc:638",
+        "2wikimultihopqa:doc:639"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:638",
+        "2wikimultihopqa:doc:639"
+      ],
+      "rendered_gold_chunk_ids": [
+        "2wikimultihopqa:doc:638"
+      ]
+    },
+    {
+      "query_id": "632fcc82085611ebbd59ac1f6bf848b6",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.42857142857142855,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:647",
+        "2wikimultihopqa:doc:650"
+      ],
+      "projected_gold_chunk_ids": [
+        "2wikimultihopqa:doc:647",
+        "2wikimultihopqa:doc:650"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:647",
+        "2wikimultihopqa:doc:650"
+      ],
+      "rendered_gold_chunk_ids": [
+        "2wikimultihopqa:doc:650"
+      ]
+    },
+    {
+      "query_id": "076288460bde11eba7f7acde48001122",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": false,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:653",
+        "2wikimultihopqa:doc:658"
+      ],
+      "projected_gold_chunk_ids": [
+        "2wikimultihopqa:doc:653",
+        "2wikimultihopqa:doc:658"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:653",
+        "2wikimultihopqa:doc:658"
+      ],
+      "rendered_gold_chunk_ids": [
+        "2wikimultihopqa:doc:658"
+      ]
+    },
+    {
+      "query_id": "402c6e0008c611ebbd90ac1f6bf848b6",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:661",
+        "2wikimultihopqa:doc:664"
+      ],
+      "projected_gold_chunk_ids": [
+        "2wikimultihopqa:doc:661",
+        "2wikimultihopqa:doc:664"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:661",
+        "2wikimultihopqa:doc:664"
+      ],
+      "rendered_gold_chunk_ids": [
+        "2wikimultihopqa:doc:661",
+        "2wikimultihopqa:doc:664"
+      ]
+    },
+    {
+      "query_id": "9523a3df088911ebbd6eac1f6bf848b6",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": false,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:670",
+        "2wikimultihopqa:doc:675"
+      ],
+      "projected_gold_chunk_ids": [
+        "2wikimultihopqa:doc:670",
+        "2wikimultihopqa:doc:675"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:670",
+        "2wikimultihopqa:doc:675"
+      ],
+      "rendered_gold_chunk_ids": [
+        "2wikimultihopqa:doc:675"
+      ]
+    },
+    {
+      "query_id": "5ff291a80bda11eba7f7acde48001122",
+      "failure_type": "rendering_miss",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": false,
+      "answer_in_context": false,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:681",
+        "2wikimultihopqa:doc:684"
+      ],
+      "projected_gold_chunk_ids": [
+        "2wikimultihopqa:doc:684"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:684"
+      ],
+      "rendered_gold_chunk_ids": []
+    },
+    {
+      "query_id": "a08aa2a9089111ebbd73ac1f6bf848b6",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:689",
+        "2wikimultihopqa:doc:694"
+      ],
+      "projected_gold_chunk_ids": [
+        "2wikimultihopqa:doc:689",
+        "2wikimultihopqa:doc:694"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:689",
+        "2wikimultihopqa:doc:694"
+      ],
+      "rendered_gold_chunk_ids": [
+        "2wikimultihopqa:doc:689",
+        "2wikimultihopqa:doc:694"
+      ]
+    },
+    {
+      "query_id": "63240f22089d11ebbd78ac1f6bf848b6",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:695",
+        "2wikimultihopqa:doc:696",
+        "2wikimultihopqa:doc:697",
+        "2wikimultihopqa:doc:699"
+      ],
+      "projected_gold_chunk_ids": [
+        "2wikimultihopqa:doc:695",
+        "2wikimultihopqa:doc:696",
+        "2wikimultihopqa:doc:697",
+        "2wikimultihopqa:doc:699"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:695",
+        "2wikimultihopqa:doc:696",
+        "2wikimultihopqa:doc:697",
+        "2wikimultihopqa:doc:699"
+      ],
+      "rendered_gold_chunk_ids": [
+        "2wikimultihopqa:doc:696",
+        "2wikimultihopqa:doc:697"
+      ]
+    },
+    {
+      "query_id": "fde95590089c11ebbd78ac1f6bf848b6",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:701",
+        "2wikimultihopqa:doc:702"
+      ],
+      "projected_gold_chunk_ids": [
+        "2wikimultihopqa:doc:701",
+        "2wikimultihopqa:doc:702"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:701",
+        "2wikimultihopqa:doc:702"
+      ],
+      "rendered_gold_chunk_ids": [
+        "2wikimultihopqa:doc:701",
+        "2wikimultihopqa:doc:702"
+      ]
+    },
+    {
+      "query_id": "3bb9c0740bb011ebab90acde48001122",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": false,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:703",
+        "2wikimultihopqa:doc:712"
+      ],
+      "projected_gold_chunk_ids": [
+        "2wikimultihopqa:doc:712"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:712"
+      ],
+      "rendered_gold_chunk_ids": [
+        "2wikimultihopqa:doc:712"
+      ]
+    },
+    {
+      "query_id": "dfb1d2c8085611ebbd59ac1f6bf848b6",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:713",
+        "2wikimultihopqa:doc:714",
+        "2wikimultihopqa:doc:715",
+        "2wikimultihopqa:doc:716"
+      ],
+      "projected_gold_chunk_ids": [
+        "2wikimultihopqa:doc:713",
+        "2wikimultihopqa:doc:714",
+        "2wikimultihopqa:doc:715",
+        "2wikimultihopqa:doc:716"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:713",
+        "2wikimultihopqa:doc:714",
+        "2wikimultihopqa:doc:715",
+        "2wikimultihopqa:doc:716"
+      ],
+      "rendered_gold_chunk_ids": [
+        "2wikimultihopqa:doc:715"
+      ]
+    },
+    {
+      "query_id": "e7dc72940baf11ebab90acde48001122",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": false,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:724",
+        "2wikimultihopqa:doc:726"
+      ],
+      "projected_gold_chunk_ids": [
+        "2wikimultihopqa:doc:724"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:724"
+      ],
+      "rendered_gold_chunk_ids": [
+        "2wikimultihopqa:doc:724"
+      ]
+    },
+    {
+      "query_id": "764446780bde11eba7f7acde48001122",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": false,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:727",
+        "2wikimultihopqa:doc:728"
+      ],
+      "projected_gold_chunk_ids": [
+        "2wikimultihopqa:doc:727"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:727"
+      ],
+      "rendered_gold_chunk_ids": [
+        "2wikimultihopqa:doc:727"
+      ]
+    },
+    {
+      "query_id": "bb97d66208ba11ebbd88ac1f6bf848b6",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.3846153846153846,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:731",
+        "2wikimultihopqa:doc:732",
+        "2wikimultihopqa:doc:735",
+        "2wikimultihopqa:doc:738"
+      ],
+      "projected_gold_chunk_ids": [
+        "2wikimultihopqa:doc:731",
+        "2wikimultihopqa:doc:735",
+        "2wikimultihopqa:doc:738"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:731",
+        "2wikimultihopqa:doc:735",
+        "2wikimultihopqa:doc:738"
+      ],
+      "rendered_gold_chunk_ids": [
+        "2wikimultihopqa:doc:731",
+        "2wikimultihopqa:doc:738"
+      ]
+    },
+    {
+      "query_id": "f1a794f20bdc11eba7f7acde48001122",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": false,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:741",
+        "2wikimultihopqa:doc:743"
+      ],
+      "projected_gold_chunk_ids": [
+        "2wikimultihopqa:doc:743"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:743"
+      ],
+      "rendered_gold_chunk_ids": [
+        "2wikimultihopqa:doc:743"
+      ]
+    },
+    {
+      "query_id": "47bb70600bde11eba7f7acde48001122",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:745",
+        "2wikimultihopqa:doc:746"
+      ],
+      "projected_gold_chunk_ids": [
+        "2wikimultihopqa:doc:745"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:745"
+      ],
+      "rendered_gold_chunk_ids": [
+        "2wikimultihopqa:doc:745"
+      ]
+    },
+    {
+      "query_id": "6cbb0ed6089911ebbd77ac1f6bf848b6",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.35294117647058826,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:747",
+        "2wikimultihopqa:doc:748",
+        "2wikimultihopqa:doc:750",
+        "2wikimultihopqa:doc:752"
+      ],
+      "projected_gold_chunk_ids": [
+        "2wikimultihopqa:doc:747",
+        "2wikimultihopqa:doc:748",
+        "2wikimultihopqa:doc:750",
+        "2wikimultihopqa:doc:752"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:747",
+        "2wikimultihopqa:doc:748",
+        "2wikimultihopqa:doc:750",
+        "2wikimultihopqa:doc:752"
+      ],
+      "rendered_gold_chunk_ids": [
+        "2wikimultihopqa:doc:747"
+      ]
+    },
+    {
+      "query_id": "594ca25608df11ebbda0ac1f6bf848b6",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:755",
+        "2wikimultihopqa:doc:760",
+        "2wikimultihopqa:doc:762",
+        "2wikimultihopqa:doc:763"
+      ],
+      "projected_gold_chunk_ids": [
+        "2wikimultihopqa:doc:755",
+        "2wikimultihopqa:doc:760",
+        "2wikimultihopqa:doc:762"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:755",
+        "2wikimultihopqa:doc:760",
+        "2wikimultihopqa:doc:762"
+      ],
+      "rendered_gold_chunk_ids": [
+        "2wikimultihopqa:doc:760"
+      ]
+    },
+    {
+      "query_id": "a431a93808d511ebbd98ac1f6bf848b6",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": false,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:765",
+        "2wikimultihopqa:doc:766",
+        "2wikimultihopqa:doc:767",
+        "2wikimultihopqa:doc:768"
+      ],
+      "projected_gold_chunk_ids": [
+        "2wikimultihopqa:doc:765",
+        "2wikimultihopqa:doc:767",
+        "2wikimultihopqa:doc:768"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:765",
+        "2wikimultihopqa:doc:767",
+        "2wikimultihopqa:doc:768"
+      ],
+      "rendered_gold_chunk_ids": [
+        "2wikimultihopqa:doc:765"
+      ]
+    },
+    {
+      "query_id": "421d07aa0bb011ebab90acde48001122",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": false,
+      "qa_f1": 0.21052631578947367,
+      "gold_chunk_ids": [
+        "2wikimultihopqa:doc:769",
+        "2wikimultihopqa:doc:770"
+      ],
+      "projected_gold_chunk_ids": [
+        "2wikimultihopqa:doc:769",
+        "2wikimultihopqa:doc:770"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "2wikimultihopqa:doc:769",
+        "2wikimultihopqa:doc:770"
+      ],
+      "rendered_gold_chunk_ids": [
+        "2wikimultihopqa:doc:769"
+      ]
+    }
+  ]
+}

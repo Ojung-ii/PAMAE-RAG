@@ -1,0 +1,100 @@
+{
+  "oracle": {
+    "metric_id": "squad_normalized_em_f1_v1",
+    "method_f1": 0.07313792909791965,
+    "gold_support_f1": 0.0927058865965946,
+    "answer_containing_f1": 0.3104004841215606,
+    "answer_copy_f1": 0.6534761904761902,
+    "oracle_dominance_valid": true,
+    "diagnosis": "oracle_context_construction_weaker_than_answer_copy",
+    "oracle_modes": {
+      "gold_support": {
+        "oracle_mode": "gold_support",
+        "mean_f1": 0.0927058865965946,
+        "mean_exact_match": 0.0,
+        "context_found_rate": 1.0,
+        "num_queries": 100
+      },
+      "answer_containing": {
+        "oracle_mode": "answer_containing",
+        "mean_f1": 0.3104004841215606,
+        "mean_exact_match": 0.02,
+        "context_found_rate": 1.0,
+        "num_queries": 100
+      },
+      "answer_copy": {
+        "oracle_mode": "answer_copy",
+        "mean_f1": 0.6534761904761902,
+        "mean_exact_match": 0.0,
+        "context_found_rate": 1.0,
+        "num_queries": 100
+      }
+    }
+  },
+  "rows": [
+    {
+      "run": "current_content",
+      "F1": 0.07313792909791965,
+      "oracle_gap": 0.019567957498674945,
+      "TypeB": 43,
+      "selected_basin_hit": 0.57,
+      "rendered_recall": 0.67,
+      "context_f1": 0.288333333333333,
+      "answer_in_context": 0.65,
+      "retrieval_ms": 808.65269,
+      "generation_ms": 0.3821800000000002
+    },
+    {
+      "run": "basin_preserving_selection",
+      "F1": 0.07078685533508118,
+      "oracle_gap": 0.021919031261513414,
+      "TypeB": 0,
+      "selected_basin_hit": 1.0,
+      "rendered_recall": 0.66,
+      "context_f1": 0.28514285714285686,
+      "answer_in_context": 0.64,
+      "retrieval_ms": 807.4667400000002,
+      "generation_ms": 0.28999
+    },
+    {
+      "run": "basin_preserving_selection_plus_basin_renderer",
+      "F1": 0.05889228503047029,
+      "oracle_gap": 0.033813601566124306,
+      "TypeB": 0,
+      "selected_basin_hit": 1.0,
+      "rendered_recall": 0.51,
+      "context_f1": 0.3295714285714284,
+      "answer_in_context": 0.55,
+      "retrieval_ms": 816.00907,
+      "generation_ms": 0.18336
+    }
+  ],
+  "risk_gates": [
+    {
+      "run": "current_content",
+      "decision": "REFERENCE",
+      "blockers": []
+    },
+    {
+      "run": "basin_preserving_selection",
+      "decision": "STOP",
+      "blockers": [
+        "f1_regression",
+        "oracle_gap_regression",
+        "rendered_recall_regression",
+        "context_f1_regression",
+        "answer_in_context_regression"
+      ]
+    },
+    {
+      "run": "basin_preserving_selection_plus_basin_renderer",
+      "decision": "STOP",
+      "blockers": [
+        "f1_regression",
+        "oracle_gap_regression",
+        "rendered_recall_regression",
+        "answer_in_context_regression"
+      ]
+    }
+  ]
+}

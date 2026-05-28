@@ -1,0 +1,2253 @@
+{
+  "failure_type_counts": {
+    "projection_miss": 0,
+    "selection_miss": 43,
+    "rendering_miss": 0,
+    "qa_fail": 57,
+    "success": 0
+  },
+  "rows": [
+    {
+      "query_id": "5abe953b5542993f32c2a170",
+      "failure_type": "selection_miss",
+      "projected_hit": true,
+      "selected_basin_hit": false,
+      "rendered_hit": true,
+      "answer_in_context": false,
+      "qa_f1": 0.12500000000000003,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:1",
+        "hotpotqa:doc:7"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:7"
+      ],
+      "selected_basin_gold_chunk_ids": [],
+      "rendered_gold_chunk_ids": [
+        "hotpotqa:doc:7"
+      ]
+    },
+    {
+      "query_id": "5ab69f9a554299710c8d1ef8",
+      "failure_type": "selection_miss",
+      "projected_hit": true,
+      "selected_basin_hit": false,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:13",
+        "hotpotqa:doc:18"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:13",
+        "hotpotqa:doc:18"
+      ],
+      "selected_basin_gold_chunk_ids": [],
+      "rendered_gold_chunk_ids": [
+        "hotpotqa:doc:13",
+        "hotpotqa:doc:18"
+      ]
+    },
+    {
+      "query_id": "5abc030e554299642a094bdc",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": false,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:25",
+        "hotpotqa:doc:26"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:25",
+        "hotpotqa:doc:26"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "hotpotqa:doc:25"
+      ],
+      "rendered_gold_chunk_ids": [
+        "hotpotqa:doc:25"
+      ]
+    },
+    {
+      "query_id": "5ae6c2285542995703ce8b9a",
+      "failure_type": "selection_miss",
+      "projected_hit": true,
+      "selected_basin_hit": false,
+      "rendered_hit": true,
+      "answer_in_context": false,
+      "qa_f1": 0.06451612903225806,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:35",
+        "hotpotqa:doc:39"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:35",
+        "hotpotqa:doc:39"
+      ],
+      "selected_basin_gold_chunk_ids": [],
+      "rendered_gold_chunk_ids": [
+        "hotpotqa:doc:39"
+      ]
+    },
+    {
+      "query_id": "5ab57fc4554299488d4d99c0",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": false,
+      "qa_f1": 0.2,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:46",
+        "hotpotqa:doc:49"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:46",
+        "hotpotqa:doc:49"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "hotpotqa:doc:46"
+      ],
+      "rendered_gold_chunk_ids": [
+        "hotpotqa:doc:46"
+      ]
+    },
+    {
+      "query_id": "5ade9c9c5542997c77adee8c",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:53",
+        "hotpotqa:doc:56"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:53",
+        "hotpotqa:doc:56"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "hotpotqa:doc:53",
+        "hotpotqa:doc:56"
+      ],
+      "rendered_gold_chunk_ids": [
+        "hotpotqa:doc:53",
+        "hotpotqa:doc:56"
+      ]
+    },
+    {
+      "query_id": "5a749af055429979e28829b7",
+      "failure_type": "selection_miss",
+      "projected_hit": true,
+      "selected_basin_hit": false,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.13953488372093023,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:63",
+        "hotpotqa:doc:64"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:63",
+        "hotpotqa:doc:64"
+      ],
+      "selected_basin_gold_chunk_ids": [],
+      "rendered_gold_chunk_ids": [
+        "hotpotqa:doc:64"
+      ]
+    },
+    {
+      "query_id": "5ae1389655429901ffe4ae05",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.20689655172413793,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:75",
+        "hotpotqa:doc:76"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:75",
+        "hotpotqa:doc:76"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "hotpotqa:doc:75"
+      ],
+      "rendered_gold_chunk_ids": [
+        "hotpotqa:doc:75",
+        "hotpotqa:doc:76"
+      ]
+    },
+    {
+      "query_id": "5adcd4325542994d58a2f6ed",
+      "failure_type": "selection_miss",
+      "projected_hit": true,
+      "selected_basin_hit": false,
+      "rendered_hit": true,
+      "answer_in_context": false,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:82",
+        "hotpotqa:doc:83"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:83"
+      ],
+      "selected_basin_gold_chunk_ids": [],
+      "rendered_gold_chunk_ids": [
+        "hotpotqa:doc:82",
+        "hotpotqa:doc:83"
+      ]
+    },
+    {
+      "query_id": "5a85c3225542992a431d1b95",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:85",
+        "hotpotqa:doc:91"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:85",
+        "hotpotqa:doc:91"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "hotpotqa:doc:91"
+      ],
+      "rendered_gold_chunk_ids": [
+        "hotpotqa:doc:85",
+        "hotpotqa:doc:91"
+      ]
+    },
+    {
+      "query_id": "5ab94bc2554299743d22eacf",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.11764705882352941,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:101",
+        "hotpotqa:doc:95"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:95"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "hotpotqa:doc:101",
+        "hotpotqa:doc:95"
+      ],
+      "rendered_gold_chunk_ids": [
+        "hotpotqa:doc:101",
+        "hotpotqa:doc:95"
+      ]
+    },
+    {
+      "query_id": "5ae1f17e554299234fd04349",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": false,
+      "qa_f1": 0.11764705882352942,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:107",
+        "hotpotqa:doc:108"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:107",
+        "hotpotqa:doc:108"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "hotpotqa:doc:108"
+      ],
+      "rendered_gold_chunk_ids": [
+        "hotpotqa:doc:108"
+      ]
+    },
+    {
+      "query_id": "5ab3cecd5542992ade7c6eae",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:119",
+        "hotpotqa:doc:120"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:119",
+        "hotpotqa:doc:120"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "hotpotqa:doc:119"
+      ],
+      "rendered_gold_chunk_ids": [
+        "hotpotqa:doc:119"
+      ]
+    },
+    {
+      "query_id": "5a8835dc5542994846c1ce2b",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:124",
+        "hotpotqa:doc:132"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:124",
+        "hotpotqa:doc:132"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "hotpotqa:doc:124",
+        "hotpotqa:doc:132"
+      ],
+      "rendered_gold_chunk_ids": [
+        "hotpotqa:doc:124",
+        "hotpotqa:doc:132"
+      ]
+    },
+    {
+      "query_id": "5a714dea5542994082a3e7a9",
+      "failure_type": "selection_miss",
+      "projected_hit": true,
+      "selected_basin_hit": false,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:139",
+        "hotpotqa:doc:142"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:139",
+        "hotpotqa:doc:142"
+      ],
+      "selected_basin_gold_chunk_ids": [],
+      "rendered_gold_chunk_ids": [
+        "hotpotqa:doc:139"
+      ]
+    },
+    {
+      "query_id": "5a8481945542997175ce1ed3",
+      "failure_type": "selection_miss",
+      "projected_hit": true,
+      "selected_basin_hit": false,
+      "rendered_hit": true,
+      "answer_in_context": false,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:146",
+        "hotpotqa:doc:150"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:146",
+        "hotpotqa:doc:150"
+      ],
+      "selected_basin_gold_chunk_ids": [],
+      "rendered_gold_chunk_ids": [
+        "hotpotqa:doc:146"
+      ]
+    },
+    {
+      "query_id": "5a84574455429933447460e6",
+      "failure_type": "selection_miss",
+      "projected_hit": true,
+      "selected_basin_hit": false,
+      "rendered_hit": false,
+      "answer_in_context": true,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:160",
+        "hotpotqa:doc:162"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:160",
+        "hotpotqa:doc:162"
+      ],
+      "selected_basin_gold_chunk_ids": [],
+      "rendered_gold_chunk_ids": []
+    },
+    {
+      "query_id": "5a72b2dc5542992359bc3173",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.19999999999999998,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:164",
+        "hotpotqa:doc:165"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:164",
+        "hotpotqa:doc:165"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "hotpotqa:doc:165"
+      ],
+      "rendered_gold_chunk_ids": [
+        "hotpotqa:doc:164",
+        "hotpotqa:doc:165"
+      ]
+    },
+    {
+      "query_id": "5a7a3a945542996a35c17147",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": false,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:176",
+        "hotpotqa:doc:177"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:176",
+        "hotpotqa:doc:177"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "hotpotqa:doc:177"
+      ],
+      "rendered_gold_chunk_ids": [
+        "hotpotqa:doc:177"
+      ]
+    },
+    {
+      "query_id": "5ade86b255429939a52fe8e0",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": false,
+      "qa_f1": 0.07692307692307693,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:188",
+        "hotpotqa:doc:192"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:188",
+        "hotpotqa:doc:192"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "hotpotqa:doc:188"
+      ],
+      "rendered_gold_chunk_ids": [
+        "hotpotqa:doc:188"
+      ]
+    },
+    {
+      "query_id": "5a8f5b6f554299458435d5e7",
+      "failure_type": "selection_miss",
+      "projected_hit": true,
+      "selected_basin_hit": false,
+      "rendered_hit": true,
+      "answer_in_context": false,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:195",
+        "hotpotqa:doc:200"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:195",
+        "hotpotqa:doc:200"
+      ],
+      "selected_basin_gold_chunk_ids": [],
+      "rendered_gold_chunk_ids": [
+        "hotpotqa:doc:200"
+      ]
+    },
+    {
+      "query_id": "5ae40d405542996836b02c28",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": false,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:207",
+        "hotpotqa:doc:213"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:207",
+        "hotpotqa:doc:213"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "hotpotqa:doc:207"
+      ],
+      "rendered_gold_chunk_ids": [
+        "hotpotqa:doc:207"
+      ]
+    },
+    {
+      "query_id": "5a72334755429971e9dc934c",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": false,
+      "qa_f1": 0.08695652173913045,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:216",
+        "hotpotqa:doc:217"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:216",
+        "hotpotqa:doc:217"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "hotpotqa:doc:216"
+      ],
+      "rendered_gold_chunk_ids": [
+        "hotpotqa:doc:216"
+      ]
+    },
+    {
+      "query_id": "5ab8829d55429934fafe6e08",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:224",
+        "hotpotqa:doc:225"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:224",
+        "hotpotqa:doc:225"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "hotpotqa:doc:224"
+      ],
+      "rendered_gold_chunk_ids": [
+        "hotpotqa:doc:224",
+        "hotpotqa:doc:225"
+      ]
+    },
+    {
+      "query_id": "5a7b1c0a55429931da12c9c9",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:235",
+        "hotpotqa:doc:242"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:235"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "hotpotqa:doc:235",
+        "hotpotqa:doc:242"
+      ],
+      "rendered_gold_chunk_ids": [
+        "hotpotqa:doc:235",
+        "hotpotqa:doc:242"
+      ]
+    },
+    {
+      "query_id": "5ae40b2b55429970de88d8b3",
+      "failure_type": "selection_miss",
+      "projected_hit": true,
+      "selected_basin_hit": false,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.29629629629629634,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:249",
+        "hotpotqa:doc:251"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:249",
+        "hotpotqa:doc:251"
+      ],
+      "selected_basin_gold_chunk_ids": [],
+      "rendered_gold_chunk_ids": [
+        "hotpotqa:doc:251"
+      ]
+    },
+    {
+      "query_id": "5ab29c24554299449642c932",
+      "failure_type": "selection_miss",
+      "projected_hit": true,
+      "selected_basin_hit": false,
+      "rendered_hit": true,
+      "answer_in_context": false,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:257",
+        "hotpotqa:doc:259"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:257",
+        "hotpotqa:doc:259"
+      ],
+      "selected_basin_gold_chunk_ids": [],
+      "rendered_gold_chunk_ids": [
+        "hotpotqa:doc:257"
+      ]
+    },
+    {
+      "query_id": "5ae26fad554299495565da6f",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.09523809523809525,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:268",
+        "hotpotqa:doc:269"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:268",
+        "hotpotqa:doc:269"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "hotpotqa:doc:269"
+      ],
+      "rendered_gold_chunk_ids": [
+        "hotpotqa:doc:268",
+        "hotpotqa:doc:269"
+      ]
+    },
+    {
+      "query_id": "5a7542425542996c70cfaecc",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:274",
+        "hotpotqa:doc:279"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:274",
+        "hotpotqa:doc:279"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "hotpotqa:doc:279"
+      ],
+      "rendered_gold_chunk_ids": [
+        "hotpotqa:doc:274",
+        "hotpotqa:doc:279"
+      ]
+    },
+    {
+      "query_id": "5adecc7755429975fa854f9d",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:291",
+        "hotpotqa:doc:292"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:291",
+        "hotpotqa:doc:292"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "hotpotqa:doc:291"
+      ],
+      "rendered_gold_chunk_ids": [
+        "hotpotqa:doc:291",
+        "hotpotqa:doc:292"
+      ]
+    },
+    {
+      "query_id": "5abff9905542997d64295980",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.06666666666666667,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:298",
+        "hotpotqa:doc:302"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:298",
+        "hotpotqa:doc:302"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "hotpotqa:doc:298",
+        "hotpotqa:doc:302"
+      ],
+      "rendered_gold_chunk_ids": [
+        "hotpotqa:doc:298",
+        "hotpotqa:doc:302"
+      ]
+    },
+    {
+      "query_id": "5ab5f372554299488d4d9a60",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.34285714285714286,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:304",
+        "hotpotqa:doc:308"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:304",
+        "hotpotqa:doc:308"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "hotpotqa:doc:304",
+        "hotpotqa:doc:308"
+      ],
+      "rendered_gold_chunk_ids": [
+        "hotpotqa:doc:304",
+        "hotpotqa:doc:308"
+      ]
+    },
+    {
+      "query_id": "5a7558425542992db9473647",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:319",
+        "hotpotqa:doc:321"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:319",
+        "hotpotqa:doc:321"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "hotpotqa:doc:321"
+      ],
+      "rendered_gold_chunk_ids": [
+        "hotpotqa:doc:321"
+      ]
+    },
+    {
+      "query_id": "5a72f45a5542992359bc31e6",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.29629629629629634,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:327",
+        "hotpotqa:doc:329"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:327",
+        "hotpotqa:doc:329"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "hotpotqa:doc:327",
+        "hotpotqa:doc:329"
+      ],
+      "rendered_gold_chunk_ids": [
+        "hotpotqa:doc:327",
+        "hotpotqa:doc:329"
+      ]
+    },
+    {
+      "query_id": "5a83411655429966c78a6b5d",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": false,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:334",
+        "hotpotqa:doc:336"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:334",
+        "hotpotqa:doc:336"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "hotpotqa:doc:334"
+      ],
+      "rendered_gold_chunk_ids": [
+        "hotpotqa:doc:334"
+      ]
+    },
+    {
+      "query_id": "5a77aa095542995d83181260",
+      "failure_type": "selection_miss",
+      "projected_hit": true,
+      "selected_basin_hit": false,
+      "rendered_hit": true,
+      "answer_in_context": false,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:346",
+        "hotpotqa:doc:347"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:346",
+        "hotpotqa:doc:347"
+      ],
+      "selected_basin_gold_chunk_ids": [],
+      "rendered_gold_chunk_ids": [
+        "hotpotqa:doc:347"
+      ]
+    },
+    {
+      "query_id": "5ae680cc5542996d980e7ba5",
+      "failure_type": "selection_miss",
+      "projected_hit": true,
+      "selected_basin_hit": false,
+      "rendered_hit": false,
+      "answer_in_context": false,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:355",
+        "hotpotqa:doc:362"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:355",
+        "hotpotqa:doc:362"
+      ],
+      "selected_basin_gold_chunk_ids": [],
+      "rendered_gold_chunk_ids": []
+    },
+    {
+      "query_id": "5ae4d3c95542990ba0bbb165",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.11764705882352941,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:367",
+        "hotpotqa:doc:372"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:367",
+        "hotpotqa:doc:372"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "hotpotqa:doc:367"
+      ],
+      "rendered_gold_chunk_ids": [
+        "hotpotqa:doc:367",
+        "hotpotqa:doc:372"
+      ]
+    },
+    {
+      "query_id": "5a790d8f554299029c4b5eec",
+      "failure_type": "selection_miss",
+      "projected_hit": true,
+      "selected_basin_hit": false,
+      "rendered_hit": false,
+      "answer_in_context": false,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:376",
+        "hotpotqa:doc:383"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:376"
+      ],
+      "selected_basin_gold_chunk_ids": [],
+      "rendered_gold_chunk_ids": []
+    },
+    {
+      "query_id": "5a717d4c5542994082a3e854",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.4444444444444444,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:386",
+        "hotpotqa:doc:390"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:386",
+        "hotpotqa:doc:390"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "hotpotqa:doc:390"
+      ],
+      "rendered_gold_chunk_ids": [
+        "hotpotqa:doc:386",
+        "hotpotqa:doc:390"
+      ]
+    },
+    {
+      "query_id": "5a77322055429972597f1494",
+      "failure_type": "selection_miss",
+      "projected_hit": true,
+      "selected_basin_hit": false,
+      "rendered_hit": false,
+      "answer_in_context": false,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:395",
+        "hotpotqa:doc:400"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:395",
+        "hotpotqa:doc:400"
+      ],
+      "selected_basin_gold_chunk_ids": [],
+      "rendered_gold_chunk_ids": []
+    },
+    {
+      "query_id": "5ae163b3554299422ee99678",
+      "failure_type": "selection_miss",
+      "projected_hit": true,
+      "selected_basin_hit": false,
+      "rendered_hit": false,
+      "answer_in_context": false,
+      "qa_f1": 0.23333333333333334,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:406",
+        "hotpotqa:doc:413"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:406"
+      ],
+      "selected_basin_gold_chunk_ids": [],
+      "rendered_gold_chunk_ids": []
+    },
+    {
+      "query_id": "5a77cb335542997042120b3a",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.4,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:416",
+        "hotpotqa:doc:423"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:416",
+        "hotpotqa:doc:423"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "hotpotqa:doc:423"
+      ],
+      "rendered_gold_chunk_ids": [
+        "hotpotqa:doc:416",
+        "hotpotqa:doc:423"
+      ]
+    },
+    {
+      "query_id": "5ae4a0ca5542995ad6573dcb",
+      "failure_type": "selection_miss",
+      "projected_hit": true,
+      "selected_basin_hit": false,
+      "rendered_hit": true,
+      "answer_in_context": false,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:428",
+        "hotpotqa:doc:431"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:428",
+        "hotpotqa:doc:431"
+      ],
+      "selected_basin_gold_chunk_ids": [],
+      "rendered_gold_chunk_ids": [
+        "hotpotqa:doc:431"
+      ]
+    },
+    {
+      "query_id": "5a84e21d5542997b5ce3ff7c",
+      "failure_type": "selection_miss",
+      "projected_hit": true,
+      "selected_basin_hit": false,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:438",
+        "hotpotqa:doc:441"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:438",
+        "hotpotqa:doc:441"
+      ],
+      "selected_basin_gold_chunk_ids": [],
+      "rendered_gold_chunk_ids": [
+        "hotpotqa:doc:438",
+        "hotpotqa:doc:441"
+      ]
+    },
+    {
+      "query_id": "5a797bd95542994bb9457016",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:447",
+        "hotpotqa:doc:448"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:447",
+        "hotpotqa:doc:448"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "hotpotqa:doc:447"
+      ],
+      "rendered_gold_chunk_ids": [
+        "hotpotqa:doc:447",
+        "hotpotqa:doc:448"
+      ]
+    },
+    {
+      "query_id": "5a84973e5542992a431d1a67",
+      "failure_type": "selection_miss",
+      "projected_hit": true,
+      "selected_basin_hit": false,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.09302325581395349,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:459",
+        "hotpotqa:doc:460"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:459",
+        "hotpotqa:doc:460"
+      ],
+      "selected_basin_gold_chunk_ids": [],
+      "rendered_gold_chunk_ids": [
+        "hotpotqa:doc:459",
+        "hotpotqa:doc:460"
+      ]
+    },
+    {
+      "query_id": "5a7736bc554299373536021b",
+      "failure_type": "selection_miss",
+      "projected_hit": true,
+      "selected_basin_hit": false,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.2727272727272727,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:469",
+        "hotpotqa:doc:470"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:469",
+        "hotpotqa:doc:470"
+      ],
+      "selected_basin_gold_chunk_ids": [],
+      "rendered_gold_chunk_ids": [
+        "hotpotqa:doc:469",
+        "hotpotqa:doc:470"
+      ]
+    },
+    {
+      "query_id": "5add7c9c5542990dbb2f7e60",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.13953488372093023,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:481",
+        "hotpotqa:doc:483"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:481",
+        "hotpotqa:doc:483"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "hotpotqa:doc:481"
+      ],
+      "rendered_gold_chunk_ids": [
+        "hotpotqa:doc:481",
+        "hotpotqa:doc:483"
+      ]
+    },
+    {
+      "query_id": "5a7d3470554299452d57bb56",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:484",
+        "hotpotqa:doc:485"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:484",
+        "hotpotqa:doc:485"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "hotpotqa:doc:484",
+        "hotpotqa:doc:485"
+      ],
+      "rendered_gold_chunk_ids": [
+        "hotpotqa:doc:484",
+        "hotpotqa:doc:485"
+      ]
+    },
+    {
+      "query_id": "5ab3a83d5542992ade7c6e08",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.14285714285714288,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:496",
+        "hotpotqa:doc:501"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:496",
+        "hotpotqa:doc:501"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "hotpotqa:doc:501"
+      ],
+      "rendered_gold_chunk_ids": [
+        "hotpotqa:doc:496",
+        "hotpotqa:doc:501"
+      ]
+    },
+    {
+      "query_id": "5a8a2a5555429930ff3c0ccc",
+      "failure_type": "selection_miss",
+      "projected_hit": true,
+      "selected_basin_hit": false,
+      "rendered_hit": false,
+      "answer_in_context": false,
+      "qa_f1": 0.13333333333333333,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:505",
+        "hotpotqa:doc:513"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:505",
+        "hotpotqa:doc:513"
+      ],
+      "selected_basin_gold_chunk_ids": [],
+      "rendered_gold_chunk_ids": []
+    },
+    {
+      "query_id": "5ae526c455429908b6326529",
+      "failure_type": "selection_miss",
+      "projected_hit": true,
+      "selected_basin_hit": false,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.38095238095238093,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:519",
+        "hotpotqa:doc:521"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:519"
+      ],
+      "selected_basin_gold_chunk_ids": [],
+      "rendered_gold_chunk_ids": [
+        "hotpotqa:doc:519"
+      ]
+    },
+    {
+      "query_id": "5a8031c1554299485f598585",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.3076923076923077,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:527",
+        "hotpotqa:doc:529"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:527",
+        "hotpotqa:doc:529"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "hotpotqa:doc:529"
+      ],
+      "rendered_gold_chunk_ids": [
+        "hotpotqa:doc:527",
+        "hotpotqa:doc:529"
+      ]
+    },
+    {
+      "query_id": "5ac3bd0c554299204fd21e21",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.18181818181818182,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:539",
+        "hotpotqa:doc:543"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:539",
+        "hotpotqa:doc:543"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "hotpotqa:doc:539"
+      ],
+      "rendered_gold_chunk_ids": [
+        "hotpotqa:doc:539"
+      ]
+    },
+    {
+      "query_id": "5ae7281c5542991e8301cb69",
+      "failure_type": "selection_miss",
+      "projected_hit": true,
+      "selected_basin_hit": false,
+      "rendered_hit": false,
+      "answer_in_context": false,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:548",
+        "hotpotqa:doc:549"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:548",
+        "hotpotqa:doc:549"
+      ],
+      "selected_basin_gold_chunk_ids": [],
+      "rendered_gold_chunk_ids": []
+    },
+    {
+      "query_id": "5abcf14f55429959677d6b5b",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.06060606060606061,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:558",
+        "hotpotqa:doc:560"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:558",
+        "hotpotqa:doc:560"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "hotpotqa:doc:558"
+      ],
+      "rendered_gold_chunk_ids": [
+        "hotpotqa:doc:558",
+        "hotpotqa:doc:560"
+      ]
+    },
+    {
+      "query_id": "5ae0818e55429924de1b70e9",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": false,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:566",
+        "hotpotqa:doc:569"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:566",
+        "hotpotqa:doc:569"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "hotpotqa:doc:566"
+      ],
+      "rendered_gold_chunk_ids": [
+        "hotpotqa:doc:566"
+      ]
+    },
+    {
+      "query_id": "5adc46665542994650320cc8",
+      "failure_type": "selection_miss",
+      "projected_hit": true,
+      "selected_basin_hit": false,
+      "rendered_hit": true,
+      "answer_in_context": false,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:574",
+        "hotpotqa:doc:583"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:574",
+        "hotpotqa:doc:583"
+      ],
+      "selected_basin_gold_chunk_ids": [],
+      "rendered_gold_chunk_ids": [
+        "hotpotqa:doc:574"
+      ]
+    },
+    {
+      "query_id": "5ac00278554299012d1db56b",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:587",
+        "hotpotqa:doc:589"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:587",
+        "hotpotqa:doc:589"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "hotpotqa:doc:587"
+      ],
+      "rendered_gold_chunk_ids": [
+        "hotpotqa:doc:587",
+        "hotpotqa:doc:589"
+      ]
+    },
+    {
+      "query_id": "5a7b3fc155429931da12ca3a",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:596",
+        "hotpotqa:doc:601"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:596"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "hotpotqa:doc:596",
+        "hotpotqa:doc:601"
+      ],
+      "rendered_gold_chunk_ids": [
+        "hotpotqa:doc:596",
+        "hotpotqa:doc:601"
+      ]
+    },
+    {
+      "query_id": "5ae7f0c75542994a481bbe44",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:607",
+        "hotpotqa:doc:612"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:607",
+        "hotpotqa:doc:612"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "hotpotqa:doc:607"
+      ],
+      "rendered_gold_chunk_ids": [
+        "hotpotqa:doc:607"
+      ]
+    },
+    {
+      "query_id": "5ab8854555429934fafe6e0c",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.05555555555555556,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:621",
+        "hotpotqa:doc:622"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:621"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "hotpotqa:doc:621",
+        "hotpotqa:doc:622"
+      ],
+      "rendered_gold_chunk_ids": [
+        "hotpotqa:doc:621",
+        "hotpotqa:doc:622"
+      ]
+    },
+    {
+      "query_id": "5a84fd085542994c784ddaba",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:631",
+        "hotpotqa:doc:632"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:631",
+        "hotpotqa:doc:632"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "hotpotqa:doc:632"
+      ],
+      "rendered_gold_chunk_ids": [
+        "hotpotqa:doc:631",
+        "hotpotqa:doc:632"
+      ]
+    },
+    {
+      "query_id": "5adc6a3b55429947ff173953",
+      "failure_type": "selection_miss",
+      "projected_hit": true,
+      "selected_basin_hit": false,
+      "rendered_hit": true,
+      "answer_in_context": false,
+      "qa_f1": 0.08333333333333333,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:639",
+        "hotpotqa:doc:641"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:639",
+        "hotpotqa:doc:641"
+      ],
+      "selected_basin_gold_chunk_ids": [],
+      "rendered_gold_chunk_ids": [
+        "hotpotqa:doc:639"
+      ]
+    },
+    {
+      "query_id": "5a7732dc55429972597f149b",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:647",
+        "hotpotqa:doc:653"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:647",
+        "hotpotqa:doc:653"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "hotpotqa:doc:653"
+      ],
+      "rendered_gold_chunk_ids": [
+        "hotpotqa:doc:647",
+        "hotpotqa:doc:653"
+      ]
+    },
+    {
+      "query_id": "5ac3ce74554299204fd21e71",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:654",
+        "hotpotqa:doc:661"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:654",
+        "hotpotqa:doc:661"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "hotpotqa:doc:654"
+      ],
+      "rendered_gold_chunk_ids": [
+        "hotpotqa:doc:654",
+        "hotpotqa:doc:661"
+      ]
+    },
+    {
+      "query_id": "5a8cee9b554299441c6b9f87",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.13333333333333333,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:671",
+        "hotpotqa:doc:673"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:671",
+        "hotpotqa:doc:673"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "hotpotqa:doc:671"
+      ],
+      "rendered_gold_chunk_ids": [
+        "hotpotqa:doc:671",
+        "hotpotqa:doc:673"
+      ]
+    },
+    {
+      "query_id": "5ae7ff745542994a481bbe6e",
+      "failure_type": "selection_miss",
+      "projected_hit": true,
+      "selected_basin_hit": false,
+      "rendered_hit": true,
+      "answer_in_context": false,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:676",
+        "hotpotqa:doc:677"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:676",
+        "hotpotqa:doc:677"
+      ],
+      "selected_basin_gold_chunk_ids": [],
+      "rendered_gold_chunk_ids": [
+        "hotpotqa:doc:677"
+      ]
+    },
+    {
+      "query_id": "5a88a1bb5542997e5c09a64c",
+      "failure_type": "selection_miss",
+      "projected_hit": true,
+      "selected_basin_hit": false,
+      "rendered_hit": true,
+      "answer_in_context": false,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:684",
+        "hotpotqa:doc:686"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:684",
+        "hotpotqa:doc:686"
+      ],
+      "selected_basin_gold_chunk_ids": [],
+      "rendered_gold_chunk_ids": [
+        "hotpotqa:doc:684"
+      ]
+    },
+    {
+      "query_id": "5a88f7bf5542997e5c09a6dd",
+      "failure_type": "selection_miss",
+      "projected_hit": true,
+      "selected_basin_hit": false,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.13333333333333333,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:696",
+        "hotpotqa:doc:701"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:696",
+        "hotpotqa:doc:701"
+      ],
+      "selected_basin_gold_chunk_ids": [],
+      "rendered_gold_chunk_ids": [
+        "hotpotqa:doc:701"
+      ]
+    },
+    {
+      "query_id": "5ab545d3554299494045ef5c",
+      "failure_type": "selection_miss",
+      "projected_hit": true,
+      "selected_basin_hit": false,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.14285714285714288,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:705",
+        "hotpotqa:doc:711"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:705",
+        "hotpotqa:doc:711"
+      ],
+      "selected_basin_gold_chunk_ids": [],
+      "rendered_gold_chunk_ids": [
+        "hotpotqa:doc:705"
+      ]
+    },
+    {
+      "query_id": "5a8e41735542995085b37406",
+      "failure_type": "selection_miss",
+      "projected_hit": true,
+      "selected_basin_hit": false,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:722",
+        "hotpotqa:doc:723"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:722",
+        "hotpotqa:doc:723"
+      ],
+      "selected_basin_gold_chunk_ids": [],
+      "rendered_gold_chunk_ids": [
+        "hotpotqa:doc:722"
+      ]
+    },
+    {
+      "query_id": "5a85df525542994c784ddb9f",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:728",
+        "hotpotqa:doc:733"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:728",
+        "hotpotqa:doc:733"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "hotpotqa:doc:733"
+      ],
+      "rendered_gold_chunk_ids": [
+        "hotpotqa:doc:733"
+      ]
+    },
+    {
+      "query_id": "5a86b13f55429960ec39b6c3",
+      "failure_type": "selection_miss",
+      "projected_hit": true,
+      "selected_basin_hit": false,
+      "rendered_hit": true,
+      "answer_in_context": false,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:737",
+        "hotpotqa:doc:742"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:737",
+        "hotpotqa:doc:742"
+      ],
+      "selected_basin_gold_chunk_ids": [],
+      "rendered_gold_chunk_ids": [
+        "hotpotqa:doc:742"
+      ]
+    },
+    {
+      "query_id": "5a78d35e55429974737f78c3",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.18181818181818182,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:750",
+        "hotpotqa:doc:753"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:750",
+        "hotpotqa:doc:753"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "hotpotqa:doc:750"
+      ],
+      "rendered_gold_chunk_ids": [
+        "hotpotqa:doc:750"
+      ]
+    },
+    {
+      "query_id": "5a8b45765542995d1e6f1333",
+      "failure_type": "selection_miss",
+      "projected_hit": true,
+      "selected_basin_hit": false,
+      "rendered_hit": true,
+      "answer_in_context": false,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:759",
+        "hotpotqa:doc:763"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:759",
+        "hotpotqa:doc:763"
+      ],
+      "selected_basin_gold_chunk_ids": [],
+      "rendered_gold_chunk_ids": [
+        "hotpotqa:doc:763"
+      ]
+    },
+    {
+      "query_id": "5ade56ed5542997c77adee04",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.20689655172413793,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:767",
+        "hotpotqa:doc:773"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:767",
+        "hotpotqa:doc:773"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "hotpotqa:doc:773"
+      ],
+      "rendered_gold_chunk_ids": [
+        "hotpotqa:doc:773"
+      ]
+    },
+    {
+      "query_id": "5ab3b42c5542992ade7c6e4f",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": false,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:779",
+        "hotpotqa:doc:780"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:779"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "hotpotqa:doc:779"
+      ],
+      "rendered_gold_chunk_ids": [
+        "hotpotqa:doc:779"
+      ]
+    },
+    {
+      "query_id": "5ae7535c5542997b22f6a6d8",
+      "failure_type": "selection_miss",
+      "projected_hit": true,
+      "selected_basin_hit": false,
+      "rendered_hit": true,
+      "answer_in_context": false,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:785",
+        "hotpotqa:doc:789"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:785",
+        "hotpotqa:doc:789"
+      ],
+      "selected_basin_gold_chunk_ids": [],
+      "rendered_gold_chunk_ids": [
+        "hotpotqa:doc:789"
+      ]
+    },
+    {
+      "query_id": "5a7b88b45542997c3ec97201",
+      "failure_type": "selection_miss",
+      "projected_hit": true,
+      "selected_basin_hit": false,
+      "rendered_hit": true,
+      "answer_in_context": false,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:794",
+        "hotpotqa:doc:796"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:794",
+        "hotpotqa:doc:796"
+      ],
+      "selected_basin_gold_chunk_ids": [],
+      "rendered_gold_chunk_ids": [
+        "hotpotqa:doc:796"
+      ]
+    },
+    {
+      "query_id": "5ae6fee3554299572ea54670",
+      "failure_type": "selection_miss",
+      "projected_hit": true,
+      "selected_basin_hit": false,
+      "rendered_hit": false,
+      "answer_in_context": true,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:805",
+        "hotpotqa:doc:813"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:805",
+        "hotpotqa:doc:813"
+      ],
+      "selected_basin_gold_chunk_ids": [],
+      "rendered_gold_chunk_ids": []
+    },
+    {
+      "query_id": "5ab3bcc55542992ade7c6e66",
+      "failure_type": "selection_miss",
+      "projected_hit": true,
+      "selected_basin_hit": false,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:818",
+        "hotpotqa:doc:823"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:818",
+        "hotpotqa:doc:823"
+      ],
+      "selected_basin_gold_chunk_ids": [],
+      "rendered_gold_chunk_ids": [
+        "hotpotqa:doc:823"
+      ]
+    },
+    {
+      "query_id": "5a7f33115542992e7d278c84",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.125,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:826",
+        "hotpotqa:doc:827"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:826",
+        "hotpotqa:doc:827"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "hotpotqa:doc:826"
+      ],
+      "rendered_gold_chunk_ids": [
+        "hotpotqa:doc:826"
+      ]
+    },
+    {
+      "query_id": "5ae7793c554299540e5a55c2",
+      "failure_type": "selection_miss",
+      "projected_hit": true,
+      "selected_basin_hit": false,
+      "rendered_hit": true,
+      "answer_in_context": false,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:834",
+        "hotpotqa:doc:842"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:834",
+        "hotpotqa:doc:842"
+      ],
+      "selected_basin_gold_chunk_ids": [],
+      "rendered_gold_chunk_ids": [
+        "hotpotqa:doc:834"
+      ]
+    },
+    {
+      "query_id": "5ae1d32a554299492dc91b9c",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:845",
+        "hotpotqa:doc:849"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:845",
+        "hotpotqa:doc:849"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "hotpotqa:doc:845"
+      ],
+      "rendered_gold_chunk_ids": [
+        "hotpotqa:doc:845",
+        "hotpotqa:doc:849"
+      ]
+    },
+    {
+      "query_id": "5ae12aa6554299422ee99617",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.14814814814814814,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:856",
+        "hotpotqa:doc:859"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:856",
+        "hotpotqa:doc:859"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "hotpotqa:doc:856",
+        "hotpotqa:doc:859"
+      ],
+      "rendered_gold_chunk_ids": [
+        "hotpotqa:doc:856",
+        "hotpotqa:doc:859"
+      ]
+    },
+    {
+      "query_id": "5ae0ce4e554299603e41845f",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.25,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:865",
+        "hotpotqa:doc:870"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:865",
+        "hotpotqa:doc:870"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "hotpotqa:doc:865",
+        "hotpotqa:doc:870"
+      ],
+      "rendered_gold_chunk_ids": [
+        "hotpotqa:doc:865",
+        "hotpotqa:doc:870"
+      ]
+    },
+    {
+      "query_id": "5a73987c55429978a71e9039",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.1111111111111111,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:881",
+        "hotpotqa:doc:882"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:881",
+        "hotpotqa:doc:882"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "hotpotqa:doc:882"
+      ],
+      "rendered_gold_chunk_ids": [
+        "hotpotqa:doc:881",
+        "hotpotqa:doc:882"
+      ]
+    },
+    {
+      "query_id": "5adcdf455542994ed6169c11",
+      "failure_type": "selection_miss",
+      "projected_hit": true,
+      "selected_basin_hit": false,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:889",
+        "hotpotqa:doc:892"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:889",
+        "hotpotqa:doc:892"
+      ],
+      "selected_basin_gold_chunk_ids": [],
+      "rendered_gold_chunk_ids": [
+        "hotpotqa:doc:889"
+      ]
+    },
+    {
+      "query_id": "5a8a48ee55429930ff3c0d66",
+      "failure_type": "selection_miss",
+      "projected_hit": true,
+      "selected_basin_hit": false,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:894",
+        "hotpotqa:doc:895"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:894",
+        "hotpotqa:doc:895"
+      ],
+      "selected_basin_gold_chunk_ids": [],
+      "rendered_gold_chunk_ids": [
+        "hotpotqa:doc:894"
+      ]
+    },
+    {
+      "query_id": "5a8efb5a55429918e830d172",
+      "failure_type": "selection_miss",
+      "projected_hit": true,
+      "selected_basin_hit": false,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:909",
+        "hotpotqa:doc:912"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:909",
+        "hotpotqa:doc:912"
+      ],
+      "selected_basin_gold_chunk_ids": [],
+      "rendered_gold_chunk_ids": [
+        "hotpotqa:doc:909"
+      ]
+    },
+    {
+      "query_id": "5a72a6d855429901807daf27",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.23529411764705882,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:917",
+        "hotpotqa:doc:922"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:917",
+        "hotpotqa:doc:922"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "hotpotqa:doc:917",
+        "hotpotqa:doc:922"
+      ],
+      "rendered_gold_chunk_ids": [
+        "hotpotqa:doc:917",
+        "hotpotqa:doc:922"
+      ]
+    },
+    {
+      "query_id": "5ae791ef55429952e35ea979",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:926",
+        "hotpotqa:doc:927"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:926",
+        "hotpotqa:doc:927"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "hotpotqa:doc:926"
+      ],
+      "rendered_gold_chunk_ids": [
+        "hotpotqa:doc:926",
+        "hotpotqa:doc:927"
+      ]
+    },
+    {
+      "query_id": "5ac3b4e0554299741d48a2ec",
+      "failure_type": "selection_miss",
+      "projected_hit": true,
+      "selected_basin_hit": false,
+      "rendered_hit": false,
+      "answer_in_context": false,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:938",
+        "hotpotqa:doc:941"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:938",
+        "hotpotqa:doc:941"
+      ],
+      "selected_basin_gold_chunk_ids": [],
+      "rendered_gold_chunk_ids": []
+    },
+    {
+      "query_id": "5ab55a9b5542992aa134a2ba",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:947",
+        "hotpotqa:doc:948"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:947",
+        "hotpotqa:doc:948"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "hotpotqa:doc:947"
+      ],
+      "rendered_gold_chunk_ids": [
+        "hotpotqa:doc:947"
+      ]
+    },
+    {
+      "query_id": "5a79fc8b5542994f819ef114",
+      "failure_type": "selection_miss",
+      "projected_hit": true,
+      "selected_basin_hit": false,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.16666666666666669,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:955",
+        "hotpotqa:doc:956"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:955",
+        "hotpotqa:doc:956"
+      ],
+      "selected_basin_gold_chunk_ids": [],
+      "rendered_gold_chunk_ids": [
+        "hotpotqa:doc:956"
+      ]
+    },
+    {
+      "query_id": "5abdb4a755429965af743df0",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:966",
+        "hotpotqa:doc:969"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:966",
+        "hotpotqa:doc:969"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "hotpotqa:doc:969"
+      ],
+      "rendered_gold_chunk_ids": [
+        "hotpotqa:doc:966",
+        "hotpotqa:doc:969"
+      ]
+    },
+    {
+      "query_id": "5ae604ec5542996de7b71af9",
+      "failure_type": "qa_fail",
+      "projected_hit": true,
+      "selected_basin_hit": true,
+      "rendered_hit": true,
+      "answer_in_context": true,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:974",
+        "hotpotqa:doc:979"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:974",
+        "hotpotqa:doc:979"
+      ],
+      "selected_basin_gold_chunk_ids": [
+        "hotpotqa:doc:974"
+      ],
+      "rendered_gold_chunk_ids": [
+        "hotpotqa:doc:974",
+        "hotpotqa:doc:979"
+      ]
+    },
+    {
+      "query_id": "5a857cf35542994c784ddb1d",
+      "failure_type": "selection_miss",
+      "projected_hit": true,
+      "selected_basin_hit": false,
+      "rendered_hit": true,
+      "answer_in_context": false,
+      "qa_f1": 0.0,
+      "gold_chunk_ids": [
+        "hotpotqa:doc:985",
+        "hotpotqa:doc:988"
+      ],
+      "projected_gold_chunk_ids": [
+        "hotpotqa:doc:985",
+        "hotpotqa:doc:988"
+      ],
+      "selected_basin_gold_chunk_ids": [],
+      "rendered_gold_chunk_ids": [
+        "hotpotqa:doc:988"
+      ]
+    }
+  ]
+}
