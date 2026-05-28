@@ -25,7 +25,7 @@
   "avg_context_tokens": 497.1,
   "context_node_budget_satisfied_rate": 1.0,
   "context_token_budget_satisfied_rate": 1.0,
-  "avg_latency_ms": 381.93205,
+  "avg_latency_ms": 282.7743,
   "objective_before_refinement_mean": 0.5946379727932823,
   "objective_after_refinement_mean": 0.5752521834679059,
   "refinement_accept_rate": 1.0,

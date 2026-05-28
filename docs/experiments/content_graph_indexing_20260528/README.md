@@ -23,12 +23,12 @@ Current 2Wiki20 QA measurements:
 
 | run | graph_mode | oracle | candidate_recall | projected_recall | post_refine_recall | rendered_recall | context_f1 | avg_context_tokens | retrieval_ms | generation_ms | EM | F1 | oracle_gap | risk_decision |
 | --- | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| baseline_2wiki20 | legacy_hybrid_sem_graph | false | 0.8625 | n/a | 0.0250 | 0.5000 | 0.2347 | 497.1 | 381.9 | 0.5 | 0.0000 | 0.0355 | 0.0140 | measurement_only |
+| baseline_2wiki20 | legacy_hybrid_sem_graph | false | 0.8625 | n/a | 0.0250 | 0.5000 | 0.2347 | 497.1 | 282.8 | 0.3 | 0.0000 | 0.0355 | 0.0140 | measurement_only |
 | oracle_2wiki20 | direct_gold_context | true | n/a | n/a | n/a | 1.0000 | 1.0000 | 47.4 | 0.0 | 0.1 | 0.0000 | 0.0495 | 0.0000 | measurement_only |
-| content_graph_2wiki20 | content_hybrid_sem_graph | false | 0.8625 | 0.8000 | 0.3500 | 0.6000 | 0.2843 | 350.1 | 1137.0 | 0.4 | 0.0000 | 0.0580 | -0.0085 | measurement_limited |
-| baseline_hotpot20 | legacy_hybrid_sem_graph | false | 0.9750 | n/a | 0.1500 | 0.7250 | 0.3327 | 504.4 | 419.5 | 0.5 | 0.0000 | 0.0672 | 0.0254 | measurement_only |
+| content_graph_2wiki20 | content_hybrid_sem_graph | false | 0.8625 | 0.8000 | 0.3500 | 0.6000 | 0.2843 | 350.1 | 837.4 | 0.2 | 0.0000 | 0.0580 | -0.0085 | measurement_limited |
+| baseline_hotpot20 | legacy_hybrid_sem_graph | false | 0.9750 | n/a | 0.1500 | 0.7250 | 0.3327 | 504.4 | 291.9 | 0.3 | 0.0000 | 0.0672 | 0.0254 | measurement_only |
 | oracle_hotpot20 | direct_gold_context | true | n/a | n/a | n/a | 1.0000 | 1.0000 | 56.2 | 0.0 | 0.1 | 0.0000 | 0.0925 | 0.0000 | measurement_only |
-| content_graph_hotpot20 | content_hybrid_sem_graph | false | 0.9750 | 0.9250 | 0.3750 | 0.6750 | 0.2871 | 478.8 | 923.5 | 0.5 | 0.0000 | 0.0624 | 0.0301 | no_adoption |
+| content_graph_hotpot20 | content_hybrid_sem_graph | false | 0.9750 | 0.9250 | 0.3750 | 0.6750 | 0.2871 | 478.8 | 638.9 | 0.3 | 0.0000 | 0.0624 | 0.0301 | no_adoption |
 
 Current stage-wise bottleneck read:
 
@@ -47,8 +47,8 @@ Content graph run:
 - reranking/scoring survival: `0.3500`
 - context rendering recall: `0.6000`
 - final QA F1: `0.0580`
-- content graph projection latency: `972.0 ms` average
-- latency: `1137.0 ms` retrieval average vs baseline `381.9 ms`
+- content graph projection latency: `711.3 ms` average
+- latency: `837.4 ms` retrieval average vs baseline `282.8 ms`
 
 Support-fact survival diagnostics:
 
@@ -58,6 +58,17 @@ Support-fact survival diagnostics:
 | content_graph_2wiki20 | 0.8625 | 0.7375 | 0.8000 | 0.3500 | 0.6000 | 0.6000 |
 | baseline_hotpot20 | 0.9750 | 0.8200 | n/a | 0.1583 | 0.7117 | 0.7117 |
 | content_graph_hotpot20 | 0.9750 | 0.9250 | 0.9250 | 0.3833 | 0.6750 | 0.6750 |
+
+Pre-refinement anchor diagnostics:
+
+| run | pre_refine_gold | post_refine_gold | pre_refine_support_fact | post_refine_support_fact |
+| --- | ---: | ---: | ---: | ---: |
+| baseline_2wiki20 | 0.0750 | 0.0250 | 0.0750 | 0.0250 |
+| content_graph_2wiki20 | 0.3500 | 0.3500 | 0.3500 | 0.3500 |
+| baseline_hotpot20 | 0.2250 | 0.1500 | 0.2250 | 0.1583 |
+| content_graph_hotpot20 | 0.3750 | 0.3750 | 0.3833 | 0.3833 |
+
+The content graph Hotpot20 `local_refinement_loss` bucket is therefore mostly not caused by the refinement update itself: content graph pre/post survival is unchanged. This keeps the next risk gate focused on projection/anchor selection, context rendering, or final answer selection rather than tuning the refinement objective.
 
 Measurement caution:
 

@@ -125,6 +125,10 @@ def _support_fact_extra(
     )
 
 
+def _prefix_metrics(prefix: str, values: dict) -> dict:
+    return {f"{prefix}{key}": value for key, value in values.items()}
+
+
 def _run_for_k(example: QueryExample, cfg: AppConfig, k: int, seed: int) -> RetrievalResult:
     stage_diagnostics: dict[str, dict] = {}
     stage_start = time.perf_counter()
@@ -300,6 +304,7 @@ def _run_for_k(example: QueryExample, cfg: AppConfig, k: int, seed: int) -> Retr
             "adaptive_k",
         }:
             stage_start = time.perf_counter()
+            pre_refine_anchor_ids = _node_ids(nodes, anchors)
             refined = refine_medoids_monotone(
                 anchors,
                 candidate_indices=candidates,
@@ -320,11 +325,21 @@ def _run_for_k(example: QueryExample, cfg: AppConfig, k: int, seed: int) -> Retr
                     "refinement_accepted": refined.accepted,
                     "objective_before": refined.before.total,
                     "objective_after": refined.after.total,
+                    "pre_refinement_anchor_count": len(pre_refine_anchor_ids),
+                    "pre_refinement_gold_supporting_evidence_survival": recall(
+                        pre_refine_anchor_ids,
+                        example.gold_node_ids,
+                    ),
+                    **_prefix_metrics(
+                        "pre_refinement_",
+                        _support_fact_extra(example, nodes, pre_refine_anchor_ids),
+                    ),
                     **_support_fact_extra(example, nodes, _node_ids(nodes, refined.anchors)),
                 },
             )
         else:
             refined = _identity_refinement(anchors, full_validation_objective, distance_matrix)
+            pre_refine_anchor_ids = _node_ids(nodes, anchors)
             stage_diagnostics["local_refinement"] = make_stage_metrics(
                 stage="local_refinement",
                 selected_node_ids=_node_ids(nodes, refined.anchors),
@@ -336,6 +351,15 @@ def _run_for_k(example: QueryExample, cfg: AppConfig, k: int, seed: int) -> Retr
                     "refinement_accepted": refined.accepted,
                     "objective_before": refined.before.total,
                     "objective_after": refined.after.total,
+                    "pre_refinement_anchor_count": len(pre_refine_anchor_ids),
+                    "pre_refinement_gold_supporting_evidence_survival": recall(
+                        pre_refine_anchor_ids,
+                        example.gold_node_ids,
+                    ),
+                    **_prefix_metrics(
+                        "pre_refinement_",
+                        _support_fact_extra(example, nodes, pre_refine_anchor_ids),
+                    ),
                     **_support_fact_extra(example, nodes, _node_ids(nodes, refined.anchors)),
                 },
             )
@@ -355,6 +379,15 @@ def _run_for_k(example: QueryExample, cfg: AppConfig, k: int, seed: int) -> Retr
                 "refinement_accepted": refined.accepted,
                 "objective_before": refined.before.total,
                 "objective_after": refined.after.total,
+                "pre_refinement_anchor_count": len(_node_ids(nodes, refined.anchors)),
+                "pre_refinement_gold_supporting_evidence_survival": recall(
+                    _node_ids(nodes, refined.anchors),
+                    example.gold_node_ids,
+                ),
+                **_prefix_metrics(
+                    "pre_refinement_",
+                    _support_fact_extra(example, nodes, _node_ids(nodes, refined.anchors)),
+                ),
                 **_support_fact_extra(example, nodes, _node_ids(nodes, refined.anchors)),
             },
         ),

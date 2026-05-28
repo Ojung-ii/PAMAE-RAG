@@ -14,5 +14,7 @@ def test_retrieval_records_stage_diagnostics():
     retrieval_stages = set(STAGE_NAMES) - {"final_qa"}
     assert retrieval_stages <= set(stages)
     assert stages["content_graph_projection"]["status"] == "not_configured"
+    assert "pre_refinement_gold_supporting_evidence_survival" in stages["local_refinement"]
+    assert "pre_refinement_support_fact_survival" in stages["local_refinement"]
     assert stages["context_rendering"]["rendered_recall"] is not None
     assert "support_fact_count" in stages["context_rendering"]
