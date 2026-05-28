@@ -1,7 +1,7 @@
 # Path Carrier Completion Diagnostic
 
 - Branch: `experiment/path-carrier-completion`
-- Commit: `075a45a`
+- Commit: `c3c87b1`
 - 100-query gate outcome: **DIAGNOSTIC_ONLY_100**
 - Final decision: **DIAGNOSTIC_ONLY**
 
@@ -103,4 +103,4 @@ The support tree explains much of the current-minus-medoid gap, but not all of c
 - Did it reduce hidden renderer behavior? Partially. It exposed the residual current-only recovery rather than reproducing it.
 - Did token count stay controlled? Yes. Tokens dropped from `333.39` to `192.33` on 2Wiki and from `480.93` to `272.82` on Hotpot.
 
-Conclusion: **PATH_CARRIER_RENDERING_BOTTLENECK plus IMPLICIT_RENDERER_HEURISTIC_BOTTLENECK**. Metric support-tree carrier completion is a valid diagnostic object, but the current renderer's best answer recovery is not fully explained by refined anchor-medoid support-tree closure. Next recommended experiment: characterize the residual current-only extra non-medoid chunks and determine whether they can be formalized as metric-constrained terminal/carrier additions, before changing retrieval or adopting a renderer.
+Conclusion: **IMPLICIT_RENDERER_HEURISTIC_BOTTLENECK**. Metric support-tree carrier completion is a valid diagnostic object, but the current renderer's best answer recovery is not fully explained by refined anchor-medoid support-tree closure. There is also a secondary path-carrier rendering bottleneck: deterministic `SPClosure` rendering loses answer coverage and rendered recall relative to the current renderer. Next recommended experiment: characterize the residual current-only extra non-medoid chunks and determine whether they can be formalized as metric-constrained terminal/carrier additions, before changing retrieval or adopting a renderer.
