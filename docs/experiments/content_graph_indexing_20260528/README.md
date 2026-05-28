@@ -87,6 +87,12 @@ Answer selection diagnostic:
 
 The oracle contexts contain answer strings far more often than retrieved contexts, but the fixed extractive sentence generator often selects a non-answer sentence even when the answer appears in the context. This confirms a final-QA selection bottleneck in addition to retrieval/context losses, and keeps performance changes gated on end-to-end QA rather than retrieval-only gains.
 
+Per-query bottleneck reports:
+
+- Hotpot20: [qa_bottlenecks_hotpot20.md](qa_bottlenecks_hotpot20.md) partitions content graph queries into `local_refinement_loss` (8), `answer_absent_from_context` (5), `answer_present_not_selected` (4), and `qa_partial_or_success` (3).
+- 2Wiki20: [qa_bottlenecks_2wiki20.md](qa_bottlenecks_2wiki20.md) partitions content graph queries into `answer_absent_from_context` (9), `local_refinement_loss` (6), `answer_present_not_selected` (3), `projection_loss` (1), and `qa_partial_or_success` (1).
+- These reports are diagnostic only; they do not use gold labels for retrieval, scoring, rendering, or answer generation.
+
 Risk-gated ideas stopped:
 
 - fact-scoped projection: reduced Hotpot QA F1 to `0.0505`; not adopted.
