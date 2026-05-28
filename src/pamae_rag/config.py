@@ -168,6 +168,9 @@ def validate_config(cfg: AppConfig) -> None:
         "basin_path_closure",
         "gold_path_oracle",
         "path_neighborhood",
+        "metric_path_carrier",
+        "metric_path_carrier_medoids_first",
+        "metric_path_carrier_no_medoids",
     }
     relevance_modes = {
         "current",

@@ -8,7 +8,7 @@ import numpy as np
 
 from pamae_rag.config import AppConfig
 from pamae_rag.data.schema import QueryExample, RetrievalResult
-from pamae_rag.diagnostics.path_realizability import compute_path_realizability
+from pamae_rag.diagnostics.path_realizability import compute_path_realizability, path_nodes, support_tree_nodes
 from pamae_rag.eval.support_recall import hit, recall
 from pamae_rag.eval.support_facts import support_fact_stage_metrics
 from pamae_rag.eval.stage_diagnostics import make_stage_metrics
@@ -29,6 +29,7 @@ from pamae_rag.pamae.selection import select_by_full_objective
 from pamae_rag.qa.metrics import gold_answers, normalize_answer
 from pamae_rag.rendering.basin_aware_renderer import render_basin_path_closure_indices
 from pamae_rag.rendering.gold_path_oracle_renderer import render_gold_path_oracle_indices
+from pamae_rag.rendering.path_carrier_renderer import PATH_CARRIER_RENDERERS, render_metric_path_carrier_indices
 from pamae_rag.rendering.path_neighborhood_renderer import render_path_neighborhood_indices
 from pamae_rag.retrieval.renderer import render_context_indices, render_context_order_indices
 from pamae_rag.selection.basin_preserving import (
@@ -160,6 +161,78 @@ def _answer_in_context(example: QueryExample, nodes, idxs: Iterable[int]) -> boo
         if answer_norm and f" {answer_norm} " in padded:
             return True
     return False
+
+
+def _support_tree_path_diagnostics(
+    *,
+    nodes,
+    query_anchors: Iterable[int],
+    phase1_medoids: Iterable[int],
+    refined_medoids: Iterable[int],
+    distance_matrix: np.ndarray,
+    disconnected_distance: float,
+) -> dict:
+    query_anchor_list = list(dict.fromkeys(int(idx) for idx in query_anchors))
+    phase1 = list(dict.fromkeys(int(idx) for idx in phase1_medoids))
+    refined = list(dict.fromkeys(int(idx) for idx in refined_medoids))
+
+    def ids(indices: Iterable[int]) -> list[str]:
+        return list(_node_ids(nodes, sorted(set(int(idx) for idx in indices))))
+
+    def tree(medoids: list[int]) -> set[int]:
+        return support_tree_nodes(
+            query_anchors=query_anchor_list,
+            selected_medoids=medoids,
+            distance_matrix=distance_matrix,
+            nodes=nodes,
+            disconnected_distance=disconnected_distance,
+        )
+
+    def anchor_medoid_paths(medoids: list[int]) -> set[int]:
+        out: set[int] = set()
+        for anchor in query_anchor_list:
+            for medoid in medoids:
+                out.update(
+                    path_nodes(
+                        distance_matrix,
+                        anchor,
+                        medoid,
+                        nodes,
+                        disconnected_distance=disconnected_distance,
+                    )
+                )
+        return out
+
+    def medoid_medoid_paths(medoids: list[int]) -> set[int]:
+        out: set[int] = set()
+        for pos, left in enumerate(medoids):
+            for right in medoids[pos + 1 :]:
+                out.update(
+                    path_nodes(
+                        distance_matrix,
+                        left,
+                        right,
+                        nodes,
+                        disconnected_distance=disconnected_distance,
+                    )
+                )
+        return out
+
+    phase1_tree = tree(phase1)
+    refined_tree = tree(refined)
+    refined_anchor_paths = anchor_medoid_paths(refined)
+    refined_medoid_paths = medoid_medoid_paths(refined)
+    return {
+        "support_tree_query_anchor_node_ids": ids(query_anchor_list),
+        "phase1_support_tree_node_ids": ids(phase1_tree),
+        "refined_support_tree_node_ids": ids(refined_tree),
+        "refined_anchor_medoid_path_node_ids": ids(refined_anchor_paths),
+        "refined_medoid_medoid_path_node_ids": ids(refined_medoid_paths),
+        "phase1_support_tree_chunk_count": len(phase1_tree),
+        "refined_support_tree_chunk_count": len(refined_tree),
+        "refined_anchor_medoid_path_chunk_count": len(refined_anchor_paths),
+        "refined_medoid_medoid_path_chunk_count": len(refined_medoid_paths),
+    }
 
 
 def _run_for_k(example: QueryExample, cfg: AppConfig, k: int, seed: int) -> RetrievalResult:
@@ -521,6 +594,15 @@ def _run_for_k(example: QueryExample, cfg: AppConfig, k: int, seed: int) -> Retr
             [node.node_id for node in nodes],
         )
     )
+    phase1_anchor_indices = _indices_from_node_ids(nodes, pre_refine_anchor_ids)
+    support_tree_path_diagnostics = _support_tree_path_diagnostics(
+        nodes=nodes,
+        query_anchors=diagnostic_query_anchors,
+        phase1_medoids=phase1_anchor_indices,
+        refined_medoids=anchors,
+        distance_matrix=graph_distance_matrix,
+        disconnected_distance=disconnected_distance,
+    )
     if renderer == "basin_path_closure":
         if basin_selection is None:
             raise ValueError("basin_path_closure renderer requires basin_preserving_medoids selection")
@@ -572,6 +654,20 @@ def _run_for_k(example: QueryExample, cfg: AppConfig, k: int, seed: int) -> Retr
         context_indices = path_neighborhood.indices
         renderer_order_indices = list(context_indices)
         basin_render_diagnostics = dict(path_neighborhood.diagnostics)
+    elif renderer in PATH_CARRIER_RENDERERS:
+        path_carrier = render_metric_path_carrier_indices(
+            nodes=nodes,
+            selected_medoids=anchors,
+            query_anchors=diagnostic_query_anchors,
+            distance_matrix=graph_distance_matrix,
+            max_context_tokens=cfg.pamae.max_context_tokens,
+            max_context_nodes=cfg.pamae.max_context_nodes,
+            disconnected_distance=disconnected_distance,
+            renderer_mode=renderer,
+        )
+        context_indices = path_carrier.indices
+        renderer_order_indices = list(context_indices)
+        basin_render_diagnostics = dict(path_carrier.diagnostics)
     else:
         context_indices = render_context_indices(
             nodes,
@@ -627,7 +723,7 @@ def _run_for_k(example: QueryExample, cfg: AppConfig, k: int, seed: int) -> Retr
     )
     diagnostic_renderer_mode = (
         renderer
-        if renderer in {"basin_path_closure", "path_neighborhood", "gold_path_oracle"}
+        if renderer in {"basin_path_closure", "path_neighborhood", "gold_path_oracle"} or renderer in PATH_CARRIER_RENDERERS
         else "current"
     )
     path_realizability = compute_path_realizability(
@@ -697,9 +793,12 @@ def _run_for_k(example: QueryExample, cfg: AppConfig, k: int, seed: int) -> Retr
             if renderer == "gold_path_oracle"
             else "path_neighborhood"
             if renderer == "path_neighborhood"
+            else renderer
+            if renderer in PATH_CARRIER_RENDERERS
             else "anchors_then_cell_top_rho_then_score_fill"
         ),
         "path_realizability": path_realizability.to_json(),
+        **support_tree_path_diagnostics,
         **basin_render_diagnostics,
         "max_context_nodes_less_than_k": bool(node_budget_active and max_context_nodes < k),
         "stage_diagnostics": {
