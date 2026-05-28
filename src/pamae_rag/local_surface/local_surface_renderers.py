@@ -5,6 +5,7 @@ from typing import Any, Iterable
 
 from pamae_rag.data.schema import QueryExample
 from pamae_rag.diagnostics.selected_chunk_surface import build_surface_sentence_sets
+from pamae_rag.local_surface.fact_mediated_surface import select_fact_mediated_sentences
 from pamae_rag.local_surface.local_sentence_medoid import LocalMedoidConfig, LocalMedoidResult, select_local_sentence_medoids
 from pamae_rag.local_surface.local_surface_graph import LocalSurfaceGraph, shortest_path
 from pamae_rag.qa.metrics import gold_answers, normalize_answer
@@ -227,6 +228,64 @@ def render_answer_sentence_oracle(
     )
 
 
+def render_fact_mediated_sentence(
+    *,
+    example: QueryExample,
+    graph: LocalSurfaceGraph,
+    medoids: LocalMedoidResult | None = None,
+    medoid_config: LocalMedoidConfig | None = None,
+    max_context_tokens: int = 512,
+) -> LocalSurfaceRenderResult:
+    medoids = medoids or select_local_sentence_medoids(graph, example.query, config=medoid_config)
+    fact_selection = select_fact_mediated_sentences(
+        graph,
+        query_anchor_entities=medoids.query_anchor_entities,
+        medoid_sentence_ids=medoids.selected_sentence_ids,
+    )
+    anchor_path_sentences = _path_sentence_ids(
+        graph,
+        medoids.query_anchor_entities,
+        (*medoids.selected_sentence_ids, *fact_selection.fact_grounding_sentence_ids),
+    )
+    rendered_sentence_ids = tuple(
+        dict.fromkeys(
+            (
+                *medoids.selected_sentence_ids,
+                *fact_selection.fact_grounding_sentence_ids,
+                *fact_selection.path_sentence_ids,
+                *anchor_path_sentences,
+            )
+        )
+    )
+    context_ids, context_nodes, context_tokens = _materialize(
+        graph,
+        rendered_sentence_ids,
+        max_context_tokens=max_context_tokens,
+    )
+    support = _support_metrics(example=example, graph=graph, rendered_sentence_ids=context_ids)
+    diagnostics = {
+        "renderer_mode": FACT_MEDIATED_SENTENCE,
+        "local_sentence_medoids": (medoid_config or LocalMedoidConfig()).local_sentence_medoids,
+        "oracle_renderer": False,
+        "uses_answer_string": False,
+        "uses_gold_label": False,
+        "selected_local_sentence_medoids": list(medoids.selected_sentence_ids),
+        "context_tokens": context_tokens,
+        **support,
+        **medoids.diagnostics,
+        **fact_selection.diagnostics,
+    }
+    return LocalSurfaceRenderResult(
+        renderer_mode=FACT_MEDIATED_SENTENCE,
+        context_node_ids=context_ids,
+        context_nodes=context_nodes,
+        rendered_sentence_ids=context_ids,
+        selected_sentence_ids=tuple(medoids.selected_sentence_ids),
+        context_tokens=context_tokens,
+        diagnostics=diagnostics,
+    )
+
+
 def render_gold_sentence_oracle(
     *,
     example: QueryExample,
@@ -275,6 +334,14 @@ def render_local_surface(
         return render_answer_sentence_oracle(example=example, graph=graph, max_context_tokens=max_context_tokens)
     if renderer_mode == SELECTED_CHUNK_GOLD_SENTENCE_ORACLE:
         return render_gold_sentence_oracle(example=example, graph=graph, max_context_tokens=max_context_tokens)
+    if renderer_mode == FACT_MEDIATED_SENTENCE:
+        return render_fact_mediated_sentence(
+            example=example,
+            graph=graph,
+            medoids=medoids,
+            medoid_config=medoid_config,
+            max_context_tokens=max_context_tokens,
+        )
     raise ValueError(f"Unknown local surface renderer: {renderer_mode}")
 
 
@@ -285,6 +352,7 @@ __all__ = [
     "SELECTED_CHUNK_ANSWER_SENTENCE_ORACLE",
     "SELECTED_CHUNK_GOLD_SENTENCE_ORACLE",
     "LocalSurfaceRenderResult",
+    "render_fact_mediated_sentence",
     "render_local_sentence_medoid",
     "render_local_surface",
 ]

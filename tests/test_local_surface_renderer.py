@@ -6,6 +6,7 @@ from pamae_rag.data.schema import EvidenceNode, QueryExample
 from pamae_rag.local_surface.local_sentence_medoid import LocalMedoidConfig
 from pamae_rag.local_surface.local_surface_graph import build_local_surface_graph
 from pamae_rag.local_surface.local_surface_renderers import (
+    FACT_MEDIATED_SENTENCE,
     LOCAL_SENTENCE_MEDOID,
     SELECTED_CHUNK_ANSWER_SENTENCE_ORACLE,
     SELECTED_CHUNK_GOLD_SENTENCE_ORACLE,
@@ -73,3 +74,22 @@ def test_oracle_renderers_are_marked_oracle_only() -> None:
     assert answer.diagnostics["uses_answer_string"] is True
     assert gold.diagnostics["oracle_renderer"] is True
     assert gold.diagnostics["uses_gold_label"] is True
+
+
+def test_fact_mediated_renderer_uses_graph_closure_without_labels() -> None:
+    example = _example()
+    graph = build_local_surface_graph(example.nodes, ["c0"])
+
+    rendered = render_local_surface(
+        example=example,
+        graph=graph,
+        renderer_mode=FACT_MEDIATED_SENTENCE,
+        medoid_config=LocalMedoidConfig(local_sentence_medoids=1),
+    )
+
+    assert rendered.context_nodes
+    assert rendered.diagnostics["oracle_renderer"] is False
+    assert rendered.diagnostics["uses_answer_string"] is False
+    assert rendered.diagnostics["uses_gold_label"] is False
+    assert rendered.diagnostics["fact_mediated_selection_rule"] == "deterministic_graph_closure"
+    assert rendered.diagnostics["query_reachable_fact_count"] >= 1
