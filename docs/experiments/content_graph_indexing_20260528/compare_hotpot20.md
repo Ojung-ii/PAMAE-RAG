@@ -2,7 +2,7 @@
 | --- | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | --- |
 | baseline_hotpot20 | legacy_hybrid_sem_graph | false | 0.9750 | n/a | 0.1500 | 0.7250 | 0.3327 | 504.3500 | 318.3068 | 0.3957 | 0.0000 | 0.0672 | 0.0040 | measurement_only |
 | oracle_hotpot20 | direct_gold_context | true | n/a | n/a | n/a | 1.0000 | 1.0000 | 153.0000 | 0.0000 | 0.1364 | 0.0000 | 0.0711 | 0.0000 | measurement_only |
-| content_graph_hotpot20 | content_hybrid_sem_graph | false | 0.9750 | 0.9250 | 0.3750 | 0.6750 | 0.2871 | 478.8000 | 823.8030 | 0.3710 | 0.0000 | 0.0624 | 0.0087 | no_adoption |
+| content_graph_hotpot20 | content_hybrid_sem_graph | false | 0.9750 | 0.9250 | 0.3750 | 0.6750 | 0.2871 | 478.8000 | 676.9385 | 0.3785 | 0.0000 | 0.0624 | 0.0087 | no_adoption |
 
 - oracle_context_complete: `true`
 - oracle_answer_coverage: `0.9000`

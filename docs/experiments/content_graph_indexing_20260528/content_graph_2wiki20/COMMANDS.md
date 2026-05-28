@@ -27,12 +27,12 @@ Summary:
 
 | run | graph_mode | oracle | candidate_recall | projected_recall | post_refine_recall | rendered_recall | context_f1 | avg_context_tokens | retrieval_ms | generation_ms | EM | F1 | oracle_gap | risk_decision |
 | --- | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| content_graph_2wiki20 | content_hybrid_sem_graph | false | 0.8625 | 0.8000 | 0.3500 | 0.6000 | 0.2843 | 350.1 | 1260.7 | 0.3 | 0.0000 | 0.0580 | -0.0085 | measurement_limited |
+| content_graph_2wiki20 | content_hybrid_sem_graph | false | 0.8625 | 0.8000 | 0.3500 | 0.6000 | 0.2843 | 350.1 | 967.6 | 0.3 | 0.0000 | 0.0580 | -0.0085 | measurement_limited |
 
 Notes:
 
 - Content graph projection is now active and preserves projected support at `0.8000`.
 - Local refinement/reranking support survival improves from the baseline `0.0250` to `0.3500`.
 - Rendered recall improves from `0.5000` to `0.6000`.
-- Content graph projection adds `1140.6 ms` average latency inside retrieval.
+- Content graph projection adds `830.8 ms` average latency inside retrieval.
 - QA F1 exceeds the current deterministic oracle F1 (`0.0495`), which means the offline generator is not a strict oracle-upper-bound generator. Treat this as a measurement limitation and do not claim oracle-gap success from this run.

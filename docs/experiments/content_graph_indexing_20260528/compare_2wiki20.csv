@@ -1,4 +1,4 @@
 run,graph_mode,oracle,candidate_recall,projected_recall,post_refine_recall,rendered_recall,context_f1,avg_context_tokens,retrieval_ms,generation_ms,EM,F1,oracle_gap,risk_decision
 baseline_2wiki20,legacy_hybrid_sem_graph,False,0.8625,,0.025,0.5,0.23472222222222222,497.1,311.77045000000004,0.3973,0.0,0.03547759103641457,0.013999999999999999,measurement_only
 oracle_2wiki20,direct_gold_context,True,,,,1.0,1.0,279.7,0.0,0.2351,0.0,0.04947759103641457,0.0,measurement_only
-content_graph_2wiki20,content_hybrid_sem_graph,False,0.8625,0.8,0.35,0.6,0.2842857142857143,350.1,1260.7043999999999,0.2896,0.0,0.05802304558186912,-0.00854545454545455,measurement_limited
+content_graph_2wiki20,content_hybrid_sem_graph,False,0.8625,0.8,0.35,0.6,0.2842857142857143,350.1,967.57965,0.28905,0.0,0.05802304558186912,-0.00854545454545455,measurement_limited

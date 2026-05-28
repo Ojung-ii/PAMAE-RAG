@@ -58,3 +58,23 @@ def test_content_graph_projects_text_edges_to_query_graph():
     assert graph.num_edges > 0
     assert set(projected) == {0, 1}
     assert graph.edge_counts_by_type["shared_entity"] > 0
+
+
+def test_content_graph_projection_deduplicates_repeated_bridge_entity_pairs():
+    nodes = [
+        _node(
+            "n1",
+            "Ada Lovelace met Charles Babbage. Ada Lovelace advised Charles Babbage.",
+        ),
+        _node("n2", "Charles Babbage worked with Ada Lovelace."),
+    ]
+
+    graph, index, projected = project_content_graph_to_query_graph(
+        nodes,
+        edge_lengths={"shared_entity": 1.0, "entity_fact_bridge": 1.0},
+        max_edges_per_node=8,
+    )
+
+    assert graph.num_edges > 0
+    assert set(projected) == {0, 1}
+    assert index.diagnostics["content_graph_unique_entity_fact_bridge_pairs"] < len(index.triples)

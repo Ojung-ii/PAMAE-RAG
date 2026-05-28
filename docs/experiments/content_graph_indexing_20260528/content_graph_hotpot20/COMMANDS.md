@@ -23,7 +23,7 @@ conda run -n pamae-rag python scripts/run_qa.py \
 
 | run | graph_mode | oracle | candidate_recall | projected_recall | post_refine_recall | rendered_recall | context_f1 | avg_context_tokens | retrieval_ms | generation_ms | EM | F1 | oracle_gap | risk_decision |
 | --- | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| content_graph_hotpot20 | content_hybrid_sem_graph | false | 0.9750 | 0.9250 | 0.3750 | 0.6750 | 0.2871 | 478.8 | 823.8 | 0.4 | 0.0000 | 0.0624 | 0.0087 | no_adoption |
+| content_graph_hotpot20 | content_hybrid_sem_graph | false | 0.9750 | 0.9250 | 0.3750 | 0.6750 | 0.2871 | 478.8 | 676.9 | 0.4 | 0.0000 | 0.0624 | 0.0087 | no_adoption |
 
 Notes:
 

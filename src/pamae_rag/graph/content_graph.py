@@ -310,9 +310,13 @@ def project_content_graph_to_query_graph(
             for right in ordered[pos + 1 :]:
                 add(left, right, "shared_entity")
 
-    for triple in index.triples:
-        subject_chunks = sorted(entity_to_chunks.get(triple.subject_entity_id, set()))
-        object_chunks = sorted(entity_to_chunks.get(triple.object_entity_id, set()))
+    bridge_entity_pairs = {
+        tuple(sorted((triple.subject_entity_id, triple.object_entity_id)))
+        for triple in index.triples
+    }
+    for subject_entity_id, object_entity_id in sorted(bridge_entity_pairs):
+        subject_chunks = sorted(entity_to_chunks.get(subject_entity_id, set()))
+        object_chunks = sorted(entity_to_chunks.get(object_entity_id, set()))
         for left in subject_chunks:
             for right in object_chunks:
                 add(left, right, "entity_fact_bridge")
@@ -322,6 +326,7 @@ def project_content_graph_to_query_graph(
     projected_node_indices = tuple(
         sorted({edge.source for edge in capped_edges} | {edge.target for edge in capped_edges})
     )
+    index.diagnostics["content_graph_unique_entity_fact_bridge_pairs"] = len(bridge_entity_pairs)
     graph = QueryGraph(
         num_nodes=len(nodes),
         edges=capped_edges,

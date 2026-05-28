@@ -1,4 +1,4 @@
 run,graph_mode,oracle,candidate_recall,projected_recall,post_refine_recall,rendered_recall,context_f1,avg_context_tokens,retrieval_ms,generation_ms,EM,F1,oracle_gap,risk_decision
 baseline_hotpot20,legacy_hybrid_sem_graph,False,0.975,,0.15,0.725,0.3327380952380953,504.35,318.30685,0.39575,0.0,0.06717360701706053,0.003952331193710509,measurement_only
 oracle_hotpot20,direct_gold_context,True,,,,1.0,1.0,153.0,0.0,0.13645,0.0,0.07112593821077104,0.0,measurement_only
-content_graph_hotpot20,content_hybrid_sem_graph,False,0.975,0.925,0.375,0.675,0.28706349206349213,478.8,823.80295,0.37105,0.0,0.0624082379523731,0.008717700258397937,no_adoption
+content_graph_hotpot20,content_hybrid_sem_graph,False,0.975,0.925,0.375,0.675,0.28706349206349213,478.8,676.9385000000001,0.37850000000000006,0.0,0.0624082379523731,0.008717700258397937,no_adoption

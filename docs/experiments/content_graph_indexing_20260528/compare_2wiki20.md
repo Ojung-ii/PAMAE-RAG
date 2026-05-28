@@ -2,7 +2,7 @@
 | --- | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | --- |
 | baseline_2wiki20 | legacy_hybrid_sem_graph | false | 0.8625 | n/a | 0.0250 | 0.5000 | 0.2347 | 497.1000 | 311.7705 | 0.3973 | 0.0000 | 0.0355 | 0.0140 | measurement_only |
 | oracle_2wiki20 | direct_gold_context | true | n/a | n/a | n/a | 1.0000 | 1.0000 | 279.7000 | 0.0000 | 0.2351 | 0.0000 | 0.0495 | 0.0000 | measurement_only |
-| content_graph_2wiki20 | content_hybrid_sem_graph | false | 0.8625 | 0.8000 | 0.3500 | 0.6000 | 0.2843 | 350.1000 | 1260.7044 | 0.2896 | 0.0000 | 0.0580 | -0.0085 | measurement_limited |
+| content_graph_2wiki20 | content_hybrid_sem_graph | false | 0.8625 | 0.8000 | 0.3500 | 0.6000 | 0.2843 | 350.1000 | 967.5797 | 0.2890 | 0.0000 | 0.0580 | -0.0085 | measurement_limited |
 
 - oracle_context_complete: `true`
 - oracle_answer_coverage: `0.8000`
