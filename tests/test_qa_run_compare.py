@@ -18,6 +18,7 @@ def _metrics(f1: float, *, oracle: bool = False, recall: float = 1.0) -> dict:
         "mean_exact_match": 0.0,
         "mean_context_recall": recall,
         "mean_context_f1": recall,
+        "mean_answer_coverage": recall,
         "avg_context_tokens": 10,
         "avg_generation_ms": 1,
         "stage_diagnostics": {},
@@ -42,6 +43,7 @@ def test_compare_runs_detects_oracle_dominance_violation(tmp_path: Path):
 
     assert summary["qa_settings_consistent"] is True
     assert summary["oracle_context_complete"] is True
+    assert summary["oracle_answer_coverage"] == 1.0
     assert summary["oracle_dominance_valid"] is False
     assert summary["dominance_violations"] == ["content"]
 

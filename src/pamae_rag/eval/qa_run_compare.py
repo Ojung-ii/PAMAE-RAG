@@ -67,6 +67,7 @@ def _row(spec: QARunSpec, oracle_f1: float | None) -> dict[str, Any]:
         "F1": f1,
         "oracle_gap": oracle_gap,
         "risk_decision": spec.risk_decision,
+        "answer_coverage": _metric(qa_metrics, retrieval_metrics, "mean_answer_coverage"),
         "generator_id": qa_metrics.get("generator_id"),
         "prompt_id": qa_metrics.get("prompt_id"),
         "metric_id": qa_metrics.get("metric_id"),
@@ -85,6 +86,7 @@ def compare_runs(specs: list[QARunSpec]) -> dict[str, Any]:
     oracle_spec, oracle_metrics = oracle_rows[0]
     oracle_f1 = float(oracle_metrics.get("mean_f1", 0.0))
     oracle_context_recall = float(oracle_metrics.get("mean_context_recall", 0.0))
+    oracle_answer_coverage = _metric(oracle_metrics, None, "mean_answer_coverage")
     rows = [_row(spec, oracle_f1) for spec in specs]
     generator_ids = {row.get("generator_id") for row in rows}
     prompt_ids = {row.get("prompt_id") for row in rows}
@@ -104,6 +106,7 @@ def compare_runs(specs: list[QARunSpec]) -> dict[str, Any]:
         "oracle_run": oracle_spec.name,
         "oracle_f1": oracle_f1,
         "oracle_context_recall": oracle_context_recall,
+        "oracle_answer_coverage": oracle_answer_coverage,
         "oracle_context_complete": oracle_context_complete,
         "qa_settings_consistent": qa_settings_consistent,
         "oracle_dominance_valid": not dominance_violations,
@@ -170,6 +173,7 @@ def write_summary(summary: dict[str, Any], output_json: Path, output_csv: Path, 
         [
             "",
             f"- oracle_context_complete: `{str(summary['oracle_context_complete']).lower()}`",
+            f"- oracle_answer_coverage: `{_fmt(summary.get('oracle_answer_coverage'))}`",
             f"- qa_settings_consistent: `{str(summary['qa_settings_consistent']).lower()}`",
             f"- oracle_dominance_valid: `{str(summary['oracle_dominance_valid']).lower()}`",
             f"- dominance_violations: `{', '.join(summary['dominance_violations']) or 'none'}`",

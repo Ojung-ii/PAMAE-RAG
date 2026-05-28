@@ -13,6 +13,8 @@ Fixed QA measurement settings introduced for this series:
 
 The default generator is an offline deterministic extractive sentence generator. It is not an LLM upper bound; all comparisons in this series must use the same generator and metric.
 
+Final QA diagnostics now also record `answer_coverage`: whether any normalized gold answer string appears in the rendered context. This is evaluation-only bookkeeping; it is not used by retrieval, scoring, context rendering, or answer generation.
+
 Current 2Wiki20 QA measurements:
 
 | run | graph_mode | oracle | candidate_recall | projected_recall | post_refine_recall | rendered_recall | context_f1 | avg_context_tokens | retrieval_ms | generation_ms | EM | F1 | oracle_gap | risk_decision |
@@ -57,3 +59,16 @@ Automated comparison guard:
 - 2Wiki20: [compare_2wiki20.md](compare_2wiki20.md) reports `oracle_dominance_valid=false` because `content_graph_2wiki20` exceeds oracle F1 under the offline deterministic generator. This blocks oracle-gap claims on 2Wiki.
 - Hotpot20: [compare_hotpot20.md](compare_hotpot20.md) reports `oracle_dominance_valid=true`, but content graph F1 is lower than baseline F1. This blocks content graph adoption as a performance improvement.
 - The guard command supports `--require-valid-oracle`; with that flag, the 2Wiki comparison exits nonzero and the Hotpot comparison passes.
+
+Answer coverage diagnostic:
+
+| run | answer_coverage |
+| --- | ---: |
+| baseline_2wiki20 | 0.3000 |
+| oracle_2wiki20 | 0.8000 |
+| content_graph_2wiki20 | 0.3000 |
+| baseline_hotpot20 | 0.5000 |
+| oracle_hotpot20 | 0.9000 |
+| content_graph_hotpot20 | 0.5500 |
+
+The oracle contexts contain answer strings far more often than retrieved contexts, but the fixed extractive sentence generator still produces low oracle QA F1. This confirms a final-QA generator bottleneck in addition to retrieval/context losses, and keeps performance changes gated on end-to-end QA rather than retrieval-only gains.

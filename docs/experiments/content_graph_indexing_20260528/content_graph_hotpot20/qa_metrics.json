@@ -9,9 +9,10 @@
   "mean_context_recall": 0.675,
   "mean_context_precision": 0.18291666666666667,
   "mean_context_f1": 0.28706349206349213,
+  "mean_answer_coverage": 0.55,
   "avg_context_tokens": 478.8,
   "avg_retrieval_ms": 823.80295,
-  "avg_generation_ms": 0.37334999999999996,
+  "avg_generation_ms": 0.37105,
   "missing_prediction_count": 0,
   "missing_answer_count": 0,
   "stage_diagnostics": {
@@ -75,13 +76,14 @@
         "ok": 20
       },
       "mean": {
+        "answer_coverage": 0.55,
         "context_f1": 0.28706349206349213,
         "context_precision": 0.18291666666666667,
         "context_recall": 0.675,
         "gold_support_count": 2.0,
         "gold_support_surviving_count": 1.35,
         "gold_supporting_evidence_survival": 0.675,
-        "latency_ms": 0.37334999999999996,
+        "latency_ms": 0.37105,
         "qa_exact_match": 0.0,
         "qa_f1": 0.0624082379523731,
         "rendered_f1": 0.28706349206349213,

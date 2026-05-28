@@ -14,7 +14,7 @@ from pamae_rag.data.schema import EvidenceNode, QueryExample
 from pamae_rag.eval.stage_diagnostics import aggregate_stage_diagnostics, make_stage_metrics
 from pamae_rag.eval.support_recall import f1_score, precision, recall
 from pamae_rag.qa.generator import DeterministicExtractiveSentenceGenerator, PROMPT_TEXT
-from pamae_rag.qa.metrics import METRIC_ID, gold_answers, score_json, score_prediction
+from pamae_rag.qa.metrics import METRIC_ID, gold_answers, normalize_answer, score_json, score_prediction
 
 _CORPUS_NODE_RE = re.compile(r"^(?P<dataset>.+):doc:(?P<index>[0-9]+)$")
 
@@ -31,6 +31,7 @@ class QAMetrics:
     mean_context_recall: float
     mean_context_precision: float
     mean_context_f1: float
+    mean_answer_coverage: float
     avg_context_tokens: float
     avg_retrieval_ms: float
     avg_generation_ms: float
@@ -150,6 +151,20 @@ def _float_value(value: Any) -> float | None:
         return None
 
 
+def _answer_coverage(context: str, answers: tuple[str, ...]) -> float | None:
+    if not answers:
+        return None
+    context_norm = normalize_answer(context)
+    if not context_norm:
+        return 0.0
+    padded_context = f" {context_norm} "
+    for answer in answers:
+        answer_norm = normalize_answer(answer)
+        if answer_norm and f" {answer_norm} " in padded_context:
+            return 1.0
+    return 0.0
+
+
 def run_qa(
     input_path: str | Path,
     prediction_path: str | Path | None,
@@ -174,6 +189,7 @@ def run_qa(
     context_tokens: list[float] = []
     retrieval_latencies: list[float] = []
     generation_latencies: list[float] = []
+    answer_coverages: list[float] = []
     missing_prediction_count = 0
     missing_answer_count = 0
 
@@ -198,6 +214,9 @@ def run_qa(
             missing_answer_count += 1
         answer_score = score_prediction(generated.answer, answers)
         score_payload = score_json(answer_score)
+        answer_coverage = _answer_coverage(context, answers)
+        if answer_coverage is not None:
+            answer_coverages.append(answer_coverage)
         if answer_score is not None:
             exact_matches.append(answer_score.exact_match)
             f1s.append(answer_score.f1)
@@ -226,6 +245,7 @@ def run_qa(
         final_extra = {
             "qa_exact_match": score_payload["exact_match"],
             "qa_f1": score_payload["f1"],
+            "answer_coverage": answer_coverage,
             "context_source": "gold_support" if oracle_context else "retrieval_prediction",
         }
         stage_diagnostics["final_qa"] = make_stage_metrics(
@@ -251,6 +271,7 @@ def run_qa(
                 "context_precision": c_precision,
                 "context_f1": c_f1,
                 "context_tokens": token_count,
+                "answer_coverage": answer_coverage,
                 "retrieval_ms": retrieval_ms,
                 "generation_ms": generation_ms,
                 "stage_diagnostics": stage_diagnostics,
@@ -279,6 +300,7 @@ def run_qa(
         mean_context_recall=_mean(context_recalls),
         mean_context_precision=_mean(context_precisions),
         mean_context_f1=_mean(context_f1s),
+        mean_answer_coverage=_mean(answer_coverages),
         avg_context_tokens=_mean(context_tokens),
         avg_retrieval_ms=_mean(retrieval_latencies),
         avg_generation_ms=_mean(generation_latencies),

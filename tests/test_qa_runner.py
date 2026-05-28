@@ -67,9 +67,12 @@ def test_run_qa_scores_retrieved_context(tmp_path: Path):
     assert metrics.oracle is False
     assert metrics.mean_f1 > 0.0
     assert metrics.mean_context_recall == 1.0
+    assert metrics.mean_answer_coverage == 1.0
     assert "final_qa" in metrics.stage_diagnostics
     row = json.loads(output_path.read_text(encoding="utf-8").splitlines()[0])
     assert row["prediction"] == "Ada was born in London."
+    assert row["answer_coverage"] == 1.0
+    assert row["stage_diagnostics"]["final_qa"]["answer_coverage"] == 1.0
     assert row["generation_ms"] >= 0.0
     assert "final_qa" in row["stage_diagnostics"]
 
@@ -118,6 +121,7 @@ def test_run_qa_oracle_context_uses_gold_support(tmp_path: Path):
     assert row["oracle"] is True
     assert row["context_node_ids"] == ["n1"]
     assert row["diagnostics"]["context_source"] == "gold_support"
+    assert row["answer_coverage"] == 1.0
 
 
 def test_run_qa_oracle_context_can_read_gold_from_corpus(tmp_path: Path):
@@ -168,3 +172,4 @@ def test_run_qa_oracle_context_can_read_gold_from_corpus(tmp_path: Path):
     assert row["context_node_ids"] == ["toy:doc:1"]
     assert row["diagnostics"]["corpus_context_node_count"] == 1
     assert row["diagnostics"]["missing_context_node_ids"] == []
+    assert row["stage_diagnostics"]["final_qa"]["answer_coverage"] == 1.0
