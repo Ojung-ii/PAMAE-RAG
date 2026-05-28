@@ -37,6 +37,11 @@ from pamae_rag.rendering.tree_ablation_renderers import (
     TREE_ORACLE_RENDERERS,
     render_tree_ablation,
 )
+from pamae_rag.rendering.semantic_carrier_renderers import (
+    SEMANTIC_CARRIER_RENDERERS,
+    SEMANTIC_ORACLE_RENDERERS,
+    SEMANTIC_WEIGHTED_TREE_DIAGNOSTIC,
+)
 
 CURRENT_RENDERER = "current_renderer"
 SUPPORTED_RENDERERS = {
@@ -44,6 +49,8 @@ SUPPORTED_RENDERERS = {
     *PATH_CARRIER_RENDERERS,
     *ANSWER_CARRIER_ORACLE_RENDERERS,
     *TREE_ABLATION_RENDERERS,
+    *SEMANTIC_CARRIER_RENDERERS,
+    *SEMANTIC_ORACLE_RENDERERS,
 }
 
 
@@ -120,14 +127,17 @@ def _metrics(
         "graph_variant": "entity_chunk_reference",
         "renderer_mode": renderer_mode,
         "oracle_renderer": renderer_mode in ANSWER_CARRIER_ORACLE_RENDERERS
-        or renderer_mode in TREE_ORACLE_RENDERERS,
-        "diagnostic_renderer": renderer_mode in TREE_ABLATION_RENDERERS,
+        or renderer_mode in TREE_ORACLE_RENDERERS
+        or renderer_mode in SEMANTIC_ORACLE_RENDERERS,
+        "diagnostic_renderer": renderer_mode in TREE_ABLATION_RENDERERS
+        or renderer_mode == SEMANTIC_WEIGHTED_TREE_DIAGNOSTIC,
         "uses_answer_string": renderer_mode
         in {
             "projected_answer_chunk_oracle",
             "selected_basin_answer_chunk_oracle",
             "current_answer_role_oracle",
             "support_tree_answer_oracle",
+            "shell1_answer_oracle",
             *TREE_ORACLE_RENDERERS,
         },
         "uses_gold_label": renderer_mode == "gold_chunk_role_oracle",

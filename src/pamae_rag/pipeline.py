@@ -31,6 +31,12 @@ from pamae_rag.rendering.basin_aware_renderer import render_basin_path_closure_i
 from pamae_rag.rendering.gold_path_oracle_renderer import render_gold_path_oracle_indices
 from pamae_rag.rendering.path_carrier_renderer import PATH_CARRIER_RENDERERS, render_metric_path_carrier_indices
 from pamae_rag.rendering.path_neighborhood_renderer import render_path_neighborhood_indices
+from pamae_rag.rendering.semantic_carrier_renderers import (
+    SEMANTIC_CARRIER_RENDERERS,
+    SEMANTIC_ORACLE_RENDERERS,
+    SEMANTIC_WEIGHTED_TREE_DIAGNOSTIC,
+    render_semantic_carrier_indices,
+)
 from pamae_rag.retrieval.renderer import render_context_indices, render_context_order_indices
 from pamae_rag.selection.basin_preserving import (
     BasinPreservingSelectionResult,
@@ -39,6 +45,7 @@ from pamae_rag.selection.basin_preserving import (
     query_anchor_indices,
     select_basin_preserving_medoids,
 )
+from pamae_rag.semantic.semantic_weighted_tree import semantic_weighted_support_tree_indices
 
 
 def candidate_indices(nodes, anchor_node_types: Iterable[str]) -> list[int]:
@@ -668,6 +675,34 @@ def _run_for_k(example: QueryExample, cfg: AppConfig, k: int, seed: int) -> Retr
         context_indices = path_carrier.indices
         renderer_order_indices = list(context_indices)
         basin_render_diagnostics = dict(path_carrier.diagnostics)
+    elif renderer in SEMANTIC_CARRIER_RENDERERS or renderer in SEMANTIC_ORACLE_RENDERERS:
+        if renderer == SEMANTIC_WEIGHTED_TREE_DIAGNOSTIC:
+            semantic_tree = semantic_weighted_support_tree_indices(
+                example=example,
+                selected_medoids=anchors,
+                query_anchors=diagnostic_query_anchors,
+                distance_matrix=graph_distance_matrix,
+                max_context_tokens=cfg.pamae.max_context_tokens,
+                max_context_nodes=cfg.pamae.max_context_nodes,
+                disconnected_distance=disconnected_distance,
+            )
+            context_indices = semantic_tree.indices
+            renderer_order_indices = list(context_indices)
+            basin_render_diagnostics = dict(semantic_tree.diagnostics)
+        else:
+            semantic_carrier = render_semantic_carrier_indices(
+                example=example,
+                selected_medoids=anchors,
+                query_anchors=diagnostic_query_anchors,
+                distance_matrix=graph_distance_matrix,
+                max_context_tokens=cfg.pamae.max_context_tokens,
+                max_context_nodes=cfg.pamae.max_context_nodes,
+                disconnected_distance=disconnected_distance,
+                renderer_mode=renderer,
+            )
+            context_indices = semantic_carrier.indices
+            renderer_order_indices = list(context_indices)
+            basin_render_diagnostics = dict(semantic_carrier.diagnostics)
     else:
         context_indices = render_context_indices(
             nodes,
@@ -724,6 +759,8 @@ def _run_for_k(example: QueryExample, cfg: AppConfig, k: int, seed: int) -> Retr
     diagnostic_renderer_mode = (
         renderer
         if renderer in {"basin_path_closure", "path_neighborhood", "gold_path_oracle"} or renderer in PATH_CARRIER_RENDERERS
+        or renderer in SEMANTIC_CARRIER_RENDERERS
+        or renderer in SEMANTIC_ORACLE_RENDERERS
         else "current"
     )
     path_realizability = compute_path_realizability(
@@ -794,7 +831,7 @@ def _run_for_k(example: QueryExample, cfg: AppConfig, k: int, seed: int) -> Retr
             else "path_neighborhood"
             if renderer == "path_neighborhood"
             else renderer
-            if renderer in PATH_CARRIER_RENDERERS
+            if renderer in PATH_CARRIER_RENDERERS or renderer in SEMANTIC_CARRIER_RENDERERS or renderer in SEMANTIC_ORACLE_RENDERERS
             else "anchors_then_cell_top_rho_then_score_fill"
         ),
         "path_realizability": path_realizability.to_json(),
