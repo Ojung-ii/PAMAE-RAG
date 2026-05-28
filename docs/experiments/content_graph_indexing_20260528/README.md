@@ -94,3 +94,5 @@ Risk-gated ideas stopped:
 - content query-entity relevance: mixed signal, with Hotpot top-8 recall lower than current relevance (`0.7500` vs `0.7750`); not adopted.
 - content fact closure context filtering: one-hop content graph Hotpot probe reached only `0.0633` F1, below baseline `0.0672` and with no oracle-gap reduction; not adopted.
 - entity degree log penalty: reduced content graph Hotpot QA F1 to `0.0594` and widened the oracle gap to `0.0331`, despite projection recall `0.9500` and lower retrieval latency (`712.3 ms`); code reverted and not adopted.
+- multi-token/acronym entity projection: reached Hotpot QA F1 `0.0649`, still below baseline `0.0672`, and left oracle gap `0.0276` above the baseline gap `0.0254`; not adopted.
+- sentence-initial single-token filter: improved Hotpot rendered recall to `0.7250`, but QA F1 stayed `0.0624` and oracle gap stayed `0.0301`; retrieval-only improvement, not adopted.
