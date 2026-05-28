@@ -84,6 +84,7 @@ class PamaeConfig:
     renderer_gamma: float = 0.0
     token_weight: float = 0.03
     anchor_penalty: float = 0.0
+    basin_min_expected_samples: float = 1.0
     max_context_tokens: int = 1200
     max_context_nodes: int | None = None
     strict_context_budget: bool = False
@@ -155,6 +156,7 @@ def validate_config(cfg: AppConfig) -> None:
         "sample_full_validation",
         "sample_full_validation_refine",
         "sample_full_validation_refine_cell_renderer",
+        "basin_preserving_medoids",
         "adaptive_k",
     }
     renderers = {"old", "anchor_only", "nearest", "cell_top_rho", "global_top_rho"}
@@ -216,6 +218,8 @@ def validate_config(cfg: AppConfig) -> None:
         raise ValueError("renderer_gamma must be nonnegative")
     if cfg.pamae.token_weight < 0 or cfg.pamae.anchor_penalty < 0:
         raise ValueError("objective penalties must be nonnegative")
+    if cfg.pamae.basin_min_expected_samples < 0:
+        raise ValueError("pamae.basin_min_expected_samples must be nonnegative")
     if cfg.pamae.max_context_tokens < 1:
         raise ValueError("max_context_tokens must be positive")
     if cfg.pamae.max_context_nodes is not None and cfg.pamae.max_context_nodes < 0:

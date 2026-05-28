@@ -26,6 +26,11 @@ from pamae_rag.pamae.refinement import RefinementResult, refine_medoids_monotone
 from pamae_rag.pamae.sampling import make_weighted_samples
 from pamae_rag.pamae.selection import select_by_full_objective
 from pamae_rag.retrieval.renderer import render_context_indices
+from pamae_rag.selection.basin_preserving import (
+    BasinPreservingSelectionResult,
+    gold_ids_in_selected_basins,
+    select_basin_preserving_medoids,
+)
 
 
 def candidate_indices(nodes, anchor_node_types: Iterable[str]) -> list[int]:
@@ -202,6 +207,9 @@ def _run_for_k(example: QueryExample, cfg: AppConfig, k: int, seed: int) -> Retr
     selected_sample_index: int | None = None
     sample_objective: ObjectiveBreakdown | None = None
     full_validation_objective: ObjectiveBreakdown | None = None
+    basin_selection: BasinPreservingSelectionResult | None = None
+    basin_selection_exact = True
+    basin_diagnostics: dict = {}
 
     if retrieval_variant == "top_rho":
         stage_start = time.perf_counter()
@@ -284,6 +292,27 @@ def _run_for_k(example: QueryExample, cfg: AppConfig, k: int, seed: int) -> Retr
                     anchor_penalty=cfg.pamae.anchor_penalty,
                 )
             )
+        elif retrieval_variant == "basin_preserving_medoids":
+            basin_selection = select_basin_preserving_medoids(
+                phase1_results,
+                candidates=candidates,
+                k=k,
+                distance_matrix=distance_matrix,
+                rho=rho,
+                token_costs=token_costs,
+                token_weight=cfg.pamae.token_weight,
+                anchor_penalty=cfg.pamae.anchor_penalty,
+                sample_sizes=[len(sample) for sample in samples],
+                max_combinations=cfg.pamae.max_exact_combinations,
+                node_ids=[node.node_id for node in nodes],
+                tau=cfg.pamae.basin_min_expected_samples,
+            )
+            anchors = basin_selection.anchors
+            sample_objective = basin_selection.sample_objective
+            full_validation_objective = basin_selection.full_objective
+            selected_sample_index = basin_selection.sample_index
+            basin_selection_exact = basin_selection.exact
+            basin_diagnostics = dict(basin_selection.diagnostics)
         else:
             selected = select_by_full_objective(
                 phase1_results,
@@ -301,10 +330,22 @@ def _run_for_k(example: QueryExample, cfg: AppConfig, k: int, seed: int) -> Retr
         if retrieval_variant in {
             "sample_full_validation_refine",
             "sample_full_validation_refine_cell_renderer",
+            "basin_preserving_medoids",
             "adaptive_k",
         }:
             stage_start = time.perf_counter()
             pre_refine_anchor_ids = _node_ids(nodes, anchors)
+            selected_basin_gold_ids = (
+                gold_ids_in_selected_basins(
+                    gold_node_ids=example.gold_node_ids,
+                    nodes=nodes,
+                    node_to_basin=basin_selection.node_to_basin,
+                    covered_basin_ids=basin_selection.covered_basin_ids,
+                )
+                if basin_selection is not None
+                else []
+            )
+            projected_gold_ids = sorted(set(projected_node_ids) & {str(x) for x in example.gold_node_ids})
             refined = refine_medoids_monotone(
                 anchors,
                 candidate_indices=candidates,
@@ -325,6 +366,15 @@ def _run_for_k(example: QueryExample, cfg: AppConfig, k: int, seed: int) -> Retr
                     "refinement_accepted": refined.accepted,
                     "objective_before": refined.before.total,
                     "objective_after": refined.after.total,
+                    **basin_diagnostics,
+                    "projected_gold_hit": bool(projected_gold_ids),
+                    "selected_basin_gold_hit": bool(selected_basin_gold_ids),
+                    "selected_basin_gold_chunk_ids": selected_basin_gold_ids,
+                    "selection_recovered_from_type_b": bool(
+                        projected_gold_ids
+                        and selected_basin_gold_ids
+                        and not recall(pre_refine_anchor_ids, example.gold_node_ids)
+                    ),
                     "pre_refinement_anchor_count": len(pre_refine_anchor_ids),
                     "pre_refinement_gold_supporting_evidence_survival": recall(
                         pre_refine_anchor_ids,
@@ -363,7 +413,7 @@ def _run_for_k(example: QueryExample, cfg: AppConfig, k: int, seed: int) -> Retr
                     **_support_fact_extra(example, nodes, _node_ids(nodes, refined.anchors)),
                 },
             )
-        exact_phase1 = all(result.exact for result in phase1_results)
+        exact_phase1 = all(result.exact for result in phase1_results) and basin_selection_exact
 
     anchors = refined.anchors
     stage_diagnostics.setdefault(
@@ -468,6 +518,7 @@ def _run_for_k(example: QueryExample, cfg: AppConfig, k: int, seed: int) -> Retr
         "phase1_num_combinations": [r.num_combinations for r in phase1_results],
         "sample_objective": _objective_json(sample_objective),
         "full_validation_objective": _objective_json(full_validation_objective),
+        **basin_diagnostics,
         "refinement_before": asdict(refined.before),
         "refinement_after": asdict(refined.after),
         "refinement_accepted": refined.accepted,
