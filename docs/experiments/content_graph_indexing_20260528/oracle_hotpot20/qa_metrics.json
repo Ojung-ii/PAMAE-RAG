@@ -5,15 +5,15 @@
   "prompt_id": "closed_book_free_context_qa_v1",
   "metric_id": "squad_normalized_em_f1_v1",
   "mean_exact_match": 0.0,
-  "mean_f1": 0.07112593821077104,
+  "mean_f1": 0.09253647943875647,
   "mean_context_recall": 1.0,
   "mean_context_precision": 1.0,
   "mean_context_f1": 1.0,
   "mean_answer_coverage": 0.9,
-  "mean_selected_answer_coverage": 0.3,
-  "avg_context_tokens": 153.0,
+  "mean_selected_answer_coverage": 0.35,
+  "avg_context_tokens": 56.15,
   "avg_retrieval_ms": 0.0,
-  "avg_generation_ms": 0.1343,
+  "avg_generation_ms": 0.06080000000000001,
   "missing_prediction_count": 0,
   "missing_answer_count": 0,
   "stage_diagnostics": {
@@ -30,15 +30,17 @@
         "gold_support_count": 2.0,
         "gold_support_surviving_count": 2.0,
         "gold_supporting_evidence_survival": 1.0,
-        "latency_ms": 0.1343,
+        "latency_ms": 0.06080000000000001,
         "qa_exact_match": 0.0,
-        "qa_f1": 0.07112593821077104,
+        "qa_f1": 0.09253647943875647,
         "rendered_f1": 1.0,
         "rendered_precision": 1.0,
         "rendered_recall": 1.0,
-        "selected_answer_coverage": 0.3,
+        "selected_answer_coverage": 0.35,
+        "support_fact_count": 2.35,
+        "support_fact_resolved_count": 2.35,
         "survivor_count": 2.0,
-        "token_count": 153.0
+        "token_count": 56.15
       }
     }
   }

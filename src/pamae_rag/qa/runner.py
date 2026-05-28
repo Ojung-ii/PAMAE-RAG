@@ -17,6 +17,7 @@ from pamae_rag.qa.generator import DeterministicExtractiveSentenceGenerator, PRO
 from pamae_rag.qa.metrics import METRIC_ID, gold_answers, normalize_answer, score_json, score_prediction
 
 _CORPUS_NODE_RE = re.compile(r"^(?P<dataset>.+):doc:(?P<index>[0-9]+)$")
+_SUPPORT_SENTENCE_RE = re.compile(r"[^.!?]+[.!?]?")
 
 
 @dataclass(frozen=True)
@@ -121,6 +122,15 @@ def _context_tokens(nodes: list[EvidenceNode]) -> int:
     return int(sum(max(1, int(node.token_count)) for node in nodes))
 
 
+def _sentence_texts(text: str) -> list[str]:
+    out: list[str] = []
+    for match in _SUPPORT_SENTENCE_RE.finditer(str(text)):
+        sentence = " ".join(match.group(0).split())
+        if sentence:
+            out.append(sentence)
+    return out
+
+
 def _prediction_context_ids(example: QueryExample, prediction: dict[str, Any]) -> list[str]:
     values = prediction.get("context_node_ids", [])
     if not isinstance(values, list):
@@ -141,6 +151,88 @@ def _gold_context_ids(example: QueryExample) -> list[str]:
     present = [node.node_id for node in example.nodes if node.node_id in gold]
     remaining = sorted(gold - set(present), key=lambda node_id: (_corpus_index(node_id) is None, _corpus_index(node_id) or 0, node_id))
     return [*present, *remaining]
+
+
+def _support_facts(example: QueryExample) -> list[dict[str, Any]]:
+    value = example.metadata.get("support_facts")
+    if value is None and isinstance(example.metadata.get("metadata"), dict):
+        value = example.metadata["metadata"].get("support_facts")
+    if not isinstance(value, list):
+        return []
+    return [dict(item) for item in value if isinstance(item, dict)]
+
+
+def _title_key(value: Any) -> str:
+    return normalize_answer(str(value or ""))
+
+
+def _support_sentence_node(node: EvidenceNode, sentence_id: int, sentence: str) -> EvidenceNode:
+    metadata = dict(node.metadata)
+    metadata["oracle_context_unit"] = "support_sentence"
+    metadata["support_sentence_id"] = int(sentence_id)
+    return EvidenceNode(
+        node_id=node.node_id,
+        text=sentence,
+        embedding=node.embedding,
+        relevance=node.relevance,
+        token_count=max(1, len(sentence.split())),
+        node_type=node.node_type,
+        is_anchor_candidate=node.is_anchor_candidate,
+        metadata=metadata,
+    )
+
+
+def _oracle_context(
+    example: QueryExample,
+    corpus: list[dict[str, Any]],
+) -> tuple[list[str], list[EvidenceNode], list[str], int, dict[str, Any]]:
+    context_ids = _gold_context_ids(example)
+    gold_nodes, missing_context_ids, corpus_context_count = _node_order(
+        example.nodes,
+        context_ids,
+        corpus,
+    )
+    support_facts = _support_facts(example)
+    diagnostics: dict[str, Any] = {
+        "oracle_context_unit": "gold_node",
+        "support_fact_count": len(support_facts),
+        "support_fact_resolved_count": 0,
+    }
+    if not support_facts:
+        return context_ids, gold_nodes, missing_context_ids, corpus_context_count, diagnostics
+
+    by_title: dict[str, list[EvidenceNode]] = {}
+    for node in gold_nodes:
+        key = _title_key(node.metadata.get("title"))
+        if key:
+            by_title.setdefault(key, []).append(node)
+
+    support_nodes: list[EvidenceNode] = []
+    support_ids: list[str] = []
+    for fact in support_facts:
+        title = _title_key(fact.get("title"))
+        sentence_id_raw = fact.get("sentence_id")
+        try:
+            sentence_id = int(sentence_id_raw)
+        except (TypeError, ValueError):
+            continue
+        candidates = by_title.get(title, [])
+        if not candidates:
+            continue
+        node = candidates[0]
+        sentences = _sentence_texts(node.text)
+        if sentence_id < 0 or sentence_id >= len(sentences):
+            continue
+        support_nodes.append(_support_sentence_node(node, sentence_id, sentences[sentence_id]))
+        support_ids.append(node.node_id)
+
+    diagnostics["support_fact_resolved_count"] = len(support_nodes)
+    if len(support_nodes) != len(support_facts):
+        diagnostics["oracle_context_unit"] = "gold_node_fallback"
+        return context_ids, gold_nodes, missing_context_ids, corpus_context_count, diagnostics
+
+    diagnostics["oracle_context_unit"] = "support_sentence"
+    return support_ids, support_nodes, missing_context_ids, corpus_context_count, diagnostics
 
 
 def _float_value(value: Any) -> float | None:
@@ -201,12 +293,18 @@ def run_qa(
             if not oracle_context:
                 missing_prediction_count += 1
             prediction = {"query_id": example.query_id, "context_node_ids": []}
-        context_ids = _gold_context_ids(example) if oracle_context else _prediction_context_ids(example, prediction)
-        context_nodes, missing_context_ids, corpus_context_count = _node_order(
-            example.nodes,
-            context_ids,
-            corpus,
-        )
+        if oracle_context:
+            context_ids, context_nodes, missing_context_ids, corpus_context_count, oracle_diagnostics = (
+                _oracle_context(example, corpus)
+            )
+        else:
+            context_ids = _prediction_context_ids(example, prediction)
+            context_nodes, missing_context_ids, corpus_context_count = _node_order(
+                example.nodes,
+                context_ids,
+                corpus,
+            )
+            oracle_diagnostics = {}
         context = _context_text(context_nodes)
         start = time.perf_counter()
         generated = generator.generate(example.query, context)
@@ -253,6 +351,7 @@ def run_qa(
             "answer_coverage": answer_coverage,
             "selected_answer_coverage": selected_answer_coverage,
             "context_source": "gold_support" if oracle_context else "retrieval_prediction",
+            **oracle_diagnostics,
         }
         stage_diagnostics["final_qa"] = make_stage_metrics(
             stage="final_qa",
@@ -291,6 +390,7 @@ def run_qa(
                     "context_source": "gold_support" if oracle_context else "retrieval_prediction",
                     "missing_context_node_ids": missing_context_ids,
                     "corpus_context_node_count": corpus_context_count,
+                    **oracle_diagnostics,
                     "source_prediction_query_id": prediction.get("query_id"),
                 },
             }

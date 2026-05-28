@@ -1,5 +1,7 @@
 # Oracle HotpotQA 20
 
+Oracle QA uses resolved gold support sentences as final QA context only. It does not alter retrieval, candidate generation, scoring, or graph construction.
+
 ```bash
 conda run -n pamae-rag python scripts/run_qa.py \
   --input data/processed/hotpotqa/examples_100.jsonl \
@@ -12,4 +14,4 @@ conda run -n pamae-rag python scripts/run_qa.py \
 
 | run | graph_mode | oracle | candidate_recall | projected_recall | post_refine_recall | rendered_recall | context_f1 | avg_context_tokens | retrieval_ms | generation_ms | EM | F1 | oracle_gap | risk_decision |
 | --- | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| oracle_hotpot20 | direct_gold_context | true | n/a | n/a | n/a | 1.0000 | 1.0000 | 153.0 | 0.0 | 0.1 | 0.0000 | 0.0711 | 0.0000 | measurement_only |
+| oracle_hotpot20 | direct_gold_context | true | n/a | n/a | n/a | 1.0000 | 1.0000 | 56.2 | 0.0 | 0.1 | 0.0000 | 0.0925 | 0.0000 | measurement_only |

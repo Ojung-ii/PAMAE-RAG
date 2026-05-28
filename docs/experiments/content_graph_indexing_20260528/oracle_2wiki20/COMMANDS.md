@@ -1,6 +1,6 @@
 # Oracle 2Wiki 20
 
-Oracle QA uses gold supporting evidence as final QA context only. It does not alter retrieval, candidate generation, scoring, or graph construction.
+Oracle QA uses gold supporting evidence as final QA context only. When `support_facts` sentence metadata resolves completely, the oracle context is the gold support sentences. It does not alter retrieval, candidate generation, scoring, or graph construction.
 
 ```bash
 conda run -n pamae-rag python scripts/run_qa.py \
@@ -16,7 +16,7 @@ Summary:
 
 | run | graph_mode | oracle | candidate_recall | projected_recall | post_refine_recall | rendered_recall | context_f1 | avg_context_tokens | retrieval_ms | generation_ms | EM | F1 | oracle_gap | risk_decision |
 | --- | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| oracle_2wiki20 | direct_gold_context | true | n/a | n/a | n/a | 1.0000 | 1.0000 | 279.7 | 0.0 | 0.2 | 0.0000 | 0.0495 | 0.0000 | measurement_only |
+| oracle_2wiki20 | direct_gold_context | true | n/a | n/a | n/a | 1.0000 | 1.0000 | 47.4 | 0.0 | 0.1 | 0.0000 | 0.0495 | 0.0000 | measurement_only |
 
 Baseline gap under the fixed generator:
 
