@@ -28,10 +28,13 @@ from pamae_rag.pamae.sampling import make_weighted_samples
 from pamae_rag.pamae.selection import select_by_full_objective
 from pamae_rag.qa.metrics import gold_answers, normalize_answer
 from pamae_rag.rendering.basin_aware_renderer import render_basin_path_closure_indices
+from pamae_rag.rendering.gold_path_oracle_renderer import render_gold_path_oracle_indices
 from pamae_rag.retrieval.renderer import render_context_indices
 from pamae_rag.selection.basin_preserving import (
     BasinPreservingSelectionResult,
+    assign_query_basins,
     gold_ids_in_selected_basins,
+    query_anchor_indices,
     select_basin_preserving_medoids,
 )
 
@@ -497,6 +500,26 @@ def _run_for_k(example: QueryExample, cfg: AppConfig, k: int, seed: int) -> Retr
     )
     stage_start = time.perf_counter()
     basin_render_diagnostics: dict = {}
+    graph_distance_matrix = graph_result.graph_distance_matrix
+    if graph_distance_matrix is None:
+        graph_distance_matrix = distance_matrix
+    disconnected_distance = float(graph_diagnostics.get("graph_disconnected_distance", 2.0))
+    basin_query_anchors = (
+        _indices_from_node_ids(nodes, basin_selection.diagnostics.get("query_anchor_node_ids", []))
+        if basin_selection is not None
+        else None
+    )
+    diagnostic_query_anchors = basin_query_anchors or query_anchor_indices(candidates, rho, max(1, len(anchors)))
+    diagnostic_node_to_basin = (
+        basin_selection.node_to_basin
+        if basin_selection is not None
+        else assign_query_basins(
+            candidates,
+            diagnostic_query_anchors,
+            graph_distance_matrix,
+            [node.node_id for node in nodes],
+        )
+    )
     if renderer == "basin_path_closure":
         if basin_selection is None:
             raise ValueError("basin_path_closure renderer requires basin_preserving_medoids selection")
@@ -516,6 +539,20 @@ def _run_for_k(example: QueryExample, cfg: AppConfig, k: int, seed: int) -> Retr
         )
         context_indices = basin_render.indices
         basin_render_diagnostics = dict(basin_render.diagnostics)
+    elif renderer == "gold_path_oracle":
+        gold_path_render = render_gold_path_oracle_indices(
+            example=example,
+            nodes=nodes,
+            selected_medoids=anchors,
+            query_anchors=diagnostic_query_anchors,
+            distance_matrix=graph_distance_matrix,
+            max_context_tokens=cfg.pamae.max_context_tokens,
+            max_context_nodes=cfg.pamae.max_context_nodes,
+            node_to_basin=diagnostic_node_to_basin,
+            disconnected_distance=disconnected_distance,
+        )
+        context_indices = gold_path_render.indices
+        basin_render_diagnostics = dict(gold_path_render.diagnostics)
     else:
         context_indices = render_context_indices(
             nodes,
@@ -541,9 +578,6 @@ def _run_for_k(example: QueryExample, cfg: AppConfig, k: int, seed: int) -> Retr
     node_budget_exceeded_by_anchors = bool(node_budget_active and unique_anchor_count > max_context_nodes)
     node_budget_satisfied = bool(not node_budget_active or len(context_indices) <= max_context_nodes)
     token_budget_satisfied = bool(final_context_tokens <= cfg.pamae.max_context_tokens)
-    graph_distance_matrix = graph_result.graph_distance_matrix
-    if graph_distance_matrix is None:
-        graph_distance_matrix = distance_matrix
     selected_mode = (
         "basin_preserving_selection"
         if retrieval_variant == "basin_preserving_medoids"
@@ -553,11 +587,6 @@ def _run_for_k(example: QueryExample, cfg: AppConfig, k: int, seed: int) -> Retr
         renderer
         if renderer in {"basin_path_closure", "path_neighborhood", "gold_path_oracle"}
         else "current"
-    )
-    basin_query_anchors = (
-        _indices_from_node_ids(nodes, basin_selection.diagnostics.get("query_anchor_node_ids", []))
-        if basin_selection is not None
-        else None
     )
     path_realizability = compute_path_realizability(
         example=example,
@@ -572,9 +601,9 @@ def _run_for_k(example: QueryExample, cfg: AppConfig, k: int, seed: int) -> Retr
         renderer_mode=diagnostic_renderer_mode,
         max_context_tokens=cfg.pamae.max_context_tokens,
         max_context_nodes=cfg.pamae.max_context_nodes,
-        disconnected_distance=float(graph_diagnostics.get("graph_disconnected_distance", 2.0)),
-        node_to_basin=basin_selection.node_to_basin if basin_selection is not None else None,
-        query_anchors=basin_query_anchors,
+        disconnected_distance=disconnected_distance,
+        node_to_basin=diagnostic_node_to_basin,
+        query_anchors=diagnostic_query_anchors,
     )
 
     diagnostics = {
@@ -615,6 +644,8 @@ def _run_for_k(example: QueryExample, cfg: AppConfig, k: int, seed: int) -> Retr
         "context_budget_policy": (
             "basin_path_closure"
             if renderer == "basin_path_closure"
+            else "gold_path_oracle"
+            if renderer == "gold_path_oracle"
             else "anchors_then_cell_top_rho_then_score_fill"
         ),
         "path_realizability": path_realizability.to_json(),
