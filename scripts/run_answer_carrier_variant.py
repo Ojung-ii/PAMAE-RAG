@@ -32,9 +32,19 @@ from pamae_rag.rendering.answer_carrier_oracle_renderers import (
     ANSWER_CARRIER_ORACLE_RENDERERS,
     render_answer_carrier_oracle,
 )
+from pamae_rag.rendering.tree_ablation_renderers import (
+    TREE_ABLATION_RENDERERS,
+    TREE_ORACLE_RENDERERS,
+    render_tree_ablation,
+)
 
 CURRENT_RENDERER = "current_renderer"
-SUPPORTED_RENDERERS = {CURRENT_RENDERER, *PATH_CARRIER_RENDERERS, *ANSWER_CARRIER_ORACLE_RENDERERS}
+SUPPORTED_RENDERERS = {
+    CURRENT_RENDERER,
+    *PATH_CARRIER_RENDERERS,
+    *ANSWER_CARRIER_ORACLE_RENDERERS,
+    *TREE_ABLATION_RENDERERS,
+}
 
 
 def _read_jsonl(path: Path) -> dict[str, dict[str, Any]]:
@@ -110,12 +120,14 @@ def _metrics(
         "graph_variant": "entity_chunk_reference",
         "renderer_mode": renderer_mode,
         "oracle_renderer": renderer_mode in ANSWER_CARRIER_ORACLE_RENDERERS,
+        "diagnostic_renderer": renderer_mode in TREE_ABLATION_RENDERERS,
         "uses_answer_string": renderer_mode
         in {
             "projected_answer_chunk_oracle",
             "selected_basin_answer_chunk_oracle",
             "current_answer_role_oracle",
             "support_tree_answer_oracle",
+            *TREE_ORACLE_RENDERERS,
         },
         "uses_gold_label": renderer_mode == "gold_chunk_role_oracle",
         "qa_f1": float(qa_metrics.get("mean_f1", 0.0)),
@@ -193,6 +205,17 @@ def run_variant(
             row.setdefault("diagnostics", {})["answer_carrier_oracle_renderer"] = oracle.diagnostics
             row["diagnostics"]["renderer"] = renderer_mode
             oracle_context_tokens.append(float(oracle.context_tokens))
+        elif renderer_mode in TREE_ABLATION_RENDERERS:
+            tree_render = render_tree_ablation(
+                example=example,
+                retrieval_row=row,
+                renderer_mode=renderer_mode,
+                max_context_tokens=max_context_tokens,
+            )
+            row["context_node_ids"] = list(tree_render.context_node_ids)
+            row.setdefault("diagnostics", {})["tree_ablation_renderer"] = tree_render.diagnostics
+            row["diagnostics"]["renderer"] = renderer_mode
+            oracle_context_tokens.append(float(tree_render.context_tokens))
         else:
             row.setdefault("diagnostics", {})["renderer"] = renderer_mode
 
