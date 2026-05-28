@@ -15,3 +15,4 @@ def test_retrieval_records_stage_diagnostics():
     assert retrieval_stages <= set(stages)
     assert stages["content_graph_projection"]["status"] == "not_configured"
     assert stages["context_rendering"]["rendered_recall"] is not None
+    assert "support_fact_count" in stages["context_rendering"]

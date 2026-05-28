@@ -44,12 +44,14 @@ def test_run_qa_scores_retrieved_context(tmp_path: Path):
                 "query": example.query,
                 "answer": example.answer,
                 "gold_node_ids": list(example.gold_node_ids),
+                "metadata": {"support_facts": [{"title": "Ada", "sentence_id": 0}]},
                 "nodes": [
                     {
                         "node_id": node.node_id,
                         "text": node.text,
                         "embedding": node.embedding.tolist(),
                         "token_count": node.token_count,
+                        "metadata": {"title": "Ada" if node.node_id == "n1" else "Grace"},
                     }
                     for node in example.nodes
                 ],
@@ -76,6 +78,7 @@ def test_run_qa_scores_retrieved_context(tmp_path: Path):
     assert row["selected_answer_coverage"] == 1.0
     assert row["stage_diagnostics"]["final_qa"]["answer_coverage"] == 1.0
     assert row["stage_diagnostics"]["final_qa"]["selected_answer_coverage"] == 1.0
+    assert row["stage_diagnostics"]["final_qa"]["support_fact_survival"] == 1.0
     assert row["generation_ms"] >= 0.0
     assert "final_qa" in row["stage_diagnostics"]
 
@@ -176,6 +179,7 @@ def test_run_qa_oracle_context_prefers_gold_support_sentences(tmp_path: Path):
     assert row["diagnostics"]["oracle_context_unit"] == "support_sentence"
     assert row["diagnostics"]["support_fact_resolved_count"] == 1
     assert row["stage_diagnostics"]["final_qa"]["oracle_context_unit"] == "support_sentence"
+    assert row["stage_diagnostics"]["final_qa"]["support_fact_survival"] == 1.0
 
 
 def test_run_qa_oracle_context_can_read_gold_from_corpus(tmp_path: Path):

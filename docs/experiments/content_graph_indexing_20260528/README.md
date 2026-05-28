@@ -17,16 +17,18 @@ Final QA diagnostics now also record `answer_coverage`: whether any normalized g
 
 Oracle QA now renders gold support sentences from `support_facts` when all support facts resolve against the gold context, falling back to full gold nodes only when support sentence resolution is incomplete. This is oracle-only context construction and is not used by retrieval, scoring, graph construction, or content rendering.
 
+Stage diagnostics now also record `support_fact_survival`, `support_fact_resolved_survival`, and support-fact counts. These are evaluation-only gold support fact sentence metrics and are not used by retrieval, graph construction, scoring, rendering, or generation.
+
 Current 2Wiki20 QA measurements:
 
 | run | graph_mode | oracle | candidate_recall | projected_recall | post_refine_recall | rendered_recall | context_f1 | avg_context_tokens | retrieval_ms | generation_ms | EM | F1 | oracle_gap | risk_decision |
 | --- | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| baseline_2wiki20 | legacy_hybrid_sem_graph | false | 0.8625 | n/a | 0.0250 | 0.5000 | 0.2347 | 497.1 | 311.8 | 0.4 | 0.0000 | 0.0355 | 0.0140 | measurement_only |
+| baseline_2wiki20 | legacy_hybrid_sem_graph | false | 0.8625 | n/a | 0.0250 | 0.5000 | 0.2347 | 497.1 | 381.9 | 0.5 | 0.0000 | 0.0355 | 0.0140 | measurement_only |
 | oracle_2wiki20 | direct_gold_context | true | n/a | n/a | n/a | 1.0000 | 1.0000 | 47.4 | 0.0 | 0.1 | 0.0000 | 0.0495 | 0.0000 | measurement_only |
-| content_graph_2wiki20 | content_hybrid_sem_graph | false | 0.8625 | 0.8000 | 0.3500 | 0.6000 | 0.2843 | 350.1 | 967.6 | 0.3 | 0.0000 | 0.0580 | -0.0085 | measurement_limited |
-| baseline_hotpot20 | legacy_hybrid_sem_graph | false | 0.9750 | n/a | 0.1500 | 0.7250 | 0.3327 | 504.4 | 318.3 | 0.4 | 0.0000 | 0.0672 | 0.0254 | measurement_only |
+| content_graph_2wiki20 | content_hybrid_sem_graph | false | 0.8625 | 0.8000 | 0.3500 | 0.6000 | 0.2843 | 350.1 | 1137.0 | 0.4 | 0.0000 | 0.0580 | -0.0085 | measurement_limited |
+| baseline_hotpot20 | legacy_hybrid_sem_graph | false | 0.9750 | n/a | 0.1500 | 0.7250 | 0.3327 | 504.4 | 419.5 | 0.5 | 0.0000 | 0.0672 | 0.0254 | measurement_only |
 | oracle_hotpot20 | direct_gold_context | true | n/a | n/a | n/a | 1.0000 | 1.0000 | 56.2 | 0.0 | 0.1 | 0.0000 | 0.0925 | 0.0000 | measurement_only |
-| content_graph_hotpot20 | content_hybrid_sem_graph | false | 0.9750 | 0.9250 | 0.3750 | 0.6750 | 0.2871 | 478.8 | 676.9 | 0.4 | 0.0000 | 0.0624 | 0.0301 | no_adoption |
+| content_graph_hotpot20 | content_hybrid_sem_graph | false | 0.9750 | 0.9250 | 0.3750 | 0.6750 | 0.2871 | 478.8 | 923.5 | 0.5 | 0.0000 | 0.0624 | 0.0301 | no_adoption |
 
 Current stage-wise bottleneck read:
 
@@ -45,8 +47,17 @@ Content graph run:
 - reranking/scoring survival: `0.3500`
 - context rendering recall: `0.6000`
 - final QA F1: `0.0580`
-- content graph projection latency: `830.8 ms` average
-- latency: `967.6 ms` retrieval average vs baseline `311.8 ms`
+- content graph projection latency: `972.0 ms` average
+- latency: `1137.0 ms` retrieval average vs baseline `381.9 ms`
+
+Support-fact survival diagnostics:
+
+| run | query_anchor | candidate_generation | projection | local_refinement | rendered | final_qa |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| baseline_2wiki20 | 0.8625 | 0.5750 | n/a | 0.0250 | 0.5000 | 0.5000 |
+| content_graph_2wiki20 | 0.8625 | 0.7375 | 0.8000 | 0.3500 | 0.6000 | 0.6000 |
+| baseline_hotpot20 | 0.9750 | 0.8200 | n/a | 0.1583 | 0.7117 | 0.7117 |
+| content_graph_hotpot20 | 0.9750 | 0.9250 | 0.9250 | 0.3833 | 0.6750 | 0.6750 |
 
 Measurement caution:
 
@@ -54,7 +65,7 @@ The support-sentence oracle restores a stronger HotpotQA upper bound (`0.0925` F
 
 HotpotQA risk check:
 
-The content graph improves refinement survival (`0.3750` vs `0.1500`) but reduces rendered recall (`0.6750` vs `0.7250`) and QA F1 (`0.0624` vs `0.0672`). With the support-sentence oracle, the Hotpot oracle gap is `0.0301` for content graph versus `0.0254` for baseline, so content graph remains `no_adoption` as a performance improvement.
+The content graph improves refinement survival (`0.3750` vs `0.1500`) and support-fact local refinement survival (`0.3833` vs `0.1583`), but reduces rendered recall (`0.6750` vs `0.7250`), support-fact rendered survival (`0.6750` vs `0.7117`), and QA F1 (`0.0624` vs `0.0672`). With the support-sentence oracle, the Hotpot oracle gap is `0.0301` for content graph versus `0.0254` for baseline, so content graph remains `no_adoption` as a performance improvement.
 
 Automated comparison guard:
 

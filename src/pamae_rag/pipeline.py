@@ -9,6 +9,7 @@ import numpy as np
 from pamae_rag.config import AppConfig
 from pamae_rag.data.schema import QueryExample, RetrievalResult
 from pamae_rag.eval.support_recall import hit, recall
+from pamae_rag.eval.support_facts import support_fact_stage_metrics
 from pamae_rag.eval.stage_diagnostics import make_stage_metrics
 from pamae_rag.graph.distances import build_distance_matrix, validate_square_distance_matrix
 from pamae_rag.graph.graph_distance import build_graph_aware_distance_matrix
@@ -112,6 +113,18 @@ def _actual_renderer(cfg: AppConfig) -> str:
     return cfg.pamae.renderer
 
 
+def _support_fact_extra(
+    example: QueryExample,
+    nodes,
+    selected_node_ids: Iterable[str],
+) -> dict:
+    return support_fact_stage_metrics(
+        nodes=nodes,
+        selected_node_ids=selected_node_ids,
+        metadata=example.metadata,
+    )
+
+
 def _run_for_k(example: QueryExample, cfg: AppConfig, k: int, seed: int) -> RetrievalResult:
     stage_diagnostics: dict[str, dict] = {}
     stage_start = time.perf_counter()
@@ -170,6 +183,7 @@ def _run_for_k(example: QueryExample, cfg: AppConfig, k: int, seed: int) -> Retr
         extra={
             "num_universe_nodes": len(nodes),
             "num_anchor_candidates": len(candidates),
+            **_support_fact_extra(example, nodes, _all_node_ids(nodes)),
         },
     )
     if len(candidates) < k:
@@ -205,7 +219,10 @@ def _run_for_k(example: QueryExample, cfg: AppConfig, k: int, seed: int) -> Retr
             candidate_node_ids=_node_ids(nodes, candidates),
             token_count=_context_tokens(nodes, anchors),
             latency_ms=(time.perf_counter() - stage_start) * 1000.0,
-            extra={"candidate_strategy": "top_rho"},
+            extra={
+                "candidate_strategy": "top_rho",
+                **_support_fact_extra(example, nodes, _node_ids(nodes, anchors)),
+            },
         )
     else:
         stage_start = time.perf_counter()
@@ -248,6 +265,7 @@ def _run_for_k(example: QueryExample, cfg: AppConfig, k: int, seed: int) -> Retr
                 "candidate_strategy": "weighted_samples",
                 "num_samples": len(samples),
                 "sampled_candidate_count": len(sampled_ids),
+                **_support_fact_extra(example, nodes, _node_ids(nodes, sampled_ids)),
             },
         )
 
@@ -302,6 +320,7 @@ def _run_for_k(example: QueryExample, cfg: AppConfig, k: int, seed: int) -> Retr
                     "refinement_accepted": refined.accepted,
                     "objective_before": refined.before.total,
                     "objective_after": refined.after.total,
+                    **_support_fact_extra(example, nodes, _node_ids(nodes, refined.anchors)),
                 },
             )
         else:
@@ -317,6 +336,7 @@ def _run_for_k(example: QueryExample, cfg: AppConfig, k: int, seed: int) -> Retr
                     "refinement_accepted": refined.accepted,
                     "objective_before": refined.before.total,
                     "objective_after": refined.after.total,
+                    **_support_fact_extra(example, nodes, _node_ids(nodes, refined.anchors)),
                 },
             )
         exact_phase1 = all(result.exact for result in phase1_results)
@@ -335,13 +355,15 @@ def _run_for_k(example: QueryExample, cfg: AppConfig, k: int, seed: int) -> Retr
                 "refinement_accepted": refined.accepted,
                 "objective_before": refined.before.total,
                 "objective_after": refined.after.total,
+                **_support_fact_extra(example, nodes, _node_ids(nodes, refined.anchors)),
             },
         ),
     )
     content_projection_enabled = graph_diagnostics.get("graph_source") == "content"
+    projection_node_ids = projected_node_ids if content_projection_enabled else _all_node_ids(nodes)
     stage_diagnostics["content_graph_projection"] = make_stage_metrics(
         stage="content_graph_projection",
-        selected_node_ids=projected_node_ids if content_projection_enabled else _all_node_ids(nodes),
+        selected_node_ids=projection_node_ids,
         gold_node_ids=example.gold_node_ids,
         token_count=universe_token_count,
         latency_ms=graph_diagnostics.get("graph_build_latency_ms", 0.0)
@@ -351,6 +373,7 @@ def _run_for_k(example: QueryExample, cfg: AppConfig, k: int, seed: int) -> Retr
         extra={
             "graph_source": graph_diagnostics.get("graph_source"),
             "projected_node_count": len(projected_node_ids) if content_projection_enabled else None,
+            **_support_fact_extra(example, nodes, projection_node_ids),
         },
     )
     stage_diagnostics["reranking_scoring"] = make_stage_metrics(
@@ -362,6 +385,7 @@ def _run_for_k(example: QueryExample, cfg: AppConfig, k: int, seed: int) -> Retr
         extra={
             "objective_after_refinement": refined.after.total,
             "anchor_count": len(anchors),
+            **_support_fact_extra(example, nodes, _node_ids(nodes, anchors)),
         },
     )
     stage_start = time.perf_counter()
@@ -436,6 +460,7 @@ def _run_for_k(example: QueryExample, cfg: AppConfig, k: int, seed: int) -> Retr
                 rendered_node_ids=context_node_ids,
                 token_count=final_context_tokens,
                 latency_ms=render_latency_ms,
+                extra=_support_fact_extra(example, nodes, context_node_ids),
             ),
         },
     }
