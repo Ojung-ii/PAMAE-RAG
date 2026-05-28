@@ -6,6 +6,13 @@ from typing import Any, Iterable
 
 import numpy as np
 
+try:  # pragma: no cover - exercised by integration runs when SciPy is installed.
+    from scipy.sparse import csr_matrix
+    from scipy.sparse.csgraph import shortest_path
+except ModuleNotFoundError:  # pragma: no cover - focused unit env may not include SciPy.
+    csr_matrix = None
+    shortest_path = None
+
 from pamae_rag.sentence_graph.sentence_graph_builder import SentenceGraphIndex
 
 
@@ -52,11 +59,34 @@ def sentence_shortest_path_distances(
         raise ValueError(f"Unknown sentence ids in metric universe: {unknown[:3]}")
 
     adjacency = index.adjacency(include_chunk_parent_edges=use_chunk_parent_edges_in_metric)
-    matrix = np.full((len(selected), len(selected)), float(disconnected_distance), dtype=np.float64)
-    for row, source_id in enumerate(selected):
-        distances, _previous = _dijkstra(adjacency, source_id)
-        for col, target_id in enumerate(selected):
-            matrix[row, col] = min(float(distances.get(target_id, disconnected_distance)), disconnected_distance)
+    graph_node_ids = sorted(set(adjacency) | {neighbor for values in adjacency.values() for neighbor, _, _ in values} | set(selected))
+    node_pos = {node_id: idx for idx, node_id in enumerate(graph_node_ids)}
+    rows: list[int] = []
+    cols: list[int] = []
+    data: list[float] = []
+    for source_id, neighbors in adjacency.items():
+        source_pos = node_pos[source_id]
+        for target_id, length, _edge_type in neighbors:
+            rows.append(source_pos)
+            cols.append(node_pos[target_id])
+            data.append(float(length))
+    if graph_node_ids and data and csr_matrix is not None and shortest_path is not None:
+        graph = csr_matrix((data, (rows, cols)), shape=(len(graph_node_ids), len(graph_node_ids)), dtype=np.float64)
+        selected_pos = np.asarray([node_pos[sentence_id] for sentence_id in selected], dtype=np.int64)
+        distances = shortest_path(graph, directed=False, unweighted=False, indices=selected_pos)
+        distances = np.asarray(distances, dtype=np.float64)
+        matrix = distances[:, selected_pos]
+        matrix[~np.isfinite(matrix)] = float(disconnected_distance)
+        matrix = np.minimum(matrix, float(disconnected_distance))
+    else:
+        matrix = np.full((len(selected), len(selected)), float(disconnected_distance), dtype=np.float64)
+        for row, source_id in enumerate(selected):
+            distances, _previous = _dijkstra(adjacency, source_id)
+            for col, target_id in enumerate(selected):
+                matrix[row, col] = min(
+                    float(distances.get(target_id, disconnected_distance)),
+                    disconnected_distance,
+                )
     matrix = np.minimum(matrix, matrix.T)
     np.fill_diagonal(matrix, 0.0)
     finite_mask = matrix < float(disconnected_distance)

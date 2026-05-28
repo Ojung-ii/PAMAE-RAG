@@ -11,6 +11,11 @@ from pamae_rag.graph.content_graph import normalize_content_text
 from pamae_rag.sentence_graph.sentence_graph_builder import SentenceGraphIndex
 from pamae_rag.sentence_graph.sentence_splitter import extract_query_entities
 
+try:  # pragma: no cover - optional speed path.
+    from scipy.sparse import csr_matrix
+except ModuleNotFoundError:  # pragma: no cover - focused unit env may not include SciPy.
+    csr_matrix = None
+
 _TOKEN_RE = re.compile(r"[a-z0-9]+")
 
 
@@ -147,22 +152,43 @@ def personalized_pagerank(
         else:
             restart[:] = 1.0 / len(node_ids)
 
+    transition = None
+    if csr_matrix is not None:
+        rows: list[int] = []
+        cols: list[int] = []
+        data: list[float] = []
+        for node_id, idx in pos.items():
+            neighbors = [neighbor_id for neighbor_id, _length, _edge_type in adjacency.get(node_id, []) if neighbor_id in pos]
+            if not neighbors:
+                continue
+            share = 1.0 / len(neighbors)
+            for neighbor_id in neighbors:
+                rows.append(idx)
+                cols.append(pos[neighbor_id])
+                data.append(share)
+        if rows:
+            transition = csr_matrix((data, (rows, cols)), shape=(len(node_ids), len(node_ids)), dtype=np.float64)
+
     rank = restart.copy()
     converged = False
     iterations = 0
     for iterations in range(1, max_iters + 1):
-        flowed = np.zeros_like(rank)
-        dangling_mass = 0.0
-        for node_id, idx in pos.items():
-            neighbors = adjacency.get(node_id, [])
-            if not neighbors:
-                dangling_mass += rank[idx]
-                continue
-            share = rank[idx] / len(neighbors)
-            for neighbor_id, _length, _edge_type in neighbors:
-                neighbor_pos = pos.get(neighbor_id)
-                if neighbor_pos is not None:
-                    flowed[neighbor_pos] += share
+        if transition is not None:
+            flowed = np.asarray(rank @ transition).ravel()
+            dangling_mass = max(0.0, 1.0 - float(flowed.sum()))
+        else:
+            flowed = np.zeros_like(rank)
+            dangling_mass = 0.0
+            for node_id, idx in pos.items():
+                neighbors = adjacency.get(node_id, [])
+                if not neighbors:
+                    dangling_mass += rank[idx]
+                    continue
+                share = rank[idx] / len(neighbors)
+                for neighbor_id, _length, _edge_type in neighbors:
+                    neighbor_pos = pos.get(neighbor_id)
+                    if neighbor_pos is not None:
+                        flowed[neighbor_pos] += share
         if dangling_mass:
             flowed += dangling_mass * restart
         new_rank = alpha * restart + (1.0 - alpha) * flowed
@@ -176,6 +202,7 @@ def personalized_pagerank(
         "ppr_iterations": iterations,
         "ppr_converged": converged,
         "ppr_include_chunk_parent_edges": bool(include_chunk_parent_edges),
+        "ppr_sparse_transition": transition is not None,
     }
     return {node_id: float(rank[idx]) for node_id, idx in pos.items()}, diagnostics
 

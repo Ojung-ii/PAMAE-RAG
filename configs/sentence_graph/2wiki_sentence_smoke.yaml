@@ -1,0 +1,21 @@
+experiment:
+  name: 2wikimultihopqa_sentence_graph_smoke
+  seed: 42
+
+sentence_graph:
+  expected_hops: 2
+  active_mass_eta: 0.995
+  include_chunk_parent_edges_in_ppr: false
+  use_chunk_parent_edges_in_metric: false
+  disconnected_distance: 1000000.0
+  k: 3
+  num_samples: 5
+  sample_size_per_k: 12
+  sample_size_cap: 48
+  sample_uniform_mix: 0.15
+  require_exact_sample_search: true
+  max_exact_combinations: 1000000
+  refinement_iters: 1
+  max_context_tokens: 1200
+  max_context_nodes: null
+  sentence_window: 1
