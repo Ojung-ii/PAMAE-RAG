@@ -8,6 +8,7 @@ import numpy as np
 
 from pamae_rag.config import AppConfig
 from pamae_rag.data.schema import QueryExample, RetrievalResult
+from pamae_rag.diagnostics.path_realizability import compute_path_realizability
 from pamae_rag.eval.support_recall import hit, recall
 from pamae_rag.eval.support_facts import support_fact_stage_metrics
 from pamae_rag.eval.stage_diagnostics import make_stage_metrics
@@ -57,6 +58,11 @@ def _context_tokens(nodes, idxs: Iterable[int]) -> int:
 
 def _all_node_ids(nodes) -> tuple[str, ...]:
     return tuple(node.node_id for node in nodes)
+
+
+def _indices_from_node_ids(nodes, node_ids: Iterable[str]) -> list[int]:
+    by_id = {str(node.node_id): idx for idx, node in enumerate(nodes)}
+    return [by_id[str(node_id)] for node_id in node_ids if str(node_id) in by_id]
 
 
 def _cluster_sizes(anchor_indices: Iterable[int], distance_matrix: np.ndarray) -> list[int]:
@@ -535,6 +541,41 @@ def _run_for_k(example: QueryExample, cfg: AppConfig, k: int, seed: int) -> Retr
     node_budget_exceeded_by_anchors = bool(node_budget_active and unique_anchor_count > max_context_nodes)
     node_budget_satisfied = bool(not node_budget_active or len(context_indices) <= max_context_nodes)
     token_budget_satisfied = bool(final_context_tokens <= cfg.pamae.max_context_tokens)
+    graph_distance_matrix = graph_result.graph_distance_matrix
+    if graph_distance_matrix is None:
+        graph_distance_matrix = distance_matrix
+    selected_mode = (
+        "basin_preserving_selection"
+        if retrieval_variant == "basin_preserving_medoids"
+        else "current_content"
+    )
+    diagnostic_renderer_mode = (
+        renderer
+        if renderer in {"basin_path_closure", "path_neighborhood", "gold_path_oracle"}
+        else "current"
+    )
+    basin_query_anchors = (
+        _indices_from_node_ids(nodes, basin_selection.diagnostics.get("query_anchor_node_ids", []))
+        if basin_selection is not None
+        else None
+    )
+    path_realizability = compute_path_realizability(
+        example=example,
+        nodes=nodes,
+        candidate_indices=candidates,
+        projected_node_ids=projection_node_ids,
+        selected_medoids=anchors,
+        context_indices=context_indices,
+        distance_matrix=graph_distance_matrix,
+        rho=rho,
+        selected_mode=selected_mode,
+        renderer_mode=diagnostic_renderer_mode,
+        max_context_tokens=cfg.pamae.max_context_tokens,
+        max_context_nodes=cfg.pamae.max_context_nodes,
+        disconnected_distance=float(graph_diagnostics.get("graph_disconnected_distance", 2.0)),
+        node_to_basin=basin_selection.node_to_basin if basin_selection is not None else None,
+        query_anchors=basin_query_anchors,
+    )
 
     diagnostics = {
         "retrieval_variant": retrieval_variant,
@@ -576,6 +617,7 @@ def _run_for_k(example: QueryExample, cfg: AppConfig, k: int, seed: int) -> Retr
             if renderer == "basin_path_closure"
             else "anchors_then_cell_top_rho_then_score_fill"
         ),
+        "path_realizability": path_realizability.to_json(),
         **basin_render_diagnostics,
         "max_context_nodes_less_than_k": bool(node_budget_active and max_context_nodes < k),
         "stage_diagnostics": {

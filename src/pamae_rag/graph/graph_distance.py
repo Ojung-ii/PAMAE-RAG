@@ -19,6 +19,7 @@ from pamae_rag.graph.query_graph import QueryGraph, build_minimal_query_graph
 class GraphDistanceResult:
     distance_matrix: np.ndarray
     diagnostics: dict[str, Any]
+    graph_distance_matrix: np.ndarray | None = None
 
 
 def _as_plain_dict(value: Any) -> dict[str, Any]:
@@ -157,6 +158,7 @@ def build_graph_aware_distance_matrix(
                 "disconnected_pair_rate": 1.0 if len(nodes) > 1 else 0.0,
                 "graph_disconnected_distance": float(graph_config.disconnected_distance),
             },
+            None,
         )
 
     graph_source = str(getattr(graph_config, "source", "legacy_query"))
@@ -210,7 +212,7 @@ def build_graph_aware_distance_matrix(
             "projected_node_ids": projected_node_ids,
         }
     )
-    return GraphDistanceResult(matrix, diag)
+    return GraphDistanceResult(matrix, diag, graph_sp)
 
 
 def average_edge_counts(values: list[dict[str, int]]) -> dict[str, float]:
