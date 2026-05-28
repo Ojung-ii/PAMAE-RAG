@@ -76,6 +76,66 @@ def _row(spec: QARunSpec, oracle_f1: float | None) -> dict[str, Any]:
     }
 
 
+def _delta(value: float | None, reference: float | None) -> float | None:
+    if value is None or reference is None:
+        return None
+    return value - reference
+
+
+def _adoption_checks(
+    rows: list[dict[str, Any]],
+    *,
+    qa_settings_consistent: bool,
+    oracle_context_complete: bool,
+    oracle_dominance_valid: bool,
+) -> list[dict[str, Any]]:
+    reference = next((row for row in rows if not row["oracle"]), None)
+    if reference is None:
+        return []
+
+    checks: list[dict[str, Any]] = []
+    evidence_keys = (
+        "answer_coverage",
+        "selected_answer_coverage",
+        "rendered_recall",
+        "context_f1",
+    )
+    for row in rows:
+        if row["oracle"]:
+            continue
+        f1_delta = _delta(row.get("F1"), reference.get("F1"))
+        gap_delta = _delta(row.get("oracle_gap"), reference.get("oracle_gap"))
+        evidence_deltas = {key: _delta(row.get(key), reference.get(key)) for key in evidence_keys}
+        blockers: list[str] = []
+        if row["run"] == reference["run"]:
+            blockers.append("reference_run")
+        if not qa_settings_consistent:
+            blockers.append("qa_settings_inconsistent")
+        if not oracle_context_complete:
+            blockers.append("oracle_context_incomplete")
+        if not oracle_dominance_valid:
+            blockers.append("oracle_dominance_invalid")
+        if f1_delta is None or f1_delta < -1e-12:
+            blockers.append("f1_not_improved")
+        if gap_delta is None or gap_delta > 1e-12:
+            blockers.append("oracle_gap_not_reduced")
+        for key, value in evidence_deltas.items():
+            if value is not None and value < -1e-12:
+                blockers.append(f"{key}_regression")
+        checks.append(
+            {
+                "run": row["run"],
+                "reference_run": reference["run"],
+                "adoption_gate_pass": not blockers,
+                "blockers": blockers,
+                "f1_delta_vs_reference": f1_delta,
+                "oracle_gap_delta_vs_reference": gap_delta,
+                "evidence_deltas_vs_reference": evidence_deltas,
+            }
+        )
+    return checks
+
+
 def compare_runs(specs: list[QARunSpec]) -> dict[str, Any]:
     oracle_rows = []
     for spec in specs:
@@ -104,6 +164,12 @@ def compare_runs(specs: list[QARunSpec]) -> dict[str, Any]:
         and len(metric_ids) == 1
     )
     oracle_context_complete = oracle_context_recall >= 1.0 - 1e-12
+    adoption_checks = _adoption_checks(
+        rows,
+        qa_settings_consistent=qa_settings_consistent,
+        oracle_context_complete=oracle_context_complete,
+        oracle_dominance_valid=not dominance_violations,
+    )
     return {
         "oracle_run": oracle_spec.name,
         "oracle_f1": oracle_f1,
@@ -114,6 +180,7 @@ def compare_runs(specs: list[QARunSpec]) -> dict[str, Any]:
         "qa_settings_consistent": qa_settings_consistent,
         "oracle_dominance_valid": not dominance_violations,
         "dominance_violations": dominance_violations,
+        "adoption_checks": adoption_checks,
         "rows": rows,
     }
 
@@ -183,4 +250,13 @@ def write_summary(summary: dict[str, Any], output_json: Path, output_csv: Path, 
             f"- dominance_violations: `{', '.join(summary['dominance_violations']) or 'none'}`",
         ]
     )
+    adoption_lines = []
+    for check in summary.get("adoption_checks", []):
+        blockers = ", ".join(check["blockers"]) or "none"
+        adoption_lines.append(
+            f"- adoption_gate[{check['run']}]: `{str(check['adoption_gate_pass']).lower()}`"
+            f" blockers=`{blockers}`"
+        )
+    if adoption_lines:
+        lines.extend(["", *adoption_lines])
     output_md.write_text("\n".join(lines) + "\n", encoding="utf-8")

@@ -72,6 +72,7 @@ Automated comparison guard:
 - 2Wiki20: [compare_2wiki20.md](compare_2wiki20.md) reports `oracle_dominance_valid=false` because `content_graph_2wiki20` exceeds oracle F1 under the offline deterministic generator. This blocks oracle-gap claims on 2Wiki.
 - Hotpot20: [compare_hotpot20.md](compare_hotpot20.md) reports `oracle_dominance_valid=true`, but content graph F1 is lower than baseline F1 and the oracle gap is larger. This blocks content graph adoption as a performance improvement.
 - The guard command supports `--require-valid-oracle`; with that flag, the 2Wiki comparison exits nonzero and the Hotpot comparison passes.
+- The guard now also emits `adoption_checks`, which require QA F1 improvement, oracle-gap reduction, and no regression in answer coverage, selected-answer coverage, rendered recall, or context F1 relative to the first non-oracle reference run.
 
 Answer selection diagnostic:
 

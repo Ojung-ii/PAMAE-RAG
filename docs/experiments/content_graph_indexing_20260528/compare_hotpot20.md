@@ -10,3 +10,6 @@
 - qa_settings_consistent: `true`
 - oracle_dominance_valid: `true`
 - dominance_violations: `none`
+
+- adoption_gate[baseline_hotpot20]: `false` blockers=`reference_run`
+- adoption_gate[content_graph_hotpot20]: `false` blockers=`f1_not_improved, oracle_gap_not_reduced, selected_answer_coverage_regression, rendered_recall_regression, context_f1_regression`

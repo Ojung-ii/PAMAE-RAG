@@ -10,3 +10,6 @@
 - qa_settings_consistent: `true`
 - oracle_dominance_valid: `false`
 - dominance_violations: `content_graph_2wiki20`
+
+- adoption_gate[baseline_2wiki20]: `false` blockers=`reference_run, oracle_dominance_invalid`
+- adoption_gate[content_graph_2wiki20]: `false` blockers=`oracle_dominance_invalid`

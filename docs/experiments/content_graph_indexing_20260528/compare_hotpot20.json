@@ -8,6 +8,44 @@
   "qa_settings_consistent": true,
   "oracle_dominance_valid": true,
   "dominance_violations": [],
+  "adoption_checks": [
+    {
+      "run": "baseline_hotpot20",
+      "reference_run": "baseline_hotpot20",
+      "adoption_gate_pass": false,
+      "blockers": [
+        "reference_run"
+      ],
+      "f1_delta_vs_reference": 0.0,
+      "oracle_gap_delta_vs_reference": 0.0,
+      "evidence_deltas_vs_reference": {
+        "answer_coverage": 0.0,
+        "selected_answer_coverage": 0.0,
+        "rendered_recall": 0.0,
+        "context_f1": 0.0
+      }
+    },
+    {
+      "run": "content_graph_hotpot20",
+      "reference_run": "baseline_hotpot20",
+      "adoption_gate_pass": false,
+      "blockers": [
+        "f1_not_improved",
+        "oracle_gap_not_reduced",
+        "selected_answer_coverage_regression",
+        "rendered_recall_regression",
+        "context_f1_regression"
+      ],
+      "f1_delta_vs_reference": -0.0047653690646874275,
+      "oracle_gap_delta_vs_reference": 0.0047653690646874275,
+      "evidence_deltas_vs_reference": {
+        "answer_coverage": 0.050000000000000044,
+        "selected_answer_coverage": -0.04999999999999999,
+        "rendered_recall": -0.04999999999999993,
+        "context_f1": -0.045674603174603146
+      }
+    }
+  ],
   "rows": [
     {
       "run": "baseline_hotpot20",
