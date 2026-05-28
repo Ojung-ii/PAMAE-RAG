@@ -1,0 +1,171 @@
+{
+  "2wikimultihopqa": {
+    "rows": [
+      {
+        "run": "entity_chunk_reference_current_renderer",
+        "graph_variant": "entity_chunk_reference",
+        "renderer_mode": "current_renderer",
+        "oracle_renderer": false,
+        "answer_sentence_available": 0.12,
+        "gold_sentence_available": 0.64,
+        "answer_sentence_rendered": 0.4,
+        "gold_sentence_rendered": 0.92,
+        "answer_in_context": 0.4,
+        "rendered_recall": 0.665,
+        "context_f1": 0.12311420430089692,
+        "qa_f1": 0.06095939127703833,
+        "oracle_gap_answer_containing": 0.0,
+        "avg_context_tokens": 351.04,
+        "retrieval_ms": 913.8175399999999,
+        "triangle_inequality_violation_count": 0,
+        "local_objective_invalid_count": 0,
+        "answer_rendered_given_available": 1.0,
+        "gold_rendered_given_available": 0.96875,
+        "qa_success_given_answer_rendered": 0.4
+      },
+      {
+        "run": "entity_chunk_reference_local_sentence_medoid",
+        "graph_variant": "entity_chunk_reference",
+        "renderer_mode": "local_sentence_medoid",
+        "oracle_renderer": false,
+        "answer_sentence_available": 0.12,
+        "gold_sentence_available": 0.64,
+        "answer_sentence_rendered": 0.12,
+        "gold_sentence_rendered": 0.48,
+        "answer_in_context": 0.12,
+        "rendered_recall": 0.26166666666666666,
+        "context_f1": 0.1585079365079365,
+        "qa_f1": 0.03920331302684244,
+        "oracle_gap_answer_containing": 0.0,
+        "avg_context_tokens": 89.48,
+        "retrieval_ms": 895.7308600000001,
+        "triangle_inequality_violation_count": 0,
+        "local_objective_invalid_count": 0,
+        "answer_rendered_given_available": 1.0,
+        "gold_rendered_given_available": 0.75,
+        "qa_success_given_answer_rendered": 0.8333333333333334
+      },
+      {
+        "run": "entity_chunk_reference_fact_mediated_sentence",
+        "graph_variant": "entity_chunk_reference",
+        "renderer_mode": "fact_mediated_sentence",
+        "oracle_renderer": false,
+        "answer_sentence_available": 0.12,
+        "gold_sentence_available": 0.64,
+        "answer_sentence_rendered": 0.12,
+        "gold_sentence_rendered": 0.64,
+        "answer_in_context": 0.12,
+        "rendered_recall": 0.3583333333333333,
+        "context_f1": 0.16069554301907246,
+        "qa_f1": 0.03698309544861269,
+        "oracle_gap_answer_containing": 0.0,
+        "avg_context_tokens": 144.96,
+        "retrieval_ms": 857.6253200000001,
+        "triangle_inequality_violation_count": 0,
+        "local_objective_invalid_count": 0,
+        "answer_rendered_given_available": 1.0,
+        "gold_rendered_given_available": 1.0,
+        "qa_success_given_answer_rendered": 0.8333333333333334
+      },
+      {
+        "run": "entity_chunk_reference_selected_chunk_answer_sentence_oracle",
+        "graph_variant": "entity_chunk_reference",
+        "renderer_mode": "selected_chunk_answer_sentence_oracle",
+        "oracle_renderer": true,
+        "answer_sentence_available": 0.12,
+        "gold_sentence_available": 0.64,
+        "answer_sentence_rendered": 0.12,
+        "gold_sentence_rendered": 0.1,
+        "answer_in_context": 0.12,
+        "rendered_recall": 0.04,
+        "context_f1": 0.048,
+        "qa_f1": 0.0318939393939394,
+        "oracle_gap_answer_containing": 0.0,
+        "avg_context_tokens": 5.62,
+        "retrieval_ms": 928.5638799999999,
+        "triangle_inequality_violation_count": 0,
+        "local_objective_invalid_count": 0,
+        "answer_rendered_given_available": 1.0,
+        "gold_rendered_given_available": 0.15625,
+        "qa_success_given_answer_rendered": 1.0
+      },
+      {
+        "run": "entity_chunk_reference_selected_chunk_gold_sentence_oracle",
+        "graph_variant": "entity_chunk_reference",
+        "renderer_mode": "selected_chunk_gold_sentence_oracle",
+        "oracle_renderer": true,
+        "answer_sentence_available": 0.12,
+        "gold_sentence_available": 0.64,
+        "answer_sentence_rendered": 0.1,
+        "gold_sentence_rendered": 0.64,
+        "answer_in_context": 0.12,
+        "rendered_recall": 0.3583333333333333,
+        "context_f1": 0.33542857142857146,
+        "qa_f1": 0.037052764341811,
+        "oracle_gap_answer_containing": 0.0,
+        "avg_context_tokens": 31.3,
+        "retrieval_ms": 899.2694200000001,
+        "triangle_inequality_violation_count": 0,
+        "local_objective_invalid_count": 0,
+        "answer_rendered_given_available": 0.8333333333333334,
+        "gold_rendered_given_available": 1.0,
+        "qa_success_given_answer_rendered": 0.8
+      }
+    ],
+    "gates": [
+      {
+        "run": "entity_chunk_reference_current_renderer",
+        "decision": "REFERENCE",
+        "blockers": [],
+        "strong": false
+      },
+      {
+        "run": "entity_chunk_reference_local_sentence_medoid",
+        "decision": "STOP",
+        "blockers": [
+          "qa_f1_regression",
+          "answer_in_context_regression",
+          "rendered_recall_regression"
+        ],
+        "strong": false
+      },
+      {
+        "run": "entity_chunk_reference_fact_mediated_sentence",
+        "decision": "STOP",
+        "blockers": [
+          "qa_f1_regression",
+          "answer_in_context_regression",
+          "rendered_recall_regression"
+        ],
+        "strong": false
+      },
+      {
+        "run": "entity_chunk_reference_selected_chunk_answer_sentence_oracle",
+        "decision": "STOP",
+        "blockers": [
+          "oracle_renderer_excluded",
+          "qa_f1_regression",
+          "answer_in_context_regression",
+          "rendered_recall_regression",
+          "context_f1_regression"
+        ],
+        "strong": false
+      },
+      {
+        "run": "entity_chunk_reference_selected_chunk_gold_sentence_oracle",
+        "decision": "STOP",
+        "blockers": [
+          "oracle_renderer_excluded",
+          "qa_f1_regression",
+          "answer_in_context_regression",
+          "rendered_recall_regression"
+        ],
+        "strong": false
+      }
+    ]
+  },
+  "_final": {
+    "decision": "STOP",
+    "reason": "no non-oracle local renderer passed all available datasets"
+  }
+}
