@@ -51,10 +51,17 @@ def test_dq_connectivity_retrieval_config_loads():
 
 def test_content_graph_configs_load():
     paths = sorted(Path("configs/content_graph").glob("*.yaml"))
-    assert len(paths) == 2
+    assert len(paths) >= 2
+    retrieval_variants = set()
+    renderers = set()
     for path in paths:
         cfg = load_config(path)
+        retrieval_variants.add(cfg.pamae.retrieval_variant)
+        renderers.add(cfg.pamae.renderer)
         assert cfg.pamae.graph.source == "content"
         assert cfg.pamae.relevance_mode == "current"
         assert cfg.pamae.max_context_tokens == 512
         assert cfg.pamae.max_context_nodes == 8
+    assert "sample_full_validation_refine_cell_renderer" in retrieval_variants
+    assert "basin_preserving_medoids" in retrieval_variants
+    assert "basin_path_closure" in renderers
