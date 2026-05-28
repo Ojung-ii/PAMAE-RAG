@@ -223,7 +223,7 @@ def markdown(summary: dict[str, Any]) -> str:
             [
                 f"## {dataset}",
                 "",
-                "| run | renderer | ans avail | gold avail | ans rendered | gold rendered | ans ctx | rendered recall | context F1 | QA F1 | oracle gap | ctx tok | tri viol | obj invalid | ans recov | gold recov | qa if ans | decision |",
+                "| run | renderer_mode | answer_sentence_available_in_selected_chunks | gold_sentence_available_in_selected_chunks | answer_sentence_rendered | gold_sentence_rendered | answer_in_context | rendered_recall | context_f1 | qa_f1 | oracle_gap_answer_containing | avg_context_tokens | triangle_inequality_violation_count | local_objective_invalid_count | answer_rendered_given_available | gold_rendered_given_available | qa_success_given_answer_rendered | decision |",
                 "| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | --- |",
             ]
         )
