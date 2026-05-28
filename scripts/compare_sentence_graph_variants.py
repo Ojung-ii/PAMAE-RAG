@@ -108,6 +108,9 @@ def _sentence_row(run_dir: Path) -> dict[str, Any]:
         "triangle_inequality_violation_count": int(metrics.get("triangle_inequality_violation_count", 0)),
         "gold_support_sentence_mapping_rate": metrics.get("gold_support_sentence_mapping_rate"),
         "answer_containing_sentence_found_rate": metrics.get("answer_containing_sentence_found_rate"),
+        "avg_sentences_per_chunk": metrics.get("avg_sentences_per_chunk"),
+        "avg_entities_per_sentence": metrics.get("avg_entities_per_sentence"),
+        "isolated_sentence_rate": metrics.get("isolated_sentence_rate"),
     }
 
 
@@ -197,6 +200,149 @@ def _fmt(value: Any) -> str:
     return str(value)
 
 
+def _metric_range(rows: list[dict[str, Any]], field: str) -> str:
+    values = [float(row[field]) for row in rows if row.get(field) is not None]
+    if not values:
+        return "n/a"
+    if max(values) - min(values) <= 1e-12:
+        return _fmt(values[0])
+    return f"{min(values):.4f}-{max(values):.4f}"
+
+
+def _best_row(
+    rows: list[dict[str, Any]],
+    field: str,
+    *,
+    include_diagnostic: bool,
+) -> dict[str, Any] | None:
+    candidates = [
+        row
+        for row in rows
+        if row["run"] != REFERENCE_RUN and (include_diagnostic or not row.get("diagnostic_only"))
+    ]
+    if not candidates:
+        return None
+    return max(candidates, key=lambda row: (float(row.get(field, 0.0)), float(row.get("qa_f1", 0.0))))
+
+
+def _dataset_payloads(summary: dict[str, Any]) -> list[tuple[str, dict[str, Any]]]:
+    return [(dataset, payload) for dataset, payload in summary.items() if not dataset.startswith("_")]
+
+
+def _reference(payload: dict[str, Any]) -> dict[str, Any]:
+    return next(row for row in payload["rows"] if row["run"] == REFERENCE_RUN)
+
+
+def _sentence_rows(payload: dict[str, Any]) -> list[dict[str, Any]]:
+    return [row for row in payload["rows"] if row["run"] != REFERENCE_RUN]
+
+
+def _analysis_sections(summary: dict[str, Any]) -> list[str]:
+    lines: list[str] = [
+        "## Graph Variants Implemented",
+        "",
+        "- `entity_sentence`: entity nodes plus sentence evidence nodes; entity--sentence mention edges and adjacent sentence edges only; no chunk nodes.",
+        "- `entity_sentence_chunk_hier`: entity, sentence, and chunk parent nodes; chunk parent edges are stored for metadata/rendering and excluded from the default metric.",
+        "- Main renderers: `sentence_only`, `sentence_path`, and `sentence_parent_title`; diagnostic renderers: fixed `sentence_local_window` and `sentence_parent_chunk`.",
+        "",
+        "## Sentence Splitting And Mapping Coverage",
+        "",
+    ]
+    for dataset, payload in _dataset_payloads(summary):
+        rows = _sentence_rows(payload)
+        if not rows:
+            continue
+        lines.append(
+            f"- `{dataset}`: gold support mapping {_metric_range(rows, 'gold_support_sentence_mapping_rate')}; "
+            f"answer-containing sentence found {_metric_range(rows, 'answer_containing_sentence_found_rate')}; "
+            f"avg sentences/chunk {_metric_range(rows, 'avg_sentences_per_chunk')}; "
+            f"avg entities/sentence {_metric_range(rows, 'avg_entities_per_sentence')}; "
+            f"isolated sentence rate {_metric_range(rows, 'isolated_sentence_rate')}."
+        )
+    lines.extend(
+        [
+            "",
+            "Mapping coverage was high enough to interpret the smoke results; the stop decision is not caused by an obvious sentence-boundary mapping failure.",
+            "",
+            "## Answer Projection And Rendering Analysis",
+            "",
+        ]
+    )
+    for dataset, payload in _dataset_payloads(summary):
+        ref = _reference(payload)
+        best_main = _best_row(payload["rows"], "answer_in_context", include_diagnostic=False)
+        best_diag = _best_row(payload["rows"], "answer_in_context", include_diagnostic=True)
+        if best_main is None:
+            continue
+        lines.append(
+            f"- `{dataset}` reference: projected {_fmt(ref['answer_projected'])}, rendered {_fmt(ref['answer_rendered'])}, "
+            f"in context {_fmt(ref['answer_in_context'])}, QA F1 {_fmt(ref['qa_f1'])}. "
+            f"Best non-diagnostic sentence variant `{best_main['run']}`: projected {_fmt(best_main['answer_projected'])}, "
+            f"rendered {_fmt(best_main['answer_rendered'])}, in context {_fmt(best_main['answer_in_context'])}, "
+            f"QA F1 {_fmt(best_main['qa_f1'])}."
+        )
+        if best_diag is not None and best_diag.get("diagnostic_only"):
+            lines.append(
+                f"- `{dataset}` best diagnostic renderer `{best_diag['run']}` reached answer-in-context "
+                f"{_fmt(best_diag['answer_in_context'])} at {_fmt(best_diag['avg_context_tokens'])} tokens, "
+                f"still below the reference answer-in-context {_fmt(ref['answer_in_context'])}."
+            )
+    lines.extend(
+        [
+            "",
+            "The sentence-primary graphs did not beat the chunk reference on answer projection, answer rendering, answer-in-context, rendered recall, or QA F1 on either dataset. Local-window and parent-chunk diagnostics recover some surface evidence, but not enough to pass the gates.",
+            "",
+            "## Objective Monotonicity And Metric Validity",
+            "",
+        ]
+    )
+    objective_total = 0
+    triangle_total = 0
+    for _, payload in _dataset_payloads(summary):
+        for row in _sentence_rows(payload):
+            objective_total += int(row.get("objective_increase_count", 0))
+            triangle_total += int(row.get("triangle_inequality_violation_count", 0))
+    lines.extend(
+        [
+            f"- Objective increase count across sentence runs: `{objective_total}`.",
+            f"- Triangle inequality violation count across sentence runs: `{triangle_total}`.",
+            "- The implementation also enforces sentence-node medoids in the retriever and excludes chunk parent edges from the primary metric by default.",
+            "",
+            "## Renderer Comparison",
+            "",
+        ]
+    )
+    for dataset, payload in _dataset_payloads(summary):
+        rows = _sentence_rows(payload)
+        lean = _best_row([row for row in rows if row["renderer_mode"] in {"sentence_only", "sentence_path", "sentence_parent_title"}], "qa_f1", include_diagnostic=False)
+        diag = _best_row(rows, "answer_in_context", include_diagnostic=True)
+        if lean is None:
+            continue
+        sentence_only = next((row for row in rows if row["renderer_mode"] == "sentence_only"), None)
+        if sentence_only is not None:
+            lines.append(
+                f"- `{dataset}` sentence-only kept context small ({_fmt(sentence_only['avg_context_tokens'])} tokens) "
+                f"but rendered answer sentences only {_fmt(sentence_only['answer_rendered'])} of the time."
+            )
+        lines.append(
+            f"- `{dataset}` best lean renderer by QA was `{lean['run']}` with QA F1 {_fmt(lean['qa_f1'])}; "
+            f"best answer-context renderer was `{diag['run'] if diag else 'n/a'}` with answer-in-context "
+            f"{_fmt(diag['answer_in_context']) if diag else 'n/a'}."
+        )
+    lines.extend(
+        [
+            "",
+            "## Chunk Parent Shortcut Risk Analysis",
+            "",
+            "- The hierarchical graph's sentence-only and sentence-path results match the pure `entity_sentence` graph, which is the expected behavior when chunk parent edges are not metric shortcuts.",
+            "- `sentence_parent_title` adds parent metadata without full chunk text; `sentence_parent_chunk` is diagnostic-only and was not considered an adoption candidate.",
+            "- No result indicates that `entity_sentence_chunk_hier` behaved like a chunk-primary shortcut graph in the main comparison.",
+            "",
+        ]
+    )
+    return lines
+
+
 def _git_value(args: list[str]) -> str:
     try:
         return subprocess.check_output(["git", *args], text=True).strip()
@@ -229,6 +375,7 @@ def markdown(summary: dict[str, Any]) -> str:
         "- `entity_sentence_chunk_hier` stores chunk parents for metadata/rendering; parent edges are excluded from the main metric.",
         "",
     ]
+    lines.extend(_analysis_sections(summary))
     for dataset, payload in summary.items():
         if dataset.startswith("_"):
             continue

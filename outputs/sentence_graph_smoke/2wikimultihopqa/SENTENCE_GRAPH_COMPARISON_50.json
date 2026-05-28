@@ -1,0 +1,265 @@
+{
+  "2wikimultihopqa": {
+    "rows": [
+      {
+        "run": "entity_chunk_reference_current_renderer",
+        "graph_variant": "entity_chunk_reference",
+        "renderer_mode": "current_renderer",
+        "diagnostic_only": false,
+        "num_queries": 50,
+        "gold_projection": 0.57,
+        "answer_projected": 0.82,
+        "answer_selected": 0.36,
+        "answer_rendered": 0.4,
+        "answer_in_context": 0.4,
+        "rendered_recall": 0.57,
+        "context_f1": 0.26825396825396824,
+        "qa_f1": 0.06095939127703833,
+        "avg_context_tokens": 351.04,
+        "objective_increase_count": 0,
+        "triangle_inequality_violation_count": 0,
+        "gold_support_sentence_mapping_rate": null,
+        "answer_containing_sentence_found_rate": null
+      },
+      {
+        "run": "entity_sentence_sentence_only",
+        "graph_variant": "entity_sentence",
+        "renderer_mode": "sentence_only",
+        "diagnostic_only": false,
+        "num_queries": 50,
+        "gold_projection": 0.88,
+        "answer_projected": 0.72,
+        "answer_selected": 0.28,
+        "answer_rendered": 0.28,
+        "answer_in_context": 0.28,
+        "rendered_recall": 0.41666666666666674,
+        "context_f1": 0.3223809523809525,
+        "qa_f1": 0.0577783794037237,
+        "avg_context_tokens": 64.98,
+        "objective_increase_count": 0,
+        "triangle_inequality_violation_count": 0,
+        "gold_support_sentence_mapping_rate": 0.9,
+        "answer_containing_sentence_found_rate": 0.86
+      },
+      {
+        "run": "entity_sentence_sentence_path",
+        "graph_variant": "entity_sentence",
+        "renderer_mode": "sentence_path",
+        "diagnostic_only": false,
+        "num_queries": 50,
+        "gold_projection": 0.88,
+        "answer_projected": 0.72,
+        "answer_selected": 0.28,
+        "answer_rendered": 0.28,
+        "answer_in_context": 0.28,
+        "rendered_recall": 0.4416666666666667,
+        "context_f1": 0.2795194805194805,
+        "qa_f1": 0.05830125522071716,
+        "avg_context_tokens": 124.8,
+        "objective_increase_count": 0,
+        "triangle_inequality_violation_count": 0,
+        "gold_support_sentence_mapping_rate": 0.9,
+        "answer_containing_sentence_found_rate": 0.86
+      },
+      {
+        "run": "entity_sentence_chunk_hier_sentence_only",
+        "graph_variant": "entity_sentence_chunk_hier",
+        "renderer_mode": "sentence_only",
+        "diagnostic_only": false,
+        "num_queries": 50,
+        "gold_projection": 0.88,
+        "answer_projected": 0.72,
+        "answer_selected": 0.28,
+        "answer_rendered": 0.28,
+        "answer_in_context": 0.28,
+        "rendered_recall": 0.41666666666666674,
+        "context_f1": 0.3223809523809525,
+        "qa_f1": 0.0577783794037237,
+        "avg_context_tokens": 64.98,
+        "objective_increase_count": 0,
+        "triangle_inequality_violation_count": 0,
+        "gold_support_sentence_mapping_rate": 0.9,
+        "answer_containing_sentence_found_rate": 0.86
+      },
+      {
+        "run": "entity_sentence_chunk_hier_sentence_path",
+        "graph_variant": "entity_sentence_chunk_hier",
+        "renderer_mode": "sentence_path",
+        "diagnostic_only": false,
+        "num_queries": 50,
+        "gold_projection": 0.88,
+        "answer_projected": 0.72,
+        "answer_selected": 0.28,
+        "answer_rendered": 0.28,
+        "answer_in_context": 0.28,
+        "rendered_recall": 0.4416666666666667,
+        "context_f1": 0.2795194805194805,
+        "qa_f1": 0.05830125522071716,
+        "avg_context_tokens": 124.8,
+        "objective_increase_count": 0,
+        "triangle_inequality_violation_count": 0,
+        "gold_support_sentence_mapping_rate": 0.9,
+        "answer_containing_sentence_found_rate": 0.86
+      },
+      {
+        "run": "entity_sentence_chunk_hier_sentence_parent_title",
+        "graph_variant": "entity_sentence_chunk_hier",
+        "renderer_mode": "sentence_parent_title",
+        "diagnostic_only": false,
+        "num_queries": 50,
+        "gold_projection": 0.88,
+        "answer_projected": 0.72,
+        "answer_selected": 0.28,
+        "answer_rendered": 0.28,
+        "answer_in_context": 0.28,
+        "rendered_recall": 0.4416666666666667,
+        "context_f1": 0.2795194805194805,
+        "qa_f1": 0.04954433438589037,
+        "avg_context_tokens": 142.34,
+        "objective_increase_count": 0,
+        "triangle_inequality_violation_count": 0,
+        "gold_support_sentence_mapping_rate": 0.9,
+        "answer_containing_sentence_found_rate": 0.86
+      },
+      {
+        "run": "entity_sentence_chunk_hier_sentence_local_window",
+        "graph_variant": "entity_sentence_chunk_hier",
+        "renderer_mode": "sentence_local_window",
+        "diagnostic_only": true,
+        "num_queries": 50,
+        "gold_projection": 0.88,
+        "answer_projected": 0.72,
+        "answer_selected": 0.28,
+        "answer_rendered": 0.32,
+        "answer_in_context": 0.32,
+        "rendered_recall": 0.5116666666666667,
+        "context_f1": 0.22760914277538322,
+        "qa_f1": 0.05648307340253535,
+        "avg_context_tokens": 207.7,
+        "objective_increase_count": 0,
+        "triangle_inequality_violation_count": 0,
+        "gold_support_sentence_mapping_rate": 0.9,
+        "answer_containing_sentence_found_rate": 0.86
+      },
+      {
+        "run": "entity_sentence_chunk_hier_sentence_parent_chunk",
+        "graph_variant": "entity_sentence_chunk_hier",
+        "renderer_mode": "sentence_parent_chunk",
+        "diagnostic_only": true,
+        "num_queries": 50,
+        "gold_projection": 0.88,
+        "answer_projected": 0.72,
+        "answer_selected": 0.28,
+        "answer_rendered": 0.36,
+        "answer_in_context": 0.36,
+        "rendered_recall": 0.5616666666666668,
+        "context_f1": 0.15595894724261197,
+        "qa_f1": 0.05734514236805259,
+        "avg_context_tokens": 430.52,
+        "objective_increase_count": 0,
+        "triangle_inequality_violation_count": 0,
+        "gold_support_sentence_mapping_rate": 0.9,
+        "answer_containing_sentence_found_rate": 0.86
+      }
+    ],
+    "gates": [
+      {
+        "run": "entity_chunk_reference_current_renderer",
+        "decision": "REFERENCE",
+        "blockers": [],
+        "strong": false
+      },
+      {
+        "run": "entity_sentence_sentence_only",
+        "decision": "STOP",
+        "blockers": [
+          "answer_projected_regression",
+          "answer_rendered_regression",
+          "answer_in_context_regression",
+          "rendered_recall_regression",
+          "qa_f1_regression"
+        ],
+        "strong": false
+      },
+      {
+        "run": "entity_sentence_sentence_path",
+        "decision": "STOP",
+        "blockers": [
+          "answer_projected_regression",
+          "answer_rendered_regression",
+          "answer_in_context_regression",
+          "rendered_recall_regression",
+          "qa_f1_regression"
+        ],
+        "strong": false
+      },
+      {
+        "run": "entity_sentence_chunk_hier_sentence_only",
+        "decision": "STOP",
+        "blockers": [
+          "answer_projected_regression",
+          "answer_rendered_regression",
+          "answer_in_context_regression",
+          "rendered_recall_regression",
+          "qa_f1_regression"
+        ],
+        "strong": false
+      },
+      {
+        "run": "entity_sentence_chunk_hier_sentence_path",
+        "decision": "STOP",
+        "blockers": [
+          "answer_projected_regression",
+          "answer_rendered_regression",
+          "answer_in_context_regression",
+          "rendered_recall_regression",
+          "qa_f1_regression"
+        ],
+        "strong": false
+      },
+      {
+        "run": "entity_sentence_chunk_hier_sentence_parent_title",
+        "decision": "STOP",
+        "blockers": [
+          "answer_projected_regression",
+          "answer_rendered_regression",
+          "answer_in_context_regression",
+          "rendered_recall_regression",
+          "qa_f1_regression"
+        ],
+        "strong": false
+      },
+      {
+        "run": "entity_sentence_chunk_hier_sentence_local_window",
+        "decision": "DIAGNOSTIC_ONLY_STOP",
+        "blockers": [
+          "answer_projected_regression",
+          "answer_rendered_regression",
+          "answer_in_context_regression",
+          "rendered_recall_regression",
+          "context_f1_regression",
+          "qa_f1_regression"
+        ],
+        "strong": false
+      },
+      {
+        "run": "entity_sentence_chunk_hier_sentence_parent_chunk",
+        "decision": "DIAGNOSTIC_ONLY_STOP",
+        "blockers": [
+          "answer_projected_regression",
+          "answer_rendered_regression",
+          "answer_in_context_regression",
+          "rendered_recall_regression",
+          "context_f1_regression",
+          "qa_f1_regression",
+          "context_tokens_over_110pct_reference"
+        ],
+        "strong": false
+      }
+    ]
+  },
+  "_final": {
+    "decision": "STOP",
+    "reason": "no non-diagnostic variant passed all available datasets"
+  }
+}
