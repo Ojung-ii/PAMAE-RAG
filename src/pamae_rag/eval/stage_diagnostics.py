@@ -29,6 +29,11 @@ def _support_counts(selected: tuple[str, ...], gold: set[str] | frozenset[str]) 
     return len(selected_set & gold_set), len(gold_set)
 
 
+def _support_ids(selected: tuple[str, ...], gold: set[str] | frozenset[str]) -> list[str]:
+    selected_set = set(selected)
+    return sorted(str(node_id) for node_id in set(gold) & selected_set)
+
+
 def _pair_metrics(selected: tuple[str, ...], gold: set[str] | frozenset[str]) -> dict[str, Any]:
     selected_list = list(selected)
     rec = recall(tuple(selected_list), gold)
@@ -67,6 +72,7 @@ def make_stage_metrics(
         "survivor_count": len(set(selected)),
         "gold_support_count": total,
         "gold_support_surviving_count": survived,
+        "gold_supporting_node_ids": _support_ids(selected, gold_node_ids),
         "gold_supporting_evidence_survival": recall(selected, gold_node_ids),
         "candidate_recall": candidate_metrics.get("recall"),
         "candidate_precision": candidate_metrics.get("precision"),
