@@ -1,0 +1,42 @@
+{
+  "support_tree_order_budget": {
+    "num_queries": 50,
+    "answer_on_support_tree_rate": 0.36,
+    "answer_on_anchor_medoid_path_rate": 0.34,
+    "answer_on_medoid_medoid_path_rate": 0.06,
+    "answer_current_rendered_rate": 0.4,
+    "answer_metric_rendered_rate": 0.32,
+    "answer_on_tree_but_metric_not_rendered_rate": 0.04,
+    "answer_metric_budget_cutoff_rate": 0.02,
+    "answer_current_only_non_tree_rate": 0.08,
+    "answer_near_tree_distance_1_rate": 0.6,
+    "answer_near_tree_distance_2_rate": 0.6,
+    "current_minus_metric_answer_gap": 0.08000000000000002,
+    "mean_current_answer_render_order": 3.8181818181818183,
+    "mean_metric_answer_render_order": 3.6470588235294117
+  },
+  "current_tree_diff": {
+    "num_queries": 50,
+    "answer_in_current_tree_intersection_rate": 0.34,
+    "answer_in_current_only_rate": 0.08,
+    "answer_in_tree_only_rate": 0.02,
+    "answer_in_metric_missed_current_rate": 0.1,
+    "answer_in_metric_extra_rate": 0.0,
+    "gold_in_current_tree_intersection_rate": 0.86,
+    "gold_in_current_only_rate": 0.18,
+    "gold_in_tree_only_rate": 0.08
+  },
+  "failure_taxonomy": {
+    "support_tree_order_failure_counts": {
+      "A_answer_not_projected": 9,
+      "B_answer_not_on_tree": 20,
+      "C_answer_on_tree_cut_by_budget": 1,
+      "D_answer_on_tree_bad_order": 1,
+      "E_current_hidden_non_tree": 4,
+      "F_tree_contains_answer_current_misses": 0,
+      "G_answer_rendered_qa_fail": 7,
+      "H_success": 8
+    }
+  },
+  "missing_query_ids": []
+}
