@@ -96,6 +96,25 @@ def _node_from_corpus(node_id: str, corpus: list[dict[str, Any]]) -> EvidenceNod
     )
 
 
+def _node_from_prediction_context(obj: dict[str, Any]) -> EvidenceNode | None:
+    node_id = obj.get("node_id")
+    text = str(obj.get("text") or "")
+    if not node_id or not text:
+        return None
+    metadata = obj.get("metadata")
+    if not isinstance(metadata, dict):
+        metadata = {}
+    token_count = int(obj.get("token_count") or max(1, len(text.split())))
+    return EvidenceNode(
+        node_id=str(node_id),
+        text=text,
+        embedding=np.zeros(1, dtype=np.float64),
+        token_count=max(1, token_count),
+        node_type=str(obj.get("node_type", metadata.get("context_unit", "rendered_context"))),
+        metadata=dict(metadata),
+    )
+
+
 def _node_order(
     nodes: tuple[EvidenceNode, ...],
     node_ids: list[str],
@@ -139,6 +158,25 @@ def _prediction_context_ids(example: QueryExample, prediction: dict[str, Any]) -
             seen.add(node_id)
             out.append(node_id)
     return out
+
+
+def _prediction_context_nodes(prediction: dict[str, Any]) -> tuple[list[str], list[EvidenceNode]]:
+    raw = prediction.get("context_nodes")
+    if not isinstance(raw, list):
+        return [], []
+    nodes: list[EvidenceNode] = []
+    ids: list[str] = []
+    seen: set[str] = set()
+    for item in raw:
+        if not isinstance(item, dict):
+            continue
+        node = _node_from_prediction_context(item)
+        if node is None or node.node_id in seen:
+            continue
+        nodes.append(node)
+        ids.append(node.node_id)
+        seen.add(node.node_id)
+    return ids, nodes
 
 
 def _gold_context_ids(example: QueryExample) -> list[str]:
@@ -268,12 +306,19 @@ def run_qa(
                 _oracle_context(example, corpus)
             )
         else:
-            context_ids = _prediction_context_ids(example, prediction)
-            context_nodes, missing_context_ids, corpus_context_count = _node_order(
-                example.nodes,
-                context_ids,
-                corpus,
-            )
+            explicit_context_ids, explicit_context_nodes = _prediction_context_nodes(prediction)
+            if explicit_context_nodes:
+                context_ids = explicit_context_ids
+                context_nodes = explicit_context_nodes
+                missing_context_ids = []
+                corpus_context_count = 0
+            else:
+                context_ids = _prediction_context_ids(example, prediction)
+                context_nodes, missing_context_ids, corpus_context_count = _node_order(
+                    example.nodes,
+                    context_ids,
+                    corpus,
+                )
             oracle_diagnostics = {}
         context = _context_text(context_nodes)
         start = time.perf_counter()

@@ -231,3 +231,54 @@ def test_run_qa_oracle_context_can_read_gold_from_corpus(tmp_path: Path):
     assert row["diagnostics"]["corpus_context_node_count"] == 1
     assert row["diagnostics"]["missing_context_node_ids"] == []
     assert row["stage_diagnostics"]["final_qa"]["answer_coverage"] == 1.0
+
+
+def test_run_qa_accepts_explicit_prediction_context_nodes(tmp_path: Path):
+    input_path = tmp_path / "examples.jsonl"
+    prediction_path = tmp_path / "predictions.jsonl"
+    output_path = tmp_path / "qa.jsonl"
+    metrics_path = tmp_path / "metrics.json"
+    _write_jsonl(
+        input_path,
+        [
+            {
+                "query_id": "q1",
+                "query": "Where was Ada born?",
+                "answer": "London",
+                "gold_node_ids": ["n1"],
+                "nodes": [
+                    {
+                        "node_id": "n1",
+                        "text": "Ada wrote notes. Ada was born in London.",
+                        "embedding": [1.0, 0.0],
+                        "token_count": 8,
+                    }
+                ],
+            }
+        ],
+    )
+    _write_jsonl(
+        prediction_path,
+        [
+            {
+                "query_id": "q1",
+                "context_node_ids": ["sent:n1:1"],
+                "context_nodes": [
+                    {
+                        "node_id": "sent:n1:1",
+                        "text": "Ada was born in London.",
+                        "token_count": 5,
+                        "metadata": {"context_unit": "sentence", "title": "Ada"},
+                    }
+                ],
+            }
+        ],
+    )
+
+    metrics = run_qa(input_path, prediction_path, output_path, metrics_path)
+
+    assert metrics.mean_f1 > 0.0
+    assert metrics.mean_answer_coverage == 1.0
+    row = json.loads(output_path.read_text(encoding="utf-8").splitlines()[0])
+    assert row["context_node_ids"] == ["sent:n1:1"]
+    assert row["prediction"] == "Ada was born in London."
