@@ -119,7 +119,8 @@ def _metrics(
         "num_queries": int(qa_metrics.get("num_queries", carrier.get("num_queries", 0))),
         "graph_variant": "entity_chunk_reference",
         "renderer_mode": renderer_mode,
-        "oracle_renderer": renderer_mode in ANSWER_CARRIER_ORACLE_RENDERERS,
+        "oracle_renderer": renderer_mode in ANSWER_CARRIER_ORACLE_RENDERERS
+        or renderer_mode in TREE_ORACLE_RENDERERS,
         "diagnostic_renderer": renderer_mode in TREE_ABLATION_RENDERERS,
         "uses_answer_string": renderer_mode
         in {
