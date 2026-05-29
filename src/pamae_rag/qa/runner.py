@@ -18,7 +18,12 @@ from pamae_rag.eval.support_facts import (
 )
 from pamae_rag.eval.stage_diagnostics import aggregate_stage_diagnostics, make_stage_metrics
 from pamae_rag.eval.support_recall import f1_score, precision, recall
-from pamae_rag.qa.generator import DeterministicExtractiveSentenceGenerator, PROMPT_TEXT
+from pamae_rag.qa.generator import (
+    DeterministicExtractiveSentenceGenerator,
+    PROMPT_HASH,
+    PROMPT_TEXT,
+    PROMPT_TEXT_EXACT_MATCH,
+)
 from pamae_rag.qa.metrics import METRIC_ID, gold_answers, normalize_answer, score_json, score_prediction
 
 _CORPUS_NODE_RE = re.compile(r"^(?P<dataset>.+):doc:(?P<index>[0-9]+)$")
@@ -30,6 +35,9 @@ class QAMetrics:
     oracle: bool
     generator_id: str
     prompt_id: str
+    qa_prompt_name: str
+    qa_prompt_hash: str
+    qa_prompt_text_exact_match: bool
     metric_id: str
     mean_exact_match: float
     mean_f1: float
@@ -406,6 +414,9 @@ def run_qa(
                 "diagnostics": {
                     "generator_id": generated.generator_id,
                     "prompt_id": generated.prompt_id,
+                    "qa_prompt_name": generated.prompt_id,
+                    "qa_prompt_hash": PROMPT_HASH,
+                    "qa_prompt_text_exact_match": PROMPT_TEXT_EXACT_MATCH,
                     "prompt_text": PROMPT_TEXT,
                     "metric_id": METRIC_ID,
                     "selected_sentence_index": generated.selected_sentence_index,
@@ -423,6 +434,9 @@ def run_qa(
         oracle=bool(oracle_context),
         generator_id=generator.generator_id,
         prompt_id=generator.prompt_id,
+        qa_prompt_name=generator.prompt_id,
+        qa_prompt_hash=PROMPT_HASH,
+        qa_prompt_text_exact_match=PROMPT_TEXT_EXACT_MATCH,
         metric_id=METRIC_ID,
         mean_exact_match=_mean(exact_matches),
         mean_f1=_mean(f1s),

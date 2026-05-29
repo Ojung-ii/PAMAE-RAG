@@ -1,15 +1,30 @@
 from __future__ import annotations
 
+import hashlib
 import re
 from dataclasses import dataclass
 
 
 GENERATOR_ID = "deterministic_extractive_sentence_v1"
-PROMPT_ID = "closed_book_free_context_qa_v1"
-PROMPT_TEXT = (
-    "Use only the provided context to answer the question. "
-    "If the context is insufficient, return the most relevant supported sentence."
-)
+COMMON_QA_PROMPTS = {
+    # Main common-prompt protocol. Do not change for paper reproduction.
+    "common_qa": """You are a QA assistant.
+Answer the question using only the provided Context.
+When possible, use a concise answer explicitly supported by the Context.
+Return only the final short answer.
+Do not output reasoning, explanations, citations, Markdown, or prefixes.
+For yes/no questions, output exactly yes or no in lowercase.
+If the answer cannot be found in the Context, output exactly: insufficient information
+
+Question: {question}
+Context:
+{context}
+Answer:""",
+}
+PROMPT_ID = "common_qa"
+PROMPT_TEXT = COMMON_QA_PROMPTS[PROMPT_ID]
+PROMPT_HASH = hashlib.sha256(PROMPT_TEXT.encode("utf-8")).hexdigest()
+PROMPT_TEXT_EXACT_MATCH = PROMPT_TEXT == COMMON_QA_PROMPTS["common_qa"]
 
 _TOKEN_RE = re.compile(r"[a-z0-9]+")
 _SENTENCE_SPLIT_RE = re.compile(r"(?<=[.!?])\s+|\n+")
