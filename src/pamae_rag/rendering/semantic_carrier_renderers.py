@@ -9,6 +9,7 @@ import numpy as np
 from pamae_rag.data.schema import EvidenceNode, QueryExample
 from pamae_rag.diagnostics.path_realizability import answer_containing_chunk_ids
 from pamae_rag.semantic.angular_distance import angular_distance, min_angular_distance
+from pamae_rag.semantic.compatible_embedding_cache import cache_from_env
 from pamae_rag.semantic.embedding_store import EmbeddingStore
 from pamae_rag.semantic.semantic_candidate_ordering import build_semantic_graph_pool, node_id
 
@@ -106,7 +107,6 @@ def render_semantic_carrier_indices(
         raise ValueError("semantic_weighted_tree_diagnostic is rendered by semantic_weighted_tree.py")
 
     nodes = example.nodes
-    store = embedding_store or EmbeddingStore.from_example(example)
     pool = build_semantic_graph_pool(
         nodes=nodes,
         selected_medoids=selected_medoids,
@@ -115,6 +115,15 @@ def render_semantic_carrier_indices(
         disconnected_distance=disconnected_distance,
     )
     candidates = set(pool.pool_chunks)
+    if embedding_store is None:
+        compatible_cache = cache_from_env()
+        if compatible_cache is not None:
+            candidate_ids = [node_id(nodes, idx) for idx in sorted(candidates | pool.shell2_chunks)]
+            store = compatible_cache.embedding_store_for_example(example, candidate_ids)
+        else:
+            store = EmbeddingStore.from_example(example)
+    else:
+        store = embedding_store
     oracle = renderer_mode in SEMANTIC_ORACLE_RENDERERS
     if renderer_mode == SHELL1_ANSWER_ORACLE:
         answer_ids = set(answer_containing_chunk_ids(example, nodes))

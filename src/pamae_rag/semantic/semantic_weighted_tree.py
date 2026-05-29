@@ -9,6 +9,7 @@ import numpy as np
 
 from pamae_rag.data.schema import EvidenceNode, QueryExample
 from pamae_rag.semantic.angular_distance import angular_distance
+from pamae_rag.semantic.compatible_embedding_cache import cache_from_env
 from pamae_rag.semantic.embedding_store import EmbeddingStore
 from pamae_rag.semantic.semantic_candidate_ordering import dedupe_indices, is_chunk, node_id
 
@@ -122,7 +123,14 @@ def semantic_weighted_support_tree_indices(
     embedding_store: EmbeddingStore | None = None,
 ) -> SemanticWeightedTreeResult:
     nodes = example.nodes
-    store = embedding_store or EmbeddingStore.from_example(example)
+    if embedding_store is None:
+        compatible_cache = cache_from_env()
+        if compatible_cache is not None:
+            store = compatible_cache.embedding_store_for_example(example, [str(node.node_id) for node in nodes])
+        else:
+            store = EmbeddingStore.from_example(example)
+    else:
+        store = embedding_store
     adjacency, missing_edge_count = _adjacency_from_graph_distance(
         nodes=nodes,
         distance_matrix=distance_matrix,
