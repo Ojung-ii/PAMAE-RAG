@@ -35,7 +35,7 @@ CACHE_ROOT="outputs/semantic_embedding_cache/nvidia__NV_Embed_v2/${DATASET}"
 export PAMAE_SEMANTIC_CACHE_DIR="${CACHE_ROOT}"
 
 "${PYTHON_BIN}" scripts/generate_compatible_embedding_cache.py \
-  --config "${CURRENT_CONFIG}" \
+  --config "${METRIC_CONFIG}" \
   --input "${INPUT}" \
   --output-dir "${OUT_ROOT}" \
   --dataset "${DATASET}" \
@@ -75,7 +75,7 @@ run_variant "tree_answer_oracle" "${CURRENT_CONFIG}"
 run_variant "shell1_answer_oracle" "${METRIC_CONFIG}" "shell1_answer_oracle"
 
 "${PYTHON_BIN}" scripts/build_semantic_embedding_rerun_outputs.py \
-  --config "${CURRENT_CONFIG}" \
+  --config "${METRIC_CONFIG}" \
   --input "${INPUT}" \
   --root "${OUT_ROOT}" \
   --cache-root "${CACHE_ROOT}" \

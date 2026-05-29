@@ -64,10 +64,11 @@ def _adjacency_from_graph_distance(
     disconnected_distance: float,
     eps: float = 1e-9,
 ) -> tuple[dict[int, list[tuple[int, float]]], int]:
-    adjacency: dict[int, list[tuple[int, float]]] = {idx: [] for idx in range(len(nodes))}
+    matrix_size = min(len(nodes), int(distance_matrix.shape[0]))
+    adjacency: dict[int, list[tuple[int, float]]] = {idx: [] for idx in range(matrix_size)}
     missing_edges = 0
-    for left in range(len(nodes)):
-        for right in range(left + 1, len(nodes)):
+    for left in range(matrix_size):
+        for right in range(left + 1, matrix_size):
             value = float(distance_matrix[left, right])
             if not np.isfinite(value) or value >= float(disconnected_distance) - eps:
                 continue
@@ -123,10 +124,14 @@ def semantic_weighted_support_tree_indices(
     embedding_store: EmbeddingStore | None = None,
 ) -> SemanticWeightedTreeResult:
     nodes = example.nodes
+    matrix_size = min(len(nodes), int(distance_matrix.shape[0]))
     if embedding_store is None:
         compatible_cache = cache_from_env()
         if compatible_cache is not None:
-            store = compatible_cache.embedding_store_for_example(example, [str(node.node_id) for node in nodes])
+            store = compatible_cache.embedding_store_for_example(
+                example,
+                [str(node.node_id) for node in nodes[:matrix_size]],
+            )
         else:
             store = EmbeddingStore.from_example(example)
     else:
@@ -137,8 +142,14 @@ def semantic_weighted_support_tree_indices(
         store=store,
         disconnected_distance=disconnected_distance,
     )
-    anchors = sorted(dedupe_indices(query_anchors), key=lambda idx: (node_id(nodes, idx), idx))
-    medoids = sorted(dedupe_indices(selected_medoids), key=lambda idx: (node_id(nodes, idx), idx))
+    anchors = sorted(
+        (idx for idx in dedupe_indices(query_anchors) if 0 <= int(idx) < matrix_size),
+        key=lambda idx: (node_id(nodes, idx), idx),
+    )
+    medoids = sorted(
+        (idx for idx in dedupe_indices(selected_medoids) if 0 <= int(idx) < matrix_size),
+        key=lambda idx: (node_id(nodes, idx), idx),
+    )
     tree: set[int] = set(medoids) | set(anchors)
     path_order: list[int] = []
     for anchor in anchors:
@@ -152,7 +163,7 @@ def semantic_weighted_support_tree_indices(
             tree.update(path)
             path_order.extend(path)
 
-    tree_chunks = {idx for idx in tree if is_chunk(nodes, idx)}
+    tree_chunks = {idx for idx in tree if 0 <= int(idx) < matrix_size and is_chunk(nodes, idx)}
     ordered = sorted(
         tree_chunks,
         key=lambda idx: (

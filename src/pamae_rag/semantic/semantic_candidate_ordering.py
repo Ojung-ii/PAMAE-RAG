@@ -98,8 +98,15 @@ def build_semantic_graph_pool(
     disconnected_distance: float,
     eps: float = 1e-9,
 ) -> SemanticGraphPool:
-    medoids = sorted(dedupe_indices(selected_medoids), key=lambda idx: (node_id(nodes, idx), idx))
-    anchors = sorted(dedupe_indices(query_anchors), key=lambda idx: (node_id(nodes, idx), idx))
+    matrix_size = int(distance_matrix.shape[0])
+    medoids = sorted(
+        (idx for idx in dedupe_indices(selected_medoids) if 0 <= int(idx) < matrix_size),
+        key=lambda idx: (node_id(nodes, idx), idx),
+    )
+    anchors = sorted(
+        (idx for idx in dedupe_indices(query_anchors) if 0 <= int(idx) < matrix_size),
+        key=lambda idx: (node_id(nodes, idx), idx),
+    )
     support_tree = support_tree_nodes(
         query_anchors=anchors,
         selected_medoids=medoids,
@@ -107,7 +114,7 @@ def build_semantic_graph_pool(
         nodes=nodes,
         disconnected_distance=disconnected_distance,
     )
-    support_tree_chunks = {idx for idx in support_tree if is_chunk(nodes, idx)}
+    support_tree_chunks = {idx for idx in support_tree if 0 <= int(idx) < matrix_size and is_chunk(nodes, idx)}
     roles: dict[int, dict[str, Any]] = {}
     for medoid in medoids:
         _set_role(roles, nodes, medoid, "medoid", 0, 0)
@@ -137,7 +144,7 @@ def build_semantic_graph_pool(
     graph_distance_to_tree: dict[int, float] = {}
     shell1: set[int] = set()
     shell2: set[int] = set()
-    for idx, node in enumerate(nodes):
+    for idx, node in enumerate(nodes[:matrix_size]):
         if str(getattr(node, "node_type", "chunk")) != "chunk":
             continue
         distance = _distance_to_tree(

@@ -182,13 +182,6 @@ def generate_cache(
     cache_root = default_cache_root(model_id=metadata.model_id, dataset=dataset)
     cache = CompatibleEmbeddingCache.create(cache_root, metadata)
     started = time.perf_counter()
-    embedder = NvEmbedV2Embedder(
-        model_path=str(selection["snapshot_path"]),
-        model_revision=str(selection["revision"]),
-        device=device,
-        batch_size=batch_size,
-        max_length=max_length,
-    )
     by_query: list[dict[str, Any]] = []
     all_required: set[str] = set()
     nodes_by_id: dict[str, Any] = {}
@@ -199,8 +192,23 @@ def generate_cache(
         for node in example.nodes:
             if str(node.node_id) in required:
                 nodes_by_id[str(node.node_id)] = node
-        cache.ensure_query(example, embedder)
-    cache.ensure_chunks(list(nodes_by_id.values()), sorted(all_required), embedder)
+    pre_coverage = cache.coverage(query_ids=[example.query_id for example in examples], chunk_ids=sorted(all_required))
+    embedder_device = device
+    if (
+        pre_coverage["query_embedding_coverage"] < 1.0
+        or pre_coverage["chunk_embedding_coverage_for_diagnostics"] < 1.0
+    ):
+        embedder = NvEmbedV2Embedder(
+            model_path=str(selection["snapshot_path"]),
+            model_revision=str(selection["revision"]),
+            device=device,
+            batch_size=batch_size,
+            max_length=max_length,
+        )
+        embedder_device = embedder.device
+        for example in examples:
+            cache.ensure_query(example, embedder)
+        cache.ensure_chunks(list(nodes_by_id.values()), sorted(all_required), embedder)
     coverage = cache.coverage(query_ids=[example.query_id for example in examples], chunk_ids=sorted(all_required))
     summary = {
         "dataset": dataset,
@@ -218,7 +226,7 @@ def generate_cache(
         "num_queries": len(examples),
         "required_chunk_count": len(all_required),
         "elapsed_seconds": round(time.perf_counter() - started, 3),
-        "device": embedder.device,
+        "device": embedder_device,
         "batch_size": batch_size,
         "query_diagnostics": by_query,
         **coverage,

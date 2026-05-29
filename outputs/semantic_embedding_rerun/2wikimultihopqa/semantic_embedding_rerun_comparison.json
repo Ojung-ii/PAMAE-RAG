@@ -1,0 +1,639 @@
+{
+  "branch": "experiment/semantic-embedding-space-rerun",
+  "commit": "515af2e",
+  "datasets": [
+    {
+      "cache": {
+        "all_vectors_l2_normalized": true,
+        "batch_size": 8,
+        "cache_root": "outputs/semantic_embedding_cache/nvidia__NV_Embed_v2/2wikimultihopqa",
+        "chunk_embedding_coverage_for_diagnostics": 1.0,
+        "chunk_text_format": "Title: <title>\nText: <chunk_text>",
+        "dataset": "2wikimultihopqa",
+        "device": "cuda",
+        "elapsed_seconds": 70.222,
+        "embedding_dim": 4096,
+        "embedding_dim_match": true,
+        "embedding_missing_count": 0,
+        "instruction_template": null,
+        "model_id": "nvidia/NV-Embed-v2",
+        "model_path": "/home/dilab/.cache/huggingface/models--nvidia--NV-Embed-v2/snapshots/3fa59658547db50a1e8e3346cf057fd0c77ed6ef",
+        "model_revision": "3fa59658547db50a1e8e3346cf057fd0c77ed6ef",
+        "normalized": true,
+        "num_queries": 50,
+        "pooling": "nv_embed_encode",
+        "query_diagnostics": [
+          {
+            "query_id": "83bf3b5a0bd911eba7f7acde48001122",
+            "required_chunk_count": 92,
+            "shell1_chunk_count": 88,
+            "shell2_chunk_count": 0,
+            "support_tree_chunk_count": 4
+          },
+          {
+            "query_id": "a80d84e7096d11ebbdb0ac1f6bf848b6",
+            "required_chunk_count": 111,
+            "shell1_chunk_count": 106,
+            "shell2_chunk_count": 0,
+            "support_tree_chunk_count": 5
+          },
+          {
+            "query_id": "2dc690ba0bdc11eba7f7acde48001122",
+            "required_chunk_count": 96,
+            "shell1_chunk_count": 91,
+            "shell2_chunk_count": 0,
+            "support_tree_chunk_count": 5
+          },
+          {
+            "query_id": "462bb642099211ebbdb0ac1f6bf848b6",
+            "required_chunk_count": 101,
+            "shell1_chunk_count": 90,
+            "shell2_chunk_count": 0,
+            "support_tree_chunk_count": 6
+          },
+          {
+            "query_id": "a1cdb240085811ebbd5bac1f6bf848b6",
+            "required_chunk_count": 79,
+            "shell1_chunk_count": 74,
+            "shell2_chunk_count": 0,
+            "support_tree_chunk_count": 5
+          },
+          {
+            "query_id": "6718770a087311ebbd66ac1f6bf848b6",
+            "required_chunk_count": 76,
+            "shell1_chunk_count": 70,
+            "shell2_chunk_count": 0,
+            "support_tree_chunk_count": 6
+          },
+          {
+            "query_id": "7f7046d308f711ebbdaaac1f6bf848b6",
+            "required_chunk_count": 53,
+            "shell1_chunk_count": 50,
+            "shell2_chunk_count": 0,
+            "support_tree_chunk_count": 3
+          },
+          {
+            "query_id": "9fe6a6760baf11ebab90acde48001122",
+            "required_chunk_count": 73,
+            "shell1_chunk_count": 69,
+            "shell2_chunk_count": 0,
+            "support_tree_chunk_count": 4
+          },
+          {
+            "query_id": "551e024408a611ebbd7fac1f6bf848b6",
+            "required_chunk_count": 54,
+            "shell1_chunk_count": 51,
+            "shell2_chunk_count": 0,
+            "support_tree_chunk_count": 3
+          },
+          {
+            "query_id": "33f51d7e0bde11eba7f7acde48001122",
+            "required_chunk_count": 68,
+            "shell1_chunk_count": 56,
+            "shell2_chunk_count": 0,
+            "support_tree_chunk_count": 4
+          },
+          {
+            "query_id": "914b452c0bdc11eba7f7acde48001122",
+            "required_chunk_count": 95,
+            "shell1_chunk_count": 90,
+            "shell2_chunk_count": 0,
+            "support_tree_chunk_count": 5
+          },
+          {
+            "query_id": "d6898f78089511ebbd75ac1f6bf848b6",
+            "required_chunk_count": 69,
+            "shell1_chunk_count": 65,
+            "shell2_chunk_count": 0,
+            "support_tree_chunk_count": 4
+          },
+          {
+            "query_id": "006d81bc0bde11eba7f7acde48001122",
+            "required_chunk_count": 69,
+            "shell1_chunk_count": 54,
+            "shell2_chunk_count": 0,
+            "support_tree_chunk_count": 5
+          },
+          {
+            "query_id": "f5e3b9ca0bdb11eba7f7acde48001122",
+            "required_chunk_count": 101,
+            "shell1_chunk_count": 95,
+            "shell2_chunk_count": 0,
+            "support_tree_chunk_count": 6
+          },
+          {
+            "query_id": "265daf200bdc11eba7f7acde48001122",
+            "required_chunk_count": 96,
+            "shell1_chunk_count": 90,
+            "shell2_chunk_count": 0,
+            "support_tree_chunk_count": 6
+          },
+          {
+            "query_id": "1c0dd3b00bdc11eba7f7acde48001122",
+            "required_chunk_count": 58,
+            "shell1_chunk_count": 54,
+            "shell2_chunk_count": 0,
+            "support_tree_chunk_count": 3
+          },
+          {
+            "query_id": "bab3b6d00bda11eba7f7acde48001122",
+            "required_chunk_count": 74,
+            "shell1_chunk_count": 69,
+            "shell2_chunk_count": 0,
+            "support_tree_chunk_count": 5
+          },
+          {
+            "query_id": "84b691d8086a11ebbd5fac1f6bf848b6",
+            "required_chunk_count": 96,
+            "shell1_chunk_count": 77,
+            "shell2_chunk_count": 0,
+            "support_tree_chunk_count": 5
+          },
+          {
+            "query_id": "dcbee4b608b011ebbd85ac1f6bf848b6",
+            "required_chunk_count": 104,
+            "shell1_chunk_count": 99,
+            "shell2_chunk_count": 0,
+            "support_tree_chunk_count": 5
+          },
+          {
+            "query_id": "2d8f3ebe0bda11eba7f7acde48001122",
+            "required_chunk_count": 87,
+            "shell1_chunk_count": 82,
+            "shell2_chunk_count": 0,
+            "support_tree_chunk_count": 5
+          },
+          {
+            "query_id": "e6e38bc40bdd11eba7f7acde48001122",
+            "required_chunk_count": 80,
+            "shell1_chunk_count": 65,
+            "shell2_chunk_count": 0,
+            "support_tree_chunk_count": 4
+          },
+          {
+            "query_id": "0bedb7e80bdc11eba7f7acde48001122",
+            "required_chunk_count": 95,
+            "shell1_chunk_count": 90,
+            "shell2_chunk_count": 0,
+            "support_tree_chunk_count": 5
+          },
+          {
+            "query_id": "86508dc60bdc11eba7f7acde48001122",
+            "required_chunk_count": 89,
+            "shell1_chunk_count": 83,
+            "shell2_chunk_count": 0,
+            "support_tree_chunk_count": 5
+          },
+          {
+            "query_id": "e311a3ba0bdc11eba7f7acde48001122",
+            "required_chunk_count": 81,
+            "shell1_chunk_count": 77,
+            "shell2_chunk_count": 0,
+            "support_tree_chunk_count": 3
+          },
+          {
+            "query_id": "bdd526c4091811ebbdaeac1f6bf848b6",
+            "required_chunk_count": 101,
+            "shell1_chunk_count": 97,
+            "shell2_chunk_count": 0,
+            "support_tree_chunk_count": 4
+          },
+          {
+            "query_id": "435f65fa0baf11ebab90acde48001122",
+            "required_chunk_count": 48,
+            "shell1_chunk_count": 43,
+            "shell2_chunk_count": 0,
+            "support_tree_chunk_count": 5
+          },
+          {
+            "query_id": "5cc01ab60bb011ebab90acde48001122",
+            "required_chunk_count": 63,
+            "shell1_chunk_count": 57,
+            "shell2_chunk_count": 0,
+            "support_tree_chunk_count": 5
+          },
+          {
+            "query_id": "2084260e0bde11eba7f7acde48001122",
+            "required_chunk_count": 48,
+            "shell1_chunk_count": 43,
+            "shell2_chunk_count": 0,
+            "support_tree_chunk_count": 4
+          },
+          {
+            "query_id": "7cb81afc0bd911eba7f7acde48001122",
+            "required_chunk_count": 89,
+            "shell1_chunk_count": 68,
+            "shell2_chunk_count": 0,
+            "support_tree_chunk_count": 3
+          },
+          {
+            "query_id": "a1d9a65c0bd911eba7f7acde48001122",
+            "required_chunk_count": 96,
+            "shell1_chunk_count": 90,
+            "shell2_chunk_count": 0,
+            "support_tree_chunk_count": 5
+          },
+          {
+            "query_id": "f34d188608cb11ebbd93ac1f6bf848b6",
+            "required_chunk_count": 102,
+            "shell1_chunk_count": 96,
+            "shell2_chunk_count": 0,
+            "support_tree_chunk_count": 6
+          },
+          {
+            "query_id": "3a3c2efe0bdc11eba7f7acde48001122",
+            "required_chunk_count": 65,
+            "shell1_chunk_count": 57,
+            "shell2_chunk_count": 0,
+            "support_tree_chunk_count": 4
+          },
+          {
+            "query_id": "9aa8008408de11ebbd9eac1f6bf848b6",
+            "required_chunk_count": 74,
+            "shell1_chunk_count": 69,
+            "shell2_chunk_count": 0,
+            "support_tree_chunk_count": 5
+          },
+          {
+            "query_id": "0dfe41f60bdc11eba7f7acde48001122",
+            "required_chunk_count": 79,
+            "shell1_chunk_count": 75,
+            "shell2_chunk_count": 0,
+            "support_tree_chunk_count": 4
+          },
+          {
+            "query_id": "3ce92df80bde11eba7f7acde48001122",
+            "required_chunk_count": 82,
+            "shell1_chunk_count": 74,
+            "shell2_chunk_count": 0,
+            "support_tree_chunk_count": 5
+          },
+          {
+            "query_id": "3e3cd62a086211ebbd5dac1f6bf848b6",
+            "required_chunk_count": 62,
+            "shell1_chunk_count": 58,
+            "shell2_chunk_count": 0,
+            "support_tree_chunk_count": 4
+          },
+          {
+            "query_id": "b672c1ee0bdd11eba7f7acde48001122",
+            "required_chunk_count": 117,
+            "shell1_chunk_count": 110,
+            "shell2_chunk_count": 0,
+            "support_tree_chunk_count": 5
+          },
+          {
+            "query_id": "01309e5008bd11ebbd89ac1f6bf848b6",
+            "required_chunk_count": 56,
+            "shell1_chunk_count": 53,
+            "shell2_chunk_count": 0,
+            "support_tree_chunk_count": 3
+          },
+          {
+            "query_id": "c5a00e860bda11eba7f7acde48001122",
+            "required_chunk_count": 86,
+            "shell1_chunk_count": 81,
+            "shell2_chunk_count": 0,
+            "support_tree_chunk_count": 4
+          },
+          {
+            "query_id": "434dea7708d211ebbd95ac1f6bf848b6",
+            "required_chunk_count": 63,
+            "shell1_chunk_count": 60,
+            "shell2_chunk_count": 0,
+            "support_tree_chunk_count": 3
+          },
+          {
+            "query_id": "02b62fce087211ebbd64ac1f6bf848b6",
+            "required_chunk_count": 132,
+            "shell1_chunk_count": 126,
+            "shell2_chunk_count": 0,
+            "support_tree_chunk_count": 6
+          },
+          {
+            "query_id": "b0ac0fc8087b11ebbd68ac1f6bf848b6",
+            "required_chunk_count": 107,
+            "shell1_chunk_count": 102,
+            "shell2_chunk_count": 0,
+            "support_tree_chunk_count": 5
+          },
+          {
+            "query_id": "c9a769c608be11ebbd8aac1f6bf848b6",
+            "required_chunk_count": 65,
+            "shell1_chunk_count": 61,
+            "shell2_chunk_count": 0,
+            "support_tree_chunk_count": 4
+          },
+          {
+            "query_id": "3f04140e08c311ebbd8dac1f6bf848b6",
+            "required_chunk_count": 73,
+            "shell1_chunk_count": 68,
+            "shell2_chunk_count": 0,
+            "support_tree_chunk_count": 5
+          },
+          {
+            "query_id": "50e4a65c0bde11eba7f7acde48001122",
+            "required_chunk_count": 89,
+            "shell1_chunk_count": 83,
+            "shell2_chunk_count": 0,
+            "support_tree_chunk_count": 6
+          },
+          {
+            "query_id": "b64f541e088d11ebbd70ac1f6bf848b6",
+            "required_chunk_count": 96,
+            "shell1_chunk_count": 90,
+            "shell2_chunk_count": 0,
+            "support_tree_chunk_count": 6
+          },
+          {
+            "query_id": "f998c58c091b11ebbdaeac1f6bf848b6",
+            "required_chunk_count": 98,
+            "shell1_chunk_count": 92,
+            "shell2_chunk_count": 0,
+            "support_tree_chunk_count": 6
+          },
+          {
+            "query_id": "38da155f087511ebbd67ac1f6bf848b6",
+            "required_chunk_count": 74,
+            "shell1_chunk_count": 69,
+            "shell2_chunk_count": 0,
+            "support_tree_chunk_count": 5
+          },
+          {
+            "query_id": "49b22d0a0bde11eba7f7acde48001122",
+            "required_chunk_count": 76,
+            "shell1_chunk_count": 71,
+            "shell2_chunk_count": 0,
+            "support_tree_chunk_count": 4
+          },
+          {
+            "query_id": "78b10fb00bdc11eba7f7acde48001122",
+            "required_chunk_count": 80,
+            "shell1_chunk_count": 76,
+            "shell2_chunk_count": 0,
+            "support_tree_chunk_count": 4
+          }
+        ],
+        "query_embedding_coverage": 1.0,
+        "query_text_format": "raw_question",
+        "required_chunk_count": 1993,
+        "uses_official_model_instruction_wrapper": false
+      },
+      "dataset": "2wikimultihopqa",
+      "decision": "GO_TO_100",
+      "reason": "semantic attribution is meaningful and 2Wiki smoke preserves coverage metrics",
+      "root": "outputs/semantic_embedding_rerun/2wikimultihopqa",
+      "rows": [
+        {
+          "answer_in_context": 0.4,
+          "avg_context_tokens": 351.04,
+          "context_f1": 0.26825396825396824,
+          "diagnostic_renderer": false,
+          "embedding_missing_rate": 0.0,
+          "generation_ms": 0.0,
+          "oracle_leakage_count": 0,
+          "oracle_renderer": false,
+          "qa_f1": 0.06095939127703833,
+          "rendered_recall": 0.57,
+          "rendered_shell1_chunk_count": 0.0,
+          "renderer_mode": "current_renderer",
+          "retrieval_ms": 758.4953200000001,
+          "run": "entity_chunk_reference_current_renderer",
+          "score_mixing_detected": false,
+          "shell1_chunk_count": 0.0,
+          "shell2_chunk_count": 0.0,
+          "support_tree_chunk_count": 0.0,
+          "total_ms": 0.0,
+          "triangle_inequality_violation_count": 0,
+          "uses_answer_string": false
+        },
+        {
+          "answer_in_context": 0.32,
+          "avg_context_tokens": 200.76,
+          "context_f1": 0.34279365079365093,
+          "diagnostic_renderer": false,
+          "embedding_missing_rate": 0.0,
+          "generation_ms": 0.0,
+          "oracle_leakage_count": 0,
+          "oracle_renderer": false,
+          "qa_f1": 0.0693230276406747,
+          "rendered_recall": 0.455,
+          "rendered_shell1_chunk_count": 0.0,
+          "renderer_mode": "metric_path_carrier",
+          "retrieval_ms": 801.0776200000001,
+          "run": "entity_chunk_reference_metric_path_carrier",
+          "score_mixing_detected": false,
+          "shell1_chunk_count": 0.0,
+          "shell2_chunk_count": 0.0,
+          "support_tree_chunk_count": 4.62,
+          "total_ms": 0.0,
+          "triangle_inequality_violation_count": 0,
+          "uses_answer_string": false
+        },
+        {
+          "answer_in_context": 0.36,
+          "avg_context_tokens": 419.64,
+          "context_f1": 0.2567012987012987,
+          "diagnostic_renderer": false,
+          "embedding_missing_rate": 0.0,
+          "generation_ms": 0.0,
+          "oracle_leakage_count": 0,
+          "oracle_renderer": false,
+          "qa_f1": 0.06629272461037167,
+          "rendered_recall": 0.525,
+          "rendered_shell1_chunk_count": 3.1,
+          "renderer_mode": "tree_shell1_graph_order",
+          "retrieval_ms": 859.39308,
+          "run": "entity_chunk_reference_tree_shell1_graph_order",
+          "score_mixing_detected": false,
+          "shell1_chunk_count": 76.08,
+          "shell2_chunk_count": 0.0,
+          "support_tree_chunk_count": 4.62,
+          "total_ms": 0.0,
+          "triangle_inequality_violation_count": 0,
+          "uses_answer_string": false
+        },
+        {
+          "answer_in_context": 0.46,
+          "avg_context_tokens": 370.78,
+          "context_f1": 0.29979797979797973,
+          "diagnostic_renderer": false,
+          "embedding_missing_rate": 0.0,
+          "generation_ms": 0.0,
+          "oracle_leakage_count": 0,
+          "oracle_renderer": false,
+          "qa_f1": 0.06095939127703833,
+          "rendered_recall": 0.635,
+          "rendered_shell1_chunk_count": 3.32,
+          "renderer_mode": "tree_shell1_semantic_query_order",
+          "retrieval_ms": 820.8650799999999,
+          "run": "entity_chunk_reference_tree_shell1_semantic_query_order",
+          "score_mixing_detected": false,
+          "shell1_chunk_count": 76.08,
+          "shell2_chunk_count": 0.0,
+          "support_tree_chunk_count": 4.62,
+          "total_ms": 0.0,
+          "triangle_inequality_violation_count": 0,
+          "uses_answer_string": false
+        },
+        {
+          "answer_in_context": 0.42,
+          "avg_context_tokens": 332.62,
+          "context_f1": 0.27415873015873016,
+          "diagnostic_renderer": false,
+          "embedding_missing_rate": 0.0,
+          "generation_ms": 0.0,
+          "oracle_leakage_count": 0,
+          "oracle_renderer": false,
+          "qa_f1": 0.06095939127703833,
+          "rendered_recall": 0.58,
+          "rendered_shell1_chunk_count": 3.36,
+          "renderer_mode": "tree_shell1_semantic_tree_order",
+          "retrieval_ms": 827.89482,
+          "run": "entity_chunk_reference_tree_shell1_semantic_tree_order",
+          "score_mixing_detected": false,
+          "shell1_chunk_count": 76.08,
+          "shell2_chunk_count": 0.0,
+          "support_tree_chunk_count": 4.62,
+          "total_ms": 0.0,
+          "triangle_inequality_violation_count": 0,
+          "uses_answer_string": false
+        },
+        {
+          "answer_in_context": 0.38,
+          "avg_context_tokens": 328.9,
+          "context_f1": 0.2735757575757576,
+          "diagnostic_renderer": true,
+          "embedding_missing_rate": 0.0,
+          "generation_ms": 0.0,
+          "oracle_leakage_count": 0,
+          "oracle_renderer": false,
+          "qa_f1": 0.06568666400431106,
+          "rendered_recall": 0.5,
+          "rendered_shell1_chunk_count": 0.0,
+          "renderer_mode": "semantic_weighted_tree_diagnostic",
+          "retrieval_ms": 1229.8977200000002,
+          "run": "entity_chunk_reference_semantic_weighted_tree_diagnostic",
+          "score_mixing_detected": false,
+          "shell1_chunk_count": 0.0,
+          "shell2_chunk_count": 0.0,
+          "support_tree_chunk_count": 8.74,
+          "total_ms": 0.0,
+          "triangle_inequality_violation_count": 0,
+          "uses_answer_string": false
+        },
+        {
+          "answer_in_context": 0.4,
+          "avg_context_tokens": 39.94,
+          "context_f1": 0.5216666666666667,
+          "diagnostic_renderer": false,
+          "embedding_missing_rate": 0.0,
+          "generation_ms": 0.0,
+          "oracle_leakage_count": 0,
+          "oracle_renderer": true,
+          "qa_f1": 0.09230653523165237,
+          "rendered_recall": 0.15,
+          "rendered_shell1_chunk_count": 0.0,
+          "renderer_mode": "current_answer_role_oracle",
+          "retrieval_ms": 759.0248799999999,
+          "run": "entity_chunk_reference_current_answer_role_oracle",
+          "score_mixing_detected": false,
+          "shell1_chunk_count": 0.0,
+          "shell2_chunk_count": 0.0,
+          "support_tree_chunk_count": 0.0,
+          "total_ms": 0.0,
+          "triangle_inequality_violation_count": 0,
+          "uses_answer_string": true
+        },
+        {
+          "answer_in_context": 0.36,
+          "avg_context_tokens": 32.26,
+          "context_f1": 0.5092592592592594,
+          "diagnostic_renderer": true,
+          "embedding_missing_rate": 0.0,
+          "generation_ms": 0.0,
+          "oracle_leakage_count": 0,
+          "oracle_renderer": true,
+          "qa_f1": 0.09297750297358785,
+          "rendered_recall": 0.13,
+          "rendered_shell1_chunk_count": 0.0,
+          "renderer_mode": "tree_answer_oracle",
+          "retrieval_ms": 841.0313399999999,
+          "run": "entity_chunk_reference_tree_answer_oracle",
+          "score_mixing_detected": false,
+          "shell1_chunk_count": 0.0,
+          "shell2_chunk_count": 0.0,
+          "support_tree_chunk_count": 0.0,
+          "total_ms": 0.0,
+          "triangle_inequality_violation_count": 0,
+          "uses_answer_string": true
+        },
+        {
+          "answer_in_context": 0.26,
+          "avg_context_tokens": 50.16,
+          "context_f1": 0.3846153846153845,
+          "diagnostic_renderer": false,
+          "embedding_missing_rate": 0.0,
+          "generation_ms": 0.0,
+          "oracle_leakage_count": 0,
+          "oracle_renderer": true,
+          "qa_f1": 0.017367149758454107,
+          "rendered_recall": 0.075,
+          "rendered_shell1_chunk_count": 0.32,
+          "renderer_mode": "shell1_answer_oracle",
+          "retrieval_ms": 840.2111600000001,
+          "run": "entity_chunk_reference_shell1_answer_oracle",
+          "score_mixing_detected": false,
+          "shell1_chunk_count": 76.08,
+          "shell2_chunk_count": 0.0,
+          "support_tree_chunk_count": 4.62,
+          "total_ms": 0.0,
+          "triangle_inequality_violation_count": 0,
+          "uses_answer_string": true
+        }
+      ],
+      "semantic": {
+        "embedding": {
+          "all_vectors_l2_normalized": true,
+          "chunk_embedding_coverage_for_diagnostics": 1.0,
+          "chunk_text_format": "Title: <title>\nText: <chunk_text>",
+          "embedding_dim": 4096,
+          "embedding_dim_match": true,
+          "embedding_missing_count": 0,
+          "model_id": "nvidia/NV-Embed-v2",
+          "model_revision": "3fa59658547db50a1e8e3346cf057fd0c77ed6ef",
+          "normalized": true,
+          "pooling": "nv_embed_encode",
+          "query_embedding_coverage": 1.0,
+          "query_text_format": "raw_question"
+        },
+        "pool_sizes": {
+          "answer_in_shell1_rate": 0.28,
+          "answer_in_shell2_rate": 0.0,
+          "answer_on_support_tree_rate": 0.36,
+          "avg_shell1_chunks": 76.08,
+          "avg_shell2_chunks": 0.0,
+          "avg_support_tree_chunks": 4.62
+        },
+        "semantic_hidden_carrier": {
+          "mean_d_ang_query_current_only_answer": 0.3981885387492474,
+          "mean_d_ang_query_current_only_non_answer": 0.43469480470677246,
+          "mean_d_ang_tree_current_only_answer": 0.3023377331090543,
+          "mean_d_ang_tree_current_only_non_answer": 0.3837566453258578,
+          "median_d_ang_query_current_only_answer": 0.3981885387492474,
+          "median_d_ang_query_current_only_non_answer": 0.4415783020456753,
+          "median_d_ang_tree_current_only_answer": 0.3023377331090543,
+          "median_d_ang_tree_current_only_non_answer": 0.3996155402024916,
+          "semantic_attribution_row_count": 497,
+          "semantic_query_signal_available": true,
+          "semantic_separation_query": 0.03650626595752504,
+          "semantic_separation_tree": 0.08141891221680347,
+          "semantic_signal_available": true,
+          "semantic_tree_signal_available": true
+        }
+      }
+    }
+  ],
+  "decision": "GO_TO_100",
+  "final_decision": "DIAGNOSTIC_ONLY"
+}

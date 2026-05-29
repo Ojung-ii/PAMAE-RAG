@@ -1,0 +1,14 @@
+{
+  "chunk_text_format": "Title: <title>\nText: <chunk_text>",
+  "created_at": "2026-05-29T02:53:22+00:00",
+  "dataset": "2wikimultihopqa",
+  "embedding_dim": 4096,
+  "instruction_template": null,
+  "model_id": "nvidia/NV-Embed-v2",
+  "model_path": "/home/dilab/.cache/huggingface/models--nvidia--NV-Embed-v2/snapshots/3fa59658547db50a1e8e3346cf057fd0c77ed6ef",
+  "model_revision": "3fa59658547db50a1e8e3346cf057fd0c77ed6ef",
+  "normalized": true,
+  "pooling": "nv_embed_encode",
+  "query_text_format": "raw_question",
+  "uses_official_model_instruction_wrapper": false
+}

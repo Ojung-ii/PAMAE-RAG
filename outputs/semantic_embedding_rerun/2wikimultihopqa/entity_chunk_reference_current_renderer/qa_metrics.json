@@ -1,0 +1,192 @@
+{
+  "num_queries": 50,
+  "oracle": false,
+  "generator_id": "deterministic_extractive_sentence_v1",
+  "prompt_id": "closed_book_free_context_qa_v1",
+  "metric_id": "squad_normalized_em_f1_v1",
+  "mean_exact_match": 0.0,
+  "mean_f1": 0.06095939127703833,
+  "mean_context_recall": 0.57,
+  "mean_context_precision": 0.17985714285714288,
+  "mean_context_f1": 0.26825396825396824,
+  "mean_answer_coverage": 0.4,
+  "mean_selected_answer_coverage": 0.1,
+  "avg_context_tokens": 351.04,
+  "avg_retrieval_ms": 758.4953200000001,
+  "avg_generation_ms": 0.15698,
+  "missing_prediction_count": 0,
+  "missing_answer_count": 0,
+  "stage_diagnostics": {
+    "candidate_generation": {
+      "num_queries": 50,
+      "status_counts": {
+        "ok": 50
+      },
+      "mean": {
+        "candidate_f1": 0.009478283277360822,
+        "candidate_precision": 0.004771978992699926,
+        "candidate_recall": 0.86,
+        "gold_support_count": 2.48,
+        "gold_support_surviving_count": 1.8,
+        "gold_supporting_evidence_survival": 0.75,
+        "latency_ms": 86.81446660775691,
+        "num_samples": 5.0,
+        "sampled_candidate_count": 183.08,
+        "support_fact_count": 2.48,
+        "support_fact_resolved_count": 2.12,
+        "support_fact_resolved_survival": 0.8833333333333333,
+        "support_fact_survival": 0.75,
+        "support_fact_surviving_count": 1.8,
+        "survivor_count": 183.08,
+        "token_count": 15651.48
+      }
+    },
+    "content_graph_projection": {
+      "num_queries": 50,
+      "status_counts": {
+        "ok": 50
+      },
+      "mean": {
+        "gold_support_count": 2.48,
+        "gold_support_surviving_count": 2.04,
+        "gold_supporting_evidence_survival": 0.83,
+        "latency_ms": 503.02319856360555,
+        "projected_node_count": 471.06,
+        "support_fact_count": 2.48,
+        "support_fact_resolved_count": 2.12,
+        "support_fact_resolved_survival": 0.955,
+        "support_fact_survival": 0.83,
+        "support_fact_surviving_count": 2.04,
+        "survivor_count": 471.06,
+        "token_count": 44248.32
+      }
+    },
+    "context_rendering": {
+      "num_queries": 50,
+      "status_counts": {
+        "ok": 50
+      },
+      "mean": {
+        "context_f1": 0.26825396825396824,
+        "context_precision": 0.17985714285714288,
+        "context_recall": 0.57,
+        "gold_support_count": 2.48,
+        "gold_support_surviving_count": 1.4,
+        "gold_supporting_evidence_survival": 0.57,
+        "latency_ms": 6.878909729421139,
+        "rendered_f1": 0.26825396825396824,
+        "rendered_precision": 0.17985714285714288,
+        "rendered_recall": 0.57,
+        "support_fact_count": 2.48,
+        "support_fact_resolved_count": 2.12,
+        "support_fact_resolved_survival": 0.6916666666666669,
+        "support_fact_survival": 0.57,
+        "support_fact_surviving_count": 1.4,
+        "survivor_count": 7.76,
+        "token_count": 351.04
+      }
+    },
+    "final_qa": {
+      "num_queries": 50,
+      "status_counts": {
+        "ok": 50
+      },
+      "mean": {
+        "answer_coverage": 0.4,
+        "context_f1": 0.26825396825396824,
+        "context_precision": 0.17985714285714288,
+        "context_recall": 0.57,
+        "gold_support_count": 2.48,
+        "gold_support_surviving_count": 1.4,
+        "gold_supporting_evidence_survival": 0.57,
+        "latency_ms": 0.15698,
+        "qa_exact_match": 0.0,
+        "qa_f1": 0.06095939127703833,
+        "rendered_f1": 0.26825396825396824,
+        "rendered_precision": 0.17985714285714288,
+        "rendered_recall": 0.57,
+        "selected_answer_coverage": 0.1,
+        "support_fact_count": 2.48,
+        "support_fact_resolved_count": 2.22,
+        "support_fact_resolved_survival": 0.665,
+        "support_fact_survival": 0.57,
+        "support_fact_surviving_count": 1.4,
+        "survivor_count": 7.76,
+        "token_count": 351.04
+      }
+    },
+    "local_refinement": {
+      "num_queries": 50,
+      "status_counts": {
+        "ok": 50
+      },
+      "mean": {
+        "gold_support_count": 2.48,
+        "gold_support_surviving_count": 0.7,
+        "gold_supporting_evidence_survival": 0.305,
+        "latency_ms": 5.969009785912931,
+        "objective_after": 0.7478707040917051,
+        "objective_before": 0.75008805603685,
+        "pre_refinement_anchor_count": 3.0,
+        "pre_refinement_gold_supporting_evidence_survival": 0.315,
+        "pre_refinement_support_fact_count": 2.48,
+        "pre_refinement_support_fact_resolved_count": 2.12,
+        "pre_refinement_support_fact_resolved_survival": 0.39166666666666666,
+        "pre_refinement_support_fact_survival": 0.315,
+        "pre_refinement_support_fact_surviving_count": 0.72,
+        "support_fact_count": 2.48,
+        "support_fact_resolved_count": 2.12,
+        "support_fact_resolved_survival": 0.38166666666666665,
+        "support_fact_survival": 0.305,
+        "support_fact_surviving_count": 0.7,
+        "survivor_count": 3.0,
+        "token_count": 148.26
+      }
+    },
+    "query_anchor_construction": {
+      "num_queries": 50,
+      "status_counts": {
+        "ok": 50
+      },
+      "mean": {
+        "candidate_f1": 0.009478283277360822,
+        "candidate_precision": 0.004771978992699926,
+        "candidate_recall": 0.86,
+        "gold_support_count": 2.48,
+        "gold_support_surviving_count": 2.12,
+        "gold_supporting_evidence_survival": 0.86,
+        "latency_ms": 604.4659181451425,
+        "num_anchor_candidates": 495.08,
+        "num_universe_nodes": 495.08,
+        "support_fact_count": 2.48,
+        "support_fact_resolved_count": 2.12,
+        "support_fact_resolved_survival": 1.0,
+        "support_fact_survival": 0.86,
+        "support_fact_surviving_count": 2.12,
+        "survivor_count": 495.08,
+        "token_count": 44248.32
+      }
+    },
+    "reranking_scoring": {
+      "num_queries": 50,
+      "status_counts": {
+        "ok": 50
+      },
+      "mean": {
+        "anchor_count": 3.0,
+        "gold_support_count": 2.48,
+        "gold_support_surviving_count": 0.7,
+        "gold_supporting_evidence_survival": 0.305,
+        "latency_ms": 0.0,
+        "objective_after_refinement": 0.7478707040917051,
+        "support_fact_count": 2.48,
+        "support_fact_resolved_count": 2.12,
+        "support_fact_resolved_survival": 0.38166666666666665,
+        "support_fact_survival": 0.305,
+        "support_fact_surviving_count": 0.7,
+        "survivor_count": 3.0,
+        "token_count": 148.26
+      }
+    }
+  }
+}
