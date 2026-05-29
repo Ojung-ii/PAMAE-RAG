@@ -237,6 +237,7 @@ def compare(root: Path, datasets: list[str]) -> dict[str, Any]:
         )
         for dataset in dataset_results
     ]
+    recommendation = _recommendation(final, sorted(candidate_pass), dataset_results)
     return {
         "branch": _git_value(["branch", "--show-current"]),
         "commit": _git_value(["rev-parse", "--short", "HEAD"]),
@@ -247,6 +248,7 @@ def compare(root: Path, datasets: list[str]) -> dict[str, Any]:
         "semantic_attribution_direction_consistent": len(set(query_signs) - {"zero", "missing"}) <= 1
         and len(set(tree_signs) - {"zero", "missing"}) <= 1,
         "final_decision": final,
+        "next_recommendation": recommendation,
     }
 
 
@@ -258,6 +260,26 @@ def _sign(value: Any) -> str:
     if float(value) < 0:
         return "negative"
     return "zero"
+
+
+def _recommendation(final: str, candidates: list[str], datasets: list[dict[str, Any]]) -> str:
+    if final == "STOP":
+        return "Stop semantic rendering changes until cache, prompt, sample, leakage, or metric invariants are repaired."
+    if final == "ADOPTION_CANDIDATE" and "tree_shell1_semantic_query_order" in candidates:
+        return (
+            "Treat tree_shell1_semantic_query_order as an adoption candidate, not an automatic adoption: "
+            "it passed both 100-query datasets under common_qa, but should get larger-sample validation and "
+            "a bridge-carrier safety check before paper-method promotion."
+        )
+    if candidates:
+        return (
+            "Treat the passing semantic renderer as a candidate for larger validation; keep semantic_weighted_tree "
+            "diagnostic-only and do not claim semantic gains unless the B2/B3 deltas over B1 stay positive."
+        )
+    dominant = {dataset.get("dominant_effect") for dataset in datasets}
+    if dominant == {"shell_expansion"}:
+        return "Do not claim semantic ordering gains; investigate graph shell expansion or principled tree-budget allocation next."
+    return "Keep this diagnostic-only and inspect whether graph shell expansion, prompt formatting, or tree-budget allocation is the next bottleneck."
 
 
 def _semantic_group_table(attr: dict[str, Any]) -> list[str]:
@@ -403,10 +425,11 @@ def to_markdown(result: dict[str, Any]) -> str:
         "",
         f"- Branch: `{result.get('branch')}`",
         f"- Commit: `{result.get('commit')}`",
-        f"- Fixed common_qa prompt hash: `{first_prompt_hash}`",
-        f"- Final decision: **{result.get('final_decision')}**",
-        f"- Adoption-candidate renderers: `{', '.join(result.get('candidate_pass_renderers', [])) or 'none'}`",
-        "",
+            f"- Fixed common_qa prompt hash: `{first_prompt_hash}`",
+            f"- Final decision: **{result.get('final_decision')}**",
+            f"- Adoption-candidate renderers: `{', '.join(result.get('candidate_pass_renderers', [])) or 'none'}`",
+            f"- Next recommendation: {result.get('next_recommendation')}",
+            "",
         "Previous semantic rerun summary: valid local NV-Embed-v2 embeddings replaced legacy 128D vectors, but the earlier rerun stopped because the semantic attribution direction was not stable across 2Wiki and Hotpot. This run reuses the validated embedding cache and decomposes shell expansion from semantic ordering under a fixed prompt.",
         "",
         "Theory boundary: the PAMAE entity-chunk retrieval core, graph-metric medoid selection, local refinement, support-tree construction, context budget, generator, evaluator, dataset order, and embedding cache remain unchanged. Semantic distance is normalized angular distance and is used only inside graph-defined candidates or the diagnostic semantic-weighted tree.",
@@ -421,6 +444,7 @@ def to_markdown(result: dict[str, Any]) -> str:
             f"- Query shell1 attribution signs: `{', '.join(result.get('semantic_query_shell1_signs', []))}`",
             f"- Tree shell1 attribution signs: `{', '.join(result.get('semantic_tree_shell1_signs', []))}`",
             f"- Attribution direction consistent: `{result.get('semantic_attribution_direction_consistent')}`",
+            f"- Next recommendation: {result.get('next_recommendation')}",
             "",
             "Expert-panel read: if B1 improves over A1 but B2/B3 do not improve over B1, the gain is graph shell expansion rather than semantic ordering. If query-semantic ordering damages bridge/path retention, it is risky for GraphRAG even when Hotpot improves. If B4 improves alone, semantic edge lengths remain diagnostic-only.",
             "",
