@@ -1,0 +1,1 @@
+1000-query run was stopped after NV-Embed cache expansion proved time-expensive; sandboxed CUDA was unavailable for the 500 fallback, so this run uses the same 500-query sample with explicit CUDA outside the sandbox.

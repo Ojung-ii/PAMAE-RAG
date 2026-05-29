@@ -1,0 +1,1 @@
+2Wiki 1000 exceeded the server/time envelope and the successful primary rerun used the instructed 500-query fallback; Hotpot uses the same 500-query fallback and explicit CUDA outside the sandbox for paired comparability.
