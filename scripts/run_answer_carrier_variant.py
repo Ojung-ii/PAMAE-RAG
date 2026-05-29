@@ -71,6 +71,101 @@ def _mean(values: Iterable[float]) -> float:
     return float(sum(values) / len(values)) if values else 0.0
 
 
+def _group_by_query(rows: Iterable[dict[str, Any]]) -> dict[str, list[dict[str, Any]]]:
+    grouped: dict[str, list[dict[str, Any]]] = {}
+    for row in rows:
+        grouped.setdefault(str(row.get("query_id")), []).append(row)
+    return grouped
+
+
+def _query_rate(grouped: dict[str, list[dict[str, Any]]], predicate) -> float:
+    if not grouped:
+        return 0.0
+    return float(sum(1 for rows in grouped.values() if any(predicate(row) for row in rows)) / len(grouped))
+
+
+def _answer_id(row: dict[str, Any]) -> str | None:
+    value = row.get("answer_chunk_id")
+    return str(value) if value is not None else None
+
+
+def _shell_answer_metrics(
+    *,
+    retrieval_rows: list[dict[str, Any]],
+    answer_rows: list[dict[str, Any]],
+) -> dict[str, Any]:
+    diagnostics_by_query = {
+        str(row.get("query_id")): row.get("diagnostics", {})
+        for row in retrieval_rows
+        if isinstance(row.get("diagnostics"), dict)
+    }
+    grouped = _group_by_query(answer_rows)
+
+    def in_shell(rows: list[dict[str, Any]]) -> bool:
+        diag = diagnostics_by_query.get(str(rows[0].get("query_id")), {}) if rows else {}
+        shell1 = {str(value) for value in diag.get("shell1_chunk_ids", [])}
+        return any((chunk_id := _answer_id(row)) is not None and chunk_id in shell1 for row in rows)
+
+    def rendered_from_shell(rows: list[dict[str, Any]]) -> bool:
+        diag = diagnostics_by_query.get(str(rows[0].get("query_id")), {}) if rows else {}
+        rendered = {str(value) for value in diag.get("rendered_shell1_chunk_ids", [])}
+        return any((chunk_id := _answer_id(row)) is not None and chunk_id in rendered for row in rows)
+
+    if not grouped:
+        return {"answer_in_shell1_rate": 0.0, "answer_rendered_from_shell1_rate": 0.0}
+    return {
+        "answer_in_shell1_rate": float(sum(1 for rows in grouped.values() if in_shell(rows)) / len(grouped)),
+        "answer_rendered_from_shell1_rate": float(
+            sum(1 for rows in grouped.values() if rendered_from_shell(rows)) / len(grouped)
+        ),
+    }
+
+
+def _bridge_answer_metrics(answer_rows: list[dict[str, Any]]) -> dict[str, Any]:
+    grouped = _group_by_query(answer_rows)
+
+    def is_bridge_or_path(row: dict[str, Any]) -> bool:
+        return bool(row.get("answer_chunk_is_bridge")) or bool(row.get("answer_chunk_is_path_closure"))
+
+    bridge_rows = [row for row in answer_rows if is_bridge_or_path(row)]
+    rendered_rows = [row for row in bridge_rows if bool(row.get("answer_chunk_current_rendered"))]
+    cut_rows = [row for row in bridge_rows if bool(row.get("answer_chunk_dropped_by_budget"))]
+    ranks = [
+        float(row["answer_chunk_rank_before_budget"])
+        for row in bridge_rows
+        if isinstance(row.get("answer_chunk_rank_before_budget"), (int, float))
+        and not isinstance(row.get("answer_chunk_rank_before_budget"), bool)
+    ]
+    return {
+        "bridge_answer_chunk_count": len(bridge_rows),
+        "bridge_answer_rendered_count": len(rendered_rows),
+        "bridge_answer_cut_by_budget_count": len(cut_rows),
+        "bridge_answer_mean_render_rank": _mean(ranks),
+        "bridge_or_path_answer_retained_rate": _query_rate(
+            grouped,
+            lambda row: is_bridge_or_path(row) and bool(row.get("answer_chunk_current_rendered")),
+        ),
+        "bridge_or_path_answer_pushed_after_budget_rate": _query_rate(
+            grouped,
+            lambda row: is_bridge_or_path(row) and bool(row.get("answer_chunk_dropped_by_budget")),
+        ),
+        "semantic_order_pushed_bridge_after_budget_rate": _query_rate(
+            grouped,
+            lambda row: is_bridge_or_path(row) and bool(row.get("answer_chunk_dropped_by_budget")),
+        ),
+        "current_only_hidden_recovery_rate": _query_rate(
+            grouped,
+            lambda row: bool(row.get("answer_chunk_current_rendered"))
+            and not bool(row.get("answer_chunk_on_support_tree")),
+        ),
+        "answer_current_only_non_tree_rate": _query_rate(
+            grouped,
+            lambda row: bool(row.get("answer_chunk_current_rendered"))
+            and not bool(row.get("answer_chunk_on_support_tree")),
+        ),
+    }
+
+
 def _augment_carrier_rows(
     *,
     rows: list[dict[str, Any]],
@@ -139,6 +234,10 @@ def _metrics(
 
     score_mixing = any(bool(diag.get("score_mixing_detected", False)) for diag in diagnostics)
     embedding_missing_rate = mean_diag("embedding_missing_rate")
+    shell_metrics = _shell_answer_metrics(retrieval_rows=retrieval_rows, answer_rows=answer_rows)
+    bridge_metrics = _bridge_answer_metrics(answer_rows)
+    generation_ms = float(qa_metrics.get("avg_generation_ms", 0.0))
+    retrieval_ms = _mean(retrieval_ms_values)
     return {
         "num_queries": int(qa_metrics.get("num_queries", carrier.get("num_queries", 0))),
         "graph_variant": "entity_chunk_reference",
@@ -158,6 +257,9 @@ def _metrics(
             *TREE_ORACLE_RENDERERS,
         },
         "uses_gold_label": renderer_mode == "gold_chunk_role_oracle",
+        "qa_prompt_name": qa_metrics.get("qa_prompt_name", qa_metrics.get("prompt_id")),
+        "qa_prompt_hash": qa_metrics.get("qa_prompt_hash"),
+        "qa_prompt_text_exact_match": bool(qa_metrics.get("qa_prompt_text_exact_match", False)),
         "qa_f1": float(qa_metrics.get("mean_f1", 0.0)),
         "answer_in_context": float(qa_metrics.get("mean_answer_coverage", 0.0)),
         "rendered_recall": float(qa_metrics.get("mean_context_recall", 0.0)),
@@ -165,9 +267,11 @@ def _metrics(
         "avg_context_tokens": float(
             _mean(oracle_context_tokens)
             if oracle_context_tokens
-            else qa_metrics.get("avg_context_tokens", 0.0)
+                else qa_metrics.get("avg_context_tokens", 0.0)
         ),
-        "retrieval_ms": _mean(retrieval_ms_values),
+        "retrieval_ms": retrieval_ms,
+        "generation_ms": generation_ms,
+        "total_ms": retrieval_ms + generation_ms,
         "triangle_inequality_violation_count": 0,
         "oracle_leakage_count": 0,
         "score_mixing_detected": bool(score_mixing),
@@ -176,9 +280,12 @@ def _metrics(
         "shell1_chunk_count": mean_diag("shell1_chunk_count"),
         "shell2_chunk_count": mean_diag("shell2_chunk_count"),
         "rendered_shell1_chunk_count": mean_diag("rendered_shell1_chunk_count"),
+        "answer_on_support_tree_rate": float(carrier.get("answer_chunk_support_tree_rate", 0.0)),
         "local_objective_invalid_count": 0,
         "answer_carrier_attribution": carrier,
         "support_tree_carrier": support_tree_carrier,
+        **shell_metrics,
+        **bridge_metrics,
         **carrier,
         **support_tree_carrier,
         "qa_metrics": qa_metrics,

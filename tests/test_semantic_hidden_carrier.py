@@ -23,6 +23,7 @@ def test_semantic_hidden_carrier_groups_current_only_and_tree_chunks() -> None:
             _node("c_answer_tree", "nile appears on tree", [1.0, 0.0]),
             _node("c_tree_other", "tree filler", [0.5, 0.5]),
             _node("c_projected_answer", "nile projected", [1.0, 0.0]),
+            _node("c_shell_other", "shell filler", [0.0, 1.0]),
         ),
         gold_node_ids=frozenset({"c_answer_tree"}),
         answer="nile",
@@ -36,12 +37,18 @@ def test_semantic_hidden_carrier_groups_current_only_and_tree_chunks() -> None:
         },
     }
 
-    rows = semantic_hidden_carrier_rows(example=example, current_row=row)
+    rows = semantic_hidden_carrier_rows(
+        example=example,
+        current_row=row,
+        shell1_chunk_ids=["c_projected_answer", "c_shell_other"],
+    )
     by_group = {item["group"]: item for item in rows}
 
     assert by_group["current_only_answer"]["chunk_id"] == "c_answer_current"
     assert by_group["current_only_non_answer"]["chunk_id"] == "c_non_answer_current"
     assert by_group["tree_answer"]["on_support_tree"] is True
+    assert by_group["shell1_answer"]["chunk_id"] == "c_projected_answer"
+    assert by_group["shell1_non_answer"]["chunk_id"] == "c_shell_other"
     assert by_group["projected_nonrendered_answer"]["current_rendered"] is False
     assert by_group["current_only_answer"]["d_ang_query_chunk"] == 0.0
 

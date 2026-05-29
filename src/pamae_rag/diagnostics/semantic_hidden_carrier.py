@@ -13,6 +13,8 @@ DistanceLookup = Callable[[str, str], float | None]
 SEMANTIC_CARRIER_GROUPS = (
     "current_only_answer",
     "current_only_non_answer",
+    "shell1_answer",
+    "shell1_non_answer",
     "tree_answer",
     "tree_non_answer",
     "projected_nonrendered_answer",
@@ -100,12 +102,14 @@ def semantic_hidden_carrier_rows(
     current_row: dict[str, Any],
     store: EmbeddingStore | None = None,
     distance_lookup: DistanceLookup | None = None,
+    shell1_chunk_ids: Iterable[Any] = (),
 ) -> list[dict[str, Any]]:
     store = store or EmbeddingStore.from_example(example)
     diagnostics = _diagnostics(current_row)
     current_chunks = _chunk_ids(example.nodes, current_row.get("context_node_ids", []))
     tree_chunks = _chunk_ids(example.nodes, diagnostics.get("refined_support_tree_node_ids", []))
     projected_chunks = _chunk_ids(example.nodes, diagnostics.get("projected_node_ids", []))
+    shell1_chunks = _chunk_ids(example.nodes, shell1_chunk_ids)
     answer_chunks = set(answer_containing_chunk_ids(example, example.nodes))
     gold_chunks = {str(node_id) for node_id in example.gold_node_ids}
 
@@ -113,6 +117,8 @@ def semantic_hidden_carrier_rows(
     groups = {
         "current_only_answer": current_only & answer_chunks,
         "current_only_non_answer": current_only - answer_chunks,
+        "shell1_answer": shell1_chunks & answer_chunks,
+        "shell1_non_answer": shell1_chunks - answer_chunks,
         "tree_answer": tree_chunks & answer_chunks,
         "tree_non_answer": tree_chunks - answer_chunks,
         "projected_nonrendered_answer": (projected_chunks & answer_chunks) - current_chunks,

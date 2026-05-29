@@ -81,7 +81,18 @@ def _stage_sets(
     rendered_ids = set(_ids(retrieval_row.get("context_node_ids", [])))
     support_tree_ids = set(_ids(path.get("support_tree_node_ids", [])))
     path_closure_ids = set(_ids(diagnostics.get("path_closure_node_ids", [])))
-    renderer_order = _ids(diagnostics.get("renderer_budget_order_node_ids", []))
+    renderer_order = _ids(
+        diagnostics.get(
+            "path_carrier_order_node_ids",
+            diagnostics.get(
+                "semantic_carrier_order_node_ids",
+                diagnostics.get(
+                    "semantic_weighted_order_node_ids",
+                    diagnostics.get("renderer_budget_order_node_ids", []),
+                ),
+            ),
+        )
+    )
     rank = {node_id: pos for pos, node_id in enumerate(renderer_order, start=1)}
     budget_saturated = bool(
         not diagnostics.get("node_budget_satisfied", True)
