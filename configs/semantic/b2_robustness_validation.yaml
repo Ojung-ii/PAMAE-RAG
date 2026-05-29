@@ -1,0 +1,45 @@
+experiment:
+  name: b2_semantic_carrier_robustness_validation
+  branch: validate/b2-semantic-carrier-robustness
+
+qa:
+  prompt_name: common_qa
+  prompt_hash: 31e4b446be8b00a4989078fb4a957bc61b19bf4b8014674e2baad4612cc4396d
+  prompt_text_exact_match_required: true
+
+embedding:
+  model_id: nvidia/NV-Embed-v2
+  embedding_dim: 4096
+  shared_query_chunk_space: true
+  normalized: true
+  legacy_128d_used: false
+
+method_boundary:
+  pamae_core_unchanged: true
+  graph_constraint: T_q union S1
+  semantic_ordering: query_angular_lexicographic
+  score_mixing_allowed: false
+  global_dense_topk_allowed: false
+  answer_or_gold_aware_retrieval_allowed: false
+
+variants:
+  reference: current_renderer
+  diagnostics:
+    - metric_path_carrier
+    - tree_shell1_graph_order
+  adoption_candidate: tree_shell1_semantic_query_order
+
+candidate_pool:
+  support_tree: "SPClosure(A_q union Theta_refined)"
+  shell1: "{u in U_q: d_G(u,T_q)=1}"
+  render_pool: "T_q union S1"
+
+adoption_gates:
+  qa_f1: ">= current_renderer"
+  answer_in_context: ">= current_renderer"
+  rendered_recall: ">= current_renderer"
+  context_f1: ">= current_renderer"
+  avg_context_tokens: "<= current_renderer * 1.10"
+  retrieval_ms: "<= current_renderer * 1.25"
+  oracle_leakage_count: 0
+  score_mixing_detected: false
