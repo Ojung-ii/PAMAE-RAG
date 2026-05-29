@@ -1,0 +1,726 @@
+{
+  "all_vectors_l2_normalized": true,
+  "batch_size": 8,
+  "cache_root": "outputs/semantic_embedding_cache/nvidia__NV_Embed_v2/hotpotqa",
+  "chunk_embedding_coverage_for_diagnostics": 1.0,
+  "chunk_text_format": "Title: <title>\nText: <chunk_text>",
+  "dataset": "hotpotqa",
+  "device": "cuda",
+  "elapsed_seconds": 424.149,
+  "embedding_dim": 4096,
+  "embedding_dim_match": true,
+  "embedding_missing_count": 0,
+  "instruction_template": null,
+  "model_id": "nvidia/NV-Embed-v2",
+  "model_path": "/home/dilab/.cache/huggingface/models--nvidia--NV-Embed-v2/snapshots/3fa59658547db50a1e8e3346cf057fd0c77ed6ef",
+  "model_revision": "3fa59658547db50a1e8e3346cf057fd0c77ed6ef",
+  "normalized": true,
+  "num_queries": 100,
+  "pooling": "nv_embed_encode",
+  "query_diagnostics": [
+    {
+      "query_id": "5abe953b5542993f32c2a170",
+      "required_chunk_count": 71,
+      "shell1_chunk_count": 67,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 4
+    },
+    {
+      "query_id": "5ab69f9a554299710c8d1ef8",
+      "required_chunk_count": 62,
+      "shell1_chunk_count": 59,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 3
+    },
+    {
+      "query_id": "5abc030e554299642a094bdc",
+      "required_chunk_count": 93,
+      "shell1_chunk_count": 87,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 6
+    },
+    {
+      "query_id": "5ae6c2285542995703ce8b9a",
+      "required_chunk_count": 73,
+      "shell1_chunk_count": 68,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 4
+    },
+    {
+      "query_id": "5ab57fc4554299488d4d99c0",
+      "required_chunk_count": 84,
+      "shell1_chunk_count": 79,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 4
+    },
+    {
+      "query_id": "5ade9c9c5542997c77adee8c",
+      "required_chunk_count": 82,
+      "shell1_chunk_count": 79,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 3
+    },
+    {
+      "query_id": "5a749af055429979e28829b7",
+      "required_chunk_count": 106,
+      "shell1_chunk_count": 101,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 5
+    },
+    {
+      "query_id": "5ae1389655429901ffe4ae05",
+      "required_chunk_count": 85,
+      "shell1_chunk_count": 80,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 5
+    },
+    {
+      "query_id": "5adcd4325542994d58a2f6ed",
+      "required_chunk_count": 39,
+      "shell1_chunk_count": 34,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 5
+    },
+    {
+      "query_id": "5a85c3225542992a431d1b95",
+      "required_chunk_count": 71,
+      "shell1_chunk_count": 67,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 4
+    },
+    {
+      "query_id": "5ab94bc2554299743d22eacf",
+      "required_chunk_count": 66,
+      "shell1_chunk_count": 61,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 4
+    },
+    {
+      "query_id": "5ae1f17e554299234fd04349",
+      "required_chunk_count": 40,
+      "shell1_chunk_count": 36,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 4
+    },
+    {
+      "query_id": "5ab3cecd5542992ade7c6eae",
+      "required_chunk_count": 76,
+      "shell1_chunk_count": 71,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 5
+    },
+    {
+      "query_id": "5a8835dc5542994846c1ce2b",
+      "required_chunk_count": 67,
+      "shell1_chunk_count": 63,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 4
+    },
+    {
+      "query_id": "5a714dea5542994082a3e7a9",
+      "required_chunk_count": 106,
+      "shell1_chunk_count": 101,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 5
+    },
+    {
+      "query_id": "5a8481945542997175ce1ed3",
+      "required_chunk_count": 74,
+      "shell1_chunk_count": 71,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 3
+    },
+    {
+      "query_id": "5a84574455429933447460e6",
+      "required_chunk_count": 121,
+      "shell1_chunk_count": 80,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 6
+    },
+    {
+      "query_id": "5a72b2dc5542992359bc3173",
+      "required_chunk_count": 81,
+      "shell1_chunk_count": 77,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 4
+    },
+    {
+      "query_id": "5a7a3a945542996a35c17147",
+      "required_chunk_count": 99,
+      "shell1_chunk_count": 91,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 4
+    },
+    {
+      "query_id": "5ade86b255429939a52fe8e0",
+      "required_chunk_count": 72,
+      "shell1_chunk_count": 67,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 5
+    },
+    {
+      "query_id": "5a8f5b6f554299458435d5e7",
+      "required_chunk_count": 128,
+      "shell1_chunk_count": 123,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 5
+    },
+    {
+      "query_id": "5ae40d405542996836b02c28",
+      "required_chunk_count": 60,
+      "shell1_chunk_count": 55,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 4
+    },
+    {
+      "query_id": "5a72334755429971e9dc934c",
+      "required_chunk_count": 68,
+      "shell1_chunk_count": 64,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 4
+    },
+    {
+      "query_id": "5ab8829d55429934fafe6e08",
+      "required_chunk_count": 103,
+      "shell1_chunk_count": 98,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 5
+    },
+    {
+      "query_id": "5a7b1c0a55429931da12c9c9",
+      "required_chunk_count": 74,
+      "shell1_chunk_count": 69,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 5
+    },
+    {
+      "query_id": "5ae40b2b55429970de88d8b3",
+      "required_chunk_count": 110,
+      "shell1_chunk_count": 103,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 5
+    },
+    {
+      "query_id": "5ab29c24554299449642c932",
+      "required_chunk_count": 80,
+      "shell1_chunk_count": 76,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 4
+    },
+    {
+      "query_id": "5ae26fad554299495565da6f",
+      "required_chunk_count": 64,
+      "shell1_chunk_count": 59,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 5
+    },
+    {
+      "query_id": "5a7542425542996c70cfaecc",
+      "required_chunk_count": 66,
+      "shell1_chunk_count": 62,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 4
+    },
+    {
+      "query_id": "5adecc7755429975fa854f9d",
+      "required_chunk_count": 62,
+      "shell1_chunk_count": 58,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 4
+    },
+    {
+      "query_id": "5abff9905542997d64295980",
+      "required_chunk_count": 63,
+      "shell1_chunk_count": 60,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 3
+    },
+    {
+      "query_id": "5ab5f372554299488d4d9a60",
+      "required_chunk_count": 60,
+      "shell1_chunk_count": 56,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 4
+    },
+    {
+      "query_id": "5a7558425542992db9473647",
+      "required_chunk_count": 118,
+      "shell1_chunk_count": 113,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 4
+    },
+    {
+      "query_id": "5a72f45a5542992359bc31e6",
+      "required_chunk_count": 67,
+      "shell1_chunk_count": 57,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 4
+    },
+    {
+      "query_id": "5a83411655429966c78a6b5d",
+      "required_chunk_count": 75,
+      "shell1_chunk_count": 70,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 4
+    },
+    {
+      "query_id": "5a77aa095542995d83181260",
+      "required_chunk_count": 89,
+      "shell1_chunk_count": 85,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 4
+    },
+    {
+      "query_id": "5ae680cc5542996d980e7ba5",
+      "required_chunk_count": 77,
+      "shell1_chunk_count": 72,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 5
+    },
+    {
+      "query_id": "5ae4d3c95542990ba0bbb165",
+      "required_chunk_count": 76,
+      "shell1_chunk_count": 72,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 4
+    },
+    {
+      "query_id": "5a790d8f554299029c4b5eec",
+      "required_chunk_count": 69,
+      "shell1_chunk_count": 64,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 5
+    },
+    {
+      "query_id": "5a717d4c5542994082a3e854",
+      "required_chunk_count": 87,
+      "shell1_chunk_count": 82,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 4
+    },
+    {
+      "query_id": "5a77322055429972597f1494",
+      "required_chunk_count": 68,
+      "shell1_chunk_count": 62,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 5
+    },
+    {
+      "query_id": "5ae163b3554299422ee99678",
+      "required_chunk_count": 83,
+      "shell1_chunk_count": 78,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 5
+    },
+    {
+      "query_id": "5a77cb335542997042120b3a",
+      "required_chunk_count": 73,
+      "shell1_chunk_count": 69,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 4
+    },
+    {
+      "query_id": "5ae4a0ca5542995ad6573dcb",
+      "required_chunk_count": 74,
+      "shell1_chunk_count": 56,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 4
+    },
+    {
+      "query_id": "5a84e21d5542997b5ce3ff7c",
+      "required_chunk_count": 104,
+      "shell1_chunk_count": 98,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 5
+    },
+    {
+      "query_id": "5a797bd95542994bb9457016",
+      "required_chunk_count": 102,
+      "shell1_chunk_count": 87,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 5
+    },
+    {
+      "query_id": "5a84973e5542992a431d1a67",
+      "required_chunk_count": 81,
+      "shell1_chunk_count": 76,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 5
+    },
+    {
+      "query_id": "5a7736bc554299373536021b",
+      "required_chunk_count": 68,
+      "shell1_chunk_count": 64,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 4
+    },
+    {
+      "query_id": "5add7c9c5542990dbb2f7e60",
+      "required_chunk_count": 95,
+      "shell1_chunk_count": 90,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 5
+    },
+    {
+      "query_id": "5a7d3470554299452d57bb56",
+      "required_chunk_count": 83,
+      "shell1_chunk_count": 79,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 4
+    },
+    {
+      "query_id": "5ab3a83d5542992ade7c6e08",
+      "required_chunk_count": 67,
+      "shell1_chunk_count": 64,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 3
+    },
+    {
+      "query_id": "5a8a2a5555429930ff3c0ccc",
+      "required_chunk_count": 67,
+      "shell1_chunk_count": 62,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 4
+    },
+    {
+      "query_id": "5ae526c455429908b6326529",
+      "required_chunk_count": 95,
+      "shell1_chunk_count": 90,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 5
+    },
+    {
+      "query_id": "5a8031c1554299485f598585",
+      "required_chunk_count": 97,
+      "shell1_chunk_count": 92,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 5
+    },
+    {
+      "query_id": "5ac3bd0c554299204fd21e21",
+      "required_chunk_count": 84,
+      "shell1_chunk_count": 81,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 3
+    },
+    {
+      "query_id": "5ae7281c5542991e8301cb69",
+      "required_chunk_count": 97,
+      "shell1_chunk_count": 90,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 5
+    },
+    {
+      "query_id": "5abcf14f55429959677d6b5b",
+      "required_chunk_count": 72,
+      "shell1_chunk_count": 67,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 5
+    },
+    {
+      "query_id": "5ae0818e55429924de1b70e9",
+      "required_chunk_count": 92,
+      "shell1_chunk_count": 87,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 5
+    },
+    {
+      "query_id": "5adc46665542994650320cc8",
+      "required_chunk_count": 105,
+      "shell1_chunk_count": 94,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 5
+    },
+    {
+      "query_id": "5ac00278554299012d1db56b",
+      "required_chunk_count": 73,
+      "shell1_chunk_count": 63,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 4
+    },
+    {
+      "query_id": "5a7b3fc155429931da12ca3a",
+      "required_chunk_count": 57,
+      "shell1_chunk_count": 54,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 3
+    },
+    {
+      "query_id": "5ae7f0c75542994a481bbe44",
+      "required_chunk_count": 81,
+      "shell1_chunk_count": 76,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 5
+    },
+    {
+      "query_id": "5ab8854555429934fafe6e0c",
+      "required_chunk_count": 67,
+      "shell1_chunk_count": 60,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 4
+    },
+    {
+      "query_id": "5a84fd085542994c784ddaba",
+      "required_chunk_count": 81,
+      "shell1_chunk_count": 76,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 5
+    },
+    {
+      "query_id": "5adc6a3b55429947ff173953",
+      "required_chunk_count": 131,
+      "shell1_chunk_count": 121,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 6
+    },
+    {
+      "query_id": "5a7732dc55429972597f149b",
+      "required_chunk_count": 86,
+      "shell1_chunk_count": 81,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 5
+    },
+    {
+      "query_id": "5ac3ce74554299204fd21e71",
+      "required_chunk_count": 103,
+      "shell1_chunk_count": 98,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 4
+    },
+    {
+      "query_id": "5a8cee9b554299441c6b9f87",
+      "required_chunk_count": 69,
+      "shell1_chunk_count": 65,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 4
+    },
+    {
+      "query_id": "5ae7ff745542994a481bbe6e",
+      "required_chunk_count": 111,
+      "shell1_chunk_count": 104,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 6
+    },
+    {
+      "query_id": "5a88a1bb5542997e5c09a64c",
+      "required_chunk_count": 104,
+      "shell1_chunk_count": 96,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 6
+    },
+    {
+      "query_id": "5a88f7bf5542997e5c09a6dd",
+      "required_chunk_count": 73,
+      "shell1_chunk_count": 66,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 4
+    },
+    {
+      "query_id": "5ab545d3554299494045ef5c",
+      "required_chunk_count": 111,
+      "shell1_chunk_count": 104,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 5
+    },
+    {
+      "query_id": "5a8e41735542995085b37406",
+      "required_chunk_count": 82,
+      "shell1_chunk_count": 76,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 5
+    },
+    {
+      "query_id": "5a85df525542994c784ddb9f",
+      "required_chunk_count": 90,
+      "shell1_chunk_count": 85,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 5
+    },
+    {
+      "query_id": "5a86b13f55429960ec39b6c3",
+      "required_chunk_count": 78,
+      "shell1_chunk_count": 73,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 5
+    },
+    {
+      "query_id": "5a78d35e55429974737f78c3",
+      "required_chunk_count": 88,
+      "shell1_chunk_count": 83,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 5
+    },
+    {
+      "query_id": "5a8b45765542995d1e6f1333",
+      "required_chunk_count": 76,
+      "shell1_chunk_count": 69,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 5
+    },
+    {
+      "query_id": "5ade56ed5542997c77adee04",
+      "required_chunk_count": 97,
+      "shell1_chunk_count": 93,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 4
+    },
+    {
+      "query_id": "5ab3b42c5542992ade7c6e4f",
+      "required_chunk_count": 72,
+      "shell1_chunk_count": 68,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 4
+    },
+    {
+      "query_id": "5ae7535c5542997b22f6a6d8",
+      "required_chunk_count": 89,
+      "shell1_chunk_count": 69,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 4
+    },
+    {
+      "query_id": "5a7b88b45542997c3ec97201",
+      "required_chunk_count": 112,
+      "shell1_chunk_count": 106,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 6
+    },
+    {
+      "query_id": "5ae6fee3554299572ea54670",
+      "required_chunk_count": 90,
+      "shell1_chunk_count": 76,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 6
+    },
+    {
+      "query_id": "5ab3bcc55542992ade7c6e66",
+      "required_chunk_count": 103,
+      "shell1_chunk_count": 72,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 5
+    },
+    {
+      "query_id": "5a7f33115542992e7d278c84",
+      "required_chunk_count": 49,
+      "shell1_chunk_count": 45,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 3
+    },
+    {
+      "query_id": "5ae7793c554299540e5a55c2",
+      "required_chunk_count": 102,
+      "shell1_chunk_count": 97,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 5
+    },
+    {
+      "query_id": "5ae1d32a554299492dc91b9c",
+      "required_chunk_count": 121,
+      "shell1_chunk_count": 85,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 4
+    },
+    {
+      "query_id": "5ae12aa6554299422ee99617",
+      "required_chunk_count": 77,
+      "shell1_chunk_count": 74,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 3
+    },
+    {
+      "query_id": "5ae0ce4e554299603e41845f",
+      "required_chunk_count": 84,
+      "shell1_chunk_count": 80,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 4
+    },
+    {
+      "query_id": "5a73987c55429978a71e9039",
+      "required_chunk_count": 87,
+      "shell1_chunk_count": 81,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 4
+    },
+    {
+      "query_id": "5adcdf455542994ed6169c11",
+      "required_chunk_count": 76,
+      "shell1_chunk_count": 70,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 6
+    },
+    {
+      "query_id": "5a8a48ee55429930ff3c0d66",
+      "required_chunk_count": 107,
+      "shell1_chunk_count": 91,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 6
+    },
+    {
+      "query_id": "5a8efb5a55429918e830d172",
+      "required_chunk_count": 112,
+      "shell1_chunk_count": 107,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 5
+    },
+    {
+      "query_id": "5a72a6d855429901807daf27",
+      "required_chunk_count": 69,
+      "shell1_chunk_count": 65,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 4
+    },
+    {
+      "query_id": "5ae791ef55429952e35ea979",
+      "required_chunk_count": 110,
+      "shell1_chunk_count": 80,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 6
+    },
+    {
+      "query_id": "5ac3b4e0554299741d48a2ec",
+      "required_chunk_count": 68,
+      "shell1_chunk_count": 64,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 4
+    },
+    {
+      "query_id": "5ab55a9b5542992aa134a2ba",
+      "required_chunk_count": 88,
+      "shell1_chunk_count": 83,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 5
+    },
+    {
+      "query_id": "5a79fc8b5542994f819ef114",
+      "required_chunk_count": 63,
+      "shell1_chunk_count": 58,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 5
+    },
+    {
+      "query_id": "5abdb4a755429965af743df0",
+      "required_chunk_count": 84,
+      "shell1_chunk_count": 79,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 4
+    },
+    {
+      "query_id": "5ae604ec5542996de7b71af9",
+      "required_chunk_count": 107,
+      "shell1_chunk_count": 101,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 5
+    },
+    {
+      "query_id": "5a857cf35542994c784ddb1d",
+      "required_chunk_count": 102,
+      "shell1_chunk_count": 92,
+      "shell2_chunk_count": 0,
+      "support_tree_chunk_count": 5
+    }
+  ],
+  "query_embedding_coverage": 1.0,
+  "query_text_format": "raw_question",
+  "required_chunk_count": 5082,
+  "uses_official_model_instruction_wrapper": false
+}

@@ -1,0 +1,40 @@
+{
+  "embedding": {
+    "all_vectors_l2_normalized": true,
+    "chunk_embedding_coverage_for_diagnostics": 1.0,
+    "chunk_text_format": "Title: <title>\nText: <chunk_text>",
+    "embedding_dim": 4096,
+    "embedding_dim_match": true,
+    "embedding_missing_count": 0,
+    "model_id": "nvidia/NV-Embed-v2",
+    "model_revision": "3fa59658547db50a1e8e3346cf057fd0c77ed6ef",
+    "normalized": true,
+    "pooling": "nv_embed_encode",
+    "query_embedding_coverage": 1.0,
+    "query_text_format": "raw_question"
+  },
+  "pool_sizes": {
+    "answer_in_shell1_rate": 0.45,
+    "answer_in_shell2_rate": 0.0,
+    "answer_on_support_tree_rate": 0.57,
+    "avg_shell1_chunks": 77.09,
+    "avg_shell2_chunks": 0.0,
+    "avg_support_tree_chunks": 4.52
+  },
+  "semantic_hidden_carrier": {
+    "mean_d_ang_query_current_only_answer": 0.3561934015131369,
+    "mean_d_ang_query_current_only_non_answer": 0.41671642612591325,
+    "mean_d_ang_tree_current_only_answer": 0.338090617521222,
+    "mean_d_ang_tree_current_only_non_answer": 0.3809951812283744,
+    "median_d_ang_query_current_only_answer": 0.3522057019264505,
+    "median_d_ang_query_current_only_non_answer": 0.4203101173229947,
+    "median_d_ang_tree_current_only_answer": 0.3325485212618684,
+    "median_d_ang_tree_current_only_non_answer": 0.3852165860586445,
+    "semantic_attribution_row_count": 1061,
+    "semantic_query_signal_available": true,
+    "semantic_separation_query": 0.060523024612776366,
+    "semantic_separation_tree": 0.0429045637071524,
+    "semantic_signal_available": true,
+    "semantic_tree_signal_available": true
+  }
+}
