@@ -110,6 +110,7 @@ def _metrics(
     *,
     renderer_mode: str,
     qa_metrics: dict[str, Any],
+    retrieval_rows: list[dict[str, Any]],
     answer_rows: list[dict[str, Any]],
     gold_rows: list[dict[str, Any]],
     role_rows: list[dict[str, Any]],
@@ -122,6 +123,22 @@ def _metrics(
         renderer_role_rows=role_rows,
     )
     support_tree_carrier = aggregate_support_tree_carrier_traces(support_rows)
+    diagnostics = [
+        row.get("diagnostics", {})
+        for row in retrieval_rows
+        if isinstance(row.get("diagnostics"), dict)
+    ]
+
+    def mean_diag(key: str) -> float:
+        values = [
+            float(diag.get(key))
+            for diag in diagnostics
+            if isinstance(diag.get(key), (int, float)) and not isinstance(diag.get(key), bool)
+        ]
+        return _mean(values)
+
+    score_mixing = any(bool(diag.get("score_mixing_detected", False)) for diag in diagnostics)
+    embedding_missing_rate = mean_diag("embedding_missing_rate")
     return {
         "num_queries": int(qa_metrics.get("num_queries", carrier.get("num_queries", 0))),
         "graph_variant": "entity_chunk_reference",
@@ -153,6 +170,12 @@ def _metrics(
         "retrieval_ms": _mean(retrieval_ms_values),
         "triangle_inequality_violation_count": 0,
         "oracle_leakage_count": 0,
+        "score_mixing_detected": bool(score_mixing),
+        "embedding_missing_rate": embedding_missing_rate,
+        "support_tree_chunk_count": mean_diag("support_tree_chunk_count"),
+        "shell1_chunk_count": mean_diag("shell1_chunk_count"),
+        "shell2_chunk_count": mean_diag("shell2_chunk_count"),
+        "rendered_shell1_chunk_count": mean_diag("rendered_shell1_chunk_count"),
         "local_objective_invalid_count": 0,
         "answer_carrier_attribution": carrier,
         "support_tree_carrier": support_tree_carrier,
@@ -275,6 +298,7 @@ def run_variant(
     metrics = _metrics(
         renderer_mode=renderer_mode,
         qa_metrics=qa_metrics.to_json(),
+        retrieval_rows=retrieval_rows,
         answer_rows=answer_rows,
         gold_rows=gold_rows,
         role_rows=role_rows,
