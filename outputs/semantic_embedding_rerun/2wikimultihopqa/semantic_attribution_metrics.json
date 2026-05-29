@@ -14,26 +14,26 @@
     "query_text_format": "raw_question"
   },
   "pool_sizes": {
-    "answer_in_shell1_rate": 0.28,
+    "answer_in_shell1_rate": 0.26,
     "answer_in_shell2_rate": 0.0,
-    "answer_on_support_tree_rate": 0.36,
-    "avg_shell1_chunks": 76.08,
+    "answer_on_support_tree_rate": 0.4,
+    "avg_shell1_chunks": 73.07,
     "avg_shell2_chunks": 0.0,
-    "avg_support_tree_chunks": 4.62
+    "avg_support_tree_chunks": 4.5
   },
   "semantic_hidden_carrier": {
-    "mean_d_ang_query_current_only_answer": 0.3981885387492474,
-    "mean_d_ang_query_current_only_non_answer": 0.43469480470677246,
-    "mean_d_ang_tree_current_only_answer": 0.3023377331090543,
-    "mean_d_ang_tree_current_only_non_answer": 0.3837566453258578,
-    "median_d_ang_query_current_only_answer": 0.3981885387492474,
-    "median_d_ang_query_current_only_non_answer": 0.4415783020456753,
-    "median_d_ang_tree_current_only_answer": 0.3023377331090543,
-    "median_d_ang_tree_current_only_non_answer": 0.3996155402024916,
-    "semantic_attribution_row_count": 497,
+    "mean_d_ang_query_current_only_answer": 0.43683963985544594,
+    "mean_d_ang_query_current_only_non_answer": 0.4301428791971571,
+    "mean_d_ang_tree_current_only_answer": 0.3689624020097766,
+    "mean_d_ang_tree_current_only_non_answer": 0.3819742552243247,
+    "median_d_ang_query_current_only_answer": 0.4496447757582181,
+    "median_d_ang_query_current_only_non_answer": 0.434399471277536,
+    "median_d_ang_tree_current_only_answer": 0.37075534589703585,
+    "median_d_ang_tree_current_only_non_answer": 0.39218985765499265,
+    "semantic_attribution_row_count": 1064,
     "semantic_query_signal_available": true,
-    "semantic_separation_query": 0.03650626595752504,
-    "semantic_separation_tree": 0.08141891221680347,
+    "semantic_separation_query": -0.006696760658288836,
+    "semantic_separation_tree": 0.01301185321454812,
     "semantic_signal_available": true,
     "semantic_tree_signal_available": true
   }
