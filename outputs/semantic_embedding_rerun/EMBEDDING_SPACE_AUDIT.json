@@ -1,0 +1,61 @@
+{
+  "existing_embeddings": {
+    "existing_cache_usable_for_semantic_query_chunk": false,
+    "existing_chunk_count": 6000,
+    "existing_chunk_embedding_dim": 128,
+    "existing_chunk_embedding_dim_values": [
+      128
+    ],
+    "existing_chunk_embedding_found": true,
+    "existing_model_id": null,
+    "existing_model_revision": null,
+    "existing_normalization": null,
+    "existing_pooling": null,
+    "existing_query_embedding_found": false,
+    "reason": "missing query embeddings or unknown provenance"
+  },
+  "input": "data/processed/2wikimultihopqa/examples_100.jsonl",
+  "limit": 10,
+  "model_selection": {
+    "nv_embed_v2": {
+      "config_found": true,
+      "local_found": true,
+      "model_id": "nvidia/NV-Embed-v2",
+      "model_slug": "nvidia__NV_Embed_v2",
+      "reason": "local snapshot is complete",
+      "revision": "3fa59658547db50a1e8e3346cf057fd0c77ed6ef",
+      "snapshot_path": "/home/dilab/.cache/huggingface/models--nvidia--NV-Embed-v2/snapshots/3fa59658547db50a1e8e3346cf057fd0c77ed6ef",
+      "tokenizer_found": true,
+      "usable_for_generation": true,
+      "weights_found": true
+    },
+    "qwen3_embedding_8b": {
+      "config_found": false,
+      "local_found": false,
+      "model_id": "Qwen/Qwen3-Embedding-8B",
+      "model_slug": "Qwen__Qwen3_Embedding_8B",
+      "reason": "no local Hugging Face snapshot found",
+      "revision": null,
+      "snapshot_path": null,
+      "tokenizer_found": false,
+      "usable_for_generation": false,
+      "weights_found": false
+    },
+    "selected_model": {
+      "config_found": true,
+      "local_found": true,
+      "model_id": "nvidia/NV-Embed-v2",
+      "model_slug": "nvidia__NV_Embed_v2",
+      "reason": "local snapshot is complete",
+      "revision": "3fa59658547db50a1e8e3346cf057fd0c77ed6ef",
+      "snapshot_path": "/home/dilab/.cache/huggingface/models--nvidia--NV-Embed-v2/snapshots/3fa59658547db50a1e8e3346cf057fd0c77ed6ef",
+      "tokenizer_found": true,
+      "usable_for_generation": true,
+      "weights_found": true
+    },
+    "selected_model_id": "nvidia/NV-Embed-v2",
+    "selected_model_path": "/home/dilab/.cache/huggingface/models--nvidia--NV-Embed-v2/snapshots/3fa59658547db50a1e8e3346cf057fd0c77ed6ef",
+    "selected_model_revision": "3fa59658547db50a1e8e3346cf057fd0c77ed6ef",
+    "selection_reason": "valid local NV-Embed-v2 snapshot supports query and chunk generation"
+  }
+}
