@@ -126,6 +126,8 @@ class CompatibleEmbeddingCache:
         self.query_index_path = self.root / "query_index.json"
         self.chunk_index_path = self.root / "chunk_index.json"
         self._metadata: CompatibleEmbeddingMetadata | None = None
+        self._query_index: dict[str, str] | None = None
+        self._chunk_index: dict[str, str] | None = None
         if self.metadata_path.exists():
             self._metadata = CompatibleEmbeddingMetadata.from_json(
                 json.loads(self.metadata_path.read_text(encoding="utf-8"))
@@ -166,10 +168,18 @@ class CompatibleEmbeddingCache:
             )
         return normalized.astype(np.float32)
 
+    def _index(self, *, kind: str) -> dict[str, str]:
+        if kind == "query":
+            if self._query_index is None:
+                self._query_index = _load_index(self.query_index_path)
+            return self._query_index
+        if self._chunk_index is None:
+            self._chunk_index = _load_index(self.chunk_index_path)
+        return self._chunk_index
+
     def _get(self, *, key: str, kind: str) -> np.ndarray | None:
-        index_path = self.query_index_path if kind == "query" else self.chunk_index_path
         base_dir = self.query_dir if kind == "query" else self.chunk_dir
-        index = _load_index(index_path)
+        index = self._index(kind=kind)
         rel = index.get(str(key))
         if rel is None:
             return None
@@ -182,7 +192,7 @@ class CompatibleEmbeddingCache:
         index_path = self.query_index_path if kind == "query" else self.chunk_index_path
         base_dir = self.query_dir if kind == "query" else self.chunk_dir
         base_dir.mkdir(parents=True, exist_ok=True)
-        index = _load_index(index_path)
+        index = self._index(kind=kind)
         name = index.get(str(key), _safe_name(str(key)))
         np.save(base_dir / name, self._validate_vector(vector))
         index[str(key)] = name
@@ -196,6 +206,23 @@ class CompatibleEmbeddingCache:
 
     def get_chunk(self, node_id: str) -> np.ndarray | None:
         return self._get(key=node_id, kind="chunk")
+
+    def get_chunks(self, node_ids: Iterable[str]) -> tuple[dict[str, np.ndarray], list[str]]:
+        index = self._index(kind="chunk")
+        requested = list(dict.fromkeys(str(node_id) for node_id in node_ids))
+        found: dict[str, np.ndarray] = {}
+        missing: list[str] = []
+        for node_id in requested:
+            rel = index.get(node_id)
+            if rel is None:
+                missing.append(node_id)
+                continue
+            path = self.chunk_dir / rel
+            if not path.exists():
+                missing.append(node_id)
+                continue
+            found[node_id] = self._validate_vector(np.load(path))
+        return found, missing
 
     def set_chunk(self, node_id: str, vector: Sequence[float] | np.ndarray) -> None:
         self._set(key=node_id, vector=vector, kind="chunk")
@@ -217,15 +244,8 @@ class CompatibleEmbeddingCache:
             self.set_chunk(str(node.node_id), vector)
 
     def embedding_store_for_example(self, example: QueryExample, node_ids: Iterable[str]) -> EmbeddingStore:
-        node_embeddings: dict[str, np.ndarray] = {}
-        missing: list[str] = []
         requested = list(dict.fromkeys(str(node_id) for node_id in node_ids))
-        for node_id in requested:
-            vector = self.get_chunk(node_id)
-            if vector is None:
-                missing.append(node_id)
-            else:
-                node_embeddings[node_id] = vector
+        node_embeddings, missing = self.get_chunks(requested)
         return EmbeddingStore(
             node_embeddings=node_embeddings,
             query_embedding=self.get_query(example.query_id),
@@ -262,7 +282,15 @@ def cache_from_env() -> CompatibleEmbeddingCache | None:
     path = Path(value)
     if not (path / "metadata.json").exists():
         return None
-    return CompatibleEmbeddingCache(path)
+    key = str(path.resolve())
+    cache = _CACHE_FROM_ENV.get(key)
+    if cache is None:
+        cache = CompatibleEmbeddingCache(path)
+        _CACHE_FROM_ENV[key] = cache
+    return cache
+
+
+_CACHE_FROM_ENV: dict[str, CompatibleEmbeddingCache] = {}
 
 
 def make_metadata(
