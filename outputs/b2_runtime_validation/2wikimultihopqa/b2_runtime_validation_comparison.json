@@ -1,0 +1,1548 @@
+{
+  "branch": "optimize-b2-runtime-validation",
+  "commit": "af77c17",
+  "datasets": [
+    {
+      "dataset": "2wikimultihopqa",
+      "equivalence": {
+        "all_context_hash_match": true,
+        "all_rendered_match": true,
+        "context_hash_match_rate": 1.0,
+        "diagnostic_metrics": {
+          "answer_in_context": 0.48,
+          "avg_context_tokens": 375.94,
+          "candidate_pool_size": 81.46,
+          "context_f1": 0.2993174603174603,
+          "em": 0.0,
+          "embedding_missing_rate": 0.0,
+          "generation_ms": 0.3727799999999999,
+          "graph_variant": "entity_chunk_reference",
+          "mode": "diagnostic",
+          "num_queries": 50,
+          "oracle_leakage_count": 0,
+          "qa_f1": 0.06095939127703833,
+          "qa_prompt_hash": "31e4b446be8b00a4989078fb4a957bc61b19bf4b8014674e2baad4612cc4396d",
+          "qa_prompt_name": "common_qa",
+          "qa_prompt_text_exact_match": true,
+          "query_embedding_cache_hit_rate": 1.0,
+          "rendered_recall": 0.645,
+          "rendered_shell1_chunk_count": 3.46,
+          "renderer_mode": "tree_shell1_semantic_query_order",
+          "retrieval_ms": 2026.87356,
+          "runtime_mode": "diagnostic",
+          "runtime_profile": {
+            "mean": {
+              "candidate_embedding_lookup_count": 81.46,
+              "candidate_pool_size": 81.46,
+              "duplicate_embedding_lookup_avoided": 0.0,
+              "query_embedding_cache_hit_rate": 1.0,
+              "query_embedding_cache_miss_count": 0.0,
+              "rendered_chunk_count": 7.86,
+              "rendered_shell1_chunk_count": 3.46,
+              "shell1_chunk_count": 76.92,
+              "support_tree_chunk_count": 4.54,
+              "time_anchor_ms": 1586.126038658549,
+              "time_core_retrieval_ms": 1695.783772218856,
+              "time_diagnostics_logging_ms": 0.0,
+              "time_embedding_lookup_ms": 14.635078659921419,
+              "time_query_embedding_ms": 0.0,
+              "time_refinement_ms": 12.32049711921718,
+              "time_rendering_ms": 35.769949580717366,
+              "time_semantic_ordering_ms": 0.8967047018813901,
+              "time_shell1_construction_ms": 10.221763560839463,
+              "time_support_tree_ms": 10.221763560839463,
+              "time_total_retrieval_ms": 2026.0944765398744,
+              "unique_candidate_embedding_count": 81.46
+            },
+            "num_queries": 50,
+            "top_two_contributors": [
+              {
+                "mean_ms": 1695.783772218856,
+                "name": "time_core_retrieval_ms"
+              },
+              {
+                "mean_ms": 1586.126038658549,
+                "name": "time_anchor_ms"
+              }
+            ]
+          },
+          "score_mixing_detected": false,
+          "shell1_chunk_count": 76.92,
+          "support_tree_chunk_count": 4.54,
+          "time_diagnostics_logging_ms": 0.0,
+          "time_embedding_lookup_ms": 14.635078659921419,
+          "time_query_embedding_ms": 0.0,
+          "time_semantic_ordering_ms": 0.8967047018813901,
+          "time_shell1_construction_ms": 10.221763560839463,
+          "time_total_retrieval_ms": 2026.0944765398744,
+          "total_ms": 2027.24634,
+          "variant": "tree_shell1_semantic_query_order"
+        },
+        "production_metrics": {
+          "answer_in_context": 0.48,
+          "avg_context_tokens": 375.94,
+          "candidate_pool_size": 81.46,
+          "context_f1": 0.2993174603174603,
+          "em": 0.0,
+          "embedding_missing_rate": 0.0,
+          "generation_ms": 0.3621600000000001,
+          "graph_variant": "entity_chunk_reference",
+          "mode": "production",
+          "num_queries": 50,
+          "oracle_leakage_count": 0,
+          "qa_f1": 0.06095939127703833,
+          "qa_prompt_hash": "31e4b446be8b00a4989078fb4a957bc61b19bf4b8014674e2baad4612cc4396d",
+          "qa_prompt_name": "common_qa",
+          "qa_prompt_text_exact_match": true,
+          "query_embedding_cache_hit_rate": 1.0,
+          "rendered_recall": 0.645,
+          "rendered_shell1_chunk_count": 3.46,
+          "renderer_mode": "tree_shell1_semantic_query_order",
+          "retrieval_ms": 1956.9462000000005,
+          "runtime_mode": "production",
+          "runtime_profile": {
+            "mean": {
+              "candidate_embedding_lookup_count": 81.46,
+              "candidate_pool_size": 81.46,
+              "duplicate_embedding_lookup_avoided": 0.0,
+              "query_embedding_cache_hit_rate": 1.0,
+              "query_embedding_cache_miss_count": 0.0,
+              "rendered_chunk_count": 7.86,
+              "rendered_shell1_chunk_count": 3.46,
+              "shell1_chunk_count": 76.92,
+              "support_tree_chunk_count": 4.54,
+              "time_anchor_ms": 1612.2808086191071,
+              "time_core_retrieval_ms": 1712.3795526413596,
+              "time_diagnostics_logging_ms": 0.0,
+              "time_embedding_lookup_ms": 16.88771385961445,
+              "time_query_embedding_ms": 0.0,
+              "time_refinement_ms": 10.433637659880333,
+              "time_rendering_ms": 33.638419880589936,
+              "time_semantic_ordering_ms": 1.1410520001663826,
+              "time_shell1_construction_ms": 11.259973340202123,
+              "time_support_tree_ms": 11.259973340202123,
+              "time_total_retrieval_ms": 1956.5935993404128,
+              "unique_candidate_embedding_count": 81.46
+            },
+            "num_queries": 50,
+            "top_two_contributors": [
+              {
+                "mean_ms": 1712.3795526413596,
+                "name": "time_core_retrieval_ms"
+              },
+              {
+                "mean_ms": 1612.2808086191071,
+                "name": "time_anchor_ms"
+              }
+            ]
+          },
+          "score_mixing_detected": false,
+          "shell1_chunk_count": 76.92,
+          "support_tree_chunk_count": 4.54,
+          "time_diagnostics_logging_ms": 0.0,
+          "time_embedding_lookup_ms": 16.88771385961445,
+          "time_query_embedding_ms": 0.0,
+          "time_semantic_ordering_ms": 1.1410520001663826,
+          "time_shell1_construction_ms": 11.259973340202123,
+          "time_total_retrieval_ms": 1956.5935993404128,
+          "total_ms": 1957.3083600000004,
+          "variant": "tree_shell1_semantic_query_order"
+        },
+        "quality_match": true,
+        "rendered_match_rate": 1.0,
+        "rows": [
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:0",
+              "2wikimultihopqa:doc:9",
+              "2wikimultihopqa:doc:4970",
+              "2wikimultihopqa:doc:8",
+              "2wikimultihopqa:doc:4",
+              "2wikimultihopqa:doc:5026",
+              "2wikimultihopqa:doc:5",
+              "2wikimultihopqa:doc:4972"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:0",
+              "2wikimultihopqa:doc:9",
+              "2wikimultihopqa:doc:4970",
+              "2wikimultihopqa:doc:8",
+              "2wikimultihopqa:doc:4",
+              "2wikimultihopqa:doc:5026",
+              "2wikimultihopqa:doc:5",
+              "2wikimultihopqa:doc:4972"
+            ],
+            "query_id": "83bf3b5a0bd911eba7f7acde48001122",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:17",
+              "2wikimultihopqa:doc:5350",
+              "2wikimultihopqa:doc:3561",
+              "2wikimultihopqa:doc:5753",
+              "2wikimultihopqa:doc:4728",
+              "2wikimultihopqa:doc:19",
+              "2wikimultihopqa:doc:1260",
+              "2wikimultihopqa:doc:1062"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:17",
+              "2wikimultihopqa:doc:5350",
+              "2wikimultihopqa:doc:3561",
+              "2wikimultihopqa:doc:5753",
+              "2wikimultihopqa:doc:4728",
+              "2wikimultihopqa:doc:19",
+              "2wikimultihopqa:doc:1260",
+              "2wikimultihopqa:doc:1062"
+            ],
+            "query_id": "a80d84e7096d11ebbdb0ac1f6bf848b6",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:335",
+              "2wikimultihopqa:doc:3702",
+              "2wikimultihopqa:doc:6022",
+              "2wikimultihopqa:doc:336",
+              "2wikimultihopqa:doc:186",
+              "2wikimultihopqa:doc:2096",
+              "2wikimultihopqa:doc:4386",
+              "2wikimultihopqa:doc:848"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:335",
+              "2wikimultihopqa:doc:3702",
+              "2wikimultihopqa:doc:6022",
+              "2wikimultihopqa:doc:336",
+              "2wikimultihopqa:doc:186",
+              "2wikimultihopqa:doc:2096",
+              "2wikimultihopqa:doc:4386",
+              "2wikimultihopqa:doc:848"
+            ],
+            "query_id": "2dc690ba0bdc11eba7f7acde48001122",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:39",
+              "2wikimultihopqa:doc:108",
+              "2wikimultihopqa:doc:2558",
+              "2wikimultihopqa:doc:31",
+              "2wikimultihopqa:doc:5981",
+              "2wikimultihopqa:doc:37",
+              "2wikimultihopqa:doc:33",
+              "2wikimultihopqa:doc:4191"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:39",
+              "2wikimultihopqa:doc:108",
+              "2wikimultihopqa:doc:2558",
+              "2wikimultihopqa:doc:31",
+              "2wikimultihopqa:doc:5981",
+              "2wikimultihopqa:doc:37",
+              "2wikimultihopqa:doc:33",
+              "2wikimultihopqa:doc:4191"
+            ],
+            "query_id": "462bb642099211ebbdb0ac1f6bf848b6",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:41",
+              "2wikimultihopqa:doc:46",
+              "2wikimultihopqa:doc:2666",
+              "2wikimultihopqa:doc:40",
+              "2wikimultihopqa:doc:44",
+              "2wikimultihopqa:doc:3277",
+              "2wikimultihopqa:doc:5575",
+              "2wikimultihopqa:doc:768"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:41",
+              "2wikimultihopqa:doc:46",
+              "2wikimultihopqa:doc:2666",
+              "2wikimultihopqa:doc:40",
+              "2wikimultihopqa:doc:44",
+              "2wikimultihopqa:doc:3277",
+              "2wikimultihopqa:doc:5575",
+              "2wikimultihopqa:doc:768"
+            ],
+            "query_id": "a1cdb240085811ebbd5bac1f6bf848b6",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:50",
+              "2wikimultihopqa:doc:2666",
+              "2wikimultihopqa:doc:5363",
+              "2wikimultihopqa:doc:51",
+              "2wikimultihopqa:doc:1270",
+              "2wikimultihopqa:doc:5575",
+              "2wikimultihopqa:doc:4217",
+              "2wikimultihopqa:doc:1327"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:50",
+              "2wikimultihopqa:doc:2666",
+              "2wikimultihopqa:doc:5363",
+              "2wikimultihopqa:doc:51",
+              "2wikimultihopqa:doc:1270",
+              "2wikimultihopqa:doc:5575",
+              "2wikimultihopqa:doc:4217",
+              "2wikimultihopqa:doc:1327"
+            ],
+            "query_id": "6718770a087311ebbd66ac1f6bf848b6",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:65",
+              "2wikimultihopqa:doc:60",
+              "2wikimultihopqa:doc:2602",
+              "2wikimultihopqa:doc:4826",
+              "2wikimultihopqa:doc:2436",
+              "2wikimultihopqa:doc:291",
+              "2wikimultihopqa:doc:2847",
+              "2wikimultihopqa:doc:4829"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:65",
+              "2wikimultihopqa:doc:60",
+              "2wikimultihopqa:doc:2602",
+              "2wikimultihopqa:doc:4826",
+              "2wikimultihopqa:doc:2436",
+              "2wikimultihopqa:doc:291",
+              "2wikimultihopqa:doc:2847",
+              "2wikimultihopqa:doc:4829"
+            ],
+            "query_id": "7f7046d308f711ebbdaaac1f6bf848b6",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:75",
+              "2wikimultihopqa:doc:73",
+              "2wikimultihopqa:doc:776",
+              "2wikimultihopqa:doc:74",
+              "2wikimultihopqa:doc:6052"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:75",
+              "2wikimultihopqa:doc:73",
+              "2wikimultihopqa:doc:776",
+              "2wikimultihopqa:doc:74",
+              "2wikimultihopqa:doc:6052"
+            ],
+            "query_id": "9fe6a6760baf11ebab90acde48001122",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:81",
+              "2wikimultihopqa:doc:79",
+              "2wikimultihopqa:doc:4496",
+              "2wikimultihopqa:doc:85",
+              "2wikimultihopqa:doc:84",
+              "2wikimultihopqa:doc:83",
+              "2wikimultihopqa:doc:2888",
+              "2wikimultihopqa:doc:3209"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:81",
+              "2wikimultihopqa:doc:79",
+              "2wikimultihopqa:doc:4496",
+              "2wikimultihopqa:doc:85",
+              "2wikimultihopqa:doc:84",
+              "2wikimultihopqa:doc:83",
+              "2wikimultihopqa:doc:2888",
+              "2wikimultihopqa:doc:3209"
+            ],
+            "query_id": "551e024408a611ebbd7fac1f6bf848b6",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:87",
+              "2wikimultihopqa:doc:88",
+              "2wikimultihopqa:doc:2666",
+              "2wikimultihopqa:doc:91",
+              "2wikimultihopqa:doc:89",
+              "2wikimultihopqa:doc:2759",
+              "2wikimultihopqa:doc:3029",
+              "2wikimultihopqa:doc:95"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:87",
+              "2wikimultihopqa:doc:88",
+              "2wikimultihopqa:doc:2666",
+              "2wikimultihopqa:doc:91",
+              "2wikimultihopqa:doc:89",
+              "2wikimultihopqa:doc:2759",
+              "2wikimultihopqa:doc:3029",
+              "2wikimultihopqa:doc:95"
+            ],
+            "query_id": "33f51d7e0bde11eba7f7acde48001122",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:95",
+              "2wikimultihopqa:doc:2666",
+              "2wikimultihopqa:doc:336",
+              "2wikimultihopqa:doc:102",
+              "2wikimultihopqa:doc:335",
+              "2wikimultihopqa:doc:103",
+              "2wikimultihopqa:doc:89",
+              "2wikimultihopqa:doc:471"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:95",
+              "2wikimultihopqa:doc:2666",
+              "2wikimultihopqa:doc:336",
+              "2wikimultihopqa:doc:102",
+              "2wikimultihopqa:doc:335",
+              "2wikimultihopqa:doc:103",
+              "2wikimultihopqa:doc:89",
+              "2wikimultihopqa:doc:471"
+            ],
+            "query_id": "914b452c0bdc11eba7f7acde48001122",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:107",
+              "2wikimultihopqa:doc:105",
+              "2wikimultihopqa:doc:111",
+              "2wikimultihopqa:doc:106",
+              "2wikimultihopqa:doc:108",
+              "2wikimultihopqa:doc:109",
+              "2wikimultihopqa:doc:4331",
+              "2wikimultihopqa:doc:2957"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:107",
+              "2wikimultihopqa:doc:105",
+              "2wikimultihopqa:doc:111",
+              "2wikimultihopqa:doc:106",
+              "2wikimultihopqa:doc:108",
+              "2wikimultihopqa:doc:109",
+              "2wikimultihopqa:doc:4331",
+              "2wikimultihopqa:doc:2957"
+            ],
+            "query_id": "d6898f78089511ebbd75ac1f6bf848b6",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:116",
+              "2wikimultihopqa:doc:3704",
+              "2wikimultihopqa:doc:3567",
+              "2wikimultihopqa:doc:1963",
+              "2wikimultihopqa:doc:2805",
+              "2wikimultihopqa:doc:3351",
+              "2wikimultihopqa:doc:5126",
+              "2wikimultihopqa:doc:5130"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:116",
+              "2wikimultihopqa:doc:3704",
+              "2wikimultihopqa:doc:3567",
+              "2wikimultihopqa:doc:1963",
+              "2wikimultihopqa:doc:2805",
+              "2wikimultihopqa:doc:3351",
+              "2wikimultihopqa:doc:5126",
+              "2wikimultihopqa:doc:5130"
+            ],
+            "query_id": "006d81bc0bde11eba7f7acde48001122",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:119",
+              "2wikimultihopqa:doc:5390",
+              "2wikimultihopqa:doc:1806",
+              "2wikimultihopqa:doc:123",
+              "2wikimultihopqa:doc:121",
+              "2wikimultihopqa:doc:843",
+              "2wikimultihopqa:doc:3548",
+              "2wikimultihopqa:doc:4112"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:119",
+              "2wikimultihopqa:doc:5390",
+              "2wikimultihopqa:doc:1806",
+              "2wikimultihopqa:doc:123",
+              "2wikimultihopqa:doc:121",
+              "2wikimultihopqa:doc:843",
+              "2wikimultihopqa:doc:3548",
+              "2wikimultihopqa:doc:4112"
+            ],
+            "query_id": "f5e3b9ca0bdb11eba7f7acde48001122",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:1846",
+              "2wikimultihopqa:doc:1851",
+              "2wikimultihopqa:doc:3465",
+              "2wikimultihopqa:doc:133",
+              "2wikimultihopqa:doc:1850",
+              "2wikimultihopqa:doc:5282",
+              "2wikimultihopqa:doc:4652"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:1846",
+              "2wikimultihopqa:doc:1851",
+              "2wikimultihopqa:doc:3465",
+              "2wikimultihopqa:doc:133",
+              "2wikimultihopqa:doc:1850",
+              "2wikimultihopqa:doc:5282",
+              "2wikimultihopqa:doc:4652"
+            ],
+            "query_id": "265daf200bdc11eba7f7acde48001122",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:138",
+              "2wikimultihopqa:doc:143",
+              "2wikimultihopqa:doc:436",
+              "2wikimultihopqa:doc:5346",
+              "2wikimultihopqa:doc:1547",
+              "2wikimultihopqa:doc:5502",
+              "2wikimultihopqa:doc:1191",
+              "2wikimultihopqa:doc:699"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:138",
+              "2wikimultihopqa:doc:143",
+              "2wikimultihopqa:doc:436",
+              "2wikimultihopqa:doc:5346",
+              "2wikimultihopqa:doc:1547",
+              "2wikimultihopqa:doc:5502",
+              "2wikimultihopqa:doc:1191",
+              "2wikimultihopqa:doc:699"
+            ],
+            "query_id": "1c0dd3b00bdc11eba7f7acde48001122",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:2666",
+              "2wikimultihopqa:doc:1827",
+              "2wikimultihopqa:doc:2060",
+              "2wikimultihopqa:doc:1548",
+              "2wikimultihopqa:doc:148",
+              "2wikimultihopqa:doc:1",
+              "2wikimultihopqa:doc:714",
+              "2wikimultihopqa:doc:3470"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:2666",
+              "2wikimultihopqa:doc:1827",
+              "2wikimultihopqa:doc:2060",
+              "2wikimultihopqa:doc:1548",
+              "2wikimultihopqa:doc:148",
+              "2wikimultihopqa:doc:1",
+              "2wikimultihopqa:doc:714",
+              "2wikimultihopqa:doc:3470"
+            ],
+            "query_id": "bab3b6d00bda11eba7f7acde48001122",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:150",
+              "2wikimultihopqa:doc:5931",
+              "2wikimultihopqa:doc:1261",
+              "2wikimultihopqa:doc:154",
+              "2wikimultihopqa:doc:158",
+              "2wikimultihopqa:doc:153",
+              "2wikimultihopqa:doc:159",
+              "2wikimultihopqa:doc:4703"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:150",
+              "2wikimultihopqa:doc:5931",
+              "2wikimultihopqa:doc:1261",
+              "2wikimultihopqa:doc:154",
+              "2wikimultihopqa:doc:158",
+              "2wikimultihopqa:doc:153",
+              "2wikimultihopqa:doc:159",
+              "2wikimultihopqa:doc:4703"
+            ],
+            "query_id": "84b691d8086a11ebbd5fac1f6bf848b6",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:4590",
+              "2wikimultihopqa:doc:2666",
+              "2wikimultihopqa:doc:273",
+              "2wikimultihopqa:doc:166",
+              "2wikimultihopqa:doc:162",
+              "2wikimultihopqa:doc:167",
+              "2wikimultihopqa:doc:755",
+              "2wikimultihopqa:doc:2190"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:4590",
+              "2wikimultihopqa:doc:2666",
+              "2wikimultihopqa:doc:273",
+              "2wikimultihopqa:doc:166",
+              "2wikimultihopqa:doc:162",
+              "2wikimultihopqa:doc:167",
+              "2wikimultihopqa:doc:755",
+              "2wikimultihopqa:doc:2190"
+            ],
+            "query_id": "dcbee4b608b011ebbd85ac1f6bf848b6",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:169",
+              "2wikimultihopqa:doc:171",
+              "2wikimultihopqa:doc:2666",
+              "2wikimultihopqa:doc:177",
+              "2wikimultihopqa:doc:178",
+              "2wikimultihopqa:doc:2971",
+              "2wikimultihopqa:doc:175",
+              "2wikimultihopqa:doc:174"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:169",
+              "2wikimultihopqa:doc:171",
+              "2wikimultihopqa:doc:2666",
+              "2wikimultihopqa:doc:177",
+              "2wikimultihopqa:doc:178",
+              "2wikimultihopqa:doc:2971",
+              "2wikimultihopqa:doc:175",
+              "2wikimultihopqa:doc:174"
+            ],
+            "query_id": "2d8f3ebe0bda11eba7f7acde48001122",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:183",
+              "2wikimultihopqa:doc:436",
+              "2wikimultihopqa:doc:937",
+              "2wikimultihopqa:doc:4603",
+              "2wikimultihopqa:doc:2115",
+              "2wikimultihopqa:doc:3243",
+              "2wikimultihopqa:doc:2113"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:183",
+              "2wikimultihopqa:doc:436",
+              "2wikimultihopqa:doc:937",
+              "2wikimultihopqa:doc:4603",
+              "2wikimultihopqa:doc:2115",
+              "2wikimultihopqa:doc:3243",
+              "2wikimultihopqa:doc:2113"
+            ],
+            "query_id": "e6e38bc40bdd11eba7f7acde48001122",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:190",
+              "2wikimultihopqa:doc:191",
+              "2wikimultihopqa:doc:1320",
+              "2wikimultihopqa:doc:198",
+              "2wikimultihopqa:doc:192",
+              "2wikimultihopqa:doc:1322",
+              "2wikimultihopqa:doc:1325",
+              "2wikimultihopqa:doc:4332"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:190",
+              "2wikimultihopqa:doc:191",
+              "2wikimultihopqa:doc:1320",
+              "2wikimultihopqa:doc:198",
+              "2wikimultihopqa:doc:192",
+              "2wikimultihopqa:doc:1322",
+              "2wikimultihopqa:doc:1325",
+              "2wikimultihopqa:doc:4332"
+            ],
+            "query_id": "0bedb7e80bdc11eba7f7acde48001122",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:200",
+              "2wikimultihopqa:doc:3861",
+              "2wikimultihopqa:doc:174",
+              "2wikimultihopqa:doc:199",
+              "2wikimultihopqa:doc:204",
+              "2wikimultihopqa:doc:202"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:200",
+              "2wikimultihopqa:doc:3861",
+              "2wikimultihopqa:doc:174",
+              "2wikimultihopqa:doc:199",
+              "2wikimultihopqa:doc:204",
+              "2wikimultihopqa:doc:202"
+            ],
+            "query_id": "86508dc60bdc11eba7f7acde48001122",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:213",
+              "2wikimultihopqa:doc:335",
+              "2wikimultihopqa:doc:214",
+              "2wikimultihopqa:doc:217",
+              "2wikimultihopqa:doc:1596",
+              "2wikimultihopqa:doc:218",
+              "2wikimultihopqa:doc:4161",
+              "2wikimultihopqa:doc:1633"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:213",
+              "2wikimultihopqa:doc:335",
+              "2wikimultihopqa:doc:214",
+              "2wikimultihopqa:doc:217",
+              "2wikimultihopqa:doc:1596",
+              "2wikimultihopqa:doc:218",
+              "2wikimultihopqa:doc:4161",
+              "2wikimultihopqa:doc:1633"
+            ],
+            "query_id": "e311a3ba0bdc11eba7f7acde48001122",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:221",
+              "2wikimultihopqa:doc:2324",
+              "2wikimultihopqa:doc:3131",
+              "2wikimultihopqa:doc:219",
+              "2wikimultihopqa:doc:227",
+              "2wikimultihopqa:doc:5321",
+              "2wikimultihopqa:doc:3130",
+              "2wikimultihopqa:doc:2671"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:221",
+              "2wikimultihopqa:doc:2324",
+              "2wikimultihopqa:doc:3131",
+              "2wikimultihopqa:doc:219",
+              "2wikimultihopqa:doc:227",
+              "2wikimultihopqa:doc:5321",
+              "2wikimultihopqa:doc:3130",
+              "2wikimultihopqa:doc:2671"
+            ],
+            "query_id": "bdd526c4091811ebbdaeac1f6bf848b6",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:234",
+              "2wikimultihopqa:doc:436",
+              "2wikimultihopqa:doc:235",
+              "2wikimultihopqa:doc:237",
+              "2wikimultihopqa:doc:236",
+              "2wikimultihopqa:doc:230",
+              "2wikimultihopqa:doc:431",
+              "2wikimultihopqa:doc:3880"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:234",
+              "2wikimultihopqa:doc:436",
+              "2wikimultihopqa:doc:235",
+              "2wikimultihopqa:doc:237",
+              "2wikimultihopqa:doc:236",
+              "2wikimultihopqa:doc:230",
+              "2wikimultihopqa:doc:431",
+              "2wikimultihopqa:doc:3880"
+            ],
+            "query_id": "435f65fa0baf11ebab90acde48001122",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:241",
+              "2wikimultihopqa:doc:243",
+              "2wikimultihopqa:doc:239",
+              "2wikimultihopqa:doc:248",
+              "2wikimultihopqa:doc:246",
+              "2wikimultihopqa:doc:5026",
+              "2wikimultihopqa:doc:4972",
+              "2wikimultihopqa:doc:242"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:241",
+              "2wikimultihopqa:doc:243",
+              "2wikimultihopqa:doc:239",
+              "2wikimultihopqa:doc:248",
+              "2wikimultihopqa:doc:246",
+              "2wikimultihopqa:doc:5026",
+              "2wikimultihopqa:doc:4972",
+              "2wikimultihopqa:doc:242"
+            ],
+            "query_id": "5cc01ab60bb011ebab90acde48001122",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:250",
+              "2wikimultihopqa:doc:249",
+              "2wikimultihopqa:doc:436",
+              "2wikimultihopqa:doc:2114",
+              "2wikimultihopqa:doc:2115",
+              "2wikimultihopqa:doc:4603",
+              "2wikimultihopqa:doc:2691",
+              "2wikimultihopqa:doc:1894"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:250",
+              "2wikimultihopqa:doc:249",
+              "2wikimultihopqa:doc:436",
+              "2wikimultihopqa:doc:2114",
+              "2wikimultihopqa:doc:2115",
+              "2wikimultihopqa:doc:4603",
+              "2wikimultihopqa:doc:2691",
+              "2wikimultihopqa:doc:1894"
+            ],
+            "query_id": "2084260e0bde11eba7f7acde48001122",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:257",
+              "2wikimultihopqa:doc:258",
+              "2wikimultihopqa:doc:2666",
+              "2wikimultihopqa:doc:252",
+              "2wikimultihopqa:doc:256",
+              "2wikimultihopqa:doc:259",
+              "2wikimultihopqa:doc:89",
+              "2wikimultihopqa:doc:4643"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:257",
+              "2wikimultihopqa:doc:258",
+              "2wikimultihopqa:doc:2666",
+              "2wikimultihopqa:doc:252",
+              "2wikimultihopqa:doc:256",
+              "2wikimultihopqa:doc:259",
+              "2wikimultihopqa:doc:89",
+              "2wikimultihopqa:doc:4643"
+            ],
+            "query_id": "7cb81afc0bd911eba7f7acde48001122",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:263",
+              "2wikimultihopqa:doc:3704",
+              "2wikimultihopqa:doc:1561",
+              "2wikimultihopqa:doc:260",
+              "2wikimultihopqa:doc:335",
+              "2wikimultihopqa:doc:340",
+              "2wikimultihopqa:doc:418",
+              "2wikimultihopqa:doc:4386"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:263",
+              "2wikimultihopqa:doc:3704",
+              "2wikimultihopqa:doc:1561",
+              "2wikimultihopqa:doc:260",
+              "2wikimultihopqa:doc:335",
+              "2wikimultihopqa:doc:340",
+              "2wikimultihopqa:doc:418",
+              "2wikimultihopqa:doc:4386"
+            ],
+            "query_id": "a1d9a65c0bd911eba7f7acde48001122",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:292",
+              "2wikimultihopqa:doc:5072",
+              "2wikimultihopqa:doc:6019",
+              "2wikimultihopqa:doc:265",
+              "2wikimultihopqa:doc:270",
+              "2wikimultihopqa:doc:2666",
+              "2wikimultihopqa:doc:1646",
+              "2wikimultihopqa:doc:3414"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:292",
+              "2wikimultihopqa:doc:5072",
+              "2wikimultihopqa:doc:6019",
+              "2wikimultihopqa:doc:265",
+              "2wikimultihopqa:doc:270",
+              "2wikimultihopqa:doc:2666",
+              "2wikimultihopqa:doc:1646",
+              "2wikimultihopqa:doc:3414"
+            ],
+            "query_id": "f34d188608cb11ebbd93ac1f6bf848b6",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:274",
+              "2wikimultihopqa:doc:281",
+              "2wikimultihopqa:doc:282",
+              "2wikimultihopqa:doc:276",
+              "2wikimultihopqa:doc:283",
+              "2wikimultihopqa:doc:5473",
+              "2wikimultihopqa:doc:6082",
+              "2wikimultihopqa:doc:1023"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:274",
+              "2wikimultihopqa:doc:281",
+              "2wikimultihopqa:doc:282",
+              "2wikimultihopqa:doc:276",
+              "2wikimultihopqa:doc:283",
+              "2wikimultihopqa:doc:5473",
+              "2wikimultihopqa:doc:6082",
+              "2wikimultihopqa:doc:1023"
+            ],
+            "query_id": "3a3c2efe0bdc11eba7f7acde48001122",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:287",
+              "2wikimultihopqa:doc:5367",
+              "2wikimultihopqa:doc:2666",
+              "2wikimultihopqa:doc:289",
+              "2wikimultihopqa:doc:1760",
+              "2wikimultihopqa:doc:4883",
+              "2wikimultihopqa:doc:3238",
+              "2wikimultihopqa:doc:292"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:287",
+              "2wikimultihopqa:doc:5367",
+              "2wikimultihopqa:doc:2666",
+              "2wikimultihopqa:doc:289",
+              "2wikimultihopqa:doc:1760",
+              "2wikimultihopqa:doc:4883",
+              "2wikimultihopqa:doc:3238",
+              "2wikimultihopqa:doc:292"
+            ],
+            "query_id": "9aa8008408de11ebbd9eac1f6bf848b6",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:296",
+              "2wikimultihopqa:doc:5691",
+              "2wikimultihopqa:doc:3704",
+              "2wikimultihopqa:doc:294",
+              "2wikimultihopqa:doc:843",
+              "2wikimultihopqa:doc:298",
+              "2wikimultihopqa:doc:300",
+              "2wikimultihopqa:doc:848"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:296",
+              "2wikimultihopqa:doc:5691",
+              "2wikimultihopqa:doc:3704",
+              "2wikimultihopqa:doc:294",
+              "2wikimultihopqa:doc:843",
+              "2wikimultihopqa:doc:298",
+              "2wikimultihopqa:doc:300",
+              "2wikimultihopqa:doc:848"
+            ],
+            "query_id": "0dfe41f60bdc11eba7f7acde48001122",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:306",
+              "2wikimultihopqa:doc:6046",
+              "2wikimultihopqa:doc:2666",
+              "2wikimultihopqa:doc:6047",
+              "2wikimultihopqa:doc:89",
+              "2wikimultihopqa:doc:1101",
+              "2wikimultihopqa:doc:95",
+              "2wikimultihopqa:doc:1499"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:306",
+              "2wikimultihopqa:doc:6046",
+              "2wikimultihopqa:doc:2666",
+              "2wikimultihopqa:doc:6047",
+              "2wikimultihopqa:doc:89",
+              "2wikimultihopqa:doc:1101",
+              "2wikimultihopqa:doc:95",
+              "2wikimultihopqa:doc:1499"
+            ],
+            "query_id": "3ce92df80bde11eba7f7acde48001122",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:310",
+              "2wikimultihopqa:doc:3412",
+              "2wikimultihopqa:doc:3962",
+              "2wikimultihopqa:doc:3503",
+              "2wikimultihopqa:doc:3903",
+              "2wikimultihopqa:doc:4027",
+              "2wikimultihopqa:doc:3125",
+              "2wikimultihopqa:doc:313"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:310",
+              "2wikimultihopqa:doc:3412",
+              "2wikimultihopqa:doc:3962",
+              "2wikimultihopqa:doc:3503",
+              "2wikimultihopqa:doc:3903",
+              "2wikimultihopqa:doc:4027",
+              "2wikimultihopqa:doc:3125",
+              "2wikimultihopqa:doc:313"
+            ],
+            "query_id": "3e3cd62a086211ebbd5dac1f6bf848b6",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:205",
+              "2wikimultihopqa:doc:208",
+              "2wikimultihopqa:doc:164",
+              "2wikimultihopqa:doc:317",
+              "2wikimultihopqa:doc:318",
+              "2wikimultihopqa:doc:467",
+              "2wikimultihopqa:doc:319",
+              "2wikimultihopqa:doc:320"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:205",
+              "2wikimultihopqa:doc:208",
+              "2wikimultihopqa:doc:164",
+              "2wikimultihopqa:doc:317",
+              "2wikimultihopqa:doc:318",
+              "2wikimultihopqa:doc:467",
+              "2wikimultihopqa:doc:319",
+              "2wikimultihopqa:doc:320"
+            ],
+            "query_id": "b672c1ee0bdd11eba7f7acde48001122",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:330",
+              "2wikimultihopqa:doc:333",
+              "2wikimultihopqa:doc:2666",
+              "2wikimultihopqa:doc:4569",
+              "2wikimultihopqa:doc:3238",
+              "2wikimultihopqa:doc:4125",
+              "2wikimultihopqa:doc:45",
+              "2wikimultihopqa:doc:1662"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:330",
+              "2wikimultihopqa:doc:333",
+              "2wikimultihopqa:doc:2666",
+              "2wikimultihopqa:doc:4569",
+              "2wikimultihopqa:doc:3238",
+              "2wikimultihopqa:doc:4125",
+              "2wikimultihopqa:doc:45",
+              "2wikimultihopqa:doc:1662"
+            ],
+            "query_id": "01309e5008bd11ebbd89ac1f6bf848b6",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:334",
+              "2wikimultihopqa:doc:342",
+              "2wikimultihopqa:doc:1320",
+              "2wikimultihopqa:doc:212",
+              "2wikimultihopqa:doc:4161",
+              "2wikimultihopqa:doc:4532",
+              "2wikimultihopqa:doc:3881",
+              "2wikimultihopqa:doc:4137"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:334",
+              "2wikimultihopqa:doc:342",
+              "2wikimultihopqa:doc:1320",
+              "2wikimultihopqa:doc:212",
+              "2wikimultihopqa:doc:4161",
+              "2wikimultihopqa:doc:4532",
+              "2wikimultihopqa:doc:3881",
+              "2wikimultihopqa:doc:4137"
+            ],
+            "query_id": "c5a00e860bda11eba7f7acde48001122",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:349",
+              "2wikimultihopqa:doc:345",
+              "2wikimultihopqa:doc:352",
+              "2wikimultihopqa:doc:350",
+              "2wikimultihopqa:doc:493",
+              "2wikimultihopqa:doc:2196",
+              "2wikimultihopqa:doc:3287",
+              "2wikimultihopqa:doc:2207"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:349",
+              "2wikimultihopqa:doc:345",
+              "2wikimultihopqa:doc:352",
+              "2wikimultihopqa:doc:350",
+              "2wikimultihopqa:doc:493",
+              "2wikimultihopqa:doc:2196",
+              "2wikimultihopqa:doc:3287",
+              "2wikimultihopqa:doc:2207"
+            ],
+            "query_id": "434dea7708d211ebbd95ac1f6bf848b6",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:2666",
+              "2wikimultihopqa:doc:904",
+              "2wikimultihopqa:doc:329",
+              "2wikimultihopqa:doc:355",
+              "2wikimultihopqa:doc:356",
+              "2wikimultihopqa:doc:1760",
+              "2wikimultihopqa:doc:5673",
+              "2wikimultihopqa:doc:3836"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:2666",
+              "2wikimultihopqa:doc:904",
+              "2wikimultihopqa:doc:329",
+              "2wikimultihopqa:doc:355",
+              "2wikimultihopqa:doc:356",
+              "2wikimultihopqa:doc:1760",
+              "2wikimultihopqa:doc:5673",
+              "2wikimultihopqa:doc:3836"
+            ],
+            "query_id": "02b62fce087211ebbd64ac1f6bf848b6",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:363",
+              "2wikimultihopqa:doc:174",
+              "2wikimultihopqa:doc:361",
+              "2wikimultihopqa:doc:362",
+              "2wikimultihopqa:doc:365",
+              "2wikimultihopqa:doc:5540",
+              "2wikimultihopqa:doc:4567",
+              "2wikimultihopqa:doc:366"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:363",
+              "2wikimultihopqa:doc:174",
+              "2wikimultihopqa:doc:361",
+              "2wikimultihopqa:doc:362",
+              "2wikimultihopqa:doc:365",
+              "2wikimultihopqa:doc:5540",
+              "2wikimultihopqa:doc:4567",
+              "2wikimultihopqa:doc:366"
+            ],
+            "query_id": "b0ac0fc8087b11ebbd68ac1f6bf848b6",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:368",
+              "2wikimultihopqa:doc:369",
+              "2wikimultihopqa:doc:367",
+              "2wikimultihopqa:doc:1465",
+              "2wikimultihopqa:doc:3211",
+              "2wikimultihopqa:doc:3487",
+              "2wikimultihopqa:doc:3488",
+              "2wikimultihopqa:doc:3484"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:368",
+              "2wikimultihopqa:doc:369",
+              "2wikimultihopqa:doc:367",
+              "2wikimultihopqa:doc:1465",
+              "2wikimultihopqa:doc:3211",
+              "2wikimultihopqa:doc:3487",
+              "2wikimultihopqa:doc:3488",
+              "2wikimultihopqa:doc:3484"
+            ],
+            "query_id": "c9a769c608be11ebbd8aac1f6bf848b6",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:269",
+              "2wikimultihopqa:doc:1259",
+              "2wikimultihopqa:doc:88",
+              "2wikimultihopqa:doc:373",
+              "2wikimultihopqa:doc:371",
+              "2wikimultihopqa:doc:2666",
+              "2wikimultihopqa:doc:3739",
+              "2wikimultihopqa:doc:4176"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:269",
+              "2wikimultihopqa:doc:1259",
+              "2wikimultihopqa:doc:88",
+              "2wikimultihopqa:doc:373",
+              "2wikimultihopqa:doc:371",
+              "2wikimultihopqa:doc:2666",
+              "2wikimultihopqa:doc:3739",
+              "2wikimultihopqa:doc:4176"
+            ],
+            "query_id": "3f04140e08c311ebbd8dac1f6bf848b6",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:5130",
+              "2wikimultihopqa:doc:3704",
+              "2wikimultihopqa:doc:263",
+              "2wikimultihopqa:doc:377",
+              "2wikimultihopqa:doc:5133",
+              "2wikimultihopqa:doc:376",
+              "2wikimultihopqa:doc:2786",
+              "2wikimultihopqa:doc:2282"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:5130",
+              "2wikimultihopqa:doc:3704",
+              "2wikimultihopqa:doc:263",
+              "2wikimultihopqa:doc:377",
+              "2wikimultihopqa:doc:5133",
+              "2wikimultihopqa:doc:376",
+              "2wikimultihopqa:doc:2786",
+              "2wikimultihopqa:doc:2282"
+            ],
+            "query_id": "50e4a65c0bde11eba7f7acde48001122",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:378",
+              "2wikimultihopqa:doc:5387",
+              "2wikimultihopqa:doc:2666",
+              "2wikimultihopqa:doc:381",
+              "2wikimultihopqa:doc:383",
+              "2wikimultihopqa:doc:384",
+              "2wikimultihopqa:doc:4125",
+              "2wikimultihopqa:doc:3238"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:378",
+              "2wikimultihopqa:doc:5387",
+              "2wikimultihopqa:doc:2666",
+              "2wikimultihopqa:doc:381",
+              "2wikimultihopqa:doc:383",
+              "2wikimultihopqa:doc:384",
+              "2wikimultihopqa:doc:4125",
+              "2wikimultihopqa:doc:3238"
+            ],
+            "query_id": "b64f541e088d11ebbd70ac1f6bf848b6",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:3721",
+              "2wikimultihopqa:doc:4984",
+              "2wikimultihopqa:doc:1910",
+              "2wikimultihopqa:doc:391",
+              "2wikimultihopqa:doc:953",
+              "2wikimultihopqa:doc:946",
+              "2wikimultihopqa:doc:390",
+              "2wikimultihopqa:doc:3037"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:3721",
+              "2wikimultihopqa:doc:4984",
+              "2wikimultihopqa:doc:1910",
+              "2wikimultihopqa:doc:391",
+              "2wikimultihopqa:doc:953",
+              "2wikimultihopqa:doc:946",
+              "2wikimultihopqa:doc:390",
+              "2wikimultihopqa:doc:3037"
+            ],
+            "query_id": "f998c58c091b11ebbdaeac1f6bf848b6",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:402",
+              "2wikimultihopqa:doc:397",
+              "2wikimultihopqa:doc:401",
+              "2wikimultihopqa:doc:403",
+              "2wikimultihopqa:doc:400",
+              "2wikimultihopqa:doc:3748",
+              "2wikimultihopqa:doc:5799",
+              "2wikimultihopqa:doc:3750"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:402",
+              "2wikimultihopqa:doc:397",
+              "2wikimultihopqa:doc:401",
+              "2wikimultihopqa:doc:403",
+              "2wikimultihopqa:doc:400",
+              "2wikimultihopqa:doc:3748",
+              "2wikimultihopqa:doc:5799",
+              "2wikimultihopqa:doc:3750"
+            ],
+            "query_id": "38da155f087511ebbd67ac1f6bf848b6",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:205",
+              "2wikimultihopqa:doc:4379",
+              "2wikimultihopqa:doc:371",
+              "2wikimultihopqa:doc:406",
+              "2wikimultihopqa:doc:405",
+              "2wikimultihopqa:doc:319",
+              "2wikimultihopqa:doc:323",
+              "2wikimultihopqa:doc:467"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:205",
+              "2wikimultihopqa:doc:4379",
+              "2wikimultihopqa:doc:371",
+              "2wikimultihopqa:doc:406",
+              "2wikimultihopqa:doc:405",
+              "2wikimultihopqa:doc:319",
+              "2wikimultihopqa:doc:323",
+              "2wikimultihopqa:doc:467"
+            ],
+            "query_id": "49b22d0a0bde11eba7f7acde48001122",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:408",
+              "2wikimultihopqa:doc:2666",
+              "2wikimultihopqa:doc:1937",
+              "2wikimultihopqa:doc:89",
+              "2wikimultihopqa:doc:3414",
+              "2wikimultihopqa:doc:5387",
+              "2wikimultihopqa:doc:259",
+              "2wikimultihopqa:doc:95"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:408",
+              "2wikimultihopqa:doc:2666",
+              "2wikimultihopqa:doc:1937",
+              "2wikimultihopqa:doc:89",
+              "2wikimultihopqa:doc:3414",
+              "2wikimultihopqa:doc:5387",
+              "2wikimultihopqa:doc:259",
+              "2wikimultihopqa:doc:95"
+            ],
+            "query_id": "78b10fb00bdc11eba7f7acde48001122",
+            "rendered_chunk_ids_exact_match": true
+          }
+        ],
+        "total": 50
+      },
+      "gate": {
+        "blockers": [
+          "baseline_or_b2_production_missing"
+        ],
+        "checks": {},
+        "dataset": "2wikimultihopqa",
+        "pass": false,
+        "skipped": true,
+        "time_ratio": 0.0
+      },
+      "rows": [
+        {
+          "answer_in_context": 0.48,
+          "avg_context_tokens": 375.94,
+          "candidate_pool_size": 81.46,
+          "context_f1": 0.2993174603174603,
+          "em": 0.0,
+          "embedding_missing_rate": 0.0,
+          "generation_ms": 0.3621600000000001,
+          "graph_variant": "entity_chunk_reference",
+          "mode": "production",
+          "num_queries": 50,
+          "oracle_leakage_count": 0,
+          "qa_f1": 0.06095939127703833,
+          "qa_prompt_hash": "31e4b446be8b00a4989078fb4a957bc61b19bf4b8014674e2baad4612cc4396d",
+          "qa_prompt_name": "common_qa",
+          "qa_prompt_text_exact_match": true,
+          "query_embedding_cache_hit_rate": 1.0,
+          "rendered_recall": 0.645,
+          "rendered_shell1_chunk_count": 3.46,
+          "renderer_mode": "tree_shell1_semantic_query_order",
+          "retrieval_ms": 1956.9462000000005,
+          "runtime_mode": "production",
+          "runtime_profile": {
+            "mean": {
+              "candidate_embedding_lookup_count": 81.46,
+              "candidate_pool_size": 81.46,
+              "duplicate_embedding_lookup_avoided": 0.0,
+              "query_embedding_cache_hit_rate": 1.0,
+              "query_embedding_cache_miss_count": 0.0,
+              "rendered_chunk_count": 7.86,
+              "rendered_shell1_chunk_count": 3.46,
+              "shell1_chunk_count": 76.92,
+              "support_tree_chunk_count": 4.54,
+              "time_anchor_ms": 1612.2808086191071,
+              "time_core_retrieval_ms": 1712.3795526413596,
+              "time_diagnostics_logging_ms": 0.0,
+              "time_embedding_lookup_ms": 16.88771385961445,
+              "time_query_embedding_ms": 0.0,
+              "time_refinement_ms": 10.433637659880333,
+              "time_rendering_ms": 33.638419880589936,
+              "time_semantic_ordering_ms": 1.1410520001663826,
+              "time_shell1_construction_ms": 11.259973340202123,
+              "time_support_tree_ms": 11.259973340202123,
+              "time_total_retrieval_ms": 1956.5935993404128,
+              "unique_candidate_embedding_count": 81.46
+            },
+            "num_queries": 50,
+            "top_two_contributors": [
+              {
+                "mean_ms": 1712.3795526413596,
+                "name": "time_core_retrieval_ms"
+              },
+              {
+                "mean_ms": 1612.2808086191071,
+                "name": "time_anchor_ms"
+              }
+            ]
+          },
+          "score_mixing_detected": false,
+          "shell1_chunk_count": 76.92,
+          "support_tree_chunk_count": 4.54,
+          "time_diagnostics_logging_ms": 0.0,
+          "time_embedding_lookup_ms": 16.88771385961445,
+          "time_query_embedding_ms": 0.0,
+          "time_semantic_ordering_ms": 1.1410520001663826,
+          "time_shell1_construction_ms": 11.259973340202123,
+          "time_total_retrieval_ms": 1956.5935993404128,
+          "total_ms": 1957.3083600000004,
+          "variant": "tree_shell1_semantic_query_order"
+        },
+        {
+          "answer_in_context": 0.48,
+          "avg_context_tokens": 375.94,
+          "candidate_pool_size": 81.46,
+          "context_f1": 0.2993174603174603,
+          "em": 0.0,
+          "embedding_missing_rate": 0.0,
+          "generation_ms": 0.3727799999999999,
+          "graph_variant": "entity_chunk_reference",
+          "mode": "diagnostic",
+          "num_queries": 50,
+          "oracle_leakage_count": 0,
+          "qa_f1": 0.06095939127703833,
+          "qa_prompt_hash": "31e4b446be8b00a4989078fb4a957bc61b19bf4b8014674e2baad4612cc4396d",
+          "qa_prompt_name": "common_qa",
+          "qa_prompt_text_exact_match": true,
+          "query_embedding_cache_hit_rate": 1.0,
+          "rendered_recall": 0.645,
+          "rendered_shell1_chunk_count": 3.46,
+          "renderer_mode": "tree_shell1_semantic_query_order",
+          "retrieval_ms": 2026.87356,
+          "runtime_mode": "diagnostic",
+          "runtime_profile": {
+            "mean": {
+              "candidate_embedding_lookup_count": 81.46,
+              "candidate_pool_size": 81.46,
+              "duplicate_embedding_lookup_avoided": 0.0,
+              "query_embedding_cache_hit_rate": 1.0,
+              "query_embedding_cache_miss_count": 0.0,
+              "rendered_chunk_count": 7.86,
+              "rendered_shell1_chunk_count": 3.46,
+              "shell1_chunk_count": 76.92,
+              "support_tree_chunk_count": 4.54,
+              "time_anchor_ms": 1586.126038658549,
+              "time_core_retrieval_ms": 1695.783772218856,
+              "time_diagnostics_logging_ms": 0.0,
+              "time_embedding_lookup_ms": 14.635078659921419,
+              "time_query_embedding_ms": 0.0,
+              "time_refinement_ms": 12.32049711921718,
+              "time_rendering_ms": 35.769949580717366,
+              "time_semantic_ordering_ms": 0.8967047018813901,
+              "time_shell1_construction_ms": 10.221763560839463,
+              "time_support_tree_ms": 10.221763560839463,
+              "time_total_retrieval_ms": 2026.0944765398744,
+              "unique_candidate_embedding_count": 81.46
+            },
+            "num_queries": 50,
+            "top_two_contributors": [
+              {
+                "mean_ms": 1695.783772218856,
+                "name": "time_core_retrieval_ms"
+              },
+              {
+                "mean_ms": 1586.126038658549,
+                "name": "time_anchor_ms"
+              }
+            ]
+          },
+          "score_mixing_detected": false,
+          "shell1_chunk_count": 76.92,
+          "support_tree_chunk_count": 4.54,
+          "time_diagnostics_logging_ms": 0.0,
+          "time_embedding_lookup_ms": 14.635078659921419,
+          "time_query_embedding_ms": 0.0,
+          "time_semantic_ordering_ms": 0.8967047018813901,
+          "time_shell1_construction_ms": 10.221763560839463,
+          "time_total_retrieval_ms": 2026.0944765398744,
+          "total_ms": 2027.24634,
+          "variant": "tree_shell1_semantic_query_order"
+        }
+      ]
+    }
+  ],
+  "final_decision": "DIAGNOSTIC_ONLY"
+}

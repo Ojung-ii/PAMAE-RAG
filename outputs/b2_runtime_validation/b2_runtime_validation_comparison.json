@@ -1,0 +1,3193 @@
+{
+  "branch": "optimize-b2-runtime-validation",
+  "commit": "5af5971",
+  "datasets": [
+    {
+      "dataset": "2wikimultihopqa",
+      "equivalence": {
+        "all_context_hash_match": true,
+        "all_rendered_match": true,
+        "context_hash_match_rate": 1.0,
+        "diagnostic_metrics": {
+          "answer_in_context": 0.48,
+          "avg_context_tokens": 375.94,
+          "candidate_pool_size": 81.46,
+          "context_f1": 0.2993174603174603,
+          "em": 0.0,
+          "embedding_missing_rate": 0.0,
+          "generation_ms": 0.3727799999999999,
+          "graph_variant": "entity_chunk_reference",
+          "mode": "diagnostic",
+          "num_queries": 50,
+          "oracle_leakage_count": 0,
+          "qa_f1": 0.06095939127703833,
+          "qa_prompt_hash": "31e4b446be8b00a4989078fb4a957bc61b19bf4b8014674e2baad4612cc4396d",
+          "qa_prompt_name": "common_qa",
+          "qa_prompt_text_exact_match": true,
+          "query_embedding_cache_hit_rate": 1.0,
+          "rendered_recall": 0.645,
+          "rendered_shell1_chunk_count": 3.46,
+          "renderer_mode": "tree_shell1_semantic_query_order",
+          "retrieval_ms": 2026.87356,
+          "runtime_mode": "diagnostic",
+          "runtime_profile": {
+            "mean": {
+              "candidate_embedding_lookup_count": 81.46,
+              "candidate_pool_size": 81.46,
+              "duplicate_embedding_lookup_avoided": 0.0,
+              "query_embedding_cache_hit_rate": 1.0,
+              "query_embedding_cache_miss_count": 0.0,
+              "rendered_chunk_count": 7.86,
+              "rendered_shell1_chunk_count": 3.46,
+              "shell1_chunk_count": 76.92,
+              "support_tree_chunk_count": 4.54,
+              "time_anchor_ms": 1586.126038658549,
+              "time_core_retrieval_ms": 1695.783772218856,
+              "time_diagnostics_logging_ms": 0.0,
+              "time_embedding_lookup_ms": 14.635078659921419,
+              "time_query_embedding_ms": 0.0,
+              "time_refinement_ms": 12.32049711921718,
+              "time_rendering_ms": 35.769949580717366,
+              "time_semantic_ordering_ms": 0.8967047018813901,
+              "time_shell1_construction_ms": 10.221763560839463,
+              "time_support_tree_ms": 10.221763560839463,
+              "time_total_retrieval_ms": 2026.0944765398744,
+              "unique_candidate_embedding_count": 81.46
+            },
+            "num_queries": 50,
+            "top_two_contributors": [
+              {
+                "mean_ms": 1695.783772218856,
+                "name": "time_core_retrieval_ms"
+              },
+              {
+                "mean_ms": 1586.126038658549,
+                "name": "time_anchor_ms"
+              }
+            ]
+          },
+          "score_mixing_detected": false,
+          "shell1_chunk_count": 76.92,
+          "support_tree_chunk_count": 4.54,
+          "time_diagnostics_logging_ms": 0.0,
+          "time_embedding_lookup_ms": 14.635078659921419,
+          "time_query_embedding_ms": 0.0,
+          "time_semantic_ordering_ms": 0.8967047018813901,
+          "time_shell1_construction_ms": 10.221763560839463,
+          "time_total_retrieval_ms": 2026.0944765398744,
+          "total_ms": 2027.24634,
+          "variant": "tree_shell1_semantic_query_order"
+        },
+        "production_metrics": {
+          "answer_in_context": 0.506,
+          "avg_context_tokens": 372.016,
+          "candidate_pool_size": 79.862,
+          "context_f1": 0.29056248196248285,
+          "em": 0.002,
+          "embedding_missing_rate": 3.508771929824561e-05,
+          "generation_ms": 0.18974399999999986,
+          "graph_variant": "entity_chunk_reference",
+          "mode": "production",
+          "num_queries": 500,
+          "oracle_leakage_count": 0,
+          "qa_f1": 0.0810849937806212,
+          "qa_prompt_hash": "31e4b446be8b00a4989078fb4a957bc61b19bf4b8014674e2baad4612cc4396d",
+          "qa_prompt_name": "common_qa",
+          "qa_prompt_text_exact_match": true,
+          "query_embedding_cache_hit_rate": 1.0,
+          "rendered_recall": 0.6385,
+          "rendered_shell1_chunk_count": 3.418,
+          "renderer_mode": "tree_shell1_semantic_query_order",
+          "retrieval_ms": 921.0131919999989,
+          "runtime_mode": "production",
+          "runtime_profile": {
+            "mean": {
+              "candidate_embedding_lookup_count": 79.862,
+              "candidate_pool_size": 79.862,
+              "duplicate_embedding_lookup_avoided": 0.0,
+              "query_embedding_cache_hit_rate": 1.0,
+              "query_embedding_cache_miss_count": 0.0,
+              "rendered_chunk_count": 7.844,
+              "rendered_shell1_chunk_count": 3.418,
+              "shell1_chunk_count": 75.322,
+              "support_tree_chunk_count": 4.54,
+              "time_anchor_ms": 818.0207110224583,
+              "time_core_retrieval_ms": 788.0101329397294,
+              "time_diagnostics_logging_ms": 0.0,
+              "time_embedding_lookup_ms": 8.596415231877472,
+              "time_query_embedding_ms": 0.0,
+              "time_refinement_ms": 5.747687343973666,
+              "time_rendering_ms": 17.972257443529088,
+              "time_semantic_ordering_ms": 0.6232595401233993,
+              "time_shell1_construction_ms": 6.38910310837673,
+              "time_support_tree_ms": 6.38910310837673,
+              "time_total_retrieval_ms": 920.7018577962299,
+              "unique_candidate_embedding_count": 79.862
+            },
+            "num_queries": 500,
+            "top_two_contributors": [
+              {
+                "mean_ms": 818.0207110224583,
+                "name": "time_anchor_ms"
+              },
+              {
+                "mean_ms": 788.0101329397294,
+                "name": "time_core_retrieval_ms"
+              }
+            ]
+          },
+          "score_mixing_detected": false,
+          "shell1_chunk_count": 75.322,
+          "support_tree_chunk_count": 4.54,
+          "time_diagnostics_logging_ms": 0.0,
+          "time_embedding_lookup_ms": 8.596415231877472,
+          "time_query_embedding_ms": 0.0,
+          "time_semantic_ordering_ms": 0.6232595401233993,
+          "time_shell1_construction_ms": 6.38910310837673,
+          "time_total_retrieval_ms": 920.7018577962299,
+          "total_ms": 921.2029359999989,
+          "variant": "tree_shell1_semantic_query_order"
+        },
+        "quality_match": true,
+        "quality_match_value": "not_applicable_different_sample_size",
+        "rendered_match_rate": 1.0,
+        "rows": [
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:0",
+              "2wikimultihopqa:doc:9",
+              "2wikimultihopqa:doc:4970",
+              "2wikimultihopqa:doc:8",
+              "2wikimultihopqa:doc:4",
+              "2wikimultihopqa:doc:5026",
+              "2wikimultihopqa:doc:5",
+              "2wikimultihopqa:doc:4972"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:0",
+              "2wikimultihopqa:doc:9",
+              "2wikimultihopqa:doc:4970",
+              "2wikimultihopqa:doc:8",
+              "2wikimultihopqa:doc:4",
+              "2wikimultihopqa:doc:5026",
+              "2wikimultihopqa:doc:5",
+              "2wikimultihopqa:doc:4972"
+            ],
+            "query_id": "83bf3b5a0bd911eba7f7acde48001122",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:17",
+              "2wikimultihopqa:doc:5350",
+              "2wikimultihopqa:doc:3561",
+              "2wikimultihopqa:doc:5753",
+              "2wikimultihopqa:doc:4728",
+              "2wikimultihopqa:doc:19",
+              "2wikimultihopqa:doc:1260",
+              "2wikimultihopqa:doc:1062"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:17",
+              "2wikimultihopqa:doc:5350",
+              "2wikimultihopqa:doc:3561",
+              "2wikimultihopqa:doc:5753",
+              "2wikimultihopqa:doc:4728",
+              "2wikimultihopqa:doc:19",
+              "2wikimultihopqa:doc:1260",
+              "2wikimultihopqa:doc:1062"
+            ],
+            "query_id": "a80d84e7096d11ebbdb0ac1f6bf848b6",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:335",
+              "2wikimultihopqa:doc:3702",
+              "2wikimultihopqa:doc:6022",
+              "2wikimultihopqa:doc:336",
+              "2wikimultihopqa:doc:186",
+              "2wikimultihopqa:doc:2096",
+              "2wikimultihopqa:doc:4386",
+              "2wikimultihopqa:doc:848"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:335",
+              "2wikimultihopqa:doc:3702",
+              "2wikimultihopqa:doc:6022",
+              "2wikimultihopqa:doc:336",
+              "2wikimultihopqa:doc:186",
+              "2wikimultihopqa:doc:2096",
+              "2wikimultihopqa:doc:4386",
+              "2wikimultihopqa:doc:848"
+            ],
+            "query_id": "2dc690ba0bdc11eba7f7acde48001122",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:39",
+              "2wikimultihopqa:doc:108",
+              "2wikimultihopqa:doc:2558",
+              "2wikimultihopqa:doc:31",
+              "2wikimultihopqa:doc:5981",
+              "2wikimultihopqa:doc:37",
+              "2wikimultihopqa:doc:33",
+              "2wikimultihopqa:doc:4191"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:39",
+              "2wikimultihopqa:doc:108",
+              "2wikimultihopqa:doc:2558",
+              "2wikimultihopqa:doc:31",
+              "2wikimultihopqa:doc:5981",
+              "2wikimultihopqa:doc:37",
+              "2wikimultihopqa:doc:33",
+              "2wikimultihopqa:doc:4191"
+            ],
+            "query_id": "462bb642099211ebbdb0ac1f6bf848b6",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:41",
+              "2wikimultihopqa:doc:46",
+              "2wikimultihopqa:doc:2666",
+              "2wikimultihopqa:doc:40",
+              "2wikimultihopqa:doc:44",
+              "2wikimultihopqa:doc:3277",
+              "2wikimultihopqa:doc:5575",
+              "2wikimultihopqa:doc:768"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:41",
+              "2wikimultihopqa:doc:46",
+              "2wikimultihopqa:doc:2666",
+              "2wikimultihopqa:doc:40",
+              "2wikimultihopqa:doc:44",
+              "2wikimultihopqa:doc:3277",
+              "2wikimultihopqa:doc:5575",
+              "2wikimultihopqa:doc:768"
+            ],
+            "query_id": "a1cdb240085811ebbd5bac1f6bf848b6",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:50",
+              "2wikimultihopqa:doc:2666",
+              "2wikimultihopqa:doc:5363",
+              "2wikimultihopqa:doc:51",
+              "2wikimultihopqa:doc:1270",
+              "2wikimultihopqa:doc:5575",
+              "2wikimultihopqa:doc:4217",
+              "2wikimultihopqa:doc:1327"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:50",
+              "2wikimultihopqa:doc:2666",
+              "2wikimultihopqa:doc:5363",
+              "2wikimultihopqa:doc:51",
+              "2wikimultihopqa:doc:1270",
+              "2wikimultihopqa:doc:5575",
+              "2wikimultihopqa:doc:4217",
+              "2wikimultihopqa:doc:1327"
+            ],
+            "query_id": "6718770a087311ebbd66ac1f6bf848b6",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:65",
+              "2wikimultihopqa:doc:60",
+              "2wikimultihopqa:doc:2602",
+              "2wikimultihopqa:doc:4826",
+              "2wikimultihopqa:doc:2436",
+              "2wikimultihopqa:doc:291",
+              "2wikimultihopqa:doc:2847",
+              "2wikimultihopqa:doc:4829"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:65",
+              "2wikimultihopqa:doc:60",
+              "2wikimultihopqa:doc:2602",
+              "2wikimultihopqa:doc:4826",
+              "2wikimultihopqa:doc:2436",
+              "2wikimultihopqa:doc:291",
+              "2wikimultihopqa:doc:2847",
+              "2wikimultihopqa:doc:4829"
+            ],
+            "query_id": "7f7046d308f711ebbdaaac1f6bf848b6",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:75",
+              "2wikimultihopqa:doc:73",
+              "2wikimultihopqa:doc:776",
+              "2wikimultihopqa:doc:74",
+              "2wikimultihopqa:doc:6052"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:75",
+              "2wikimultihopqa:doc:73",
+              "2wikimultihopqa:doc:776",
+              "2wikimultihopqa:doc:74",
+              "2wikimultihopqa:doc:6052"
+            ],
+            "query_id": "9fe6a6760baf11ebab90acde48001122",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:81",
+              "2wikimultihopqa:doc:79",
+              "2wikimultihopqa:doc:4496",
+              "2wikimultihopqa:doc:85",
+              "2wikimultihopqa:doc:84",
+              "2wikimultihopqa:doc:83",
+              "2wikimultihopqa:doc:2888",
+              "2wikimultihopqa:doc:3209"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:81",
+              "2wikimultihopqa:doc:79",
+              "2wikimultihopqa:doc:4496",
+              "2wikimultihopqa:doc:85",
+              "2wikimultihopqa:doc:84",
+              "2wikimultihopqa:doc:83",
+              "2wikimultihopqa:doc:2888",
+              "2wikimultihopqa:doc:3209"
+            ],
+            "query_id": "551e024408a611ebbd7fac1f6bf848b6",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:87",
+              "2wikimultihopqa:doc:88",
+              "2wikimultihopqa:doc:2666",
+              "2wikimultihopqa:doc:91",
+              "2wikimultihopqa:doc:89",
+              "2wikimultihopqa:doc:2759",
+              "2wikimultihopqa:doc:3029",
+              "2wikimultihopqa:doc:95"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:87",
+              "2wikimultihopqa:doc:88",
+              "2wikimultihopqa:doc:2666",
+              "2wikimultihopqa:doc:91",
+              "2wikimultihopqa:doc:89",
+              "2wikimultihopqa:doc:2759",
+              "2wikimultihopqa:doc:3029",
+              "2wikimultihopqa:doc:95"
+            ],
+            "query_id": "33f51d7e0bde11eba7f7acde48001122",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:95",
+              "2wikimultihopqa:doc:2666",
+              "2wikimultihopqa:doc:336",
+              "2wikimultihopqa:doc:102",
+              "2wikimultihopqa:doc:335",
+              "2wikimultihopqa:doc:103",
+              "2wikimultihopqa:doc:89",
+              "2wikimultihopqa:doc:471"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:95",
+              "2wikimultihopqa:doc:2666",
+              "2wikimultihopqa:doc:336",
+              "2wikimultihopqa:doc:102",
+              "2wikimultihopqa:doc:335",
+              "2wikimultihopqa:doc:103",
+              "2wikimultihopqa:doc:89",
+              "2wikimultihopqa:doc:471"
+            ],
+            "query_id": "914b452c0bdc11eba7f7acde48001122",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:107",
+              "2wikimultihopqa:doc:105",
+              "2wikimultihopqa:doc:111",
+              "2wikimultihopqa:doc:106",
+              "2wikimultihopqa:doc:108",
+              "2wikimultihopqa:doc:109",
+              "2wikimultihopqa:doc:4331",
+              "2wikimultihopqa:doc:2957"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:107",
+              "2wikimultihopqa:doc:105",
+              "2wikimultihopqa:doc:111",
+              "2wikimultihopqa:doc:106",
+              "2wikimultihopqa:doc:108",
+              "2wikimultihopqa:doc:109",
+              "2wikimultihopqa:doc:4331",
+              "2wikimultihopqa:doc:2957"
+            ],
+            "query_id": "d6898f78089511ebbd75ac1f6bf848b6",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:116",
+              "2wikimultihopqa:doc:3704",
+              "2wikimultihopqa:doc:3567",
+              "2wikimultihopqa:doc:1963",
+              "2wikimultihopqa:doc:2805",
+              "2wikimultihopqa:doc:3351",
+              "2wikimultihopqa:doc:5126",
+              "2wikimultihopqa:doc:5130"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:116",
+              "2wikimultihopqa:doc:3704",
+              "2wikimultihopqa:doc:3567",
+              "2wikimultihopqa:doc:1963",
+              "2wikimultihopqa:doc:2805",
+              "2wikimultihopqa:doc:3351",
+              "2wikimultihopqa:doc:5126",
+              "2wikimultihopqa:doc:5130"
+            ],
+            "query_id": "006d81bc0bde11eba7f7acde48001122",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:119",
+              "2wikimultihopqa:doc:5390",
+              "2wikimultihopqa:doc:1806",
+              "2wikimultihopqa:doc:123",
+              "2wikimultihopqa:doc:121",
+              "2wikimultihopqa:doc:843",
+              "2wikimultihopqa:doc:3548",
+              "2wikimultihopqa:doc:4112"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:119",
+              "2wikimultihopqa:doc:5390",
+              "2wikimultihopqa:doc:1806",
+              "2wikimultihopqa:doc:123",
+              "2wikimultihopqa:doc:121",
+              "2wikimultihopqa:doc:843",
+              "2wikimultihopqa:doc:3548",
+              "2wikimultihopqa:doc:4112"
+            ],
+            "query_id": "f5e3b9ca0bdb11eba7f7acde48001122",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:1846",
+              "2wikimultihopqa:doc:1851",
+              "2wikimultihopqa:doc:3465",
+              "2wikimultihopqa:doc:133",
+              "2wikimultihopqa:doc:1850",
+              "2wikimultihopqa:doc:5282",
+              "2wikimultihopqa:doc:4652"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:1846",
+              "2wikimultihopqa:doc:1851",
+              "2wikimultihopqa:doc:3465",
+              "2wikimultihopqa:doc:133",
+              "2wikimultihopqa:doc:1850",
+              "2wikimultihopqa:doc:5282",
+              "2wikimultihopqa:doc:4652"
+            ],
+            "query_id": "265daf200bdc11eba7f7acde48001122",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:138",
+              "2wikimultihopqa:doc:143",
+              "2wikimultihopqa:doc:436",
+              "2wikimultihopqa:doc:5346",
+              "2wikimultihopqa:doc:1547",
+              "2wikimultihopqa:doc:5502",
+              "2wikimultihopqa:doc:1191",
+              "2wikimultihopqa:doc:699"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:138",
+              "2wikimultihopqa:doc:143",
+              "2wikimultihopqa:doc:436",
+              "2wikimultihopqa:doc:5346",
+              "2wikimultihopqa:doc:1547",
+              "2wikimultihopqa:doc:5502",
+              "2wikimultihopqa:doc:1191",
+              "2wikimultihopqa:doc:699"
+            ],
+            "query_id": "1c0dd3b00bdc11eba7f7acde48001122",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:2666",
+              "2wikimultihopqa:doc:1827",
+              "2wikimultihopqa:doc:2060",
+              "2wikimultihopqa:doc:1548",
+              "2wikimultihopqa:doc:148",
+              "2wikimultihopqa:doc:1",
+              "2wikimultihopqa:doc:714",
+              "2wikimultihopqa:doc:3470"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:2666",
+              "2wikimultihopqa:doc:1827",
+              "2wikimultihopqa:doc:2060",
+              "2wikimultihopqa:doc:1548",
+              "2wikimultihopqa:doc:148",
+              "2wikimultihopqa:doc:1",
+              "2wikimultihopqa:doc:714",
+              "2wikimultihopqa:doc:3470"
+            ],
+            "query_id": "bab3b6d00bda11eba7f7acde48001122",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:150",
+              "2wikimultihopqa:doc:5931",
+              "2wikimultihopqa:doc:1261",
+              "2wikimultihopqa:doc:154",
+              "2wikimultihopqa:doc:158",
+              "2wikimultihopqa:doc:153",
+              "2wikimultihopqa:doc:159",
+              "2wikimultihopqa:doc:4703"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:150",
+              "2wikimultihopqa:doc:5931",
+              "2wikimultihopqa:doc:1261",
+              "2wikimultihopqa:doc:154",
+              "2wikimultihopqa:doc:158",
+              "2wikimultihopqa:doc:153",
+              "2wikimultihopqa:doc:159",
+              "2wikimultihopqa:doc:4703"
+            ],
+            "query_id": "84b691d8086a11ebbd5fac1f6bf848b6",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:4590",
+              "2wikimultihopqa:doc:2666",
+              "2wikimultihopqa:doc:273",
+              "2wikimultihopqa:doc:166",
+              "2wikimultihopqa:doc:162",
+              "2wikimultihopqa:doc:167",
+              "2wikimultihopqa:doc:755",
+              "2wikimultihopqa:doc:2190"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:4590",
+              "2wikimultihopqa:doc:2666",
+              "2wikimultihopqa:doc:273",
+              "2wikimultihopqa:doc:166",
+              "2wikimultihopqa:doc:162",
+              "2wikimultihopqa:doc:167",
+              "2wikimultihopqa:doc:755",
+              "2wikimultihopqa:doc:2190"
+            ],
+            "query_id": "dcbee4b608b011ebbd85ac1f6bf848b6",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:169",
+              "2wikimultihopqa:doc:171",
+              "2wikimultihopqa:doc:2666",
+              "2wikimultihopqa:doc:177",
+              "2wikimultihopqa:doc:178",
+              "2wikimultihopqa:doc:2971",
+              "2wikimultihopqa:doc:175",
+              "2wikimultihopqa:doc:174"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:169",
+              "2wikimultihopqa:doc:171",
+              "2wikimultihopqa:doc:2666",
+              "2wikimultihopqa:doc:177",
+              "2wikimultihopqa:doc:178",
+              "2wikimultihopqa:doc:2971",
+              "2wikimultihopqa:doc:175",
+              "2wikimultihopqa:doc:174"
+            ],
+            "query_id": "2d8f3ebe0bda11eba7f7acde48001122",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:183",
+              "2wikimultihopqa:doc:436",
+              "2wikimultihopqa:doc:937",
+              "2wikimultihopqa:doc:4603",
+              "2wikimultihopqa:doc:2115",
+              "2wikimultihopqa:doc:3243",
+              "2wikimultihopqa:doc:2113"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:183",
+              "2wikimultihopqa:doc:436",
+              "2wikimultihopqa:doc:937",
+              "2wikimultihopqa:doc:4603",
+              "2wikimultihopqa:doc:2115",
+              "2wikimultihopqa:doc:3243",
+              "2wikimultihopqa:doc:2113"
+            ],
+            "query_id": "e6e38bc40bdd11eba7f7acde48001122",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:190",
+              "2wikimultihopqa:doc:191",
+              "2wikimultihopqa:doc:1320",
+              "2wikimultihopqa:doc:198",
+              "2wikimultihopqa:doc:192",
+              "2wikimultihopqa:doc:1322",
+              "2wikimultihopqa:doc:1325",
+              "2wikimultihopqa:doc:4332"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:190",
+              "2wikimultihopqa:doc:191",
+              "2wikimultihopqa:doc:1320",
+              "2wikimultihopqa:doc:198",
+              "2wikimultihopqa:doc:192",
+              "2wikimultihopqa:doc:1322",
+              "2wikimultihopqa:doc:1325",
+              "2wikimultihopqa:doc:4332"
+            ],
+            "query_id": "0bedb7e80bdc11eba7f7acde48001122",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:200",
+              "2wikimultihopqa:doc:3861",
+              "2wikimultihopqa:doc:174",
+              "2wikimultihopqa:doc:199",
+              "2wikimultihopqa:doc:204",
+              "2wikimultihopqa:doc:202"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:200",
+              "2wikimultihopqa:doc:3861",
+              "2wikimultihopqa:doc:174",
+              "2wikimultihopqa:doc:199",
+              "2wikimultihopqa:doc:204",
+              "2wikimultihopqa:doc:202"
+            ],
+            "query_id": "86508dc60bdc11eba7f7acde48001122",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:213",
+              "2wikimultihopqa:doc:335",
+              "2wikimultihopqa:doc:214",
+              "2wikimultihopqa:doc:217",
+              "2wikimultihopqa:doc:1596",
+              "2wikimultihopqa:doc:218",
+              "2wikimultihopqa:doc:4161",
+              "2wikimultihopqa:doc:1633"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:213",
+              "2wikimultihopqa:doc:335",
+              "2wikimultihopqa:doc:214",
+              "2wikimultihopqa:doc:217",
+              "2wikimultihopqa:doc:1596",
+              "2wikimultihopqa:doc:218",
+              "2wikimultihopqa:doc:4161",
+              "2wikimultihopqa:doc:1633"
+            ],
+            "query_id": "e311a3ba0bdc11eba7f7acde48001122",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:221",
+              "2wikimultihopqa:doc:2324",
+              "2wikimultihopqa:doc:3131",
+              "2wikimultihopqa:doc:219",
+              "2wikimultihopqa:doc:227",
+              "2wikimultihopqa:doc:5321",
+              "2wikimultihopqa:doc:3130",
+              "2wikimultihopqa:doc:2671"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:221",
+              "2wikimultihopqa:doc:2324",
+              "2wikimultihopqa:doc:3131",
+              "2wikimultihopqa:doc:219",
+              "2wikimultihopqa:doc:227",
+              "2wikimultihopqa:doc:5321",
+              "2wikimultihopqa:doc:3130",
+              "2wikimultihopqa:doc:2671"
+            ],
+            "query_id": "bdd526c4091811ebbdaeac1f6bf848b6",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:234",
+              "2wikimultihopqa:doc:436",
+              "2wikimultihopqa:doc:235",
+              "2wikimultihopqa:doc:237",
+              "2wikimultihopqa:doc:236",
+              "2wikimultihopqa:doc:230",
+              "2wikimultihopqa:doc:431",
+              "2wikimultihopqa:doc:3880"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:234",
+              "2wikimultihopqa:doc:436",
+              "2wikimultihopqa:doc:235",
+              "2wikimultihopqa:doc:237",
+              "2wikimultihopqa:doc:236",
+              "2wikimultihopqa:doc:230",
+              "2wikimultihopqa:doc:431",
+              "2wikimultihopqa:doc:3880"
+            ],
+            "query_id": "435f65fa0baf11ebab90acde48001122",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:241",
+              "2wikimultihopqa:doc:243",
+              "2wikimultihopqa:doc:239",
+              "2wikimultihopqa:doc:248",
+              "2wikimultihopqa:doc:246",
+              "2wikimultihopqa:doc:5026",
+              "2wikimultihopqa:doc:4972",
+              "2wikimultihopqa:doc:242"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:241",
+              "2wikimultihopqa:doc:243",
+              "2wikimultihopqa:doc:239",
+              "2wikimultihopqa:doc:248",
+              "2wikimultihopqa:doc:246",
+              "2wikimultihopqa:doc:5026",
+              "2wikimultihopqa:doc:4972",
+              "2wikimultihopqa:doc:242"
+            ],
+            "query_id": "5cc01ab60bb011ebab90acde48001122",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:250",
+              "2wikimultihopqa:doc:249",
+              "2wikimultihopqa:doc:436",
+              "2wikimultihopqa:doc:2114",
+              "2wikimultihopqa:doc:2115",
+              "2wikimultihopqa:doc:4603",
+              "2wikimultihopqa:doc:2691",
+              "2wikimultihopqa:doc:1894"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:250",
+              "2wikimultihopqa:doc:249",
+              "2wikimultihopqa:doc:436",
+              "2wikimultihopqa:doc:2114",
+              "2wikimultihopqa:doc:2115",
+              "2wikimultihopqa:doc:4603",
+              "2wikimultihopqa:doc:2691",
+              "2wikimultihopqa:doc:1894"
+            ],
+            "query_id": "2084260e0bde11eba7f7acde48001122",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:257",
+              "2wikimultihopqa:doc:258",
+              "2wikimultihopqa:doc:2666",
+              "2wikimultihopqa:doc:252",
+              "2wikimultihopqa:doc:256",
+              "2wikimultihopqa:doc:259",
+              "2wikimultihopqa:doc:89",
+              "2wikimultihopqa:doc:4643"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:257",
+              "2wikimultihopqa:doc:258",
+              "2wikimultihopqa:doc:2666",
+              "2wikimultihopqa:doc:252",
+              "2wikimultihopqa:doc:256",
+              "2wikimultihopqa:doc:259",
+              "2wikimultihopqa:doc:89",
+              "2wikimultihopqa:doc:4643"
+            ],
+            "query_id": "7cb81afc0bd911eba7f7acde48001122",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:263",
+              "2wikimultihopqa:doc:3704",
+              "2wikimultihopqa:doc:1561",
+              "2wikimultihopqa:doc:260",
+              "2wikimultihopqa:doc:335",
+              "2wikimultihopqa:doc:340",
+              "2wikimultihopqa:doc:418",
+              "2wikimultihopqa:doc:4386"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:263",
+              "2wikimultihopqa:doc:3704",
+              "2wikimultihopqa:doc:1561",
+              "2wikimultihopqa:doc:260",
+              "2wikimultihopqa:doc:335",
+              "2wikimultihopqa:doc:340",
+              "2wikimultihopqa:doc:418",
+              "2wikimultihopqa:doc:4386"
+            ],
+            "query_id": "a1d9a65c0bd911eba7f7acde48001122",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:292",
+              "2wikimultihopqa:doc:5072",
+              "2wikimultihopqa:doc:6019",
+              "2wikimultihopqa:doc:265",
+              "2wikimultihopqa:doc:270",
+              "2wikimultihopqa:doc:2666",
+              "2wikimultihopqa:doc:1646",
+              "2wikimultihopqa:doc:3414"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:292",
+              "2wikimultihopqa:doc:5072",
+              "2wikimultihopqa:doc:6019",
+              "2wikimultihopqa:doc:265",
+              "2wikimultihopqa:doc:270",
+              "2wikimultihopqa:doc:2666",
+              "2wikimultihopqa:doc:1646",
+              "2wikimultihopqa:doc:3414"
+            ],
+            "query_id": "f34d188608cb11ebbd93ac1f6bf848b6",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:274",
+              "2wikimultihopqa:doc:281",
+              "2wikimultihopqa:doc:282",
+              "2wikimultihopqa:doc:276",
+              "2wikimultihopqa:doc:283",
+              "2wikimultihopqa:doc:5473",
+              "2wikimultihopqa:doc:6082",
+              "2wikimultihopqa:doc:1023"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:274",
+              "2wikimultihopqa:doc:281",
+              "2wikimultihopqa:doc:282",
+              "2wikimultihopqa:doc:276",
+              "2wikimultihopqa:doc:283",
+              "2wikimultihopqa:doc:5473",
+              "2wikimultihopqa:doc:6082",
+              "2wikimultihopqa:doc:1023"
+            ],
+            "query_id": "3a3c2efe0bdc11eba7f7acde48001122",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:287",
+              "2wikimultihopqa:doc:5367",
+              "2wikimultihopqa:doc:2666",
+              "2wikimultihopqa:doc:289",
+              "2wikimultihopqa:doc:1760",
+              "2wikimultihopqa:doc:4883",
+              "2wikimultihopqa:doc:3238",
+              "2wikimultihopqa:doc:292"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:287",
+              "2wikimultihopqa:doc:5367",
+              "2wikimultihopqa:doc:2666",
+              "2wikimultihopqa:doc:289",
+              "2wikimultihopqa:doc:1760",
+              "2wikimultihopqa:doc:4883",
+              "2wikimultihopqa:doc:3238",
+              "2wikimultihopqa:doc:292"
+            ],
+            "query_id": "9aa8008408de11ebbd9eac1f6bf848b6",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:296",
+              "2wikimultihopqa:doc:5691",
+              "2wikimultihopqa:doc:3704",
+              "2wikimultihopqa:doc:294",
+              "2wikimultihopqa:doc:843",
+              "2wikimultihopqa:doc:298",
+              "2wikimultihopqa:doc:300",
+              "2wikimultihopqa:doc:848"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:296",
+              "2wikimultihopqa:doc:5691",
+              "2wikimultihopqa:doc:3704",
+              "2wikimultihopqa:doc:294",
+              "2wikimultihopqa:doc:843",
+              "2wikimultihopqa:doc:298",
+              "2wikimultihopqa:doc:300",
+              "2wikimultihopqa:doc:848"
+            ],
+            "query_id": "0dfe41f60bdc11eba7f7acde48001122",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:306",
+              "2wikimultihopqa:doc:6046",
+              "2wikimultihopqa:doc:2666",
+              "2wikimultihopqa:doc:6047",
+              "2wikimultihopqa:doc:89",
+              "2wikimultihopqa:doc:1101",
+              "2wikimultihopqa:doc:95",
+              "2wikimultihopqa:doc:1499"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:306",
+              "2wikimultihopqa:doc:6046",
+              "2wikimultihopqa:doc:2666",
+              "2wikimultihopqa:doc:6047",
+              "2wikimultihopqa:doc:89",
+              "2wikimultihopqa:doc:1101",
+              "2wikimultihopqa:doc:95",
+              "2wikimultihopqa:doc:1499"
+            ],
+            "query_id": "3ce92df80bde11eba7f7acde48001122",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:310",
+              "2wikimultihopqa:doc:3412",
+              "2wikimultihopqa:doc:3962",
+              "2wikimultihopqa:doc:3503",
+              "2wikimultihopqa:doc:3903",
+              "2wikimultihopqa:doc:4027",
+              "2wikimultihopqa:doc:3125",
+              "2wikimultihopqa:doc:313"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:310",
+              "2wikimultihopqa:doc:3412",
+              "2wikimultihopqa:doc:3962",
+              "2wikimultihopqa:doc:3503",
+              "2wikimultihopqa:doc:3903",
+              "2wikimultihopqa:doc:4027",
+              "2wikimultihopqa:doc:3125",
+              "2wikimultihopqa:doc:313"
+            ],
+            "query_id": "3e3cd62a086211ebbd5dac1f6bf848b6",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:205",
+              "2wikimultihopqa:doc:208",
+              "2wikimultihopqa:doc:164",
+              "2wikimultihopqa:doc:317",
+              "2wikimultihopqa:doc:318",
+              "2wikimultihopqa:doc:467",
+              "2wikimultihopqa:doc:319",
+              "2wikimultihopqa:doc:320"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:205",
+              "2wikimultihopqa:doc:208",
+              "2wikimultihopqa:doc:164",
+              "2wikimultihopqa:doc:317",
+              "2wikimultihopqa:doc:318",
+              "2wikimultihopqa:doc:467",
+              "2wikimultihopqa:doc:319",
+              "2wikimultihopqa:doc:320"
+            ],
+            "query_id": "b672c1ee0bdd11eba7f7acde48001122",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:330",
+              "2wikimultihopqa:doc:333",
+              "2wikimultihopqa:doc:2666",
+              "2wikimultihopqa:doc:4569",
+              "2wikimultihopqa:doc:3238",
+              "2wikimultihopqa:doc:4125",
+              "2wikimultihopqa:doc:45",
+              "2wikimultihopqa:doc:1662"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:330",
+              "2wikimultihopqa:doc:333",
+              "2wikimultihopqa:doc:2666",
+              "2wikimultihopqa:doc:4569",
+              "2wikimultihopqa:doc:3238",
+              "2wikimultihopqa:doc:4125",
+              "2wikimultihopqa:doc:45",
+              "2wikimultihopqa:doc:1662"
+            ],
+            "query_id": "01309e5008bd11ebbd89ac1f6bf848b6",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:334",
+              "2wikimultihopqa:doc:342",
+              "2wikimultihopqa:doc:1320",
+              "2wikimultihopqa:doc:212",
+              "2wikimultihopqa:doc:4161",
+              "2wikimultihopqa:doc:4532",
+              "2wikimultihopqa:doc:3881",
+              "2wikimultihopqa:doc:4137"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:334",
+              "2wikimultihopqa:doc:342",
+              "2wikimultihopqa:doc:1320",
+              "2wikimultihopqa:doc:212",
+              "2wikimultihopqa:doc:4161",
+              "2wikimultihopqa:doc:4532",
+              "2wikimultihopqa:doc:3881",
+              "2wikimultihopqa:doc:4137"
+            ],
+            "query_id": "c5a00e860bda11eba7f7acde48001122",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:349",
+              "2wikimultihopqa:doc:345",
+              "2wikimultihopqa:doc:352",
+              "2wikimultihopqa:doc:350",
+              "2wikimultihopqa:doc:493",
+              "2wikimultihopqa:doc:2196",
+              "2wikimultihopqa:doc:3287",
+              "2wikimultihopqa:doc:2207"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:349",
+              "2wikimultihopqa:doc:345",
+              "2wikimultihopqa:doc:352",
+              "2wikimultihopqa:doc:350",
+              "2wikimultihopqa:doc:493",
+              "2wikimultihopqa:doc:2196",
+              "2wikimultihopqa:doc:3287",
+              "2wikimultihopqa:doc:2207"
+            ],
+            "query_id": "434dea7708d211ebbd95ac1f6bf848b6",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:2666",
+              "2wikimultihopqa:doc:904",
+              "2wikimultihopqa:doc:329",
+              "2wikimultihopqa:doc:355",
+              "2wikimultihopqa:doc:356",
+              "2wikimultihopqa:doc:1760",
+              "2wikimultihopqa:doc:5673",
+              "2wikimultihopqa:doc:3836"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:2666",
+              "2wikimultihopqa:doc:904",
+              "2wikimultihopqa:doc:329",
+              "2wikimultihopqa:doc:355",
+              "2wikimultihopqa:doc:356",
+              "2wikimultihopqa:doc:1760",
+              "2wikimultihopqa:doc:5673",
+              "2wikimultihopqa:doc:3836"
+            ],
+            "query_id": "02b62fce087211ebbd64ac1f6bf848b6",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:363",
+              "2wikimultihopqa:doc:174",
+              "2wikimultihopqa:doc:361",
+              "2wikimultihopqa:doc:362",
+              "2wikimultihopqa:doc:365",
+              "2wikimultihopqa:doc:5540",
+              "2wikimultihopqa:doc:4567",
+              "2wikimultihopqa:doc:366"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:363",
+              "2wikimultihopqa:doc:174",
+              "2wikimultihopqa:doc:361",
+              "2wikimultihopqa:doc:362",
+              "2wikimultihopqa:doc:365",
+              "2wikimultihopqa:doc:5540",
+              "2wikimultihopqa:doc:4567",
+              "2wikimultihopqa:doc:366"
+            ],
+            "query_id": "b0ac0fc8087b11ebbd68ac1f6bf848b6",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:368",
+              "2wikimultihopqa:doc:369",
+              "2wikimultihopqa:doc:367",
+              "2wikimultihopqa:doc:1465",
+              "2wikimultihopqa:doc:3211",
+              "2wikimultihopqa:doc:3487",
+              "2wikimultihopqa:doc:3488",
+              "2wikimultihopqa:doc:3484"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:368",
+              "2wikimultihopqa:doc:369",
+              "2wikimultihopqa:doc:367",
+              "2wikimultihopqa:doc:1465",
+              "2wikimultihopqa:doc:3211",
+              "2wikimultihopqa:doc:3487",
+              "2wikimultihopqa:doc:3488",
+              "2wikimultihopqa:doc:3484"
+            ],
+            "query_id": "c9a769c608be11ebbd8aac1f6bf848b6",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:269",
+              "2wikimultihopqa:doc:1259",
+              "2wikimultihopqa:doc:88",
+              "2wikimultihopqa:doc:373",
+              "2wikimultihopqa:doc:371",
+              "2wikimultihopqa:doc:2666",
+              "2wikimultihopqa:doc:3739",
+              "2wikimultihopqa:doc:4176"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:269",
+              "2wikimultihopqa:doc:1259",
+              "2wikimultihopqa:doc:88",
+              "2wikimultihopqa:doc:373",
+              "2wikimultihopqa:doc:371",
+              "2wikimultihopqa:doc:2666",
+              "2wikimultihopqa:doc:3739",
+              "2wikimultihopqa:doc:4176"
+            ],
+            "query_id": "3f04140e08c311ebbd8dac1f6bf848b6",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:5130",
+              "2wikimultihopqa:doc:3704",
+              "2wikimultihopqa:doc:263",
+              "2wikimultihopqa:doc:377",
+              "2wikimultihopqa:doc:5133",
+              "2wikimultihopqa:doc:376",
+              "2wikimultihopqa:doc:2786",
+              "2wikimultihopqa:doc:2282"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:5130",
+              "2wikimultihopqa:doc:3704",
+              "2wikimultihopqa:doc:263",
+              "2wikimultihopqa:doc:377",
+              "2wikimultihopqa:doc:5133",
+              "2wikimultihopqa:doc:376",
+              "2wikimultihopqa:doc:2786",
+              "2wikimultihopqa:doc:2282"
+            ],
+            "query_id": "50e4a65c0bde11eba7f7acde48001122",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:378",
+              "2wikimultihopqa:doc:5387",
+              "2wikimultihopqa:doc:2666",
+              "2wikimultihopqa:doc:381",
+              "2wikimultihopqa:doc:383",
+              "2wikimultihopqa:doc:384",
+              "2wikimultihopqa:doc:4125",
+              "2wikimultihopqa:doc:3238"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:378",
+              "2wikimultihopqa:doc:5387",
+              "2wikimultihopqa:doc:2666",
+              "2wikimultihopqa:doc:381",
+              "2wikimultihopqa:doc:383",
+              "2wikimultihopqa:doc:384",
+              "2wikimultihopqa:doc:4125",
+              "2wikimultihopqa:doc:3238"
+            ],
+            "query_id": "b64f541e088d11ebbd70ac1f6bf848b6",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:3721",
+              "2wikimultihopqa:doc:4984",
+              "2wikimultihopqa:doc:1910",
+              "2wikimultihopqa:doc:391",
+              "2wikimultihopqa:doc:953",
+              "2wikimultihopqa:doc:946",
+              "2wikimultihopqa:doc:390",
+              "2wikimultihopqa:doc:3037"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:3721",
+              "2wikimultihopqa:doc:4984",
+              "2wikimultihopqa:doc:1910",
+              "2wikimultihopqa:doc:391",
+              "2wikimultihopqa:doc:953",
+              "2wikimultihopqa:doc:946",
+              "2wikimultihopqa:doc:390",
+              "2wikimultihopqa:doc:3037"
+            ],
+            "query_id": "f998c58c091b11ebbdaeac1f6bf848b6",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:402",
+              "2wikimultihopqa:doc:397",
+              "2wikimultihopqa:doc:401",
+              "2wikimultihopqa:doc:403",
+              "2wikimultihopqa:doc:400",
+              "2wikimultihopqa:doc:3748",
+              "2wikimultihopqa:doc:5799",
+              "2wikimultihopqa:doc:3750"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:402",
+              "2wikimultihopqa:doc:397",
+              "2wikimultihopqa:doc:401",
+              "2wikimultihopqa:doc:403",
+              "2wikimultihopqa:doc:400",
+              "2wikimultihopqa:doc:3748",
+              "2wikimultihopqa:doc:5799",
+              "2wikimultihopqa:doc:3750"
+            ],
+            "query_id": "38da155f087511ebbd67ac1f6bf848b6",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:205",
+              "2wikimultihopqa:doc:4379",
+              "2wikimultihopqa:doc:371",
+              "2wikimultihopqa:doc:406",
+              "2wikimultihopqa:doc:405",
+              "2wikimultihopqa:doc:319",
+              "2wikimultihopqa:doc:323",
+              "2wikimultihopqa:doc:467"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:205",
+              "2wikimultihopqa:doc:4379",
+              "2wikimultihopqa:doc:371",
+              "2wikimultihopqa:doc:406",
+              "2wikimultihopqa:doc:405",
+              "2wikimultihopqa:doc:319",
+              "2wikimultihopqa:doc:323",
+              "2wikimultihopqa:doc:467"
+            ],
+            "query_id": "49b22d0a0bde11eba7f7acde48001122",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:408",
+              "2wikimultihopqa:doc:2666",
+              "2wikimultihopqa:doc:1937",
+              "2wikimultihopqa:doc:89",
+              "2wikimultihopqa:doc:3414",
+              "2wikimultihopqa:doc:5387",
+              "2wikimultihopqa:doc:259",
+              "2wikimultihopqa:doc:95"
+            ],
+            "production_rendered_chunk_ids": [
+              "2wikimultihopqa:doc:408",
+              "2wikimultihopqa:doc:2666",
+              "2wikimultihopqa:doc:1937",
+              "2wikimultihopqa:doc:89",
+              "2wikimultihopqa:doc:3414",
+              "2wikimultihopqa:doc:5387",
+              "2wikimultihopqa:doc:259",
+              "2wikimultihopqa:doc:95"
+            ],
+            "query_id": "78b10fb00bdc11eba7f7acde48001122",
+            "rendered_chunk_ids_exact_match": true
+          }
+        ],
+        "same_metric_sample": false,
+        "total": 50
+      },
+      "gate": {
+        "blockers": [],
+        "checks": {
+          "answer_in_context": true,
+          "context_f1": true,
+          "equivalence": true,
+          "oracle_leakage": true,
+          "prompt": true,
+          "qa_f1": true,
+          "rendered_recall": true,
+          "score_mixing": true,
+          "time": true,
+          "tokens": true
+        },
+        "dataset": "2wikimultihopqa",
+        "pass": true,
+        "time_ratio": 0.501811369802881
+      },
+      "rows": [
+        {
+          "answer_in_context": 0.47,
+          "avg_context_tokens": 350.086,
+          "candidate_pool_size": 0.0,
+          "context_f1": 0.26683823953824076,
+          "em": 0.002,
+          "embedding_missing_rate": 0.0,
+          "generation_ms": 0.20040799999999975,
+          "graph_variant": "entity_chunk_reference",
+          "mode": "production",
+          "num_queries": 500,
+          "oracle_leakage_count": 0,
+          "qa_f1": 0.07895222957746444,
+          "qa_prompt_hash": "31e4b446be8b00a4989078fb4a957bc61b19bf4b8014674e2baad4612cc4396d",
+          "qa_prompt_name": "common_qa",
+          "qa_prompt_text_exact_match": true,
+          "query_embedding_cache_hit_rate": 0.0,
+          "rendered_recall": 0.5905,
+          "rendered_shell1_chunk_count": 0.0,
+          "renderer_mode": "current_renderer",
+          "retrieval_ms": 1835.3772899999988,
+          "runtime_mode": "production",
+          "runtime_profile": {
+            "mean": {
+              "candidate_embedding_lookup_count": 0.0,
+              "candidate_pool_size": 0.0,
+              "duplicate_embedding_lookup_avoided": 0.0,
+              "query_embedding_cache_hit_rate": 0.0,
+              "query_embedding_cache_miss_count": 0.0,
+              "rendered_chunk_count": 7.856,
+              "rendered_shell1_chunk_count": 0.0,
+              "shell1_chunk_count": 0.0,
+              "support_tree_chunk_count": 0.0,
+              "time_anchor_ms": 1535.256740316283,
+              "time_core_retrieval_ms": 1625.645432198362,
+              "time_diagnostics_logging_ms": 0.0,
+              "time_embedding_lookup_ms": 0.0,
+              "time_query_embedding_ms": 0.0,
+              "time_refinement_ms": 10.089201187773142,
+              "time_rendering_ms": 6.652335728169419,
+              "time_semantic_ordering_ms": 0.0,
+              "time_shell1_construction_ms": 0.0,
+              "time_support_tree_ms": 0.0,
+              "time_total_retrieval_ms": 1834.3081010743917,
+              "unique_candidate_embedding_count": 0.0
+            },
+            "num_queries": 500,
+            "top_two_contributors": [
+              {
+                "mean_ms": 1625.645432198362,
+                "name": "time_core_retrieval_ms"
+              },
+              {
+                "mean_ms": 1535.256740316283,
+                "name": "time_anchor_ms"
+              }
+            ]
+          },
+          "score_mixing_detected": false,
+          "shell1_chunk_count": 0.0,
+          "support_tree_chunk_count": 0.0,
+          "time_diagnostics_logging_ms": 0.0,
+          "time_embedding_lookup_ms": 0.0,
+          "time_query_embedding_ms": 0.0,
+          "time_semantic_ordering_ms": 0.0,
+          "time_shell1_construction_ms": 0.0,
+          "time_total_retrieval_ms": 1834.3081010743917,
+          "total_ms": 1835.5776979999987,
+          "variant": "current_renderer"
+        },
+        {
+          "answer_in_context": 0.48,
+          "avg_context_tokens": 375.94,
+          "candidate_pool_size": 81.46,
+          "context_f1": 0.2993174603174603,
+          "em": 0.0,
+          "embedding_missing_rate": 0.0,
+          "generation_ms": 0.3727799999999999,
+          "graph_variant": "entity_chunk_reference",
+          "mode": "diagnostic",
+          "num_queries": 50,
+          "oracle_leakage_count": 0,
+          "qa_f1": 0.06095939127703833,
+          "qa_prompt_hash": "31e4b446be8b00a4989078fb4a957bc61b19bf4b8014674e2baad4612cc4396d",
+          "qa_prompt_name": "common_qa",
+          "qa_prompt_text_exact_match": true,
+          "query_embedding_cache_hit_rate": 1.0,
+          "rendered_recall": 0.645,
+          "rendered_shell1_chunk_count": 3.46,
+          "renderer_mode": "tree_shell1_semantic_query_order",
+          "retrieval_ms": 2026.87356,
+          "runtime_mode": "diagnostic",
+          "runtime_profile": {
+            "mean": {
+              "candidate_embedding_lookup_count": 81.46,
+              "candidate_pool_size": 81.46,
+              "duplicate_embedding_lookup_avoided": 0.0,
+              "query_embedding_cache_hit_rate": 1.0,
+              "query_embedding_cache_miss_count": 0.0,
+              "rendered_chunk_count": 7.86,
+              "rendered_shell1_chunk_count": 3.46,
+              "shell1_chunk_count": 76.92,
+              "support_tree_chunk_count": 4.54,
+              "time_anchor_ms": 1586.126038658549,
+              "time_core_retrieval_ms": 1695.783772218856,
+              "time_diagnostics_logging_ms": 0.0,
+              "time_embedding_lookup_ms": 14.635078659921419,
+              "time_query_embedding_ms": 0.0,
+              "time_refinement_ms": 12.32049711921718,
+              "time_rendering_ms": 35.769949580717366,
+              "time_semantic_ordering_ms": 0.8967047018813901,
+              "time_shell1_construction_ms": 10.221763560839463,
+              "time_support_tree_ms": 10.221763560839463,
+              "time_total_retrieval_ms": 2026.0944765398744,
+              "unique_candidate_embedding_count": 81.46
+            },
+            "num_queries": 50,
+            "top_two_contributors": [
+              {
+                "mean_ms": 1695.783772218856,
+                "name": "time_core_retrieval_ms"
+              },
+              {
+                "mean_ms": 1586.126038658549,
+                "name": "time_anchor_ms"
+              }
+            ]
+          },
+          "score_mixing_detected": false,
+          "shell1_chunk_count": 76.92,
+          "support_tree_chunk_count": 4.54,
+          "time_diagnostics_logging_ms": 0.0,
+          "time_embedding_lookup_ms": 14.635078659921419,
+          "time_query_embedding_ms": 0.0,
+          "time_semantic_ordering_ms": 0.8967047018813901,
+          "time_shell1_construction_ms": 10.221763560839463,
+          "time_total_retrieval_ms": 2026.0944765398744,
+          "total_ms": 2027.24634,
+          "variant": "tree_shell1_semantic_query_order"
+        },
+        {
+          "answer_in_context": 0.506,
+          "avg_context_tokens": 372.016,
+          "candidate_pool_size": 79.862,
+          "context_f1": 0.29056248196248285,
+          "em": 0.002,
+          "embedding_missing_rate": 3.508771929824561e-05,
+          "generation_ms": 0.18974399999999986,
+          "graph_variant": "entity_chunk_reference",
+          "mode": "production",
+          "num_queries": 500,
+          "oracle_leakage_count": 0,
+          "qa_f1": 0.0810849937806212,
+          "qa_prompt_hash": "31e4b446be8b00a4989078fb4a957bc61b19bf4b8014674e2baad4612cc4396d",
+          "qa_prompt_name": "common_qa",
+          "qa_prompt_text_exact_match": true,
+          "query_embedding_cache_hit_rate": 1.0,
+          "rendered_recall": 0.6385,
+          "rendered_shell1_chunk_count": 3.418,
+          "renderer_mode": "tree_shell1_semantic_query_order",
+          "retrieval_ms": 921.0131919999989,
+          "runtime_mode": "production",
+          "runtime_profile": {
+            "mean": {
+              "candidate_embedding_lookup_count": 79.862,
+              "candidate_pool_size": 79.862,
+              "duplicate_embedding_lookup_avoided": 0.0,
+              "query_embedding_cache_hit_rate": 1.0,
+              "query_embedding_cache_miss_count": 0.0,
+              "rendered_chunk_count": 7.844,
+              "rendered_shell1_chunk_count": 3.418,
+              "shell1_chunk_count": 75.322,
+              "support_tree_chunk_count": 4.54,
+              "time_anchor_ms": 818.0207110224583,
+              "time_core_retrieval_ms": 788.0101329397294,
+              "time_diagnostics_logging_ms": 0.0,
+              "time_embedding_lookup_ms": 8.596415231877472,
+              "time_query_embedding_ms": 0.0,
+              "time_refinement_ms": 5.747687343973666,
+              "time_rendering_ms": 17.972257443529088,
+              "time_semantic_ordering_ms": 0.6232595401233993,
+              "time_shell1_construction_ms": 6.38910310837673,
+              "time_support_tree_ms": 6.38910310837673,
+              "time_total_retrieval_ms": 920.7018577962299,
+              "unique_candidate_embedding_count": 79.862
+            },
+            "num_queries": 500,
+            "top_two_contributors": [
+              {
+                "mean_ms": 818.0207110224583,
+                "name": "time_anchor_ms"
+              },
+              {
+                "mean_ms": 788.0101329397294,
+                "name": "time_core_retrieval_ms"
+              }
+            ]
+          },
+          "score_mixing_detected": false,
+          "shell1_chunk_count": 75.322,
+          "support_tree_chunk_count": 4.54,
+          "time_diagnostics_logging_ms": 0.0,
+          "time_embedding_lookup_ms": 8.596415231877472,
+          "time_query_embedding_ms": 0.0,
+          "time_semantic_ordering_ms": 0.6232595401233993,
+          "time_shell1_construction_ms": 6.38910310837673,
+          "time_total_retrieval_ms": 920.7018577962299,
+          "total_ms": 921.2029359999989,
+          "variant": "tree_shell1_semantic_query_order"
+        }
+      ]
+    },
+    {
+      "dataset": "hotpotqa",
+      "equivalence": {
+        "all_context_hash_match": true,
+        "all_rendered_match": true,
+        "context_hash_match_rate": 1.0,
+        "diagnostic_metrics": {
+          "answer_in_context": 0.78,
+          "avg_context_tokens": 482.6,
+          "candidate_pool_size": 79.94,
+          "context_f1": 0.35092063492063486,
+          "em": 0.0,
+          "embedding_missing_rate": 0.0,
+          "generation_ms": 0.26198,
+          "graph_variant": "entity_chunk_reference",
+          "mode": "diagnostic",
+          "num_queries": 50,
+          "oracle_leakage_count": 0,
+          "qa_f1": 0.0877748316512022,
+          "qa_prompt_hash": "31e4b446be8b00a4989078fb4a957bc61b19bf4b8014674e2baad4612cc4396d",
+          "qa_prompt_name": "common_qa",
+          "qa_prompt_text_exact_match": true,
+          "query_embedding_cache_hit_rate": 1.0,
+          "rendered_recall": 0.81,
+          "rendered_shell1_chunk_count": 2.96,
+          "renderer_mode": "tree_shell1_semantic_query_order",
+          "retrieval_ms": 948.8296399999998,
+          "runtime_mode": "diagnostic",
+          "runtime_profile": {
+            "mean": {
+              "candidate_embedding_lookup_count": 79.94,
+              "candidate_pool_size": 79.94,
+              "duplicate_embedding_lookup_avoided": 0.0,
+              "query_embedding_cache_hit_rate": 1.0,
+              "query_embedding_cache_miss_count": 0.0,
+              "rendered_chunk_count": 7.3,
+              "rendered_shell1_chunk_count": 2.96,
+              "shell1_chunk_count": 75.58,
+              "support_tree_chunk_count": 4.36,
+              "time_anchor_ms": 758.1676114801667,
+              "time_core_retrieval_ms": 710.5971042593592,
+              "time_diagnostics_logging_ms": 0.0,
+              "time_embedding_lookup_ms": 9.363926879595965,
+              "time_query_embedding_ms": 0.0,
+              "time_refinement_ms": 6.539647839963436,
+              "time_rendering_ms": 24.45913461910095,
+              "time_semantic_ordering_ms": 0.6638757404289208,
+              "time_shell1_construction_ms": 7.4100406595971435,
+              "time_support_tree_ms": 7.4100406595971435,
+              "time_total_retrieval_ms": 947.8172429991537,
+              "unique_candidate_embedding_count": 79.94
+            },
+            "num_queries": 50,
+            "top_two_contributors": [
+              {
+                "mean_ms": 758.1676114801667,
+                "name": "time_anchor_ms"
+              },
+              {
+                "mean_ms": 710.5971042593592,
+                "name": "time_core_retrieval_ms"
+              }
+            ]
+          },
+          "score_mixing_detected": false,
+          "shell1_chunk_count": 75.58,
+          "support_tree_chunk_count": 4.36,
+          "time_diagnostics_logging_ms": 0.0,
+          "time_embedding_lookup_ms": 9.363926879595965,
+          "time_query_embedding_ms": 0.0,
+          "time_semantic_ordering_ms": 0.6638757404289208,
+          "time_shell1_construction_ms": 7.4100406595971435,
+          "time_total_retrieval_ms": 947.8172429991537,
+          "total_ms": 949.0916199999998,
+          "variant": "tree_shell1_semantic_query_order"
+        },
+        "production_metrics": {
+          "answer_in_context": 0.73,
+          "avg_context_tokens": 480.446,
+          "candidate_pool_size": 82.758,
+          "context_f1": 0.33658571428571593,
+          "em": 0.002,
+          "embedding_missing_rate": 0.0,
+          "generation_ms": 0.2379539999999996,
+          "graph_variant": "entity_chunk_reference",
+          "mode": "production",
+          "num_queries": 500,
+          "oracle_leakage_count": 0,
+          "qa_f1": 0.0743211366901527,
+          "qa_prompt_hash": "31e4b446be8b00a4989078fb4a957bc61b19bf4b8014674e2baad4612cc4396d",
+          "qa_prompt_name": "common_qa",
+          "qa_prompt_text_exact_match": true,
+          "query_embedding_cache_hit_rate": 1.0,
+          "rendered_recall": 0.777,
+          "rendered_shell1_chunk_count": 2.784,
+          "renderer_mode": "tree_shell1_semantic_query_order",
+          "retrieval_ms": 903.7098379999992,
+          "runtime_mode": "production",
+          "runtime_profile": {
+            "mean": {
+              "candidate_embedding_lookup_count": 82.758,
+              "candidate_pool_size": 82.758,
+              "duplicate_embedding_lookup_avoided": 0.0,
+              "query_embedding_cache_hit_rate": 1.0,
+              "query_embedding_cache_miss_count": 0.0,
+              "rendered_chunk_count": 7.24,
+              "rendered_shell1_chunk_count": 2.784,
+              "shell1_chunk_count": 78.234,
+              "support_tree_chunk_count": 4.524,
+              "time_anchor_ms": 759.2521798018133,
+              "time_core_retrieval_ms": 752.4708839705563,
+              "time_diagnostics_logging_ms": 0.0,
+              "time_embedding_lookup_ms": 9.55901402598829,
+              "time_query_embedding_ms": 0.0,
+              "time_refinement_ms": 6.331325726001523,
+              "time_rendering_ms": 19.938465748011367,
+              "time_semantic_ordering_ms": 0.6620827338774689,
+              "time_shell1_construction_ms": 7.104397154034814,
+              "time_support_tree_ms": 7.104397154034814,
+              "time_total_retrieval_ms": 902.7095387059089,
+              "unique_candidate_embedding_count": 82.758
+            },
+            "num_queries": 500,
+            "top_two_contributors": [
+              {
+                "mean_ms": 759.2521798018133,
+                "name": "time_anchor_ms"
+              },
+              {
+                "mean_ms": 752.4708839705563,
+                "name": "time_core_retrieval_ms"
+              }
+            ]
+          },
+          "score_mixing_detected": false,
+          "shell1_chunk_count": 78.234,
+          "support_tree_chunk_count": 4.524,
+          "time_diagnostics_logging_ms": 0.0,
+          "time_embedding_lookup_ms": 9.55901402598829,
+          "time_query_embedding_ms": 0.0,
+          "time_semantic_ordering_ms": 0.6620827338774689,
+          "time_shell1_construction_ms": 7.104397154034814,
+          "time_total_retrieval_ms": 902.7095387059089,
+          "total_ms": 903.9477919999991,
+          "variant": "tree_shell1_semantic_query_order"
+        },
+        "quality_match": true,
+        "quality_match_value": "not_applicable_different_sample_size",
+        "rendered_match_rate": 1.0,
+        "rows": [
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "hotpotqa:doc:0",
+              "hotpotqa:doc:5",
+              "hotpotqa:doc:6709",
+              "hotpotqa:doc:6",
+              "hotpotqa:doc:7",
+              "hotpotqa:doc:8",
+              "hotpotqa:doc:4318",
+              "hotpotqa:doc:4661"
+            ],
+            "production_rendered_chunk_ids": [
+              "hotpotqa:doc:0",
+              "hotpotqa:doc:5",
+              "hotpotqa:doc:6709",
+              "hotpotqa:doc:6",
+              "hotpotqa:doc:7",
+              "hotpotqa:doc:8",
+              "hotpotqa:doc:4318",
+              "hotpotqa:doc:4661"
+            ],
+            "query_id": "5abe953b5542993f32c2a170",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "hotpotqa:doc:17",
+              "hotpotqa:doc:16",
+              "hotpotqa:doc:11",
+              "hotpotqa:doc:13",
+              "hotpotqa:doc:18",
+              "hotpotqa:doc:10",
+              "hotpotqa:doc:4843",
+              "hotpotqa:doc:2599"
+            ],
+            "production_rendered_chunk_ids": [
+              "hotpotqa:doc:17",
+              "hotpotqa:doc:16",
+              "hotpotqa:doc:11",
+              "hotpotqa:doc:13",
+              "hotpotqa:doc:18",
+              "hotpotqa:doc:10",
+              "hotpotqa:doc:4843",
+              "hotpotqa:doc:2599"
+            ],
+            "query_id": "5ab69f9a554299710c8d1ef8",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "hotpotqa:doc:29",
+              "hotpotqa:doc:23",
+              "hotpotqa:doc:4282",
+              "hotpotqa:doc:22",
+              "hotpotqa:doc:20",
+              "hotpotqa:doc:6063"
+            ],
+            "production_rendered_chunk_ids": [
+              "hotpotqa:doc:29",
+              "hotpotqa:doc:23",
+              "hotpotqa:doc:4282",
+              "hotpotqa:doc:22",
+              "hotpotqa:doc:20",
+              "hotpotqa:doc:6063"
+            ],
+            "query_id": "5abc030e554299642a094bdc",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "hotpotqa:doc:38",
+              "hotpotqa:doc:8978",
+              "hotpotqa:doc:3257",
+              "hotpotqa:doc:39",
+              "hotpotqa:doc:32",
+              "hotpotqa:doc:35"
+            ],
+            "production_rendered_chunk_ids": [
+              "hotpotqa:doc:38",
+              "hotpotqa:doc:8978",
+              "hotpotqa:doc:3257",
+              "hotpotqa:doc:39",
+              "hotpotqa:doc:32",
+              "hotpotqa:doc:35"
+            ],
+            "query_id": "5ae6c2285542995703ce8b9a",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "hotpotqa:doc:47",
+              "hotpotqa:doc:40",
+              "hotpotqa:doc:4677",
+              "hotpotqa:doc:41",
+              "hotpotqa:doc:44",
+              "hotpotqa:doc:45",
+              "hotpotqa:doc:43",
+              "hotpotqa:doc:42"
+            ],
+            "production_rendered_chunk_ids": [
+              "hotpotqa:doc:47",
+              "hotpotqa:doc:40",
+              "hotpotqa:doc:4677",
+              "hotpotqa:doc:41",
+              "hotpotqa:doc:44",
+              "hotpotqa:doc:45",
+              "hotpotqa:doc:43",
+              "hotpotqa:doc:42"
+            ],
+            "query_id": "5ab57fc4554299488d4d99c0",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "hotpotqa:doc:53",
+              "hotpotqa:doc:56",
+              "hotpotqa:doc:2729",
+              "hotpotqa:doc:59",
+              "hotpotqa:doc:54",
+              "hotpotqa:doc:5275",
+              "hotpotqa:doc:2675",
+              "hotpotqa:doc:2793"
+            ],
+            "production_rendered_chunk_ids": [
+              "hotpotqa:doc:53",
+              "hotpotqa:doc:56",
+              "hotpotqa:doc:2729",
+              "hotpotqa:doc:59",
+              "hotpotqa:doc:54",
+              "hotpotqa:doc:5275",
+              "hotpotqa:doc:2675",
+              "hotpotqa:doc:2793"
+            ],
+            "query_id": "5ade9c9c5542997c77adee8c",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "hotpotqa:doc:62",
+              "hotpotqa:doc:66",
+              "hotpotqa:doc:8619",
+              "hotpotqa:doc:60",
+              "hotpotqa:doc:69",
+              "hotpotqa:doc:64",
+              "hotpotqa:doc:4932"
+            ],
+            "production_rendered_chunk_ids": [
+              "hotpotqa:doc:62",
+              "hotpotqa:doc:66",
+              "hotpotqa:doc:8619",
+              "hotpotqa:doc:60",
+              "hotpotqa:doc:69",
+              "hotpotqa:doc:64",
+              "hotpotqa:doc:4932"
+            ],
+            "query_id": "5a749af055429979e28829b7",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "hotpotqa:doc:76",
+              "hotpotqa:doc:75",
+              "hotpotqa:doc:78",
+              "hotpotqa:doc:74",
+              "hotpotqa:doc:79",
+              "hotpotqa:doc:7806"
+            ],
+            "production_rendered_chunk_ids": [
+              "hotpotqa:doc:76",
+              "hotpotqa:doc:75",
+              "hotpotqa:doc:78",
+              "hotpotqa:doc:74",
+              "hotpotqa:doc:79",
+              "hotpotqa:doc:7806"
+            ],
+            "query_id": "5ae1389655429901ffe4ae05",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "hotpotqa:doc:80",
+              "hotpotqa:doc:5596",
+              "hotpotqa:doc:1717",
+              "hotpotqa:doc:83",
+              "hotpotqa:doc:4670",
+              "hotpotqa:doc:81",
+              "hotpotqa:doc:4876",
+              "hotpotqa:doc:2034"
+            ],
+            "production_rendered_chunk_ids": [
+              "hotpotqa:doc:80",
+              "hotpotqa:doc:5596",
+              "hotpotqa:doc:1717",
+              "hotpotqa:doc:83",
+              "hotpotqa:doc:4670",
+              "hotpotqa:doc:81",
+              "hotpotqa:doc:4876",
+              "hotpotqa:doc:2034"
+            ],
+            "query_id": "5adcd4325542994d58a2f6ed",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "hotpotqa:doc:91",
+              "hotpotqa:doc:87",
+              "hotpotqa:doc:5278",
+              "hotpotqa:doc:84",
+              "hotpotqa:doc:85",
+              "hotpotqa:doc:89"
+            ],
+            "production_rendered_chunk_ids": [
+              "hotpotqa:doc:91",
+              "hotpotqa:doc:87",
+              "hotpotqa:doc:5278",
+              "hotpotqa:doc:84",
+              "hotpotqa:doc:85",
+              "hotpotqa:doc:89"
+            ],
+            "query_id": "5a85c3225542992a431d1b95",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "hotpotqa:doc:101",
+              "hotpotqa:doc:7416",
+              "hotpotqa:doc:303",
+              "hotpotqa:doc:95",
+              "hotpotqa:doc:94",
+              "hotpotqa:doc:294",
+              "hotpotqa:doc:4129",
+              "hotpotqa:doc:5313"
+            ],
+            "production_rendered_chunk_ids": [
+              "hotpotqa:doc:101",
+              "hotpotqa:doc:7416",
+              "hotpotqa:doc:303",
+              "hotpotqa:doc:95",
+              "hotpotqa:doc:94",
+              "hotpotqa:doc:294",
+              "hotpotqa:doc:4129",
+              "hotpotqa:doc:5313"
+            ],
+            "query_id": "5ab94bc2554299743d22eacf",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "hotpotqa:doc:108",
+              "hotpotqa:doc:104",
+              "hotpotqa:doc:113",
+              "hotpotqa:doc:109",
+              "hotpotqa:doc:107",
+              "hotpotqa:doc:111",
+              "hotpotqa:doc:105",
+              "hotpotqa:doc:1460"
+            ],
+            "production_rendered_chunk_ids": [
+              "hotpotqa:doc:108",
+              "hotpotqa:doc:104",
+              "hotpotqa:doc:113",
+              "hotpotqa:doc:109",
+              "hotpotqa:doc:107",
+              "hotpotqa:doc:111",
+              "hotpotqa:doc:105",
+              "hotpotqa:doc:1460"
+            ],
+            "query_id": "5ae1f17e554299234fd04349",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "hotpotqa:doc:119",
+              "hotpotqa:doc:122",
+              "hotpotqa:doc:2904",
+              "hotpotqa:doc:120",
+              "hotpotqa:doc:118",
+              "hotpotqa:doc:123",
+              "hotpotqa:doc:121",
+              "hotpotqa:doc:3490"
+            ],
+            "production_rendered_chunk_ids": [
+              "hotpotqa:doc:119",
+              "hotpotqa:doc:122",
+              "hotpotqa:doc:2904",
+              "hotpotqa:doc:120",
+              "hotpotqa:doc:118",
+              "hotpotqa:doc:123",
+              "hotpotqa:doc:121",
+              "hotpotqa:doc:3490"
+            ],
+            "query_id": "5ab3cecd5542992ade7c6eae",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "hotpotqa:doc:128",
+              "hotpotqa:doc:125",
+              "hotpotqa:doc:133",
+              "hotpotqa:doc:124",
+              "hotpotqa:doc:132",
+              "hotpotqa:doc:130"
+            ],
+            "production_rendered_chunk_ids": [
+              "hotpotqa:doc:128",
+              "hotpotqa:doc:125",
+              "hotpotqa:doc:133",
+              "hotpotqa:doc:124",
+              "hotpotqa:doc:132",
+              "hotpotqa:doc:130"
+            ],
+            "query_id": "5a8835dc5542994846c1ce2b",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "hotpotqa:doc:139",
+              "hotpotqa:doc:141",
+              "hotpotqa:doc:140",
+              "hotpotqa:doc:142",
+              "hotpotqa:doc:136",
+              "hotpotqa:doc:7700",
+              "hotpotqa:doc:3237"
+            ],
+            "production_rendered_chunk_ids": [
+              "hotpotqa:doc:139",
+              "hotpotqa:doc:141",
+              "hotpotqa:doc:140",
+              "hotpotqa:doc:142",
+              "hotpotqa:doc:136",
+              "hotpotqa:doc:7700",
+              "hotpotqa:doc:3237"
+            ],
+            "query_id": "5a714dea5542994082a3e7a9",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "hotpotqa:doc:147",
+              "hotpotqa:doc:153",
+              "hotpotqa:doc:148",
+              "hotpotqa:doc:150",
+              "hotpotqa:doc:149",
+              "hotpotqa:doc:3102",
+              "hotpotqa:doc:144",
+              "hotpotqa:doc:152"
+            ],
+            "production_rendered_chunk_ids": [
+              "hotpotqa:doc:147",
+              "hotpotqa:doc:153",
+              "hotpotqa:doc:148",
+              "hotpotqa:doc:150",
+              "hotpotqa:doc:149",
+              "hotpotqa:doc:3102",
+              "hotpotqa:doc:144",
+              "hotpotqa:doc:152"
+            ],
+            "query_id": "5a8481945542997175ce1ed3",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "hotpotqa:doc:162",
+              "hotpotqa:doc:160",
+              "hotpotqa:doc:6970",
+              "hotpotqa:doc:163",
+              "hotpotqa:doc:154"
+            ],
+            "production_rendered_chunk_ids": [
+              "hotpotqa:doc:162",
+              "hotpotqa:doc:160",
+              "hotpotqa:doc:6970",
+              "hotpotqa:doc:163",
+              "hotpotqa:doc:154"
+            ],
+            "query_id": "5a84574455429933447460e6",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "hotpotqa:doc:165",
+              "hotpotqa:doc:164",
+              "hotpotqa:doc:172",
+              "hotpotqa:doc:171",
+              "hotpotqa:doc:170",
+              "hotpotqa:doc:173",
+              "hotpotqa:doc:4257"
+            ],
+            "production_rendered_chunk_ids": [
+              "hotpotqa:doc:165",
+              "hotpotqa:doc:164",
+              "hotpotqa:doc:172",
+              "hotpotqa:doc:171",
+              "hotpotqa:doc:170",
+              "hotpotqa:doc:173",
+              "hotpotqa:doc:4257"
+            ],
+            "query_id": "5a72b2dc5542992359bc3173",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "hotpotqa:doc:177",
+              "hotpotqa:doc:178",
+              "hotpotqa:doc:5391",
+              "hotpotqa:doc:181",
+              "hotpotqa:doc:183",
+              "hotpotqa:doc:182",
+              "hotpotqa:doc:3326"
+            ],
+            "production_rendered_chunk_ids": [
+              "hotpotqa:doc:177",
+              "hotpotqa:doc:178",
+              "hotpotqa:doc:5391",
+              "hotpotqa:doc:181",
+              "hotpotqa:doc:183",
+              "hotpotqa:doc:182",
+              "hotpotqa:doc:3326"
+            ],
+            "query_id": "5a7a3a945542996a35c17147",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "hotpotqa:doc:188",
+              "hotpotqa:doc:741",
+              "hotpotqa:doc:735",
+              "hotpotqa:doc:191",
+              "hotpotqa:doc:189",
+              "hotpotqa:doc:192",
+              "hotpotqa:doc:186",
+              "hotpotqa:doc:4761"
+            ],
+            "production_rendered_chunk_ids": [
+              "hotpotqa:doc:188",
+              "hotpotqa:doc:741",
+              "hotpotqa:doc:735",
+              "hotpotqa:doc:191",
+              "hotpotqa:doc:189",
+              "hotpotqa:doc:192",
+              "hotpotqa:doc:186",
+              "hotpotqa:doc:4761"
+            ],
+            "query_id": "5ade86b255429939a52fe8e0",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "hotpotqa:doc:198",
+              "hotpotqa:doc:194",
+              "hotpotqa:doc:962",
+              "hotpotqa:doc:199",
+              "hotpotqa:doc:200",
+              "hotpotqa:doc:197",
+              "hotpotqa:doc:195"
+            ],
+            "production_rendered_chunk_ids": [
+              "hotpotqa:doc:198",
+              "hotpotqa:doc:194",
+              "hotpotqa:doc:962",
+              "hotpotqa:doc:199",
+              "hotpotqa:doc:200",
+              "hotpotqa:doc:197",
+              "hotpotqa:doc:195"
+            ],
+            "query_id": "5a8f5b6f554299458435d5e7",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "hotpotqa:doc:207",
+              "hotpotqa:doc:9292",
+              "hotpotqa:doc:7733",
+              "hotpotqa:doc:211",
+              "hotpotqa:doc:210",
+              "hotpotqa:doc:9296",
+              "hotpotqa:doc:2631",
+              "hotpotqa:doc:669"
+            ],
+            "production_rendered_chunk_ids": [
+              "hotpotqa:doc:207",
+              "hotpotqa:doc:9292",
+              "hotpotqa:doc:7733",
+              "hotpotqa:doc:211",
+              "hotpotqa:doc:210",
+              "hotpotqa:doc:9296",
+              "hotpotqa:doc:2631",
+              "hotpotqa:doc:669"
+            ],
+            "query_id": "5ae40d405542996836b02c28",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "hotpotqa:doc:216",
+              "hotpotqa:doc:217",
+              "hotpotqa:doc:2224",
+              "hotpotqa:doc:214",
+              "hotpotqa:doc:218",
+              "hotpotqa:doc:223",
+              "hotpotqa:doc:215",
+              "hotpotqa:doc:220"
+            ],
+            "production_rendered_chunk_ids": [
+              "hotpotqa:doc:216",
+              "hotpotqa:doc:217",
+              "hotpotqa:doc:2224",
+              "hotpotqa:doc:214",
+              "hotpotqa:doc:218",
+              "hotpotqa:doc:223",
+              "hotpotqa:doc:215",
+              "hotpotqa:doc:220"
+            ],
+            "query_id": "5a72334755429971e9dc934c",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "hotpotqa:doc:224",
+              "hotpotqa:doc:676",
+              "hotpotqa:doc:7149",
+              "hotpotqa:doc:225",
+              "hotpotqa:doc:230",
+              "hotpotqa:doc:231",
+              "hotpotqa:doc:4576"
+            ],
+            "production_rendered_chunk_ids": [
+              "hotpotqa:doc:224",
+              "hotpotqa:doc:676",
+              "hotpotqa:doc:7149",
+              "hotpotqa:doc:225",
+              "hotpotqa:doc:230",
+              "hotpotqa:doc:231",
+              "hotpotqa:doc:4576"
+            ],
+            "query_id": "5ab8829d55429934fafe6e08",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "hotpotqa:doc:241",
+              "hotpotqa:doc:7392",
+              "hotpotqa:doc:2914",
+              "hotpotqa:doc:234",
+              "hotpotqa:doc:235",
+              "hotpotqa:doc:1221",
+              "hotpotqa:doc:1968"
+            ],
+            "production_rendered_chunk_ids": [
+              "hotpotqa:doc:241",
+              "hotpotqa:doc:7392",
+              "hotpotqa:doc:2914",
+              "hotpotqa:doc:234",
+              "hotpotqa:doc:235",
+              "hotpotqa:doc:1221",
+              "hotpotqa:doc:1968"
+            ],
+            "query_id": "5a7b1c0a55429931da12c9c9",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "hotpotqa:doc:251",
+              "hotpotqa:doc:250",
+              "hotpotqa:doc:2110",
+              "hotpotqa:doc:247",
+              "hotpotqa:doc:246",
+              "hotpotqa:doc:8256"
+            ],
+            "production_rendered_chunk_ids": [
+              "hotpotqa:doc:251",
+              "hotpotqa:doc:250",
+              "hotpotqa:doc:2110",
+              "hotpotqa:doc:247",
+              "hotpotqa:doc:246",
+              "hotpotqa:doc:8256"
+            ],
+            "query_id": "5ae40b2b55429970de88d8b3",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "hotpotqa:doc:258",
+              "hotpotqa:doc:263",
+              "hotpotqa:doc:469",
+              "hotpotqa:doc:255",
+              "hotpotqa:doc:257",
+              "hotpotqa:doc:259",
+              "hotpotqa:doc:262",
+              "hotpotqa:doc:7032"
+            ],
+            "production_rendered_chunk_ids": [
+              "hotpotqa:doc:258",
+              "hotpotqa:doc:263",
+              "hotpotqa:doc:469",
+              "hotpotqa:doc:255",
+              "hotpotqa:doc:257",
+              "hotpotqa:doc:259",
+              "hotpotqa:doc:262",
+              "hotpotqa:doc:7032"
+            ],
+            "query_id": "5ab29c24554299449642c932",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "hotpotqa:doc:269",
+              "hotpotqa:doc:271",
+              "hotpotqa:doc:264",
+              "hotpotqa:doc:273",
+              "hotpotqa:doc:268",
+              "hotpotqa:doc:266",
+              "hotpotqa:doc:9726",
+              "hotpotqa:doc:4035"
+            ],
+            "production_rendered_chunk_ids": [
+              "hotpotqa:doc:269",
+              "hotpotqa:doc:271",
+              "hotpotqa:doc:264",
+              "hotpotqa:doc:273",
+              "hotpotqa:doc:268",
+              "hotpotqa:doc:266",
+              "hotpotqa:doc:9726",
+              "hotpotqa:doc:4035"
+            ],
+            "query_id": "5ae26fad554299495565da6f",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "hotpotqa:doc:279",
+              "hotpotqa:doc:275",
+              "hotpotqa:doc:282",
+              "hotpotqa:doc:281",
+              "hotpotqa:doc:274",
+              "hotpotqa:doc:4137",
+              "hotpotqa:doc:283",
+              "hotpotqa:doc:278"
+            ],
+            "production_rendered_chunk_ids": [
+              "hotpotqa:doc:279",
+              "hotpotqa:doc:275",
+              "hotpotqa:doc:282",
+              "hotpotqa:doc:281",
+              "hotpotqa:doc:274",
+              "hotpotqa:doc:4137",
+              "hotpotqa:doc:283",
+              "hotpotqa:doc:278"
+            ],
+            "query_id": "5a7542425542996c70cfaecc",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "hotpotqa:doc:291",
+              "hotpotqa:doc:9330",
+              "hotpotqa:doc:8390",
+              "hotpotqa:doc:289",
+              "hotpotqa:doc:292",
+              "hotpotqa:doc:8855"
+            ],
+            "production_rendered_chunk_ids": [
+              "hotpotqa:doc:291",
+              "hotpotqa:doc:9330",
+              "hotpotqa:doc:8390",
+              "hotpotqa:doc:289",
+              "hotpotqa:doc:292",
+              "hotpotqa:doc:8855"
+            ],
+            "query_id": "5adecc7755429975fa854f9d",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "hotpotqa:doc:302",
+              "hotpotqa:doc:298",
+              "hotpotqa:doc:303",
+              "hotpotqa:doc:294",
+              "hotpotqa:doc:300",
+              "hotpotqa:doc:1051",
+              "hotpotqa:doc:101",
+              "hotpotqa:doc:1048"
+            ],
+            "production_rendered_chunk_ids": [
+              "hotpotqa:doc:302",
+              "hotpotqa:doc:298",
+              "hotpotqa:doc:303",
+              "hotpotqa:doc:294",
+              "hotpotqa:doc:300",
+              "hotpotqa:doc:1051",
+              "hotpotqa:doc:101",
+              "hotpotqa:doc:1048"
+            ],
+            "query_id": "5abff9905542997d64295980",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "hotpotqa:doc:308",
+              "hotpotqa:doc:313",
+              "hotpotqa:doc:312",
+              "hotpotqa:doc:304",
+              "hotpotqa:doc:309",
+              "hotpotqa:doc:7036",
+              "hotpotqa:doc:9449",
+              "hotpotqa:doc:257"
+            ],
+            "production_rendered_chunk_ids": [
+              "hotpotqa:doc:308",
+              "hotpotqa:doc:313",
+              "hotpotqa:doc:312",
+              "hotpotqa:doc:304",
+              "hotpotqa:doc:309",
+              "hotpotqa:doc:7036",
+              "hotpotqa:doc:9449",
+              "hotpotqa:doc:257"
+            ],
+            "query_id": "5ab5f372554299488d4d9a60",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "hotpotqa:doc:316",
+              "hotpotqa:doc:290",
+              "hotpotqa:doc:2760",
+              "hotpotqa:doc:319",
+              "hotpotqa:doc:314",
+              "hotpotqa:doc:321",
+              "hotpotqa:doc:4062"
+            ],
+            "production_rendered_chunk_ids": [
+              "hotpotqa:doc:316",
+              "hotpotqa:doc:290",
+              "hotpotqa:doc:2760",
+              "hotpotqa:doc:319",
+              "hotpotqa:doc:314",
+              "hotpotqa:doc:321",
+              "hotpotqa:doc:4062"
+            ],
+            "query_id": "5a7558425542992db9473647",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "hotpotqa:doc:329",
+              "hotpotqa:doc:332",
+              "hotpotqa:doc:327",
+              "hotpotqa:doc:324",
+              "hotpotqa:doc:6819",
+              "hotpotqa:doc:4894",
+              "hotpotqa:doc:6810",
+              "hotpotqa:doc:6811"
+            ],
+            "production_rendered_chunk_ids": [
+              "hotpotqa:doc:329",
+              "hotpotqa:doc:332",
+              "hotpotqa:doc:327",
+              "hotpotqa:doc:324",
+              "hotpotqa:doc:6819",
+              "hotpotqa:doc:4894",
+              "hotpotqa:doc:6810",
+              "hotpotqa:doc:6811"
+            ],
+            "query_id": "5a72f45a5542992359bc31e6",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "hotpotqa:doc:334",
+              "hotpotqa:doc:343",
+              "hotpotqa:doc:337",
+              "hotpotqa:doc:340",
+              "hotpotqa:doc:339",
+              "hotpotqa:doc:2450"
+            ],
+            "production_rendered_chunk_ids": [
+              "hotpotqa:doc:334",
+              "hotpotqa:doc:343",
+              "hotpotqa:doc:337",
+              "hotpotqa:doc:340",
+              "hotpotqa:doc:339",
+              "hotpotqa:doc:2450"
+            ],
+            "query_id": "5a83411655429966c78a6b5d",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "hotpotqa:doc:345",
+              "hotpotqa:doc:350",
+              "hotpotqa:doc:351",
+              "hotpotqa:doc:347",
+              "hotpotqa:doc:346",
+              "hotpotqa:doc:352",
+              "hotpotqa:doc:353"
+            ],
+            "production_rendered_chunk_ids": [
+              "hotpotqa:doc:345",
+              "hotpotqa:doc:350",
+              "hotpotqa:doc:351",
+              "hotpotqa:doc:347",
+              "hotpotqa:doc:346",
+              "hotpotqa:doc:352",
+              "hotpotqa:doc:353"
+            ],
+            "query_id": "5a77aa095542995d83181260",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "hotpotqa:doc:6192",
+              "hotpotqa:doc:361",
+              "hotpotqa:doc:9045",
+              "hotpotqa:doc:363",
+              "hotpotqa:doc:360",
+              "hotpotqa:doc:362",
+              "hotpotqa:doc:9039",
+              "hotpotqa:doc:9038"
+            ],
+            "production_rendered_chunk_ids": [
+              "hotpotqa:doc:6192",
+              "hotpotqa:doc:361",
+              "hotpotqa:doc:9045",
+              "hotpotqa:doc:363",
+              "hotpotqa:doc:360",
+              "hotpotqa:doc:362",
+              "hotpotqa:doc:9039",
+              "hotpotqa:doc:9038"
+            ],
+            "query_id": "5ae680cc5542996d980e7ba5",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "hotpotqa:doc:372",
+              "hotpotqa:doc:367",
+              "hotpotqa:doc:364",
+              "hotpotqa:doc:373",
+              "hotpotqa:doc:371",
+              "hotpotqa:doc:1298",
+              "hotpotqa:doc:6694"
+            ],
+            "production_rendered_chunk_ids": [
+              "hotpotqa:doc:372",
+              "hotpotqa:doc:367",
+              "hotpotqa:doc:364",
+              "hotpotqa:doc:373",
+              "hotpotqa:doc:371",
+              "hotpotqa:doc:1298",
+              "hotpotqa:doc:6694"
+            ],
+            "query_id": "5ae4d3c95542990ba0bbb165",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "hotpotqa:doc:7305",
+              "hotpotqa:doc:6753",
+              "hotpotqa:doc:379",
+              "hotpotqa:doc:6315",
+              "hotpotqa:doc:4425",
+              "hotpotqa:doc:376",
+              "hotpotqa:doc:380",
+              "hotpotqa:doc:2155"
+            ],
+            "production_rendered_chunk_ids": [
+              "hotpotqa:doc:7305",
+              "hotpotqa:doc:6753",
+              "hotpotqa:doc:379",
+              "hotpotqa:doc:6315",
+              "hotpotqa:doc:4425",
+              "hotpotqa:doc:376",
+              "hotpotqa:doc:380",
+              "hotpotqa:doc:2155"
+            ],
+            "query_id": "5a790d8f554299029c4b5eec",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "hotpotqa:doc:387",
+              "hotpotqa:doc:393",
+              "hotpotqa:doc:391",
+              "hotpotqa:doc:389",
+              "hotpotqa:doc:390",
+              "hotpotqa:doc:385",
+              "hotpotqa:doc:384",
+              "hotpotqa:doc:5433"
+            ],
+            "production_rendered_chunk_ids": [
+              "hotpotqa:doc:387",
+              "hotpotqa:doc:393",
+              "hotpotqa:doc:391",
+              "hotpotqa:doc:389",
+              "hotpotqa:doc:390",
+              "hotpotqa:doc:385",
+              "hotpotqa:doc:384",
+              "hotpotqa:doc:5433"
+            ],
+            "query_id": "5a717d4c5542994082a3e854",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "hotpotqa:doc:395",
+              "hotpotqa:doc:5057",
+              "hotpotqa:doc:396",
+              "hotpotqa:doc:401",
+              "hotpotqa:doc:398",
+              "hotpotqa:doc:397",
+              "hotpotqa:doc:2923"
+            ],
+            "production_rendered_chunk_ids": [
+              "hotpotqa:doc:395",
+              "hotpotqa:doc:5057",
+              "hotpotqa:doc:396",
+              "hotpotqa:doc:401",
+              "hotpotqa:doc:398",
+              "hotpotqa:doc:397",
+              "hotpotqa:doc:2923"
+            ],
+            "query_id": "5a77322055429972597f1494",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "hotpotqa:doc:407",
+              "hotpotqa:doc:409",
+              "hotpotqa:doc:410",
+              "hotpotqa:doc:406",
+              "hotpotqa:doc:4882"
+            ],
+            "production_rendered_chunk_ids": [
+              "hotpotqa:doc:407",
+              "hotpotqa:doc:409",
+              "hotpotqa:doc:410",
+              "hotpotqa:doc:406",
+              "hotpotqa:doc:4882"
+            ],
+            "query_id": "5ae163b3554299422ee99678",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "hotpotqa:doc:423",
+              "hotpotqa:doc:417",
+              "hotpotqa:doc:419",
+              "hotpotqa:doc:415",
+              "hotpotqa:doc:416",
+              "hotpotqa:doc:421",
+              "hotpotqa:doc:418",
+              "hotpotqa:doc:414"
+            ],
+            "production_rendered_chunk_ids": [
+              "hotpotqa:doc:423",
+              "hotpotqa:doc:417",
+              "hotpotqa:doc:419",
+              "hotpotqa:doc:415",
+              "hotpotqa:doc:416",
+              "hotpotqa:doc:421",
+              "hotpotqa:doc:418",
+              "hotpotqa:doc:414"
+            ],
+            "query_id": "5a77cb335542997042120b3a",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "hotpotqa:doc:426",
+              "hotpotqa:doc:433",
+              "hotpotqa:doc:6426",
+              "hotpotqa:doc:430",
+              "hotpotqa:doc:431",
+              "hotpotqa:doc:428",
+              "hotpotqa:doc:424",
+              "hotpotqa:doc:427"
+            ],
+            "production_rendered_chunk_ids": [
+              "hotpotqa:doc:426",
+              "hotpotqa:doc:433",
+              "hotpotqa:doc:6426",
+              "hotpotqa:doc:430",
+              "hotpotqa:doc:431",
+              "hotpotqa:doc:428",
+              "hotpotqa:doc:424",
+              "hotpotqa:doc:427"
+            ],
+            "query_id": "5ae4a0ca5542995ad6573dcb",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "hotpotqa:doc:8854",
+              "hotpotqa:doc:440",
+              "hotpotqa:doc:3126",
+              "hotpotqa:doc:441",
+              "hotpotqa:doc:438",
+              "hotpotqa:doc:436",
+              "hotpotqa:doc:7003"
+            ],
+            "production_rendered_chunk_ids": [
+              "hotpotqa:doc:8854",
+              "hotpotqa:doc:440",
+              "hotpotqa:doc:3126",
+              "hotpotqa:doc:441",
+              "hotpotqa:doc:438",
+              "hotpotqa:doc:436",
+              "hotpotqa:doc:7003"
+            ],
+            "query_id": "5a84e21d5542997b5ce3ff7c",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "hotpotqa:doc:450",
+              "hotpotqa:doc:8297",
+              "hotpotqa:doc:8719",
+              "hotpotqa:doc:445",
+              "hotpotqa:doc:451",
+              "hotpotqa:doc:447",
+              "hotpotqa:doc:5865",
+              "hotpotqa:doc:8291"
+            ],
+            "production_rendered_chunk_ids": [
+              "hotpotqa:doc:450",
+              "hotpotqa:doc:8297",
+              "hotpotqa:doc:8719",
+              "hotpotqa:doc:445",
+              "hotpotqa:doc:451",
+              "hotpotqa:doc:447",
+              "hotpotqa:doc:5865",
+              "hotpotqa:doc:8291"
+            ],
+            "query_id": "5a797bd95542994bb9457016",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "hotpotqa:doc:458",
+              "hotpotqa:doc:7584",
+              "hotpotqa:doc:3933",
+              "hotpotqa:doc:460",
+              "hotpotqa:doc:454",
+              "hotpotqa:doc:459",
+              "hotpotqa:doc:3327",
+              "hotpotqa:doc:8775"
+            ],
+            "production_rendered_chunk_ids": [
+              "hotpotqa:doc:458",
+              "hotpotqa:doc:7584",
+              "hotpotqa:doc:3933",
+              "hotpotqa:doc:460",
+              "hotpotqa:doc:454",
+              "hotpotqa:doc:459",
+              "hotpotqa:doc:3327",
+              "hotpotqa:doc:8775"
+            ],
+            "query_id": "5a84973e5542992a431d1a67",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "hotpotqa:doc:472",
+              "hotpotqa:doc:8712",
+              "hotpotqa:doc:3764",
+              "hotpotqa:doc:469",
+              "hotpotqa:doc:465",
+              "hotpotqa:doc:257",
+              "hotpotqa:doc:470",
+              "hotpotqa:doc:8091"
+            ],
+            "production_rendered_chunk_ids": [
+              "hotpotqa:doc:472",
+              "hotpotqa:doc:8712",
+              "hotpotqa:doc:3764",
+              "hotpotqa:doc:469",
+              "hotpotqa:doc:465",
+              "hotpotqa:doc:257",
+              "hotpotqa:doc:470",
+              "hotpotqa:doc:8091"
+            ],
+            "query_id": "5a7736bc554299373536021b",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "hotpotqa:doc:481",
+              "hotpotqa:doc:483",
+              "hotpotqa:doc:3875",
+              "hotpotqa:doc:480",
+              "hotpotqa:doc:478",
+              "hotpotqa:doc:3838",
+              "hotpotqa:doc:479",
+              "hotpotqa:doc:8676"
+            ],
+            "production_rendered_chunk_ids": [
+              "hotpotqa:doc:481",
+              "hotpotqa:doc:483",
+              "hotpotqa:doc:3875",
+              "hotpotqa:doc:480",
+              "hotpotqa:doc:478",
+              "hotpotqa:doc:3838",
+              "hotpotqa:doc:479",
+              "hotpotqa:doc:8676"
+            ],
+            "query_id": "5add7c9c5542990dbb2f7e60",
+            "rendered_chunk_ids_exact_match": true
+          },
+          {
+            "context_text_hash_exact_match": true,
+            "diagnostic_rendered_chunk_ids": [
+              "hotpotqa:doc:485",
+              "hotpotqa:doc:484",
+              "hotpotqa:doc:9786",
+              "hotpotqa:doc:489",
+              "hotpotqa:doc:699",
+              "hotpotqa:doc:8763",
+              "hotpotqa:doc:8959"
+            ],
+            "production_rendered_chunk_ids": [
+              "hotpotqa:doc:485",
+              "hotpotqa:doc:484",
+              "hotpotqa:doc:9786",
+              "hotpotqa:doc:489",
+              "hotpotqa:doc:699",
+              "hotpotqa:doc:8763",
+              "hotpotqa:doc:8959"
+            ],
+            "query_id": "5a7d3470554299452d57bb56",
+            "rendered_chunk_ids_exact_match": true
+          }
+        ],
+        "same_metric_sample": false,
+        "total": 50
+      },
+      "gate": {
+        "blockers": [],
+        "checks": {
+          "answer_in_context": true,
+          "context_f1": true,
+          "equivalence": true,
+          "oracle_leakage": true,
+          "prompt": true,
+          "qa_f1": true,
+          "rendered_recall": true,
+          "score_mixing": true,
+          "time": true,
+          "tokens": true
+        },
+        "dataset": "hotpotqa",
+        "pass": true,
+        "time_ratio": 0.9946345153398521
+      },
+      "rows": [
+        {
+          "answer_in_context": 0.612,
+          "avg_context_tokens": 480.692,
+          "candidate_pool_size": 0.0,
+          "context_f1": 0.2684603174603189,
+          "em": 0.002,
+          "embedding_missing_rate": 0.0,
+          "generation_ms": 0.29226799999999986,
+          "graph_variant": "entity_chunk_reference",
+          "mode": "production",
+          "num_queries": 500,
+          "oracle_leakage_count": 0,
+          "qa_f1": 0.07186856853349122,
+          "qa_prompt_hash": "31e4b446be8b00a4989078fb4a957bc61b19bf4b8014674e2baad4612cc4396d",
+          "qa_prompt_name": "common_qa",
+          "qa_prompt_text_exact_match": true,
+          "query_embedding_cache_hit_rate": 0.0,
+          "rendered_recall": 0.628,
+          "rendered_shell1_chunk_count": 0.0,
+          "renderer_mode": "current_renderer",
+          "retrieval_ms": 908.5848360000001,
+          "runtime_mode": "production",
+          "runtime_profile": {
+            "mean": {
+              "candidate_embedding_lookup_count": 0.0,
+              "candidate_pool_size": 0.0,
+              "duplicate_embedding_lookup_avoided": 0.0,
+              "query_embedding_cache_hit_rate": 0.0,
+              "query_embedding_cache_miss_count": 0.0,
+              "rendered_chunk_count": 7.376,
+              "rendered_shell1_chunk_count": 0.0,
+              "shell1_chunk_count": 0.0,
+              "support_tree_chunk_count": 0.0,
+              "time_anchor_ms": 778.4095606539631,
+              "time_core_retrieval_ms": 770.5157212337363,
+              "time_diagnostics_logging_ms": 0.0,
+              "time_embedding_lookup_ms": 0.0,
+              "time_query_embedding_ms": 0.0,
+              "time_refinement_ms": 6.412739881576272,
+              "time_rendering_ms": 4.739496538153617,
+              "time_semantic_ordering_ms": 0.0,
+              "time_shell1_construction_ms": 0.0,
+              "time_support_tree_ms": 0.0,
+              "time_total_retrieval_ms": 907.60369817639,
+              "unique_candidate_embedding_count": 0.0
+            },
+            "num_queries": 500,
+            "top_two_contributors": [
+              {
+                "mean_ms": 778.4095606539631,
+                "name": "time_anchor_ms"
+              },
+              {
+                "mean_ms": 770.5157212337363,
+                "name": "time_core_retrieval_ms"
+              }
+            ]
+          },
+          "score_mixing_detected": false,
+          "shell1_chunk_count": 0.0,
+          "support_tree_chunk_count": 0.0,
+          "time_diagnostics_logging_ms": 0.0,
+          "time_embedding_lookup_ms": 0.0,
+          "time_query_embedding_ms": 0.0,
+          "time_semantic_ordering_ms": 0.0,
+          "time_shell1_construction_ms": 0.0,
+          "time_total_retrieval_ms": 907.60369817639,
+          "total_ms": 908.8771040000001,
+          "variant": "current_renderer"
+        },
+        {
+          "answer_in_context": 0.78,
+          "avg_context_tokens": 482.6,
+          "candidate_pool_size": 79.94,
+          "context_f1": 0.35092063492063486,
+          "em": 0.0,
+          "embedding_missing_rate": 0.0,
+          "generation_ms": 0.26198,
+          "graph_variant": "entity_chunk_reference",
+          "mode": "diagnostic",
+          "num_queries": 50,
+          "oracle_leakage_count": 0,
+          "qa_f1": 0.0877748316512022,
+          "qa_prompt_hash": "31e4b446be8b00a4989078fb4a957bc61b19bf4b8014674e2baad4612cc4396d",
+          "qa_prompt_name": "common_qa",
+          "qa_prompt_text_exact_match": true,
+          "query_embedding_cache_hit_rate": 1.0,
+          "rendered_recall": 0.81,
+          "rendered_shell1_chunk_count": 2.96,
+          "renderer_mode": "tree_shell1_semantic_query_order",
+          "retrieval_ms": 948.8296399999998,
+          "runtime_mode": "diagnostic",
+          "runtime_profile": {
+            "mean": {
+              "candidate_embedding_lookup_count": 79.94,
+              "candidate_pool_size": 79.94,
+              "duplicate_embedding_lookup_avoided": 0.0,
+              "query_embedding_cache_hit_rate": 1.0,
+              "query_embedding_cache_miss_count": 0.0,
+              "rendered_chunk_count": 7.3,
+              "rendered_shell1_chunk_count": 2.96,
+              "shell1_chunk_count": 75.58,
+              "support_tree_chunk_count": 4.36,
+              "time_anchor_ms": 758.1676114801667,
+              "time_core_retrieval_ms": 710.5971042593592,
+              "time_diagnostics_logging_ms": 0.0,
+              "time_embedding_lookup_ms": 9.363926879595965,
+              "time_query_embedding_ms": 0.0,
+              "time_refinement_ms": 6.539647839963436,
+              "time_rendering_ms": 24.45913461910095,
+              "time_semantic_ordering_ms": 0.6638757404289208,
+              "time_shell1_construction_ms": 7.4100406595971435,
+              "time_support_tree_ms": 7.4100406595971435,
+              "time_total_retrieval_ms": 947.8172429991537,
+              "unique_candidate_embedding_count": 79.94
+            },
+            "num_queries": 50,
+            "top_two_contributors": [
+              {
+                "mean_ms": 758.1676114801667,
+                "name": "time_anchor_ms"
+              },
+              {
+                "mean_ms": 710.5971042593592,
+                "name": "time_core_retrieval_ms"
+              }
+            ]
+          },
+          "score_mixing_detected": false,
+          "shell1_chunk_count": 75.58,
+          "support_tree_chunk_count": 4.36,
+          "time_diagnostics_logging_ms": 0.0,
+          "time_embedding_lookup_ms": 9.363926879595965,
+          "time_query_embedding_ms": 0.0,
+          "time_semantic_ordering_ms": 0.6638757404289208,
+          "time_shell1_construction_ms": 7.4100406595971435,
+          "time_total_retrieval_ms": 947.8172429991537,
+          "total_ms": 949.0916199999998,
+          "variant": "tree_shell1_semantic_query_order"
+        },
+        {
+          "answer_in_context": 0.73,
+          "avg_context_tokens": 480.446,
+          "candidate_pool_size": 82.758,
+          "context_f1": 0.33658571428571593,
+          "em": 0.002,
+          "embedding_missing_rate": 0.0,
+          "generation_ms": 0.2379539999999996,
+          "graph_variant": "entity_chunk_reference",
+          "mode": "production",
+          "num_queries": 500,
+          "oracle_leakage_count": 0,
+          "qa_f1": 0.0743211366901527,
+          "qa_prompt_hash": "31e4b446be8b00a4989078fb4a957bc61b19bf4b8014674e2baad4612cc4396d",
+          "qa_prompt_name": "common_qa",
+          "qa_prompt_text_exact_match": true,
+          "query_embedding_cache_hit_rate": 1.0,
+          "rendered_recall": 0.777,
+          "rendered_shell1_chunk_count": 2.784,
+          "renderer_mode": "tree_shell1_semantic_query_order",
+          "retrieval_ms": 903.7098379999992,
+          "runtime_mode": "production",
+          "runtime_profile": {
+            "mean": {
+              "candidate_embedding_lookup_count": 82.758,
+              "candidate_pool_size": 82.758,
+              "duplicate_embedding_lookup_avoided": 0.0,
+              "query_embedding_cache_hit_rate": 1.0,
+              "query_embedding_cache_miss_count": 0.0,
+              "rendered_chunk_count": 7.24,
+              "rendered_shell1_chunk_count": 2.784,
+              "shell1_chunk_count": 78.234,
+              "support_tree_chunk_count": 4.524,
+              "time_anchor_ms": 759.2521798018133,
+              "time_core_retrieval_ms": 752.4708839705563,
+              "time_diagnostics_logging_ms": 0.0,
+              "time_embedding_lookup_ms": 9.55901402598829,
+              "time_query_embedding_ms": 0.0,
+              "time_refinement_ms": 6.331325726001523,
+              "time_rendering_ms": 19.938465748011367,
+              "time_semantic_ordering_ms": 0.6620827338774689,
+              "time_shell1_construction_ms": 7.104397154034814,
+              "time_support_tree_ms": 7.104397154034814,
+              "time_total_retrieval_ms": 902.7095387059089,
+              "unique_candidate_embedding_count": 82.758
+            },
+            "num_queries": 500,
+            "top_two_contributors": [
+              {
+                "mean_ms": 759.2521798018133,
+                "name": "time_anchor_ms"
+              },
+              {
+                "mean_ms": 752.4708839705563,
+                "name": "time_core_retrieval_ms"
+              }
+            ]
+          },
+          "score_mixing_detected": false,
+          "shell1_chunk_count": 78.234,
+          "support_tree_chunk_count": 4.524,
+          "time_diagnostics_logging_ms": 0.0,
+          "time_embedding_lookup_ms": 9.55901402598829,
+          "time_query_embedding_ms": 0.0,
+          "time_semantic_ordering_ms": 0.6620827338774689,
+          "time_shell1_construction_ms": 7.104397154034814,
+          "time_total_retrieval_ms": 902.7095387059089,
+          "total_ms": 903.9477919999991,
+          "variant": "tree_shell1_semantic_query_order"
+        }
+      ]
+    }
+  ],
+  "final_decision": "ADOPTION_CANDIDATE_CONFIRMED"
+}

@@ -1,0 +1,68 @@
+{
+  "answer_in_context": 0.78,
+  "avg_context_tokens": 482.6,
+  "candidate_pool_size": 79.94,
+  "context_f1": 0.35092063492063486,
+  "em": 0.0,
+  "embedding_missing_rate": 0.0,
+  "generation_ms": 0.26198,
+  "graph_variant": "entity_chunk_reference",
+  "num_queries": 50,
+  "oracle_leakage_count": 0,
+  "qa_f1": 0.0877748316512022,
+  "qa_prompt_hash": "31e4b446be8b00a4989078fb4a957bc61b19bf4b8014674e2baad4612cc4396d",
+  "qa_prompt_name": "common_qa",
+  "qa_prompt_text_exact_match": true,
+  "query_embedding_cache_hit_rate": 1.0,
+  "rendered_recall": 0.81,
+  "rendered_shell1_chunk_count": 2.96,
+  "renderer_mode": "tree_shell1_semantic_query_order",
+  "retrieval_ms": 948.8296399999998,
+  "runtime_mode": "diagnostic",
+  "runtime_profile": {
+    "mean": {
+      "candidate_embedding_lookup_count": 79.94,
+      "candidate_pool_size": 79.94,
+      "duplicate_embedding_lookup_avoided": 0.0,
+      "query_embedding_cache_hit_rate": 1.0,
+      "query_embedding_cache_miss_count": 0.0,
+      "rendered_chunk_count": 7.3,
+      "rendered_shell1_chunk_count": 2.96,
+      "shell1_chunk_count": 75.58,
+      "support_tree_chunk_count": 4.36,
+      "time_anchor_ms": 758.1676114801667,
+      "time_core_retrieval_ms": 710.5971042593592,
+      "time_diagnostics_logging_ms": 0.0,
+      "time_embedding_lookup_ms": 9.363926879595965,
+      "time_query_embedding_ms": 0.0,
+      "time_refinement_ms": 6.539647839963436,
+      "time_rendering_ms": 24.45913461910095,
+      "time_semantic_ordering_ms": 0.6638757404289208,
+      "time_shell1_construction_ms": 7.4100406595971435,
+      "time_support_tree_ms": 7.4100406595971435,
+      "time_total_retrieval_ms": 947.8172429991537,
+      "unique_candidate_embedding_count": 79.94
+    },
+    "num_queries": 50,
+    "top_two_contributors": [
+      {
+        "mean_ms": 758.1676114801667,
+        "name": "time_anchor_ms"
+      },
+      {
+        "mean_ms": 710.5971042593592,
+        "name": "time_core_retrieval_ms"
+      }
+    ]
+  },
+  "score_mixing_detected": false,
+  "shell1_chunk_count": 75.58,
+  "support_tree_chunk_count": 4.36,
+  "time_diagnostics_logging_ms": 0.0,
+  "time_embedding_lookup_ms": 9.363926879595965,
+  "time_query_embedding_ms": 0.0,
+  "time_semantic_ordering_ms": 0.6638757404289208,
+  "time_shell1_construction_ms": 7.4100406595971435,
+  "time_total_retrieval_ms": 947.8172429991537,
+  "total_ms": 949.0916199999998
+}

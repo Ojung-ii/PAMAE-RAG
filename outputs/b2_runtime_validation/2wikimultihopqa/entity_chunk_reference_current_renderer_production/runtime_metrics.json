@@ -1,0 +1,68 @@
+{
+  "answer_in_context": 0.47,
+  "avg_context_tokens": 350.086,
+  "candidate_pool_size": 0.0,
+  "context_f1": 0.26683823953824076,
+  "em": 0.002,
+  "embedding_missing_rate": 0.0,
+  "generation_ms": 0.20040799999999975,
+  "graph_variant": "entity_chunk_reference",
+  "num_queries": 500,
+  "oracle_leakage_count": 0,
+  "qa_f1": 0.07895222957746444,
+  "qa_prompt_hash": "31e4b446be8b00a4989078fb4a957bc61b19bf4b8014674e2baad4612cc4396d",
+  "qa_prompt_name": "common_qa",
+  "qa_prompt_text_exact_match": true,
+  "query_embedding_cache_hit_rate": 0.0,
+  "rendered_recall": 0.5905,
+  "rendered_shell1_chunk_count": 0.0,
+  "renderer_mode": "current_renderer",
+  "retrieval_ms": 1835.3772899999988,
+  "runtime_mode": "production",
+  "runtime_profile": {
+    "mean": {
+      "candidate_embedding_lookup_count": 0.0,
+      "candidate_pool_size": 0.0,
+      "duplicate_embedding_lookup_avoided": 0.0,
+      "query_embedding_cache_hit_rate": 0.0,
+      "query_embedding_cache_miss_count": 0.0,
+      "rendered_chunk_count": 7.856,
+      "rendered_shell1_chunk_count": 0.0,
+      "shell1_chunk_count": 0.0,
+      "support_tree_chunk_count": 0.0,
+      "time_anchor_ms": 1535.256740316283,
+      "time_core_retrieval_ms": 1625.645432198362,
+      "time_diagnostics_logging_ms": 0.0,
+      "time_embedding_lookup_ms": 0.0,
+      "time_query_embedding_ms": 0.0,
+      "time_refinement_ms": 10.089201187773142,
+      "time_rendering_ms": 6.652335728169419,
+      "time_semantic_ordering_ms": 0.0,
+      "time_shell1_construction_ms": 0.0,
+      "time_support_tree_ms": 0.0,
+      "time_total_retrieval_ms": 1834.3081010743917,
+      "unique_candidate_embedding_count": 0.0
+    },
+    "num_queries": 500,
+    "top_two_contributors": [
+      {
+        "mean_ms": 1625.645432198362,
+        "name": "time_core_retrieval_ms"
+      },
+      {
+        "mean_ms": 1535.256740316283,
+        "name": "time_anchor_ms"
+      }
+    ]
+  },
+  "score_mixing_detected": false,
+  "shell1_chunk_count": 0.0,
+  "support_tree_chunk_count": 0.0,
+  "time_diagnostics_logging_ms": 0.0,
+  "time_embedding_lookup_ms": 0.0,
+  "time_query_embedding_ms": 0.0,
+  "time_semantic_ordering_ms": 0.0,
+  "time_shell1_construction_ms": 0.0,
+  "time_total_retrieval_ms": 1834.3081010743917,
+  "total_ms": 1835.5776979999987
+}
