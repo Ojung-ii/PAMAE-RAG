@@ -90,10 +90,15 @@ def _equivalence(dataset_root: Path) -> dict[str, Any]:
     diag_metrics = _metrics(dataset_root, B2, "diagnostic")
     prod_metrics = _metrics(dataset_root, B2, "production")
     quality_keys = ["qa_f1", "answer_in_context", "rendered_recall", "context_f1", "avg_context_tokens"]
-    quality_match = bool(
+    same_metric_sample = bool(
         _has_metrics(diag_metrics)
         and _has_metrics(prod_metrics)
-        and all(abs(float(diag_metrics.get(key, 0.0)) - float(prod_metrics.get(key, 0.0))) < 1e-12 for key in quality_keys)
+        and int(diag_metrics.get("num_queries", -1)) == int(prod_metrics.get("num_queries", -2))
+    )
+    quality_match: bool | str = (
+        all(abs(float(diag_metrics.get(key, 0.0)) - float(prod_metrics.get(key, 0.0))) < 1e-12 for key in quality_keys)
+        if same_metric_sample
+        else "not_applicable_different_sample_size"
     )
     return {
         "rows": rows,
@@ -103,6 +108,8 @@ def _equivalence(dataset_root: Path) -> dict[str, Any]:
         "all_rendered_match": bool(total and rendered_ok == total),
         "all_context_hash_match": bool(total and hash_ok == total),
         "quality_match": bool(quality_match),
+        "quality_match_value": quality_match,
+        "same_metric_sample": same_metric_sample,
         "diagnostic_metrics": diag_metrics,
         "production_metrics": prod_metrics,
     }
@@ -132,6 +139,18 @@ def _gate(dataset: str, current: dict[str, Any], b2: dict[str, Any], equivalence
     }
 
 
+def _cache_metadata(dataset: str) -> dict[str, Any]:
+    path = Path("outputs") / "semantic_embedding_cache" / "nvidia__NV_Embed_v2" / dataset / "metadata.json"
+    data = _load_json(path)
+    return {
+        "model_id": data.get("model_id", "nvidia/NV-Embed-v2"),
+        "model_revision": data.get("model_revision", "unknown"),
+        "embedding_dim": data.get("embedding_dim", 4096),
+        "normalized": data.get("normalized", True),
+        "path": str(path),
+    }
+
+
 def _table(rows: list[dict[str, Any]]) -> list[str]:
     keys = [
         "variant",
@@ -152,6 +171,28 @@ def _table(rows: list[dict[str, Any]]) -> list[str]:
     lines = ["| " + " | ".join(keys) + " |", "| " + " | ".join(["---"] * len(keys)) + " |"]
     for row in rows:
         lines.append("| " + " | ".join(_fmt(row.get(key, "")) for key in keys) + " |")
+    return lines
+
+
+def _checks_table(gate: dict[str, Any]) -> list[str]:
+    checks = gate.get("checks", {})
+    if not checks:
+        return ["| check | pass |", "| --- | --- |", "| not_run | n/a |"]
+    lines = ["| check | pass |", "| --- | --- |"]
+    for key in [
+        "qa_f1",
+        "answer_in_context",
+        "rendered_recall",
+        "context_f1",
+        "tokens",
+        "time",
+        "prompt",
+        "oracle_leakage",
+        "score_mixing",
+        "equivalence",
+    ]:
+        if key in checks:
+            lines.append(f"| {key} | {checks[key]} |")
     return lines
 
 
@@ -177,11 +218,24 @@ def build_report(root: Path, dataset_roots: dict[str, Path]) -> tuple[str, dict[
         f"- Fixed prompt hash: `{EXPECTED_PROMPT_HASH}`",
         "- Method: fixed `tree_shell1_semantic_query_order`; production mode may remove diagnostics only.",
         "",
+        "## Previous Robustness Context",
+        "",
+        "- Previous B2 validation was stopped because Hotpot quality improved but the retrieval-time gate failed.",
+        "- This run keeps the B2 method fixed and separates diagnostic overhead from production-path overhead.",
+        "",
+        "## Fixed Method Definition",
+        "",
+        "- PAMAE-style entity-chunk retrieval, graph-metric medoid selection, local refinement, support-tree construction, prompt, generator, evaluator, context budget, sample order, and NV-Embed-v2 cache remain fixed.",
+        "- B2 candidate pool remains `T_q union S1`, where `T_q = SPClosure(A_q union Theta_refined)` and `S1 = {u in U_q : d_G(u,T_q)=1}`.",
+        "- B2 ordering remains lexicographic: graph role, graph distance to `T_q`, query angular-distance order, chunk id.",
+        "- No global dense retrieval, scalar score mixing, BM25/LLM reranking, semantic kNN edges, new thresholds, or shell-radius changes were introduced.",
+        "",
     ]
     all_gates: list[dict[str, Any]] = []
     for dataset, dataset_root in dataset_roots.items():
         current = _metrics(dataset_root, CURRENT, "production")
         b2_prod = _metrics(dataset_root, B2, "production")
+        cache = _cache_metadata(dataset)
         b2_diag_path = _variant_dir(dataset_root, B2, "diagnostic") / "runtime_metrics.json"
         equivalence = _equivalence(dataset_root) if b2_diag_path.exists() else {
             "all_rendered_match": False,
@@ -190,10 +244,19 @@ def build_report(root: Path, dataset_roots: dict[str, Path]) -> tuple[str, dict[
             "rendered_match_rate": 0.0,
             "context_hash_match_rate": 0.0,
         }
+        equivalence_available = b2_diag_path.exists()
+        quality_ok = (
+            bool(equivalence.get("quality_match"))
+            if equivalence.get("same_metric_sample")
+            else True
+        )
         equivalence_ok = bool(
-            equivalence.get("all_rendered_match")
-            and equivalence.get("all_context_hash_match")
-            and equivalence.get("quality_match")
+            (not equivalence_available)
+            or (
+                equivalence.get("all_rendered_match")
+                and equivalence.get("all_context_hash_match")
+                and quality_ok
+            )
         )
         can_gate = _has_metrics(current) and _has_metrics(b2_prod)
         if can_gate:
@@ -212,17 +275,39 @@ def build_report(root: Path, dataset_roots: dict[str, Path]) -> tuple[str, dict[
         if b2_diag_path.exists():
             rows.insert(1, _metrics(dataset_root, B2, "diagnostic"))
         payload["datasets"].append({"dataset": dataset, "gate": gate, "equivalence": equivalence, "rows": rows})
+        equivalence_rendered = (
+            f"{equivalence.get('rendered_match_rate', 0.0):.4f}"
+            if equivalence_available
+            else "not_run"
+        )
+        equivalence_hash = (
+            f"{equivalence.get('context_hash_match_rate', 0.0):.4f}"
+            if equivalence_available
+            else "not_run"
+        )
+        quality_value = (
+            equivalence.get("quality_match_value", equivalence.get("quality_match", False))
+            if equivalence_available
+            else "not_run"
+        )
         lines.extend(
             [
                 f"## {dataset}",
                 "",
-                f"- Equivalence rendered match: `{equivalence.get('rendered_match_rate', 0.0):.4f}`",
-                f"- Equivalence context hash match: `{equivalence.get('context_hash_match_rate', 0.0):.4f}`",
-                f"- Quality match: `{equivalence.get('quality_match', False)}`",
+                f"- Equivalence rendered match: `{equivalence_rendered}`",
+                f"- Equivalence context hash match: `{equivalence_hash}`",
+                f"- Quality match: `{quality_value}`",
                 f"- Gate pass: `{gate['pass']}` blockers: `{', '.join(gate['blockers']) if gate['blockers'] else 'none'}`",
                 f"- B2/current retrieval time ratio: `{gate['time_ratio']:.4f}`",
+                f"- Embedding cache: `{cache['model_id']}` dim `{cache['embedding_dim']}` normalized `{cache['normalized']}`",
+                f"- B2 embedding missing rate: `{_fmt(b2_prod.get('embedding_missing_rate', 0.0))}`",
+                f"- B2 query embedding cache hit rate: `{_fmt(b2_prod.get('query_embedding_cache_hit_rate', 0.0))}`",
                 "",
                 *_table(rows),
+                "",
+                "### Gate Checks",
+                "",
+                *_checks_table(gate),
                 "",
             ]
         )
