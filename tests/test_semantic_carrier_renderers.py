@@ -5,6 +5,9 @@ import inspect
 import numpy as np
 
 from pamae_rag.data.schema import EvidenceNode, QueryExample
+from pamae_rag.diagnostics.runtime_profile import context_text_hash
+from pamae_rag.semantic.angular_distance import angular_distance
+from pamae_rag.semantic.embedding_store import EmbeddingStore
 from pamae_rag.rendering.semantic_carrier_renderers import (
     SEMANTIC_ADOPTION_CANDIDATE_RENDERERS,
     SEMANTIC_ORACLE_RENDERERS,
@@ -12,6 +15,7 @@ from pamae_rag.rendering.semantic_carrier_renderers import (
     TREE_SHELL1_GRAPH_ORDER,
     TREE_SHELL1_SEMANTIC_QUERY_ORDER,
     render_semantic_carrier_indices,
+    semantic_query_order_keys,
 )
 
 
@@ -101,3 +105,39 @@ def test_semantic_renderer_static_no_score_mixing_or_answer_gold_calls() -> None
 def test_semantic_oracle_is_not_adoption_candidate() -> None:
     assert SHELL1_ANSWER_ORACLE in SEMANTIC_ORACLE_RENDERERS
     assert SHELL1_ANSWER_ORACLE not in SEMANTIC_ADOPTION_CANDIDATE_RENDERERS
+
+
+def test_b2_production_mode_keeps_context_and_drops_heavy_trace() -> None:
+    kwargs = dict(
+        example=_example(),
+        selected_medoids=[1],
+        query_anchors=[0],
+        distance_matrix=_distance(),
+        max_context_tokens=10,
+        max_context_nodes=None,
+        disconnected_distance=9.0,
+        renderer_mode=TREE_SHELL1_SEMANTIC_QUERY_ORDER,
+    )
+    diagnostic = render_semantic_carrier_indices(**kwargs, include_trace=True)
+    production = render_semantic_carrier_indices(**kwargs, include_trace=False)
+
+    assert production.indices == diagnostic.indices
+    assert context_text_hash([_example().nodes[idx].text for idx in production.indices]) == context_text_hash(
+        [_example().nodes[idx].text for idx in diagnostic.indices]
+    )
+    assert "semantic_carrier_order_node_ids" in diagnostic.diagnostics
+    assert "semantic_carrier_order_node_ids" not in production.diagnostics
+    assert production.diagnostics["candidate_pool_size"] == diagnostic.diagnostics["candidate_pool_size"]
+
+
+def test_b2_angular_order_matches_dot_monotonic_order() -> None:
+    example = _example()
+    store = EmbeddingStore.from_example(example)
+    candidates = [2, 3]
+    angular_order = sorted(
+        candidates,
+        key=lambda idx: (angular_distance(store.query_embedding, store.node_embedding(example.nodes[idx].node_id)), example.nodes[idx].node_id),
+    )
+    dot_order_keys = semantic_query_order_keys(store=store, candidate_indices=candidates, nodes=example.nodes)
+    dot_order = sorted(candidates, key=lambda idx: (dot_order_keys[idx], example.nodes[idx].node_id))
+    assert dot_order == angular_order

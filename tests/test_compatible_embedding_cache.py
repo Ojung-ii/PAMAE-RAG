@@ -92,3 +92,21 @@ def test_compatible_cache_rejects_dimension_mismatch(tmp_path) -> None:
         assert "dimension mismatch" in str(exc)
     else:
         raise AssertionError("expected dimension mismatch")
+
+
+def test_compatible_cache_batch_lookup_logs_missing_without_replacement(tmp_path) -> None:
+    metadata = make_metadata(
+        model_id="fake/model",
+        model_revision="abc",
+        embedding_dim=2,
+        dataset="toy",
+        pooling="fake",
+    )
+    cache = CompatibleEmbeddingCache.create(tmp_path, metadata)
+    cache.set_chunk("c1", [1.0, 0.0])
+
+    found, missing = cache.get_chunks(["c1", "c_missing", "c1"])
+
+    assert list(found) == ["c1"]
+    assert missing == ["c_missing"]
+    assert np.allclose(found["c1"], np.asarray([1.0, 0.0]))

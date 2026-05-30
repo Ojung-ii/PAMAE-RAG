@@ -18,6 +18,7 @@ def test_common_qa_prompt_is_fixed_and_hashable() -> None:
     assert PROMPT_TEXT == COMMON_QA_PROMPTS["common_qa"]
     assert PROMPT_TEXT_EXACT_MATCH is True
     assert PROMPT_HASH == hashlib.sha256(PROMPT_TEXT.encode("utf-8")).hexdigest()
+    assert PROMPT_HASH == "31e4b446be8b00a4989078fb4a957bc61b19bf4b8014674e2baad4612cc4396d"
 
 
 def test_prompt_protocol_status_requires_common_hash_and_exact_match() -> None:
