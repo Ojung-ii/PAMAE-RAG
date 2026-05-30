@@ -9,6 +9,7 @@ import numpy as np
 from pamae_rag.config import AppConfig
 from pamae_rag.data.schema import QueryExample, RetrievalResult
 from pamae_rag.diagnostics.path_realizability import compute_path_realizability, path_nodes, support_tree_nodes
+from pamae_rag.diagnostics.runtime_profile import build_runtime_profile
 from pamae_rag.eval.support_recall import hit, recall
 from pamae_rag.eval.support_facts import support_fact_stage_metrics
 from pamae_rag.eval.stage_diagnostics import make_stage_metrics
@@ -242,8 +243,16 @@ def _support_tree_path_diagnostics(
     }
 
 
-def _run_for_k(example: QueryExample, cfg: AppConfig, k: int, seed: int) -> RetrievalResult:
+def _run_for_k(example: QueryExample, cfg: AppConfig, k: int, seed: int, runtime_mode: str = "diagnostic") -> RetrievalResult:
+    total_started = time.perf_counter()
+    diagnostic_enabled = runtime_mode != "production"
     stage_diagnostics: dict[str, dict] = {}
+
+    def diagnostic_support_fact_extra(selected_node_ids: Iterable[str]) -> dict:
+        if not diagnostic_enabled:
+            return {}
+        return _support_fact_extra(example, nodes, selected_node_ids)
+
     stage_start = time.perf_counter()
     nodes = select_universe_by_mass(
         example.nodes,
@@ -300,7 +309,7 @@ def _run_for_k(example: QueryExample, cfg: AppConfig, k: int, seed: int) -> Retr
         extra={
             "num_universe_nodes": len(nodes),
             "num_anchor_candidates": len(candidates),
-            **_support_fact_extra(example, nodes, _all_node_ids(nodes)),
+            **diagnostic_support_fact_extra(_all_node_ids(nodes)),
         },
     )
     if len(candidates) < k:
@@ -341,7 +350,7 @@ def _run_for_k(example: QueryExample, cfg: AppConfig, k: int, seed: int) -> Retr
             latency_ms=(time.perf_counter() - stage_start) * 1000.0,
             extra={
                 "candidate_strategy": "top_rho",
-                **_support_fact_extra(example, nodes, _node_ids(nodes, anchors)),
+                **diagnostic_support_fact_extra(_node_ids(nodes, anchors)),
             },
         )
     else:
@@ -385,7 +394,7 @@ def _run_for_k(example: QueryExample, cfg: AppConfig, k: int, seed: int) -> Retr
                 "candidate_strategy": "weighted_samples",
                 "num_samples": len(samples),
                 "sampled_candidate_count": len(sampled_ids),
-                **_support_fact_extra(example, nodes, _node_ids(nodes, sampled_ids)),
+                **diagnostic_support_fact_extra(_node_ids(nodes, sampled_ids)),
             },
         )
 
@@ -490,9 +499,9 @@ def _run_for_k(example: QueryExample, cfg: AppConfig, k: int, seed: int) -> Retr
                     ),
                     **_prefix_metrics(
                         "pre_refinement_",
-                        _support_fact_extra(example, nodes, pre_refine_anchor_ids),
+                        diagnostic_support_fact_extra(pre_refine_anchor_ids),
                     ),
-                    **_support_fact_extra(example, nodes, _node_ids(nodes, refined.anchors)),
+                    **diagnostic_support_fact_extra(_node_ids(nodes, refined.anchors)),
                 },
             )
         else:
@@ -516,9 +525,9 @@ def _run_for_k(example: QueryExample, cfg: AppConfig, k: int, seed: int) -> Retr
                     ),
                     **_prefix_metrics(
                         "pre_refinement_",
-                        _support_fact_extra(example, nodes, pre_refine_anchor_ids),
+                        diagnostic_support_fact_extra(pre_refine_anchor_ids),
                     ),
-                    **_support_fact_extra(example, nodes, _node_ids(nodes, refined.anchors)),
+                    **diagnostic_support_fact_extra(_node_ids(nodes, refined.anchors)),
                 },
             )
         exact_phase1 = all(result.exact for result in phase1_results) and basin_selection_exact
@@ -544,9 +553,9 @@ def _run_for_k(example: QueryExample, cfg: AppConfig, k: int, seed: int) -> Retr
                 ),
                 **_prefix_metrics(
                     "pre_refinement_",
-                    _support_fact_extra(example, nodes, _node_ids(nodes, refined.anchors)),
+                    diagnostic_support_fact_extra(_node_ids(nodes, refined.anchors)),
                 ),
-                **_support_fact_extra(example, nodes, _node_ids(nodes, refined.anchors)),
+                **diagnostic_support_fact_extra(_node_ids(nodes, refined.anchors)),
             },
         ),
     )
@@ -564,7 +573,7 @@ def _run_for_k(example: QueryExample, cfg: AppConfig, k: int, seed: int) -> Retr
         extra={
             "graph_source": graph_diagnostics.get("graph_source"),
             "projected_node_count": len(projected_node_ids) if content_projection_enabled else None,
-            **_support_fact_extra(example, nodes, projection_node_ids),
+            **diagnostic_support_fact_extra(projection_node_ids),
         },
     )
     stage_diagnostics["reranking_scoring"] = make_stage_metrics(
@@ -576,7 +585,7 @@ def _run_for_k(example: QueryExample, cfg: AppConfig, k: int, seed: int) -> Retr
         extra={
             "objective_after_refinement": refined.after.total,
             "anchor_count": len(anchors),
-            **_support_fact_extra(example, nodes, _node_ids(nodes, anchors)),
+            **diagnostic_support_fact_extra(_node_ids(nodes, anchors)),
         },
     )
     stage_start = time.perf_counter()
@@ -602,13 +611,17 @@ def _run_for_k(example: QueryExample, cfg: AppConfig, k: int, seed: int) -> Retr
         )
     )
     phase1_anchor_indices = _indices_from_node_ids(nodes, pre_refine_anchor_ids)
-    support_tree_path_diagnostics = _support_tree_path_diagnostics(
-        nodes=nodes,
-        query_anchors=diagnostic_query_anchors,
-        phase1_medoids=phase1_anchor_indices,
-        refined_medoids=anchors,
-        distance_matrix=graph_distance_matrix,
-        disconnected_distance=disconnected_distance,
+    support_tree_path_diagnostics = (
+        _support_tree_path_diagnostics(
+            nodes=nodes,
+            query_anchors=diagnostic_query_anchors,
+            phase1_medoids=phase1_anchor_indices,
+            refined_medoids=anchors,
+            distance_matrix=graph_distance_matrix,
+            disconnected_distance=disconnected_distance,
+        )
+        if diagnostic_enabled
+        else {}
     )
     if renderer == "basin_path_closure":
         if basin_selection is None:
@@ -699,6 +712,7 @@ def _run_for_k(example: QueryExample, cfg: AppConfig, k: int, seed: int) -> Retr
                 max_context_nodes=cfg.pamae.max_context_nodes,
                 disconnected_distance=disconnected_distance,
                 renderer_mode=renderer,
+                include_trace=diagnostic_enabled,
             )
             context_indices = semantic_carrier.indices
             renderer_order_indices = list(context_indices)
@@ -763,25 +777,58 @@ def _run_for_k(example: QueryExample, cfg: AppConfig, k: int, seed: int) -> Retr
         or renderer in SEMANTIC_ORACLE_RENDERERS
         else "current"
     )
-    path_realizability = compute_path_realizability(
-        example=example,
-        nodes=nodes,
-        candidate_indices=candidates,
-        projected_node_ids=projection_node_ids,
-        selected_medoids=anchors,
-        context_indices=context_indices,
-        distance_matrix=graph_distance_matrix,
-        rho=rho,
-        selected_mode=selected_mode,
-        renderer_mode=diagnostic_renderer_mode,
-        max_context_tokens=cfg.pamae.max_context_tokens,
-        max_context_nodes=cfg.pamae.max_context_nodes,
-        disconnected_distance=disconnected_distance,
-        node_to_basin=diagnostic_node_to_basin,
-        query_anchors=diagnostic_query_anchors,
+    path_realizability_json = (
+        compute_path_realizability(
+            example=example,
+            nodes=nodes,
+            candidate_indices=candidates,
+            projected_node_ids=projection_node_ids,
+            selected_medoids=anchors,
+            context_indices=context_indices,
+            distance_matrix=graph_distance_matrix,
+            rho=rho,
+            selected_mode=selected_mode,
+            renderer_mode=diagnostic_renderer_mode,
+            max_context_tokens=cfg.pamae.max_context_tokens,
+            max_context_nodes=cfg.pamae.max_context_nodes,
+            disconnected_distance=disconnected_distance,
+            node_to_basin=diagnostic_node_to_basin,
+            query_anchors=diagnostic_query_anchors,
+        ).to_json()
+        if diagnostic_enabled
+        else {"runtime_mode": "production", "skipped": True}
+    )
+
+    context_stage = make_stage_metrics(
+        stage="context_rendering",
+        selected_node_ids=context_node_ids,
+        gold_node_ids=example.gold_node_ids,
+        context_node_ids=context_node_ids,
+        rendered_node_ids=context_node_ids,
+        token_count=final_context_tokens,
+        latency_ms=render_latency_ms,
+        extra={
+            **basin_render_diagnostics,
+            "answer_in_context": _answer_in_context(example, nodes, context_indices) if diagnostic_enabled else None,
+            **diagnostic_support_fact_extra(context_node_ids),
+        },
+    )
+    stage_diagnostics_payload = {**stage_diagnostics, "context_rendering": context_stage}
+    total_retrieval_ms = (time.perf_counter() - total_started) * 1000.0
+    runtime_profile = build_runtime_profile(
+        query_id=example.query_id,
+        variant=renderer,
+        runtime_mode=runtime_mode,
+        stage_diagnostics=stage_diagnostics_payload,
+        renderer_diagnostics={
+            **basin_render_diagnostics,
+            "final_context_nodes": len(context_indices),
+        },
+        total_retrieval_ms=total_retrieval_ms,
     )
 
     diagnostics = {
+        "runtime_mode": runtime_mode,
         "retrieval_variant": retrieval_variant,
         "renderer": renderer,
         "relevance_mode": cfg.pamae.relevance_mode,
@@ -798,13 +845,13 @@ def _run_for_k(example: QueryExample, cfg: AppConfig, k: int, seed: int) -> Retr
         "num_samples": len(samples),
         "sample_sizes": [len(s) for s in samples],
         "selected_sample_index": selected_sample_index,
-        "active_universe_node_ids": list(_all_node_ids(nodes)),
-        "candidate_node_ids": list(_node_ids(nodes, candidates)),
-        "projected_node_ids": list(projection_node_ids),
-        "pre_refinement_anchor_ids": list(pre_refine_anchor_ids),
+        "active_universe_node_ids": list(_all_node_ids(nodes)) if diagnostic_enabled else [],
+        "candidate_node_ids": list(_node_ids(nodes, candidates)) if diagnostic_enabled else [],
+        "projected_node_ids": list(projection_node_ids) if diagnostic_enabled else [],
+        "pre_refinement_anchor_ids": list(pre_refine_anchor_ids) if diagnostic_enabled else [],
         "diagnostic_query_anchor_node_ids": list(_node_ids(nodes, diagnostic_query_anchors)),
-        "diagnostic_selected_basin_node_ids": list(selected_basin_node_ids),
-        "renderer_budget_order_node_ids": list(renderer_order_node_ids),
+        "diagnostic_selected_basin_node_ids": list(selected_basin_node_ids) if diagnostic_enabled else [],
+        "renderer_budget_order_node_ids": list(renderer_order_node_ids) if diagnostic_enabled else [],
         "phase1_exact": exact_phase1,
         "phase1_num_combinations": [r.num_combinations for r in phase1_results],
         "sample_objective": _objective_json(sample_objective),
@@ -834,27 +881,12 @@ def _run_for_k(example: QueryExample, cfg: AppConfig, k: int, seed: int) -> Retr
             if renderer in PATH_CARRIER_RENDERERS or renderer in SEMANTIC_CARRIER_RENDERERS or renderer in SEMANTIC_ORACLE_RENDERERS
             else "anchors_then_cell_top_rho_then_score_fill"
         ),
-        "path_realizability": path_realizability.to_json(),
+        "path_realizability": path_realizability_json,
         **support_tree_path_diagnostics,
         **basin_render_diagnostics,
+        "runtime_profile": runtime_profile,
         "max_context_nodes_less_than_k": bool(node_budget_active and max_context_nodes < k),
-        "stage_diagnostics": {
-            **stage_diagnostics,
-            "context_rendering": make_stage_metrics(
-                stage="context_rendering",
-                selected_node_ids=context_node_ids,
-                gold_node_ids=example.gold_node_ids,
-                context_node_ids=context_node_ids,
-                rendered_node_ids=context_node_ids,
-                token_count=final_context_tokens,
-                latency_ms=render_latency_ms,
-                extra={
-                    **basin_render_diagnostics,
-                    "answer_in_context": _answer_in_context(example, nodes, context_indices),
-                    **_support_fact_extra(example, nodes, context_node_ids),
-                },
-            ),
-        },
+        "stage_diagnostics": stage_diagnostics_payload,
     }
 
     return RetrievalResult(
@@ -871,13 +903,24 @@ def _run_for_k(example: QueryExample, cfg: AppConfig, k: int, seed: int) -> Retr
     )
 
 
-def run_query_pamae(example: QueryExample, cfg: AppConfig, seed_offset: int = 0) -> RetrievalResult:
+def run_query_pamae(
+    example: QueryExample,
+    cfg: AppConfig,
+    seed_offset: int = 0,
+    runtime_mode: str = "diagnostic",
+) -> RetrievalResult:
     if cfg.pamae.retrieval_variant == "adaptive_k":
         best: RetrievalResult | None = None
         best_score = float("inf")
         max_k = min(cfg.pamae.k_max, max(1, len(example.nodes)))
         for k in range(1, max_k + 1):
-            result = _run_for_k(example, cfg, k=k, seed=cfg.seed + seed_offset + 1009 * k)
+            result = _run_for_k(
+                example,
+                cfg,
+                k=k,
+                seed=cfg.seed + seed_offset + 1009 * k,
+                runtime_mode=runtime_mode,
+            )
             score = result.objective_after_refinement + cfg.pamae.lambda_k * len(result.anchor_node_ids)
             if score < best_score:
                 best_score = score
@@ -890,9 +933,15 @@ def run_query_pamae(example: QueryExample, cfg: AppConfig, seed_offset: int = 0)
         best: RetrievalResult | None = None
         max_k = min(cfg.pamae.k_max, max(1, len(example.nodes)))
         for k in range(1, max_k + 1):
-            result = _run_for_k(example, cfg, k=k, seed=cfg.seed + seed_offset + 1009 * k)
+            result = _run_for_k(
+                example,
+                cfg,
+                k=k,
+                seed=cfg.seed + seed_offset + 1009 * k,
+                runtime_mode=runtime_mode,
+            )
             if best is None or result.objective_after_refinement < best.objective_after_refinement:
                 best = result
         assert best is not None
         return best
-    return _run_for_k(example, cfg, k=cfg.pamae.k, seed=cfg.seed + seed_offset)
+    return _run_for_k(example, cfg, k=cfg.pamae.k, seed=cfg.seed + seed_offset, runtime_mode=runtime_mode)
