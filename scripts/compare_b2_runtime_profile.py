@@ -155,7 +155,15 @@ def _table(rows: list[dict[str, Any]]) -> list[str]:
     return lines
 
 
-def build_report(root: Path, datasets: list[str]) -> tuple[str, dict[str, Any]]:
+def _dataset_roots(root: Path, datasets: list[str] | None) -> dict[str, Path]:
+    if datasets:
+        return {dataset: root / dataset for dataset in datasets}
+    if _variant_dir(root, B2, "diagnostic").exists() or _variant_dir(root, B2, "production").exists():
+        return {root.name: root}
+    return {path.name: path for path in sorted(root.iterdir()) if path.is_dir()}
+
+
+def build_report(root: Path, dataset_roots: dict[str, Path]) -> tuple[str, dict[str, Any]]:
     payload: dict[str, Any] = {
         "branch": _git_branch(),
         "commit": _git_commit(),
@@ -171,8 +179,7 @@ def build_report(root: Path, datasets: list[str]) -> tuple[str, dict[str, Any]]:
         "",
     ]
     all_gates: list[dict[str, Any]] = []
-    for dataset in datasets:
-        dataset_root = root / dataset
+    for dataset, dataset_root in dataset_roots.items():
         current = _metrics(dataset_root, CURRENT, "production")
         b2_prod = _metrics(dataset_root, B2, "production")
         b2_diag_path = _variant_dir(dataset_root, B2, "diagnostic") / "runtime_metrics.json"
@@ -272,8 +279,7 @@ def main() -> None:
     parser.add_argument("--datasets", nargs="+", default=None)
     parser.add_argument("--out", required=True, type=Path)
     args = parser.parse_args()
-    datasets = args.datasets or [path.name for path in sorted(args.root.iterdir()) if path.is_dir()]
-    report, payload = build_report(args.root, datasets)
+    report, payload = build_report(args.root, _dataset_roots(args.root, args.datasets))
     args.out.parent.mkdir(parents=True, exist_ok=True)
     args.out.write_text(report, encoding="utf-8")
     (args.out.parent / "b2_runtime_validation_comparison.json").write_text(
